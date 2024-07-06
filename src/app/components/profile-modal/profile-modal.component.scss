@@ -1,0 +1,88 @@
+.profile-modal {
+  width: 400px;
+  height: 400px;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.back-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.back-button i {
+  margin-right: 5px;
+}
+
+.content {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-details {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.profile-details .title {
+  text-align: left;
+  padding-right: 10px;
+}
+
+.profile-details .value {
+  text-align: left;
+}
+
+.profile-details .arrow-icon {
+  text-align: right;
+}
+
+.profile-details td {
+  padding: 5px;
+}
+
+.profile-details tr:hover .arrow-icon button {
+  display: inline-block;
+}
+
+.logout-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.logout-button i {
+  margin-right: 5px;
+}
