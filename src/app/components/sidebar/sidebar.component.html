@@ -1,0 +1,33 @@
+<div class="sidebar" [@collapse]="isCollapsed ? 'collapsed' : 'expanded'">
+    <div class="d-flex">
+        <div>
+            <h2 class="sidebar-heading m-3" *ngIf="!isCollapsed">Knowlix</h2>
+        </div>
+     
+        <div (click)="toggleCollapse()" class="mt-3">
+            <fa-icon [icon]="isCollapsed ? faChevronRight : faChevronLeft"></fa-icon>
+          </div>
+    </div>
+    <hr class="dull-white-hr">
+  
+    <ul class="sidebar-list">
+      <li class="sidebar-item mb-4">
+        <fa-icon [icon]="faHome"></fa-icon>
+        <button routerLink="/" *ngIf="!isCollapsed">Dashboard</button>
+      </li>
+      <li class="sidebar-item">
+        <fa-icon [icon]="faPlus"></fa-icon>
+        <button routerLink="/create-test" *ngIf="!isCollapsed">Create Test</button>
+      </li>
+      <li class="sidebar-item">
+        <fa-icon [icon]="faUpload"></fa-icon>
+        <button routerLink="/upload-question" *ngIf="!isCollapsed">Upload Question</button>
+      </li>
+      <li class="sidebar-item" *ngIf="isAdmin">
+        <fa-icon [icon]="faUserCog"></fa-icon>
+        <button routerLink="/trainer-management" *ngIf="!isCollapsed">Trainer Management</button>
+    </li>
+    </ul>
+  
+    <hr />
+</div>
