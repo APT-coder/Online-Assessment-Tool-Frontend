@@ -1,0 +1,26 @@
+
+.sideCard {
+    width: 150px;
+    height: 80px;
+    background-color: #f5f5f5; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    padding: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.card-name {
+    color: #153462;
+    font-size: 14px;
+    margin: 0; 
+}
+
+.card-title {
+    color: #153462;
+    font-weight: bolder;
+    margin: 0;
+}
