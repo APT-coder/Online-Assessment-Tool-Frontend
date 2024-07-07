@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHome, faUpload, faBell, faCog,faPlus,faChevronLeft, faChevronRight,faUserCog  } from '@fortawesome/free-solid-svg-icons';
+import { FileUploadComponent } from '../../pages/assessment/modals/file-upload/file-upload.component';
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [FontAwesomeModule,CommonModule],
+  imports: [FontAwesomeModule,CommonModule, FileUploadComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   animations: [

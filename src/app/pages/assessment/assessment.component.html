@@ -1,0 +1,9 @@
+<div class="container">
+    <ng-container *ngIf="showPreview">
+      <app-assessment-preview [questions]="questions" (editClicked)="onEditClicked()"></app-assessment-preview>
+    </ng-container>
+    <ng-container *ngIf="!showPreview">
+      <app-assessment-edit [questions]="editQuestions"></app-assessment-edit>
+    </ng-container>
+  </div>
+  

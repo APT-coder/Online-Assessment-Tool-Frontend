@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
 import { ButtonInactiveComponent } from '../../../../ui/buttons/button-inactive/button-inactive.component';
 import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
@@ -30,10 +30,12 @@ interface Assessment {
   styleUrl: './assessment-edit.component.scss'
 })
 export class AssessmentEditComponent {
+    @Input() questions: any;
   isSidebarCollapsed: boolean = false;
     currentAssessment: Assessment | null = null;
 
     ngOnInit() {
+        console.log(this.questions);
         this.fetchAssessmentData();
     }
 

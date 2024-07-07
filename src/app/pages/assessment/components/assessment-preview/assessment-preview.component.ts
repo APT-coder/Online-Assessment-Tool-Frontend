@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
@@ -30,10 +30,17 @@ interface Assessment {
   styleUrl: './assessment-preview.component.scss'
 })
 export class AssessmentPreviewComponent {
+    @Input() questions: any;
+    @Output() editClicked: EventEmitter<void> = new EventEmitter<void>();
+
+    onEditClicked() {
+      this.editClicked.emit();
+    }
   isSidebarCollapsed: boolean = false;
     currentAssessment: Assessment | null = null;
 
     ngOnInit() {
+        console.log(this.questions);
         this.fetchAssessmentData();
     }
 

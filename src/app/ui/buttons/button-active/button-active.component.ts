@@ -13,7 +13,8 @@ export class ButtonActiveComponent {
   @Input() customStyles: { [key: string]: string } = {};
   @Input() customClasses: string[] = [];
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
-onClick(): void {
-  this.buttonClick.emit();
-}
+  
+  onClick(): void {
+    this.buttonClick.emit();
+  }
 }
