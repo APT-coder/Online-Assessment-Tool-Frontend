@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
-import { ButtonInactiveComponent } from '../../ui/buttons/button-inactive/button-inactive.component';
-import { ButtonPointsComponent } from '../../ui/buttons/button-points/button-points.component';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
+import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
+import { ButtonInactiveComponent } from '../../../../ui/buttons/button-inactive/button-inactive.component';
+import { ButtonPointsComponent } from '../../../../ui/buttons/button-points/button-points.component';
 
 interface Question {
   id: string;

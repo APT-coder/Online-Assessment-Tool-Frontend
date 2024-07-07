@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { CardComponent } from './components/card/card.component';
-import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
-import { TableComponent } from './components/table/table.component';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
+import { CardComponent } from '../card/card.component';
+import { TableComponent } from '../table/table.component';
+import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-assessment-performance',
