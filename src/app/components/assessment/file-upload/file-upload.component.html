@@ -1,0 +1,23 @@
+<app-button-normal type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Upload File</app-button-normal>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+       <div class="header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">File Upload</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-inner-body">
+             <img src="Uploadicon.png" alt="upload icon" class="upload-icon">
+             <p class="upload-content">Drag and Drop a File<br/>
+                or <span class="select">select a file</span> from your computer</p>
+                <app-button-inactive class="template" [content]="'Download Template'"></app-button-inactive>
+          </div>
+        </div>
+        <p class="file-types">File types:pdfs,Docs</p>
+       
+        <app-button-active class="upload-button" [content]="'Upload File'"></app-button-active>
+    
+      </div>
+    </div>
+  </div>
