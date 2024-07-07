@@ -1,0 +1,23 @@
+<div class="container"  [ngClass]="{'sidebar-collapsed': isSidebarCollapsed}">
+    <div class="row">
+      <div class="sidebar-col">
+        <div class="sidebar">
+          <app-sidebar (toggle)="onToggleSidebar($event)"></app-sidebar>
+        </div>
+      </div>
+  
+      <div class="view-col">
+        <div class="d-flex">
+          <app-button-active [content]="'Add Role'" (buttonClick)="toggleCard()"></app-button-active>
+          &nbsp;&nbsp;
+          <app-button-active [content]="'Add Trainer'" (buttonClick)="ShowTrainer()"></app-button-active>
+        </div>
+        <br/><br/>
+  
+        <app-rolecreation-card *ngIf="isCardVisible"></app-rolecreation-card>
+        <app-accountcreation-modal *ngIf="isAddTrainer" [(visible)]="isAddTrainer"></app-accountcreation-modal>
+     <app-trainer-table></app-trainer-table>
+      </div>
+    </div>
+  </div>
+  
