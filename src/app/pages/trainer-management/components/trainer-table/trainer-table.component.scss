@@ -1,0 +1,102 @@
+:host ::ng-deep .card {
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 4px; 
+    background: white; 
+    overflow: hidden; 
+    padding: 0.5rem; 
+}
+
+:host ::ng-deep .role-card {
+    margin-bottom: 0.5rem; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px; 
+    background: white; 
+    overflow: hidden; 
+}
+
+:host ::ng-deep .role-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem; 
+    background: #f8f9fa; 
+    border-bottom: 1px solid #dee2e6;
+}
+
+:host ::ng-deep .role-body {
+    padding: 0.5rem; 
+}
+
+:host ::ng-deep .role-body table {
+    width: 100%;
+}
+
+:host ::ng-deep .role-body td {
+    padding: 0.25rem; 
+}
+
+:host ::ng-deep .users-count {
+    margin-left: auto; 
+    font-weight: bold;
+}
+
+
+.role-row {
+    margin-bottom: 1rem; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 4px; 
+    background: white; 
+    overflow: hidden; 
+    padding: 0.5rem;
+}
+
+.role-card {
+    margin-bottom: 0.5rem; 
+    box-shadow: 0 4px 8px rgba(2, 2, 0, 0.1); 
+    border-radius: 4px; 
+    background: white; 
+    overflow: hidden;
+}
+
+.role-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem; 
+    background: #f8f9fa; 
+    border-bottom: 1px solid #dee2e6; 
+}
+
+.users-count {
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.role-body {
+    padding: 0.5rem; 
+}
+
+.role-body table {
+    width: 100%;
+}
+
+.role-body td {
+    padding: 0.25rem; 
+}
+.role-body table {
+    width: 100%;
+   
+    border-radius: 20px; 
+    box-shadow: 0 4px 8px rgba(2, 2, 0, 0.2); 
+}
+
+.role-body td {
+    padding: 0.75rem; 
+}
+
+.m-5 {
+    margin-bottom: 0.75rem; 
+}
+
+.p-button {
+    margin-right: 0.75rem; 
+}
