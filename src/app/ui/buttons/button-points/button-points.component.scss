@@ -1,0 +1,13 @@
+$bg-color: linear-gradient(#261D42, #8061C3);
+
+.button-points{
+     background: $bg-color;
+     color: #FFFFFF;
+     height:30px;
+     width: 100px;
+     border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    justify-content: center;
+    }
