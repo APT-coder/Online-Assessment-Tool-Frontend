@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ButtonNormalComponent } from '../../../ui/buttons/button-normal/button-normal.component';
+import { ButtonNormalComponent } from '../../../../ui/buttons/button-normal/button-normal.component';
 
 @Component({
   selector: 'app-test-success',
