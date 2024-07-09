@@ -1,0 +1,35 @@
+.scroll-to-bottom-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+   
+  .scroll-to-bottom-button.clicked {
+    animation: bounce 1s infinite alternate;
+  }
+   
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .fixed-buttons{
+    display: flex;
+    justify-content: space-between;
+  }
+
+ 
+  .scroll-to-top-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+   

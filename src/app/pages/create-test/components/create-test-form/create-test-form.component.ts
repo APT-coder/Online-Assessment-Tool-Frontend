@@ -10,11 +10,14 @@ import { FillInTheBlanksFormComponent } from '../fill-in-the-blanks-form/fill-in
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component'; 
 import { ScheduleComponent } from '../schedule/schedule.component'; 
 import { MatIcon } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { AssessmentPreviewComponent } from "../../../assessment/components/assessment-preview/assessment-preview.component";
 
 @Component({
   selector: 'app-create-test-form',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     MatStepperModule,
     MatButtonModule,
     QuestionDropdownComponent,
@@ -22,9 +25,13 @@ import { MatIcon } from '@angular/material/icon';
     DescriptiveFormComponent,
     FillInTheBlanksFormComponent,
     ButtonActiveComponent,
-    ScheduleComponent,MatIcon],
+    ScheduleComponent,
+    MatIcon,
+    FormsModule,
+    AssessmentPreviewComponent
+],
   templateUrl: './create-test-form.component.html',
-  styleUrl: './create-test-form.component.scss'
+  styleUrls: ['./create-test-form.component.scss']
 })
 export class CreateTestFormComponent {
   @ViewChild('stepper')
@@ -33,14 +40,15 @@ export class CreateTestFormComponent {
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
-  questions: { selectedType: string, data?: any }[] = [{ selectedType: '' }];
+  questions: { id: number, type: string, score: number, data?: any }[] = [{ id: 1, type: '', score: 0 }];
 
   onQuestionTypeSelected(questionType: string, index: number) {
-    this.questions[index].selectedType = questionType;
+    this.questions[index].type = questionType;
   }
 
   addNewQuestion() {
-    this.questions.push({ selectedType: '' });
+    const newQuestionId = this.questions.length + 1;
+    this.questions.push({ id: newQuestionId, type: '', score: 0 });
   }
 
   removeQuestion(index: number) {
@@ -54,7 +62,19 @@ export class CreateTestFormComponent {
   logQuestions() {
     const currentStepIndex = this.stepper.selectedIndex;
     if (currentStepIndex === 1) {
-      console.log('Questions JSON:', JSON.stringify(this.questions, null, 2));
+      const formattedQuestions = this.questions.map(question => {
+        let formattedQuestion = {
+          id: question.id,
+          type: question.type,
+          content: '',
+          options: question.data?.options,
+          correctAnswer: question.data?.correctAnswer, 
+          score: question.score
+        };
+        return formattedQuestion;
+      });
+
+      console.log('Formatted Questions:', formattedQuestions);
     }
   }
 

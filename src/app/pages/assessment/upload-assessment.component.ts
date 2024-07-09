@@ -1,11 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostListener } from '@angular/core';
 import { AssessmentPreviewComponent } from './components/assessment-preview/assessment-preview.component';
 import { ActivatedRoute } from '@angular/router';
 import { parse } from '@fortawesome/fontawesome-svg-core';
 import { AssessmentEditComponent } from './components/assessment-edit/assessment-edit.component';
 import { CommonModule } from '@angular/common';
 import { AssessmentEvaluateComponent } from './components/assessment-evaluate/assessment-evaluate.component';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { MatIcon } from '@angular/material/icon';
+import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
+import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
 
 interface Question {
   type: string;
@@ -19,9 +28,9 @@ interface Question {
 @Component({
   selector: 'app-assessment',
   standalone: true,
-  imports: [CommonModule, AssessmentPreviewComponent, AssessmentEditComponent, AssessmentEvaluateComponent],
-  templateUrl: './assessment.component.html',
-  styleUrl: './assessment.component.scss'
+  imports: [CommonModule, AssessmentPreviewComponent, AssessmentEditComponent, AssessmentEvaluateComponent, MatStepperModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatButtonModule, SidebarComponent, MatIcon, ButtonActiveComponent, ScheduleComponent],
+  templateUrl: './upload-assessment.component.html',
+  styleUrls: ['./upload-assessment.component.scss']
 })
 export class AssessmentComponent {
   @Input() evaluate: boolean = false;
@@ -31,21 +40,45 @@ export class AssessmentComponent {
   showPreview = true;
   editQuestions: any;
 
-  onEditClicked() {
-    this.showPreview = false;
-    this.editQuestions = this.questions;
-  }
+  isLinear = false;
+  firstFormGroup!: FormGroup;
+  secondFormGroup!: FormGroup;
+  thirdFormGroup!: FormGroup;
 
-  constructor(private route: ActivatedRoute) {}
+  showScrollToTopButton = false;
+  showScrollToBottomButton = true;
+
+  constructor(private route: ActivatedRoute, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.htmlContent = history.state.htmlContent;
     console.log('Received HTML Content:', this.htmlContent);
     this.parseQuestions(this.htmlContent);
 
-    if(this.evaluate){
+    if (this.evaluate) {
       this.showPreview = false;
     }
+
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      thirdCtrl: ['', Validators.required]
+    });
+    this.editQuestions = this.questions;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.body.scrollHeight;
+
+    this.showScrollToTopButton = scrollPosition > 500;
+    this.showScrollToBottomButton = scrollPosition + windowHeight < documentHeight-500;
   }
 
   parseQuestions(htmlContent: string) {
@@ -53,7 +86,7 @@ export class AssessmentComponent {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, 'text/html');
     const paragraphs = doc.querySelectorAll('p');
-    
+
     let currentQuestion: any | null = null;
 
     paragraphs.forEach((p) => {
@@ -94,5 +127,13 @@ export class AssessmentComponent {
     }
 
     console.log('Parsed questions:', this.questions);
+  }
+
+  scrollToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
