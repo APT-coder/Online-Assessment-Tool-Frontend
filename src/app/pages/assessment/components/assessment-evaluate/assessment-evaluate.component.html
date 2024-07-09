@@ -1,0 +1,87 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-2">
+        <div class="sidebar">
+          <app-sidebar (toggle)="onToggleSidebar($event)"></app-sidebar>
+        </div>
+      </div>
+  
+      <div class="col-10 ">
+        <div class="Mcq-body">
+          <div class="Mcq-intro">
+            <h3>{{ Title }}</h3>
+            <div><app-button-active [content]="'Save'"  [customStyles]="{'height':'38px','width':'120px'}"></app-button-active></div>
+          </div>
+          <div class="Mcq-content">
+            <div class="qn">
+              
+              <div *ngFor="let question of assessments[0].questions; let i = index">
+                <h6>{{ i + 1 }}. {{ question.content }}</h6>
+                <ng-container [ngSwitch]="question.type">
+                    <ul *ngSwitchCase="'mcq'">
+                        <li *ngFor="let option of question.options" [ngClass]="{
+                                'correct-option': option === question.correctAnswer,
+                                'incorrect-option': option === question.learnerResponse && option !== question.correctAnswer
+                            }">
+                            {{ option }}
+                        </li>
+                    </ul>
+                    <div *ngSwitchCase="'descriptive'" class="descriptive">
+                        <div class="mark-box">
+                            <input type="number"  />&nbsp;
+                            <span>out of {{ question.score }}</span>
+                        </div>
+                        <div class="response-box">
+                            <textarea class="learner-response" readonly>{{ question.learnerResponse }}</textarea>
+                        </div>
+                        <div class="correct-answer">
+                            <strong>Correct Answer:</strong> {{ question.correctAnswer }}
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'fill_up'" class="fill-up">
+                        <input type="text" [(ngModel)]="question.learnerResponse" readonly />
+                        <div class="correct-answer">
+                            <strong>Correct Answer:</strong> {{ question.correctAnswer }}
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            </div>
+            <div class="Mcq-side">
+              <div class="Marks">
+                <div class="submitted">
+                    <h6>Submitted</h6>
+                    <p>Evaluated  {{rate1}}</p>
+                </div>
+                <div class="submitted-student-list">
+                <div class="submitted-student" *ngFor="let student of students">
+                    <span *ngIf="student.status === 'present'">
+                    <div class="icon-name">
+                        
+                        <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="height:20px;width:20px"><path fill="#7521bc" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg></div>
+                    <div>{{ student.name }}</div>
+                </div>
+                <div>{{ student.mark }}</div>
+                      </span>
+                  </div>
+                </div>
+              </div>
+              <div class="absentees">
+                <h6>Absentees</h6>
+                <div class="absent">
+                 <p>Absent: {{ getAbsentCount() }} / {{ students.length }}</p> 
+                </div>
+                <div class="absent-student">
+                    <div class="absent-student-name"*ngFor="let student of getAbsentStudents()">
+                      <svg xmlns="http://www.w3.org/2000/svg" style="height:20px;width:20px;" viewBox="0 0 384 512" class="xbar-icon"><path fill="#c90d0d" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+                      {{ student.name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

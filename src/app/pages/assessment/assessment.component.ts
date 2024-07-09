@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AssessmentPreviewComponent } from './components/assessment-preview/assessment-preview.component';
 import { ActivatedRoute } from '@angular/router';
 import { parse } from '@fortawesome/fontawesome-svg-core';
 import { AssessmentEditComponent } from './components/assessment-edit/assessment-edit.component';
 import { CommonModule } from '@angular/common';
+import { AssessmentEvaluateComponent } from './components/assessment-evaluate/assessment-evaluate.component';
 
 
 interface Question {
@@ -18,11 +19,12 @@ interface Question {
 @Component({
   selector: 'app-assessment',
   standalone: true,
-  imports: [CommonModule, AssessmentPreviewComponent, AssessmentEditComponent],
+  imports: [CommonModule, AssessmentPreviewComponent, AssessmentEditComponent, AssessmentEvaluateComponent],
   templateUrl: './assessment.component.html',
   styleUrl: './assessment.component.scss'
 })
 export class AssessmentComponent {
+  @Input() evaluate: boolean = false;
   htmlContent!: string;
   questions: Question[] = [];
 
@@ -40,6 +42,10 @@ export class AssessmentComponent {
     this.htmlContent = history.state.htmlContent;
     console.log('Received HTML Content:', this.htmlContent);
     this.parseQuestions(this.htmlContent);
+
+    if(this.evaluate){
+      this.showPreview = false;
+    }
   }
 
   parseQuestions(htmlContent: string) {

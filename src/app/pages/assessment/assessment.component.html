@@ -2,8 +2,11 @@
     <ng-container *ngIf="showPreview">
       <app-assessment-preview [questions]="questions" (editClicked)="onEditClicked()"></app-assessment-preview>
     </ng-container>
-    <ng-container *ngIf="!showPreview">
+    <ng-container *ngIf="!showPreview && !evaluate">
       <app-assessment-edit [questions]="editQuestions"></app-assessment-edit>
     </ng-container>
   </div>
+  <ng-container *ngIf="evaluate">
+    <app-assessment-evaluate></app-assessment-evaluate>
+  </ng-container>
   
