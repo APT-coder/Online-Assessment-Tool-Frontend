@@ -26,6 +26,6 @@ export class UploadSuccessComponent {
 
   prepareTestAndCloseModal() {
     this.dialogRef.close();
-    this.router.navigate(['/assessment'], { state: { htmlContent: this.htmlContent } });
+    this.router.navigate(['/upload-assessment'], { state: { htmlContent: this.htmlContent } });
   }
 }

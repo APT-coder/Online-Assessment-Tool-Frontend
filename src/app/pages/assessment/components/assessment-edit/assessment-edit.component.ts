@@ -41,4 +41,27 @@ export class AssessmentEditComponent {
   onToggleSidebar(collapsed: boolean) {
     this.isSidebarCollapsed = collapsed;
   }
+
+  addOption(questionIndex: number) {
+    const question = this.questions[questionIndex];
+    if (!question.options) {
+      question.options = [];
+    }
+    question.options.push('');
+  }
+
+  addQuestion() {
+    this.questions.push({
+      id: '',
+      type: 'mcq',
+      content: '',
+      options: [''],
+      correctAnswer: '',
+      score: 0
+    });
+  }
+
+  setCorrectAnswer(question: Question, option: string) {
+    question.correctAnswer = option;
+  }
 }

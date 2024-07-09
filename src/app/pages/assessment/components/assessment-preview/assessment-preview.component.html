@@ -1,20 +1,6 @@
-
 <div class="container">
     <div class="row">
-        <div class="col-2">
-            <div class="sidebar">
-                <app-sidebar (toggle)="onToggleSidebar($event)"></app-sidebar>
-            </div>
-        </div>
         <div class="col-10 mt-1 preview">
-            <div class="preview-top">
-                <div class="heading"><h4>Preview</h4></div>
-                <div class="preview-options">
-                    <app-button-inactive [content]="'Edit'" (click)=onEditClicked() [customStyles]="{'color':'#8546D2','background':'white','border-color':'#A050D3','box-shadow':'1px 2px 4px 0 rgba(0, 0, 0, 0.25)'}" ></app-button-inactive>
-                    <app-button-inactive [content]="'Add More'"  [customStyles]="{'color':'#8546D2','background':'white','border-color':'#A050D3','box-shadow':'1px 2px 4px 0 rgba(0, 0, 0, 0.25)'}"></app-button-inactive>
-                    <app-button-active [content]="'Assign'" ></app-button-active>
-                </div>
-            </div>
             <div class="preview-body">
                 <div class="question">
                     <div *ngFor="let question of questions; let i = index" class="qn-point">

@@ -4,12 +4,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHome, faUpload, faBell, faCog,faPlus,faChevronLeft, faChevronRight,faUserCog  } from '@fortawesome/free-solid-svg-icons';
 import { FileUploadComponent } from '../../pages/assessment/modals/file-upload/file-upload.component';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [FontAwesomeModule,CommonModule, FileUploadComponent],
+  imports: [FontAwesomeModule,CommonModule, FileUploadComponent, RouterLink],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   animations: [

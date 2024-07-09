@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { AssessmentComponent } from './pages/assessment/assessment.component';
+import { AssessmentComponent } from './pages/assessment/upload-assessment.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CreateTestComponent } from './pages/create-test/create-test.component';
+import { TrainerManagementComponent } from './pages/trainer-management/trainer-management.component';
 
 export const routes: Routes = [
     {
@@ -13,10 +14,13 @@ export const routes: Routes = [
         path: 'sidebar', component: SidebarComponent
     },
     {
-        path: 'assessment', component: AssessmentComponent
+        path: 'upload-assessment', component: AssessmentComponent
     },
     {
         path: 'create-test', component: CreateTestComponent
+    },
+    {
+        path: 'trainer-management', component: TrainerManagementComponent
     },
     {
         path: '**', component: NotFoundComponent
