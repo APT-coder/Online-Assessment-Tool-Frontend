@@ -1,1 +1,33 @@
-<p>login works!</p>
+<div class="login-container">
+    <div class="split-screen">
+        <div class="content-card">
+            <h5>Welcome to</h5>
+            <h2>Knowlix</h2>
+            <p>The Online Assessment Tool of Experion Technologies</p>
+        </div>
+        <div class="login-card">
+            <h1>Login</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="field">
+                    
+                    <input type="text" placeholder="Username" name="username" id="userName" formControlName="userName" />
+                    <div *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched">
+                        <div class="error-msg" *ngIf="loginForm.get('userName')?.errors?.['required']">Username is required.</div>
+                        <div class="error-msg" *ngIf="loginForm.get('userName')?.errors?.['minlength']">Minimum length must be 4.</div>
+                      </div>
+                </div>
+                <div class="field">
+                    
+                    <input type="password" placeholder="Password" name="password" id="password" formControlName="password"/>
+                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                        <div class="error-msg" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+                      </div>
+                </div>
+                <div class="clearfix">
+                    <button type="submit" [disabled]="loginForm.invalid"><span>Login</span></button>
+                  </div>
+                
+            </form>
+        </div>
+    </div>
+</div>

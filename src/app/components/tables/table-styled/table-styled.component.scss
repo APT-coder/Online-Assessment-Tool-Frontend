@@ -1,0 +1,50 @@
+.card-table {
+    display: flex;
+    justify-content: center; /* Center the table horizontally */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: separate; /* Allow space between rows */
+    border-spacing: 0 10px; /* Vertical space between rows */
+    margin-bottom: 20px; /* Bottom margin for spacing */
+  }
+  
+  th {
+    padding: 12px;
+    text-align: center;
+    background-color: #261d42; /* Header background color */
+    color: white; /* Header text color */
+    border-radius: 0 !important; /* Rounded corners for header */
+    /* Box shadow for header row */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  td {
+    padding: 12px;
+    text-align: center;
+    background-color: white; /* Row background color */
+  }
+  
+  tr {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Apply shadow to the entire row */
+    border-radius: 10px; /* Apply border radius to the entire row */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for transform and shadow effects */
+  }
+  
+  th:first-child,
+  td:first-child {
+    border-radius: 10px 0 0 10px; /* Rounded corners for the first cell in each row */
+  }
+  
+  th:last-child,
+  td:last-child {
+    border-radius: 0 10px 10px 0; /* Rounded corners for the last cell in each row */
+  }
+  
+  .row-elements:hover {
+    transform: perspective(1000px) rotateX(5deg) translateY(-5px); /* Lift and tilt effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+  }
+  
