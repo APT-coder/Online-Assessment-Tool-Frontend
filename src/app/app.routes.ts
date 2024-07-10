@@ -5,10 +5,14 @@ import { AssessmentComponent } from './pages/assessment/upload-assessment.compon
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CreateTestComponent } from './pages/create-test/create-test.component';
 import { TrainerManagementComponent } from './pages/trainer-management/trainer-management.component';
+import { TestPageComponent } from './pages/test-page/test-page.component';
 
 export const routes: Routes = [
     {
         path: '', component: LoginComponent
+    },
+    {
+        path: 'test', component: TestPageComponent
     },
     {
         path: 'sidebar', component: SidebarComponent
