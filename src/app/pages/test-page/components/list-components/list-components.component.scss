@@ -110,7 +110,7 @@
 .option-box {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   padding: 10px 20px;
   width: 200px; /* Adjust width as needed */
   border: 1px solid #ddd;
@@ -124,3 +124,22 @@
   margin-right: 10px;
 }
 
+.wrapper-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.wrapper-button:focus {
+  outline: none;
+}
+
+
+.option-box.clicked {
+  background-color: green; /* Example style for clicked state */
+  color: white;
+}

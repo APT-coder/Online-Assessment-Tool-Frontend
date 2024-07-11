@@ -2,12 +2,14 @@
 <div class="list-container ">
   <ul class="grid-container">
     <div *ngFor="let options of questions let i = index">
+      <button class="wrapper-button" (click)="handleClick(options[i],questionNumber,i)">
       <div class="center-wrapper">
-        <div class="option-box">
+        <div class="option-box" [ngClass]="{'clicked': clickedIndex === i}">
           <span class="option-label">{{i+1}}.</span>
           <span class="option-content">{{options}}</span>
         </div>
       </div>
+    </button>
     </div>
   </ul>
   <!-- <div>
@@ -21,14 +23,20 @@
   <div class="list-container ">
     <ul class="grid-container">
       <div *ngFor="let options of questions let i = index">
+        <button class="wrapper-button" (click)="handleClick('option',questionNumber,i)">
         <div class="center-wrapper">
-          <div class="option-box">
+          <div class="option-box" [ngClass]="{'clicked': clickedIndex === i}">
             <span class="option-label">{{i+1}}.</span>
             <span class="option-content">{{options}}</span>
           </div>
         </div>
+      </button>
       </div>
     </ul>
+    <!-- <div>
+      <input type="checkbox" id="review" name="review">
+      <label for="review">Mark for review</label>
+    </div> -->
   </div>
   }
 @if (questionType=="fill_in_the_blank") {

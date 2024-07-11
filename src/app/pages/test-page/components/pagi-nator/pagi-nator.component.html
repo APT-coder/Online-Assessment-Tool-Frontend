@@ -1,13 +1,41 @@
 <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
-        <a class="" href="#" tabindex="-1"><button type="button" class="btn next">Prev</button></a> 
-      </li>
-      @for (question of questions; track question.question_id) {
-                <li class="page-item" (click)="handleClick($event,question.question_id)"><a class="page-link normal " href="#">{{question.question_id}}</a></li>
+  <ul class="pagination justify-content-center">
+    <li class="page-item disabled">
+      <a class href="#" tabindex="-1"><button type="button"
+          class="btn next">Prev</button></a>
+    </li>
+    @for (question of questions; track question.questionno) {
+    <li class="page-item" (click)="handleClick($event,question.questionno)">
+      
+
+      @if(question.questionstatus=="done"){
+        <a class="page-link done "
+        href="#">{{question.questionno}}
+      </a>
       }
-      <li class="page-item">
-        <button type="button" class="btn next">Next</button>
-      </li>
-    </ul>
-  </nav>
+
+
+      @if(question.questionstatus=="unreviewed"){
+        <a class="page-link active"
+        [ngClass]="{
+          'active': selectedQuestionId === question.questionno
+        }"
+        href="#">{{question.questionno}}
+      </a>
+      }
+<!-- 
+      @if(question.questionstatus=="marked"){
+        <a class="page-link active"
+        [ngClass]="{'active': selectedQuestionId === question.questionno}"
+        href="#">{{question.questionno}}
+      </a>
+      }
+       -->
+     
+    </li>
+    }
+    <li class="page-item">
+      <button type="button" class="btn next">Next</button>
+    </li>
+  </ul>
+</nav>
