@@ -21,10 +21,10 @@
         <app-mcq-form [index]="i" (mcqData)="onMcqData($event, i)"></app-mcq-form>
       </div>
       <div *ngIf="question.type === 'descriptive'">
-        <app-descriptive-form [index]="i"></app-descriptive-form>
+        <app-descriptive-form [index]="i" (descData)="onDescData($event, i)"></app-descriptive-form>
       </div>
-      <div *ngIf="question.type === 'fill-in-the-blanks'">
-        <app-fill-in-the-blanks-form [index]="i"></app-fill-in-the-blanks-form>
+      <div *ngIf="question.type === 'fillup'">
+        <app-fill-in-the-blanks-form [index]="i" (fillData)="onFillData($event, i)"></app-fill-in-the-blanks-form>
       </div>
       <button mat-button color="warn" (click)="removeQuestion(i)" class="delete-button">Delete Question</button>
     </div>

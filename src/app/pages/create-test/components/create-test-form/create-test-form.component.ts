@@ -13,6 +13,11 @@ import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AssessmentPreviewComponent } from "../../../assessment/components/assessment-preview/assessment-preview.component";
 
+interface Option {
+  option: string;
+  isCorrect: boolean;
+}
+
 @Component({
   selector: 'app-create-test-form',
   standalone: true,
@@ -40,7 +45,7 @@ export class CreateTestFormComponent {
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
-  questions: { id: number, type: string, score: number, data?: any }[] = [{ id: 1, type: '', score: 0 }];
+  questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
 
   onQuestionTypeSelected(questionType: string, index: number) {
     this.questions[index].type = questionType;
@@ -48,7 +53,7 @@ export class CreateTestFormComponent {
 
   addNewQuestion() {
     const newQuestionId = this.questions.length + 1;
-    this.questions.push({ id: newQuestionId, type: '', score: 0 });
+    this.questions.push({ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' });
   }
 
   removeQuestion(index: number) {
@@ -56,7 +61,20 @@ export class CreateTestFormComponent {
   }
 
   onMcqData(data: any, index: number) {
-    this.questions[index].data = data;
+    this.questions[index].content = data.question;
+    const correctChoice = data.options.find((option: Option) => option.isCorrect);
+    this.questions[index].correctAnswer = correctChoice.option;
+    this.questions[index].options = data.options.map((option: Option) => option.option);
+  }
+
+  onDescData(data: any, index: number) {
+    this.questions[index].content = data.question;
+    this.questions[index].correctAnswer = data.answer;
+  }
+
+  onFillData(data: any, index: number) {
+    this.questions[index].content = data.question;
+    this.questions[index].correctAnswer = data.answer;
   }
 
   logQuestions() {
@@ -66,9 +84,9 @@ export class CreateTestFormComponent {
         let formattedQuestion = {
           id: question.id,
           type: question.type,
-          content: '',
-          options: question.data?.options,
-          correctAnswer: question.data?.correctAnswer, 
+          content: question.content, // Replace with actual content based on type if needed
+          options: question.options, // Replace with actual options if applicable
+          correctAnswer: question.correctAnswer, // Replace with actual correct answer if applicable
           score: question.score
         };
         return formattedQuestion;
