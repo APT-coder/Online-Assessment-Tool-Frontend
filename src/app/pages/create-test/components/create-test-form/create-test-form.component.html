@@ -1,0 +1,82 @@
+<mat-stepper linear #stepper>
+  <!-- Step 1: Create Questions -->
+  <mat-step>
+    <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <ng-template matStepLabel>Create Questions</ng-template>
+    <div *ngFor="let question of questions; let i = index">
+      <h4>Question {{ i + 1 }}</h4>
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2">Question Type</label>
+        <div class="col-sm-4">
+          <app-question-dropdown (selectedType)="onQuestionTypeSelected($event, i)"></app-question-dropdown>
+        </div>
+        <label class="col-form-label col-sm-2">Question Score</label>
+        <div class="col-sm-2">
+          <input type="number" [(ngModel)]="question.score" name="score{{ i }}" class="form-control">
+        </div>
+      </div>
+      <div *ngIf="question.type === 'mcq'">
+        <app-mcq-form [index]="i" (mcqData)="onMcqData($event, i)"></app-mcq-form>
+      </div>
+      <div *ngIf="question.type === 'descriptive'">
+        <app-descriptive-form [index]="i" (descData)="onDescData($event, i)"></app-descriptive-form>
+      </div>
+      <div *ngIf="question.type === 'fillup'">
+        <app-fill-in-the-blanks-form [index]="i" (fillData)="onFillData($event, i)"></app-fill-in-the-blanks-form>
+      </div>
+      <button mat-button color="warn" (click)="removeQuestion(i)" class="delete-button">Delete Question</button>
+    </div>
+    <div class="form-group">
+      <app-button-active mat-button (click)="addNewQuestion()">Add New Question</app-button-active>
+      <button mat-button matStepperNext><app-button-active (click)="logQuestions()">Next</app-button-active></button>
+    </div>
+    <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </mat-step>
+
+  <mat-step>
+    <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <ng-template matStepLabel>Preview</ng-template>
+    <app-assessment-preview [questions]="questions"></app-assessment-preview>
+    <div class="form-group">
+      <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
+      <button mat-button matStepperNext><app-button-active>Next</app-button-active></button>
+    </div>
+    <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </mat-step>
+
+  <!-- Step 2: Configure -->
+  <mat-step>
+    <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <ng-template matStepLabel>Configure</ng-template>
+    <app-schedule></app-schedule>
+    <div class="form-group">
+      <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
+      <button mat-button matStepperNext><app-button-active (click)="logQuestions()">Next</app-button-active></button>
+    </div>
+    <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </mat-step>
+
+  <!-- Step 3: Done -->
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <div class="container">
+      <p>You are now done.</p>
+      <div class="form-group">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>

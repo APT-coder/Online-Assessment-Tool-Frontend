@@ -1,0 +1,41 @@
+li{
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.next{
+    background: rgb(38,29,66);
+    background: linear-gradient(100deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
+    color: antiquewhite;
+}
+
+.done{
+    color: white;
+    background-color: green;
+    border-color: green;
+}
+
+.active{
+    color: white;
+    background-color:rgb(38,29,66);
+    border-color: rgb(38,29,66);
+}
+.normal{
+    color: rgb(38,29,66);
+    background-color:rgb(255, 255, 255);
+    border-color: rgb(38,29,66);
+}
+
+.marked{
+
+    color: white;
+    background-color:orange;
+    border-color:orange;
+
+}
+
+.page-link.done{
+    color: white;
+    background-color: green;
+    border-color: green;
+
+}

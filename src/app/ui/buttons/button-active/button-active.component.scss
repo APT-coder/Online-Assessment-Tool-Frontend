@@ -1,0 +1,11 @@
+$bg-color: linear-gradient(#261D42, #8061C3);
+
+.active-button{
+     background: $bg-color;
+     color: #FFFFFF;
+     height:42px;
+     width: 150px;
+
+     border-radius: 10px;
+
+    }

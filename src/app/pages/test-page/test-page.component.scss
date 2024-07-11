@@ -1,0 +1,166 @@
+.background-div{
+    margin: 0px !important;
+    background: rgb(38,29,66);
+    background: linear-gradient(100deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+    
+.header{
+    height: 100px;
+    display: flex;
+    width: 80vw;
+    justify-content: space-between;
+}
+
+.question-div{
+    height: 75vh;
+    width: 80vw;
+    // margin: 0px 60px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 7px 9px 52px -12px rgba(128,97,195,1);
+-webkit-box-shadow: 7px 9px 52px -12px rgba(128,97,195,1);
+-moz-box-shadow: 7px 9px 52px -12px rgba(128,97,195,1);
+}
+
+// .question-div * {
+//     // margin: 0px 60px;
+// }
+
+.question-parent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+
+  .avatar {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    // margin: 0px 10vw 0px 10vw
+    }
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    padding: 20px 0px;
+    color: white;
+}
+
+.profile-info {
+    margin-right: 20px;
+}
+
+.profile-info h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-info p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.profile-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+
+
+.heading-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerrr {
+    text-align: center;
+    color: white;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.logo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.containerrr h1 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.time-and-submit{
+    display: flex;
+    // background-color: aqua;
+    margin: 40px 60px ;
+    justify-content: space-between;
+}
+.time{
+    display: flex;
+}
+
+.m-side{
+    margin-left:  60px ;
+    margin-right: 60px;
+}
+.m-top{
+    margin-top: 30px ;
+}
+
+body{
+
+    background: rgb(38,29,66);
+    background: linear-gradient(100deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
+
+}
+
+.counter {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  .next{
+    background: rgb(38,29,66);
+    background: linear-gradient(100deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
+    color: white;
+    height: 40px;
+    padding: 8px;
+}

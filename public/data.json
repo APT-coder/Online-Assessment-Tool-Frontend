@@ -1,0 +1,54 @@
+{
+    "questions":[
+        {
+          "question_id": "1",
+          "question_type": "multiple_choice",
+          "question_no": 1,
+          "question_status":"unreviewed",
+          "question": "What is the capital of France?",
+          "options": [
+            "Paris",
+            "London",
+            "Berlin",
+            "Madrid"
+          ],
+          "correct_answer": "Option A: Paris"
+        },
+        {
+          "question_id": "2",
+          "question_type": "true_false",
+          "question_no": 2,
+          "question_status":"unreviewed",
+          "question": "The Earth is flat.",
+          "options": [
+            "True",
+            "False"
+          ],
+          "correct_answer": "False"
+        },
+        {
+          "question_id": "3",
+          "question_type": "multiple_choice",
+          "question_no": 3,
+          "question_status":"unreviewed",
+          "question": "Which planet is known as the Red Planet?",
+          "options": [
+            "Earth",
+            "Mars",
+            "Jupiter",
+            "Venus"
+          ],
+          "correct_answer": "Option B: Mars"
+        },
+        {
+          "question_id": "4",
+          "question_type": "fill_in_the_blank",
+          "question_status":"unreviewed",
+          "question_no": 4,
+          "question": "The chemical symbol for water is ___",
+          "options": [],
+          "correct_answer": "H2O"
+        }
+      ]
+      
+}

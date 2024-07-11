@@ -1,0 +1,39 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-10 mt-1 preview">
+            <div class="preview-body">
+                <div class="question">
+                    <div *ngFor="let question of questions; let i = index" class="qn-point">
+                        <div class="question-container">
+                            <p>{{ i + 1 }}. {{ question.content }}</p>
+                            <ng-container [ngSwitch]="question.type">
+                                <div *ngSwitchCase="'mcq'">
+                                    <div *ngFor="let option of question.options" class="option-container">
+                                        <input type="radio" [name]="'q' + i" [value]="option" class="radio"> {{ option }}
+                                    </div>
+                                    <div class="correct-answer">
+                                        Correct Answer: {{ question.correctAnswer }}
+                                    </div>
+                                </div>
+                                <div *ngSwitchCase="'descriptive'">
+                                    <div class="correct-answer">
+                                        Correct Answer: {{ question.correctAnswer }}
+                                    </div>
+                                </div>
+                                <div *ngSwitchCase="'fillup'">
+                                    <div class="correct-answer">
+                                        Correct Answer: {{ question.correctAnswer }}
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="question-score">
+                            <app-button-points [content]="question.score + ' points'"></app-button-points>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

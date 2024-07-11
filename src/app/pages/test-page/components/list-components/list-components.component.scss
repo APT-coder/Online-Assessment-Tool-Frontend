@@ -1,0 +1,145 @@
+.list-container {
+    // max-width: 600px;
+    // margin: auto auto;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    // align-items: center;
+    // gap: 3rem;
+    // padding: 20px;
+    // border: 1px solid #ccc;
+    // border-radius: 8px;
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    height: 8px;
+    width: 200px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  label {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .grid-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Ensures two columns */
+    // gap: 10px; /* Optional: adds space between grid items */
+    justify-items: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+  }
+
+.grid-item{
+    padding: 20px;
+    text-align: center;
+}
+
+/* Adjust grid-template-columns to ensure each row has the same width */
+.grid-container > .grid-item:nth-child(2n + 1):nth-last-child(1){
+    grid-column: span 2;
+}
+    
+  /* Style the text field */
+  .custom-text-field {
+    width: auto; /* Adjust width as needed */
+    max-width: 300px; /* Maximum width for the input field */
+    padding: 10px; /* Add padding */
+    border: 2px solid #261D42; /* Custom border color */
+    border-radius: 4px; /* Rounded corners */
+    // box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Box shadow for focus effect */
+    transition: all 0.3s ease; /* Smooth transition for hover/focus effects */
+  }
+  
+  /* Change border and box-shadow on focus */
+  .custom-text-field:focus {
+    border-color: #8061C3; /* Darker border color on focus */
+    box-shadow: 0 0 10px #8061C3; /* More pronounced box shadow */
+    color: #6c757d;
+  }
+  
+  /* Custom placeholder color */
+  .custom-text-field::placeholder {
+    color:  #261D42; /* Placeholder color */
+    opacity: 1; /* Make sure the color is applied */
+  }
+  .input-value{
+    display: flex;
+    justify-content: center;
+    height: 25vh;
+    align-items: center;
+  }
+
+  .m-side{
+    margin-left:  60px ;
+    margin-right: 60px;
+}
+.m-top{
+    margin-top: 30px ;
+}
+.mark-for-review{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.option-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  width: 200px; /* Adjust width as needed */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.option-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.wrapper-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.wrapper-button:focus {
+  outline: none;
+}
+
+
+.option-box.clicked {
+  background-color: green; /* Example style for clicked state */
+  color: white;
+}

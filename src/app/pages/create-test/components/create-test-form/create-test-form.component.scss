@@ -1,0 +1,143 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row {
+    display: flex;
+    width: 100%;
+  }
+  
+  .col-sm-2 {
+    flex: 0 0 16.66667%;
+  }
+  
+  .col-sm-10 {
+    flex: 0 0 83.33333%;
+  }
+  
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  /* Adjust the height and width of the input fields */
+  mat-form-field {
+    width: 50%; /* Ensure input fields take the full width of their container */
+    
+    /* Apply custom styles to input fields */
+    .mat-form-field-wrapper {
+      padding: 0; /* Adjust padding inside the input field */
+    }
+  
+    .mat-input-element {
+      font-size: 1rem; /* Adjust font size */
+      height: 2rem; /* Adjust height */
+      padding: 0.5rem; /* Adjust padding */
+    }
+  
+    /* Adjust the delete button inside input fields */
+    .mat-icon-button {
+      height: 2rem; /* Match the height of input fields */
+      width: 2rem; /* Match the width of input fields */
+      padding: 0.5rem; /* Adjust padding */
+    }
+  }
+  
+  /* Adjust the height and width of mat-checkbox */
+  mat-checkbox {
+    display: flex;
+    align-items: center;
+  
+    .mat-checkbox-layout {
+      height: 2rem; /* Adjust height */
+    }
+  
+    .mat-checkbox-inner-container {
+      width: 1.5rem; /* Adjust width */
+      height: 1.5rem; /* Adjust height */
+    }
+  
+    .mat-checkbox-label {
+      font-size: 1rem; /* Adjust font size */
+    }
+  }
+  
+  /* Adjust button styles */
+  button {
+    height: 2.5rem; /* Adjust height of buttons */
+    padding: 0.5rem 1rem; /* Adjust padding to control size */
+    font-size: 1rem; /* Adjust font size as needed */
+  }
+  
+  /* Adjust the styles of app-button-active */
+  app-button-active {
+    display: inline-block;
+    width: auto; /* Set to auto or a specific value to control width */
+    height: 2.5rem; /* Set the height of the custom button component */
+  }
+  
+  /* Additional styling for alignment */
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input{
+    width: 100%;
+    height: 50px;
+  }
+  
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    height: 45px; 
+  }// Set the height of the wrapper
+    
+  ::ng-deep .mat-mdc-input-element {
+    position: relative;
+    bottom: 5px;
+  }
+  
+  ::ng-deep .btn{
+    font-size: smaller;
+  }
+  
+  .delete-button{
+    color: red !important;
+  }
+  
+  
+  
+  .scroll-to-bottom-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  // .scroll-to-bottom-button.clicked {
+  //   animation: bounce 1s infinite alternate;
+  // }
+  
+  .scroll-to-top-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  // .scroll-to-top-button.clicked {
+  //   animation: bounce 0.5s infinite alternate;
+  // }
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }

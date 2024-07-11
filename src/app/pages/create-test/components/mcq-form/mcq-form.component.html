@@ -1,0 +1,32 @@
+<div class="container">
+    <form [formGroup]="mcqForm">
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2">Question</label>
+        <div class="col-sm-10">
+          <mat-form-field appearance="outline" class="w-100 h-20">
+            <input class="input" matInput placeholder="Type your question" formControlName="question" required>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div formArrayName="options">
+        <label>Options:</label>
+        <div *ngFor="let option of options.controls; let i = index" [formGroupName]="i" class="form-group row">
+          <div class="col-sm-10">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="Option {{ i + 1 }}" formControlName="option" required>
+              <button mat-icon-button color="warn" matSuffix (click)="removeOption(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2 d-flex align-items-center">
+            <mat-checkbox formControlName="isCorrect">Correct</mat-checkbox>
+          </div>
+        </div>
+      </div>
+  
+      <button mat-button (click)="addOption()">Add Option</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,17 @@
+.input{
+    width: 100%;
+    height: 50px;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    height: 45px; 
+}// Set the height of the wrapper
+    
+::ng-deep .mat-mdc-select-placeholder {
+    position: relative;
+    bottom: 15px;
+}
+::ng-deep .mat-mdc-select-min-line{
+    position: relative;
+    bottom: 5px;
+}
