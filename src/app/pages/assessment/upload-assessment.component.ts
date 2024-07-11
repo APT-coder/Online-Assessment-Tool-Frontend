@@ -1,19 +1,18 @@
-import { Component, Input, HostListener } from '@angular/core';
-import { AssessmentPreviewComponent } from './components/assessment-preview/assessment-preview.component';
+import { Component, Input, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { parse } from '@fortawesome/fontawesome-svg-core';
-import { AssessmentEditComponent } from './components/assessment-edit/assessment-edit.component';
-import { CommonModule } from '@angular/common';
-import { AssessmentEvaluateComponent } from './components/assessment-evaluate/assessment-evaluate.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AssessmentPreviewComponent } from './components/assessment-preview/assessment-preview.component';
+import { AssessmentEditComponent } from './components/assessment-edit/assessment-edit.component';
+import { AssessmentEvaluateComponent } from './components/assessment-evaluate/assessment-evaluate.component';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { MatIcon } from '@angular/material/icon';
-import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
+import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
 
 interface Question {
@@ -28,29 +27,53 @@ interface Question {
 @Component({
   selector: 'app-assessment',
   standalone: true,
-  imports: [CommonModule, AssessmentPreviewComponent, AssessmentEditComponent, AssessmentEvaluateComponent, MatStepperModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatButtonModule, SidebarComponent, MatIcon, ButtonActiveComponent, ScheduleComponent],
+  imports: [
+    CommonModule,
+    AssessmentPreviewComponent,
+    AssessmentEditComponent,
+    AssessmentEvaluateComponent,
+    MatStepperModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    SidebarComponent,
+    MatIconModule,
+    ButtonActiveComponent,
+    ScheduleComponent
+  ],
   templateUrl: './upload-assessment.component.html',
   styleUrls: ['./upload-assessment.component.scss']
 })
-export class AssessmentComponent {
+export class AssessmentComponent implements OnInit {
   @Input() evaluate: boolean = false;
   htmlContent!: string;
   questions: Question[] = [];
-
   showPreview = true;
   editQuestions: any;
-
   isLinear = false;
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
-
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
-  constructor(private route: ActivatedRoute, private _formBuilder: FormBuilder) { }
+  constructor(
+    private route: ActivatedRoute,
+    private _formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
+    if (!sessionStorage.getItem('hasReloaded')) {
+      sessionStorage.setItem('hasReloaded', 'true');
+      window.location.reload();
+    } else {
+      sessionStorage.removeItem('hasReloaded');
+      this.initializeComponent();
+    }
+  }
+
+  initializeComponent(): void {
     this.htmlContent = history.state.htmlContent;
     console.log('Received HTML Content:', this.htmlContent);
     this.parseQuestions(this.htmlContent);
@@ -71,6 +94,10 @@ export class AssessmentComponent {
     this.editQuestions = this.questions;
   }
 
+  onQuestionsChange(updatedQuestions: Question[]) {
+    this.questions = updatedQuestions;
+  }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPosition = window.scrollY;
@@ -78,7 +105,7 @@ export class AssessmentComponent {
     const documentHeight = document.body.scrollHeight;
 
     this.showScrollToTopButton = scrollPosition > 500;
-    this.showScrollToBottomButton = scrollPosition + windowHeight < documentHeight-500;
+    this.showScrollToBottomButton = scrollPosition + windowHeight < documentHeight - 500;
   }
 
   parseQuestions(htmlContent: string) {

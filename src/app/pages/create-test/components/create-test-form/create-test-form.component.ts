@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -9,7 +9,7 @@ import { DescriptiveFormComponent } from '../descriptive-form/descriptive-form.c
 import { FillInTheBlanksFormComponent } from '../fill-in-the-blanks-form/fill-in-the-blanks-form.component';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component'; 
 import { ScheduleComponent } from '../schedule/schedule.component'; 
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AssessmentPreviewComponent } from "../../../assessment/components/assessment-preview/assessment-preview.component";
 
@@ -31,14 +31,14 @@ interface Option {
     FillInTheBlanksFormComponent,
     ButtonActiveComponent,
     ScheduleComponent,
-    MatIcon,
+    MatIconModule,
     FormsModule,
     AssessmentPreviewComponent
-],
+  ],
   templateUrl: './create-test-form.component.html',
   styleUrls: ['./create-test-form.component.scss']
 })
-export class CreateTestFormComponent {
+export class CreateTestFormComponent implements OnInit {
   @ViewChild('stepper')
   stepper!: MatStepper;
 
@@ -46,6 +46,16 @@ export class CreateTestFormComponent {
   showScrollToBottomButton = true;
 
   questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
+
+  ngOnInit(): void {
+    if (!sessionStorage.getItem('hasReloaded')) {
+      sessionStorage.setItem('hasReloaded', 'true');
+      window.location.reload();
+    } else {
+      sessionStorage.removeItem('hasReloaded');
+      // Any additional initialization logic can go here
+    }
+  }
 
   onQuestionTypeSelected(questionType: string, index: number) {
     this.questions[index].type = questionType;
