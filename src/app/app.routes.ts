@@ -6,6 +6,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CreateTestComponent } from './pages/create-test/create-test.component';
 import { TrainerManagementComponent } from './pages/trainer-management/trainer-management.component';
 import { TestPageComponent } from './pages/test-page/test-page.component';
+import { TrainerDashboardComponent } from './pages/trainer-dashboard/trainer-dashboard.component';
 
 export const routes: Routes = [
     {
@@ -16,6 +17,9 @@ export const routes: Routes = [
     },
     {
         path: 'sidebar', component: SidebarComponent
+    },
+    {
+        path: 'trainer', component: TrainerDashboardComponent
     },
     {
         path: 'upload-assessment', component: AssessmentComponent

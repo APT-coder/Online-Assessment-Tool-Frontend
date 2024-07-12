@@ -1,0 +1,58 @@
+<div class="card">
+    <div class="card-header">
+      <div class="row ">
+        <div class="col text-center">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-sm btn-outline-secondary" [ngClass]="{'active': selectedFilter === 'All'}" (click)="filterByStatus('All')">
+              <fa-icon [icon]="faFilter"></fa-icon> All
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" [ngClass]="{'active': selectedFilter === 'Completed'}" (click)="filterByStatus('Completed')">
+              Completed
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" [ngClass]="{'active': selectedFilter === 'Upcoming'}" (click)="filterByStatus('Upcoming')">
+              Upcoming
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" [ngClass]="{'active': selectedFilter === 'Cancelled'}" (click)="filterByStatus('Cancelled')">
+              Cancelled
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card-body p-0" style="max-height: 50vh; overflow-y: auto;">
+      <table class="table mb-0 custom-table">
+        <thead>
+          <tr class="header-row">
+            <th class="header"></th>
+            <th class="header">Test</th>
+            <th class="header">Batch</th>
+            <th class="header">Created On</th>
+            <th class="header">Status</th>
+            <th class="header" colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+         
+          <tr *ngFor="let item of filteredData; let rowIndex = index" [ngClass]="{'odd-row': rowIndex % 2 !== 0, 'even-row': rowIndex % 2 === 0}">
+            <td><img src="assets/checkbox.png"></td>
+            <td>{{ item.testName }}</td>
+            <td>{{ item.batch }}</td>
+            <td>{{ item.createdOn }}</td>
+            <td>{{ item.details.status }}</td>
+            <td>
+              <button type="button" class="btn btn-sm">
+                <fa-icon [icon]="faPen"></fa-icon> Edit
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-sm ml-2">
+                <fa-icon [icon]="faTrash"></fa-icon> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
