@@ -1,0 +1,48 @@
+<div class="live-card" *ngIf="runningTest">
+    <div class="test">
+      {{
+        runningTest.details.status.charAt(0).toUpperCase() +
+          runningTest.details.status.slice(1).toLowerCase()
+      }}Test
+    </div>
+    <div class="test-details">
+      <div class="test-name-date">
+        <div class="test-name">{{ runningTest.testName }}</div>
+        <div class="date">
+          Created on:&nbsp;{{
+            runningTest.details.dateTime | date : "mediumDate"
+          }}
+        </div>
+      </div>
+      <div class="student-count">
+        <span class="number">
+          {{
+            runningTest.totalStudents - (runningTest.studentsAbsent || 0)
+          }}
+          /</span>
+        {{ runningTest.totalStudents }}&nbsp;
+        <span class="submitted">submitted</span>
+      </div>
+    </div>
+    <div class="remaining-time">
+      <p>Remaining Time :</p>
+      <div class="time">
+        <div class="hr-min">
+          <div class="time-card">
+            <div class="timebox">00</div>
+            <p>hr</p>
+          </div>
+          <div class="time-card">
+            <div class="timebox">42</div>
+            <p>min</p>
+          </div>
+        </div>
+        <p>:</p>
+        <div class="time-card">
+          <div class="timebox">10</div>
+          <p>sec</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
