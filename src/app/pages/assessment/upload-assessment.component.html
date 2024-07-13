@@ -48,20 +48,12 @@
             <app-schedule></app-schedule>
             <div class="fixed-buttons">
               <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
-              <button mat-button matStepperNext><app-button-active>Next</app-button-active></button>
+              <button mat-button matStepperNext><app-button-active>Schedule</app-button-active></button>
             </div>
           </form>
           <button *ngIf="showScrollToBottomButton" mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
-          <p>You are now done.</p>
-          <div>
-            <button mat-button matStepperPrevious class="custom-button back-button"><app-button-active>Back</app-button-active></button>
-            <button mat-button matStepperNext><app-button-active>Next</app-button-active></button>
-          </div>
         </mat-step>
       </mat-stepper>
     </div>

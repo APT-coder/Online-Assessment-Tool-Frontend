@@ -12,6 +12,8 @@ import { ScheduleComponent } from '../schedule/schedule.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AssessmentPreviewComponent } from "../../../assessment/components/assessment-preview/assessment-preview.component";
+import { MessageServiceComponent } from '../../../../components/message-service/message-service.component';
+import { Router } from '@angular/router';
 
 interface Option {
   option: string;
@@ -33,7 +35,8 @@ interface Option {
     ScheduleComponent,
     MatIconModule,
     FormsModule,
-    AssessmentPreviewComponent
+    AssessmentPreviewComponent,
+    MessageServiceComponent
   ],
   templateUrl: './create-test-form.component.html',
   styleUrls: ['./create-test-form.component.scss']
@@ -41,11 +44,14 @@ interface Option {
 export class CreateTestFormComponent implements OnInit {
   @ViewChild('stepper')
   stepper!: MatStepper;
+  @ViewChild('messageComponent') messageComponent!: MessageServiceComponent;
 
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
   questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (!sessionStorage.getItem('hasReloaded')) {
@@ -104,6 +110,16 @@ export class CreateTestFormComponent implements OnInit {
 
       console.log('Formatted Questions:', formattedQuestions);
     }
+  }
+
+  finishSchedule() {
+    this.scrollToTop();
+    this.messageComponent.showMessageAndStartProgress();
+
+    // After a delay, navigate to the dashboard
+    setTimeout(() => {
+      this.router.navigate(['/sidebar']);
+    }, 5000);
   }
 
   scrollToBottom() {
