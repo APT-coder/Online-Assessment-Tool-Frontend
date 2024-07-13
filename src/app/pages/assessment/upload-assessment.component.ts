@@ -1,5 +1,5 @@
-import { Component, Input, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AssessmentPreviewComponent } from './components/assessment-preview/assessment-preview.component';
@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
+import { MessageServiceComponent } from '../../components/message-service/message-service.component';
 
 interface Question {
   type: string;
@@ -40,13 +41,16 @@ interface Question {
     SidebarComponent,
     MatIconModule,
     ButtonActiveComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    MessageServiceComponent
   ],
   templateUrl: './upload-assessment.component.html',
   styleUrls: ['./upload-assessment.component.scss']
 })
 export class AssessmentComponent implements OnInit {
   @Input() evaluate: boolean = false;
+  @ViewChild('messageComponent') messageComponent!: MessageServiceComponent;
+  
   htmlContent!: string;
   questions: Question[] = [];
   showPreview = true;
@@ -60,6 +64,7 @@ export class AssessmentComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private _formBuilder: FormBuilder
   ) {}
 
@@ -162,5 +167,16 @@ export class AssessmentComponent implements OnInit {
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  finishSchedule() {
+    this.scrollToTop();
+    this.messageComponent.isVisible = true; 
+    this.messageComponent.ngOnInit();
+
+    // After a delay, navigate to the dashboard
+    setTimeout(() => {
+      this.router.navigate(['/sidebar']);
+    }, 5000);
   }
 }

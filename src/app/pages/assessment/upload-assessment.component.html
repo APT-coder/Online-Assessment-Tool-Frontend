@@ -40,6 +40,9 @@
           </button>
         </mat-step>
         <mat-step [stepControl]="thirdFormGroup">
+          <div class="message-container">
+            <app-message-service #messageComponent></app-message-service>
+          </div>
           <button *ngIf="showScrollToTopButton" mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
             <mat-icon>keyboard_arrow_up</mat-icon>
           </button>
@@ -48,7 +51,7 @@
             <app-schedule></app-schedule>
             <div class="fixed-buttons">
               <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
-              <button mat-button matStepperNext><app-button-active>Schedule</app-button-active></button>
+              <button mat-button matStepperNext><app-button-active (click)="finishSchedule()">Schedule</app-button-active></button>
             </div>
           </form>
           <button *ngIf="showScrollToBottomButton" mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">

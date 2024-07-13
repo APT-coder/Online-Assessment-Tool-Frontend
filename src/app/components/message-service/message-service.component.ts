@@ -10,15 +10,18 @@ import { MessagesModule } from 'primeng/messages';
 })
 export class MessageServiceComponent {
     @Input() messages: any[] = [];
-    @Input() progressBarColor: string = '#4caf50'; 
+    @Input() progressBarColor: string = '#4caf50';
+    @Input() isVisible: boolean = false;  
     progressWidth: number = 0;
 
-    showMessageAndStartProgress() {
-        this.messages = [
-            { severity: 'success', summary: 'Success', detail: 'Test assigned successfully' },
-        ];
+    ngOnInit() {
+        if (this.isVisible) {
+            this.messages = [
+                { severity: 'success', summary: 'Success', detail: 'Test assigned successfully' },
+            ];
 
-        this.startProgressBar();
+            this.startProgressBar();
+        }
     }
 
     startProgressBar() {
@@ -35,6 +38,7 @@ export class MessageServiceComponent {
     clearMessages() {
         this.messages = [];
         this.progressWidth = 0;
+        this.isVisible = false;
     }
 
 }

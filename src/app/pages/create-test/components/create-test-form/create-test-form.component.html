@@ -54,7 +54,9 @@
 
   <!-- Step 2: Configure -->
   <mat-step>
-    <app-message-service #messageComponent></app-message-service>
+    <div class="message-container">
+      <app-message-service #messageComponent></app-message-service>
+    </div>
     <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>

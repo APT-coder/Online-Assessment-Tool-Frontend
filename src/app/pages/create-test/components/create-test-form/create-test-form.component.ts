@@ -114,7 +114,8 @@ export class CreateTestFormComponent implements OnInit {
 
   finishSchedule() {
     this.scrollToTop();
-    this.messageComponent.showMessageAndStartProgress();
+    this.messageComponent.isVisible = true; 
+    this.messageComponent.ngOnInit();
 
     // After a delay, navigate to the dashboard
     setTimeout(() => {
