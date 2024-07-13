@@ -1,0 +1,15 @@
+.message-service {
+    width: fit-content;
+    float: right;
+    position: relative;
+}
+
+.progress-bar {
+    height: 5px;
+    background-color: #4caf50;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    transition: width 0.1s linear;
+    z-index: -1;
+}

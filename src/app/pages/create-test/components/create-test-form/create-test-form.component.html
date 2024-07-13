@@ -54,29 +54,20 @@
 
   <!-- Step 2: Configure -->
   <mat-step>
+    <div class="message-container">
+      <app-message-service #messageComponent></app-message-service>
+    </div>
     <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
-    <ng-template matStepLabel>Configure</ng-template>
+    <ng-template matStepLabel>Schedule</ng-template>
     <app-schedule></app-schedule>
     <div class="form-group">
       <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
-      <button mat-button matStepperNext><app-button-active (click)="logQuestions()">Next</app-button-active></button>
+      <button mat-button matStepperNext><app-button-active (click)="finishSchedule()">Schedule</app-button-active></button>
     </div>
     <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-  </mat-step>
-
-  <!-- Step 3: Done -->
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <div class="container">
-      <p>You are now done.</p>
-      <div class="form-group">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </div>
   </mat-step>
 </mat-stepper>

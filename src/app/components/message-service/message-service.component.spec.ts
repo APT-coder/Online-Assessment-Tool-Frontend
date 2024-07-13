@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestSuccessComponent } from './test-success.component';
+import { MessageServiceComponent } from './message-service.component';
 
-describe('TestSuccessComponent', () => {
-  let component: TestSuccessComponent;
-  let fixture: ComponentFixture<TestSuccessComponent>;
+describe('MessageServiceComponent', () => {
+  let component: MessageServiceComponent;
+  let fixture: ComponentFixture<MessageServiceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestSuccessComponent]
+      imports: [MessageServiceComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TestSuccessComponent);
+    fixture = TestBed.createComponent(MessageServiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
