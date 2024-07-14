@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-list-table',
@@ -8,8 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './list-table.component.html',
   styleUrl: './list-table.component.scss'
 })
-export class ListTableComponent implements OnInit{
-
+export class ListTableComponent {
   @Input() batchName: string = '';
   Title:string='';
   @Input() assessmentName: string = '';
