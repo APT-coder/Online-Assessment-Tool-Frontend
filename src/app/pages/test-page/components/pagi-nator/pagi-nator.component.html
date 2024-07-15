@@ -1,7 +1,7 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item disabled">
-      <a class href="#" tabindex="-1"><button type="button"
+      <a class href="instructions" tabindex="-1"><button type="button"
           class="btn next">Prev</button></a>
     </li>
     @for (question of questions; track question.questionno) {
@@ -23,14 +23,14 @@
         href="#">{{question.questionno}}
       </a>
       }
-<!-- 
+
       @if(question.questionstatus=="marked"){
-        <a class="page-link active"
+        <a class="page-link marked"
         [ngClass]="{'active': selectedQuestionId === question.questionno}"
         href="#">{{question.questionno}}
       </a>
       }
-       -->
+      
      
     </li>
     }

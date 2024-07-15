@@ -44,15 +44,29 @@ export class TestPageComponent {
     if(index==7){
       this.questions[this.count].questionstatus="unreviewed";
       console.log(this.questions);
+      this.questions[this.count].selectedoption=-1;
     }
     else{
-      console.log('Button clicked in child component at index:', index+1);
+    console.log('Button clicked in child component at index:', index);
     this.questions[this.count].questionstatus="done";
-    console.log('Question index:', this.count+1);
+    this.questions[this.count].selectedoption=index;
+    // console.log('Question index:', this.count+1);
     console.log(this.questions);
     this.index=index;
     }
     // Your logic here
+  }
+
+  onReviewMarked(isMarked: boolean) {
+    if(this.questions[this.count].questionstatus=="marked"){
+      this.questions[this.count].questionstatus="unreviewed";
+    }
+    else{
+      this.questions[this.count].questionstatus="marked";
+    }
+    
+    // Handle the event here
+    console.log("Checked");
   }
 
   

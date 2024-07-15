@@ -13,13 +13,17 @@ export class ListComponentsComponent {
   @Input() questions: any;
   @Input() questionType: any;
   @Input() questionNumber:any;
-  inputValue: string = '';
+  @Input() selectedOption:any;
+  @Input() fullQuestions:any;
+  @Input() isChecked: any = false;
+ 
 
   @Output() buttonClicked = new EventEmitter<number>();
+  @Output() reviewMarked = new EventEmitter<boolean>();
 
   option: any;
   clickedIndex: number | null = null;
-
+  inputValue: string = '';
 
   handleClick(option: string, index: number,i:number) {
     if (this.clickedIndex === i) {
@@ -27,12 +31,15 @@ export class ListComponentsComponent {
       this.buttonClicked.emit(7);
     } else {
       this.clickedIndex = i;
-      this.buttonClicked.emit(index);
+      this.buttonClicked.emit(i);
     }
+  }
 
+  onCheckboxChange(event: Event) {
+    console.log(this.isChecked);
     
-    // this event should go to change the color in the paginator for successfull color marking
-
+    const inputElement = event.target as HTMLInputElement;
+    this.reviewMarked.emit(inputElement.checked);
   }
 
 
