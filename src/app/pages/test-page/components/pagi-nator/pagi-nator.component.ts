@@ -16,6 +16,7 @@ export class PagiNatorComponent {
 
 
   @Output() itemClicked = new EventEmitter<string>();
+  
 
   handleClick(event: Event,item: string): void {
     event.preventDefault();
