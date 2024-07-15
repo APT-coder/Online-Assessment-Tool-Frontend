@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="card-body p-0" style="max-height: 50vh; overflow-y: auto;">
+      <table class="table mb-0 custom-table">
+        <thead>
+          <tr class="header-row">
+            <th class="header"></th>
+            <th class="header">Assessment</th>
+            <th class="header">Date</th>
+            <th class="header">Trainer </th>
+            <th class="header">No.of Attendees</th>
+            <th class="header">Maximum Score </th>
+            <th class="header">Highest Score </th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Iterate over filteredData instead of tableData.assessments -->
+          <ng-container *ngFor="let batch of tableData">
+            <tr *ngFor="let assessment of batch.assessments">
+            <td><img src="eye.png"></td>
+            <td>{{ assessment.assessmentName }}</td>
+            <td>{{ assessment.assessmentDate }}</td>
+            <td>{{ assessment.trainerName }}</td>
+            <td>{{ batch.totalLearners }}</td>
+            <td>{{ assessment.maximumScore }}</td>
+            <td>{{ assessment.highestScore }}</td>
+            
+          </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
 import { ButtonInactiveComponent } from '../../../../ui/buttons/button-inactive/button-inactive.component';
 import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
@@ -33,6 +33,7 @@ export class AssessmentEditComponent {
   @Input() questions: Question[] = [];
   isSidebarCollapsed: boolean = false;
   currentAssessment: Assessment | null = null;
+  @Output() questionsChange: EventEmitter<Question[]> = new EventEmitter<Question[]>();
 
   ngOnInit() {
     
@@ -48,6 +49,7 @@ export class AssessmentEditComponent {
       question.options = [];
     }
     question.options.push('');
+    this.questionsChange.emit(this.questions);
   }
 
   addQuestion() {
@@ -59,9 +61,19 @@ export class AssessmentEditComponent {
       correctAnswer: '',
       score: 0
     });
+    this.questionsChange.emit(this.questions);
   }
 
   setCorrectAnswer(question: Question, option: string) {
     question.correctAnswer = option;
+    this.questionsChange.emit(this.questions);
+  }
+
+  onQuestionsChange() {
+    this.questionsChange.emit(this.questions);
+  }
+
+  trackByFn(index: number, item: any): any {
+    return index;
   }
 }

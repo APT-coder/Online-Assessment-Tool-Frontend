@@ -1,0 +1,23 @@
+$introcolor:#5F529D;
+.trainer{
+    display: flex;
+    flex-direction: column;
+}
+.trainerpage-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.trainerpage-top h4{
+    color: $introcolor;
+}
+.chart-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.live-card{
+    margin-top: 10px;
+}
