@@ -1,3 +1,5 @@
+$bg-color: #8061C3;
+
 .preview-top {
   display: flex;
   flex-direction: row;
@@ -117,4 +119,24 @@
 .add-question-btn {
   display: block;
   margin: 20px auto 0 auto;
+}
+
+.add-option-btn{
+  border: 1.5px solid $bg-color;
+  color:$bg-color;
+  border-radius: 20px;
+background-color: white;
+ align-items: center;
+ font-size: 14px;
+ justify-content: center;
+}
+.add-question-btn{
+   border: 1.5px solid $bg-color;
+  color:$bg-color;
+  border-radius: 20px;
+background-color: white;
+ align-items: center;
+ font-size: 14px;
+ justify-content: center;
+
 }
