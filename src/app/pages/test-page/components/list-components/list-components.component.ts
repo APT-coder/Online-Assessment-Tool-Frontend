@@ -16,6 +16,16 @@ export class ListComponentsComponent {
   @Input() selectedOption:any;
   @Input() fullQuestions:any;
   @Input() isChecked: any = false;
+  @Output() answerEntered = new EventEmitter<string>();
+
+  enteredAnswer: string = '';
+
+  onTextareaChange(): void {
+    this.answerEntered.emit(this.fullQuestions.answered);
+    this.enteredAnswer="";
+    // this.buttonClicked.emit();
+   
+  }
  
 
   @Output() buttonClicked = new EventEmitter<number>();
@@ -41,6 +51,5 @@ export class ListComponentsComponent {
     const inputElement = event.target as HTMLInputElement;
     this.reviewMarked.emit(inputElement.checked);
   }
-
 
 }

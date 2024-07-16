@@ -54,8 +54,8 @@
                 {{ item.name }}
               } -->
             <app-question [question]="questions[count].text" [questionNumber]="count+1" [totalQuestion]="questions.length"></app-question>
-            <app-list-components   [questions]="questions[count].options" [questionType]="questions[count].questiontype" [questionNumber]="count+1" [selectedOption]="questions[count].selectedoption" [fullQuestions]="questions[count]" (buttonClicked)="handleButtonClick($event)" [isChecked]="questions[count].questionstatus" (reviewMarked)="onReviewMarked($event)"></app-list-components>
-            <app-pagi-nator [questions]="questions"  [selectedQuestionId]="count+1" (itemClicked)="onItemClicked($event)"></app-pagi-nator>,
+            <app-list-components   [questions]="questions[count].options" [questionType]="questions[count].questiontype" [questionNumber]="count+1" [selectedOption]="questions[count].selectedoption" [fullQuestions]="questions[count]" (buttonClicked)="handleButtonClick($event)" [isChecked]="questions[count].questionstatus" (reviewMarked)="onReviewMarked($event)"  (answerEntered)="handleAnswerEntered($event)"></app-list-components>
+            <app-pagi-nator [questions]="questions"  [selectedQuestionId]="count+1" [questionNo]="count+1" (itemClicked)="onItemClicked($event)"></app-pagi-nator>,
            
         </div>
     </div>
