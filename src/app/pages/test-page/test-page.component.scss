@@ -96,7 +96,12 @@
 .containerrr {
     text-align: center;
     color: white;
+    h1{
+        font-family: 'Poppins';
+        font-weight: 600;
+    }
 }
+
 
 .head {
     display: flex;
@@ -105,13 +110,18 @@
    
 }
 
-.logo {
+.logo{
     display: flex;
-    align-items: center;
+    // align-items: center;
     padding: 10px;
     border-radius: 5px;
+    font-family: 'Poppins';
+    font-weight: 600;
 }
-
+h6{
+    font-family: 'Poppins';
+    font-weight: 600; 
+}
 .logo img {
     width: 30px;
     height: 30px;
@@ -126,7 +136,7 @@
 .time-and-submit{
     display: flex;
     // background-color: aqua;
-    margin: 40px 60px ;
+    margin: 40px 100px ;
     justify-content: space-between;
 }
 .time{
@@ -164,4 +174,14 @@ body{
     color: white;
     height: 40px;
     padding: 8px;
+}
+
+.time-running{
+    
+}
+.time{
+    font-family: 'Poppins';
+    font-weight: 700;
+    color: #251D40;
+    margin-right: 100px;
 }
