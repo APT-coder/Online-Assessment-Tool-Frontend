@@ -17,6 +17,7 @@ import { Question } from '../../service/questions/question';
 export class TestPageComponent {
 
     todos:any=[];
+    enteredAnswer: string | undefined;
     constructor(private api: QuestionService) {}
     public questions: any[] = [];
 
@@ -69,6 +70,19 @@ export class TestPageComponent {
     console.log("Checked");
   }
 
+  handleAnswerEntered(answer: string): void {
+    this.enteredAnswer = answer;
+    if (this.enteredAnswer.trim() === '') {
+      this.questions[this.count].questionstatus = "unreviewed";
+      console.log("unreviewed");
+    } else {
+      this.questions[this.count].questionstatus = "done";
+    }
+    // Here you can perform any further actions with the entered answer
+
+    this.questions[this.count].answered=this.enteredAnswer;
+    console.log('Entered answer:', this.enteredAnswer);
+  }
   
   
     ngOnInit(): void {
@@ -87,7 +101,10 @@ export class TestPageComponent {
         this.api.getQuestions().subscribe(response => {
               // this.questions =response.questions;
               // console.log(response);
-              this.questions =response;
+              this.questions =response.sort((a, b) => a.questionno - b.questionno);
+              this.questions.forEach(question => {
+                question.answered = ''; // Reset answered field for each question
+              });
               console.log(this.questions);
               // const questionLength = this.questions.length
             });

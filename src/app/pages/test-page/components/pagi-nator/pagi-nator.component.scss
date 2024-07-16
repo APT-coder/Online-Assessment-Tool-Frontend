@@ -2,11 +2,8 @@ li{
     padding-left: 4px;
     padding-right: 4px;
 }
-.next{
-    background: rgb(38,29,66);
-    background: linear-gradient(100deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
-    color: antiquewhite;
-}
+
+
 
 .done{
     color: white;
@@ -46,3 +43,27 @@ li{
     border-color:orange;
 
 }
+
+.prev{
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 29%, rgba(191,191,191,1) 100%);
+    color: rgb(0, 0, 0);
+    border: 1px solid #ccc;
+}
+.disabledprev {
+    opacity: 0.5; /* Example styling */
+    cursor: not-allowed;
+    border: 1px solid #ccc;
+  }
+
+  .next{
+    background: rgb(38,29,66);
+    background: linear-gradient(100deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
+    color: antiquewhite;
+    border: 1px solid rgb(38,29,66);
+}
+.disablednext{
+    opacity: 0.5;
+    cursor: not-allowed;
+    border: 1px solid #ccc;
+}  
