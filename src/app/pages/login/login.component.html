@@ -1,33 +1,99 @@
 <div class="login-container">
     <div class="split-screen">
         <div class="content-card">
-            <h5>Welcome to</h5>
-            <h2>Knowlix</h2>
-            <p>The Online Assessment Tool of Experion Technologies</p>
+            <!-- Carousel Start -->
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="carousel-image">
+                            <img src="./assets/img/logo_background.jpg" class="d-block w-100" alt="Logo Background">
+                        </div>
+                        <div class="carousel-caption">
+                            <h1>Knowlix</h1>
+                            <p>Your inspiring motto goes here.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-image">
+                            <img src="./assets/upload-question.jpg" class="d-block w-100" alt="File Upload">
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>Upload Made Easy</h3>
+                            <p>Seamlessly upload Word documents to convert them into assessment questions.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-image">
+                            <img src="./assets/automated-grading.jpg" class="d-block w-100" alt="Automated Grading">
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>Automated Grading</h3>
+                            <p>Receive immediate feedback with our automated grading system.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-image">
+                            <img src="./assets/design_data_dashboard.jpg" class="d-block w-100"
+                                alt="Performance Analysis">
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>Detailed Insights</h3>
+                            <p>Analyze student performance with comprehensive reports and analytics.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <!-- Carousel End -->
+
         </div>
+
+        <!-- Login Start -->
         <div class="login-card">
             <h1>Login</h1>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="field">
-                    
-                    <input type="text" placeholder="Username" name="username" id="userName" formControlName="userName" />
-                    <div *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched">
-                        <div class="error-msg" *ngIf="loginForm.get('userName')?.errors?.['required']">Username is required.</div>
-                        <div class="error-msg" *ngIf="loginForm.get('userName')?.errors?.['minlength']">Minimum length must be 4.</div>
-                      </div>
+                <div class="example-container">
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Password</mat-label>
+                        <input matInput [type]="hide() ? 'password' : 'text'"  placeholder="Password" formControlName="password" required>
+                        <button mat-icon-button matSuffix (click)="clickEvent($event)"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+                            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is
+                            required</mat-error>
+                    </mat-form-field>
+                    <button class="buttons" [disabled]="!loginForm.valid"><span>Sign In</span></button>
                 </div>
-                <div class="field">
-                    
-                    <input type="password" placeholder="Password" name="password" id="password" formControlName="password"/>
-                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                        <div class="error-msg" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
-                      </div>
-                </div>
-                <div class="clearfix">
-                    <button type="submit" [disabled]="loginForm.invalid"><span>Login</span></button>
-                  </div>
-                
             </form>
         </div>
+
+
+        <!-- Login End -->
     </div>
 </div>

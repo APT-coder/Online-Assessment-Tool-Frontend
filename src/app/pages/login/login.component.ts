@@ -1,32 +1,36 @@
-import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
+import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule,NgIf, RouterLink,PasswordModule,InputTextModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterLink, NgIf,MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  loginForm !: FormGroup
-value: any;
-  ngOnInit() {
+onSubmit() {
+throw new Error('Method not implemented.');
+}
+
+  loginForm: FormGroup;
+  constructor() {
     this.loginForm = new FormGroup({
-      userName: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      password: new FormControl('', Validators.required)
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
     });
   }
-
-  onSubmit() {
-   
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      
-    }
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }
