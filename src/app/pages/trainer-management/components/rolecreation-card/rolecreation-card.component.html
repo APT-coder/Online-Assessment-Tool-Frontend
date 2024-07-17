@@ -1,76 +1,35 @@
 <div class="card mt-3">
-    <div class="card-head">
-      <div class="row d-flex justify-content-between  ">
-        <div class="col-3">
-          <h5>Role Name</h5>
-        </div>
-        <div class="col-5">
-          <input type="text" class="form-control" placeholder="Enter name">
-        </div>
-        <div class="col-4 text-right mr-auto">
-          <button class="btn btn-primary">Submit</button>
-        </div>
+  <div class="card-head">
+    <div class="row d-flex justify-content-between">
+      <div class="col-3">
+        <h5>Role Name</h5>
       </div>
-    </div>
-    <div class="card-body">
-      <h6>Permissions</h6>
-      <hr>
-      <div class="row">
-        <div class="col-4">
-          <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission1">
-            <label class="form-check-label" for="permission1">
-              Permission 1
-            </label>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission2">
-            <label class="form-check-label" for="permission2">
-              Permission 2
-            </label>
-          </div>
-        </div>
-       
+      <div class="col-5">
+        <input type="text" class="form-control" placeholder="Enter role name" [(ngModel)]="role.roleName">
       </div>
-      <div class="row mt-2">
-        <div class="col-4">
-          <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission4">
-            <label class="form-check-label" for="permission4">
-              Permission 3
-            </label>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission5">
-            <label class="form-check-label" for="permission5">
-              Permission 4
-            </label>
-          </div>
-        </div>
-        
+      <div class="col-2 text-right mr-auto">
+        <button class="btn btn-primary" (click)="submitRole()">{{ role.roleId ? 'Update' : 'Create' }}</button>
       </div>
-      <div class="row mt-2">
-      <div class="col-4">
-        <div class="form-check">
-          <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission3">
-          <label class="form-check-label" for="permission3">
-            Permission 5
-          </label>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="form-check">
-          <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission6">
-          <label class="form-check-label" for="permission6">
-            Permission 6
-          </label>
-        </div>
-      </div>
+      <div class="col-2 text-right mr-auto">
+        <button class="btn btn-secondary" (click)="cancelRole()">Cancel</button>
       </div>
     </div>
   </div>
-  
+
+  <div class="card-body">
+    <h6>Permissions</h6>
+    <hr>
+    <div class="row" *ngFor="let permission of permissions; let i = index">
+      <div class="col-5">
+        <div class="form-check">
+          <input class="form-check-input custom-checkbox" type="checkbox" 
+                 [checked]="isPermissionSelected(permission)"
+                 (change)="togglePermission(permission)">
+          <label class="form-check-label">
+            {{ permission.description }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

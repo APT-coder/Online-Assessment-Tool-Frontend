@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestSuccessComponent } from './test-success.component';
+import { ListTableComponent } from './list-table.component';
 
-describe('TestSuccessComponent', () => {
-  let component: TestSuccessComponent;
-  let fixture: ComponentFixture<TestSuccessComponent>;
+describe('ListTableComponent', () => {
+  let component: ListTableComponent;
+  let fixture: ComponentFixture<ListTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestSuccessComponent]
+      imports: [ListTableComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TestSuccessComponent);
+    fixture = TestBed.createComponent(ListTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

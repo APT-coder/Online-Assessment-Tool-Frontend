@@ -32,4 +32,16 @@
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
   }
+
+  .message-container {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: fit-content;
+    z-index: 100;
+  }
+
+  :host {
+    position: relative;
+  }
    

@@ -1,0 +1,32 @@
+
+.header {
+    background-color: #251D40;
+    color: white; 
+    text-align: center;
+  }
+  
+  
+  .card{
+    margin: 7px;
+    width:250px
+  }
+
+  .table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #fff;
+}
+.name{
+    width:80%;
+}
+.score{
+    width:20%;
+}
+.table tbody tr:nth-child(odd) td {
+    background-color: #D9D9D9; 
+  }
+  
+.table tbody tr:nth-child(even) td{
+    background-color: #F3F0FC; 
+  }

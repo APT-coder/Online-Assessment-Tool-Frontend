@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,11 +20,17 @@ export class DescriptiveFormComponent {
   @Input()
   index!: number;
   descriptiveForm: FormGroup;
+  @Output()
+  descData = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder) {
     this.descriptiveForm = this.fb.group({
       question: ['', Validators.required],
       answer: ['', Validators.required]
+    });
+
+    this.descriptiveForm.valueChanges.subscribe(value => {
+      this.descData.emit(value);
     });
   }
 
