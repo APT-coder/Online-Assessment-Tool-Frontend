@@ -1,0 +1,40 @@
+.profileCard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height:50px;
+    width:150px;
+    border-radius: 10px;
+    background: linear-gradient(0deg, #261D42 0%, #8061C3 100%);
+}
+.name-course{
+    display: flex;
+    flex-direction: column;
+}
+.role{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1px;
+    margin-top: 4px;
+}
+.course{
+    font-size: 10px;
+    color:white;
+}
+.name{
+    font-size: 14px;
+    font-weight: bold;
+    color:white;
+    display: flex;
+    align-content: center;
+    margin-top: 8px;
+}
+.role img{
+    height:24px;
+    width:21px;
+}
+.roleName{
+    font-size: 8px;
+    color:white;
+}

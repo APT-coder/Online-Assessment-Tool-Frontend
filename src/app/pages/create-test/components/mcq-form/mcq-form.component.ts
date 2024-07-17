@@ -41,6 +41,7 @@ export class McqFormComponent {
 
     this.mcqForm.valueChanges.subscribe(value => {
       this.mcqData.emit(value);
+      console.log(value);
     });
   }
 

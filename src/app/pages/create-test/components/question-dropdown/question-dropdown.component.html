@@ -1,11 +1,10 @@
 <div class="form-group">
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label >Select Question Type</mat-label>
-      <mat-select (selectionChange)="onSelectionChange($event)">
-        <mat-option value="mcq">MCQ</mat-option>
-        <mat-option value="descriptive">Descriptive</mat-option>
-        <mat-option value="fill-in-the-blanks">Fill in the blanks</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label >Select Question Type</mat-label>
+    <mat-select (selectionChange)="onSelectionChange($event)">
+      <mat-option value="mcq">MCQ</mat-option>
+      <mat-option value="descriptive">Descriptive</mat-option>
+      <mat-option value="fillup">Fill in the blanks</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

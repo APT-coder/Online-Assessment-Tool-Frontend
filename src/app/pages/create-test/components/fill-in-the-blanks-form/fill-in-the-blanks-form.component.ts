@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,12 +19,18 @@ import { CommonModule } from '@angular/common';
 export class FillInTheBlanksFormComponent {
   @Input()
   index!: number;
+  @Output()
+  fillData = new EventEmitter<any>();
   fillInTheBlanksForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.fillInTheBlanksForm = this.fb.group({
       question: ['', Validators.required],
       answer: ['', Validators.required]
+    });
+
+    this.fillInTheBlanksForm.valueChanges.subscribe(value => {
+      this.fillData.emit(value);
     });
   }
 

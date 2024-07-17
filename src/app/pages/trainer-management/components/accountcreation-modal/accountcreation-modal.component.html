@@ -8,42 +8,63 @@
         <div class="inline-flex align-items-center justify-content-center gap-2">
             <p-avatar 
                 image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-                shape="circle" />
+                shape="circle"></p-avatar>
             <span class="font-bold white-space-nowrap">
                 Add Trainer Details
             </span>
         </div>
     </ng-template>
     
-    <div class="form-group mb-3">
-        <label for="name" class="font-semibold " >Name</label>
-        <input pInputText id="name" class="input-text" [(ngModel)]="trainer.name" autocomplete="off" />
-    </div>
-    
-    <div class="form-group mb-3">
-        <label for="email" class="font-semibold ">Email</label>
-        <input pInputText id="email" class="input-text" [(ngModel)]="trainer.email" autocomplete="off" />
-    </div>
-    
-    <div class="form-group mb-3">
-        <label for="phone" class="font-semibold ">Phone</label>
-        <input pInputText id="phone" class="input-text" [(ngModel)]="trainer.phone" autocomplete="off" />
-    </div>
-    
-    <div class="form-group mb-3">
-        <label for="role" class="font-semibold ">Role</label>
-        <p-dropdown class="p-dropdown" [options]="roles" [(ngModel)]="trainer.role" placeholder="Select a role"></p-dropdown>
-    </div>
-    
-    <div class="form-group mb-3">
-        <label for="password" class="font-semibold ">Password</label>
-        <input pPassword id="password" class="input-text" [(ngModel)]="trainer.password" />
-    </div>
-    
-    <div class="form-group mb-3">
-        <label for="batch" class="font-semibold ">Batch</label>
-        <p-dropdown class="p-dropdown" [options]="batches" [(ngModel)]="trainer.batch" placeholder="Select a batch"></p-dropdown>
-    </div>
+    <form [formGroup]="trainerForm">
+        <div class="form-group mb-3">
+            <label for="name" class="font-semibold">Name</label>
+            <input pInputText id="name" class="input-text" formControlName="name" autocomplete="off" />
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="email" class="font-semibold">Email</label>
+            <input pInputText id="email" class="input-text" formControlName="email" autocomplete="off" />
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="phone" class="font-semibold">Phone</label>
+            <input pInputText id="phone" class="input-text" formControlName="phone" autocomplete="off" />
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="role" class="font-semibold">Role</label>
+            <p-dropdown class="p-dropdown" [options]="roles" formControlName="role" placeholder="Select a role"></p-dropdown>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="password" class="font-semibold">Password</label>
+            <input pPassword id="password" class="input-text" formControlName="password" />
+        </div>
+        
+        <div class="form-group mb-3">
+            <label class="font-semibold">Batches</label>
+            <p-multiSelect 
+                class="p-multiselect" 
+                [options]="batches" 
+                formControlName="selectedBatches" 
+                optionLabel="name" 
+                placeholder="Select batches">
+            </p-multiSelect>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label class="font-semibold">Permissions</label>
+            <div *ngFor="let permission of permissions">
+                <p-checkbox 
+                    [value]="permission.permissionId"
+                    [(ngModel)]="selectedPermissions"
+                    binary="true"
+                    inputId="permission-{{permission.permissionId}}">
+                </p-checkbox>
+                <label for="permission-{{permission.permissionId}}">{{ permission.description }}</label>
+            </div>
+        </div>
+    </form>
     
     <ng-template pTemplate="footer">
         <p-button 
