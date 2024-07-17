@@ -9,6 +9,7 @@ import { TestPageComponent } from './pages/test-page/test-page.component';
 import { InstructionPageComponent } from './pages/instruction-page/instruction-page.component';
 import { TrainerDashboardComponent } from './pages/trainer-dashboard/trainer-dashboard.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { MsalGuard } from '@azure/msal-angular';
 
 export const routes: Routes = [
     {
@@ -19,13 +20,13 @@ export const routes: Routes = [
     },
     { path: 'instructions', component:  InstructionPageComponent},
     {
-        path: 'sidebar', component: SidebarComponent
+        path: 'sidebar', component: SidebarComponent, canActivate: [MsalGuard],
     },
     {
-        path: 'trainer', component: TrainerDashboardComponent
+        path: 'trainer', component: TrainerDashboardComponent, canActivate: [MsalGuard],
     },
     {
-        path: 'admin', component: AdminDashboardComponent
+        path: 'admin', component: AdminDashboardComponent, canActivate: [MsalGuard],
     },
     {
         path: 'upload-assessment', component: AssessmentComponent
