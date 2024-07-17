@@ -14,8 +14,10 @@
   name="John Doe"
   role="Admin" 
   [image]="'assets/User.png'"
+  (cardClicked)="showModal()"
 >
 </app-profile-card>
+<app-profile-modal *ngIf="isModalVisible"></app-profile-modal>
 </div>
 <div class="dropdowns">
   <app-dropdown 
