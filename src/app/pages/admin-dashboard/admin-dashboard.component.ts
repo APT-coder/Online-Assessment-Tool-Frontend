@@ -5,6 +5,8 @@ import { PieDiagramComponent } from './components/pie-diagram/pie-diagram.compon
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { TableDashboardComponent } from './components/table-dashboard/table-dashboard.component';
 import { ProfileCardComponent } from '../../components/profile-card/profile-card.component';
+import { ProfileModalComponent } from '../../components/profile-modal/profile-modal.component';
+import { CommonModule } from '@angular/common';
 interface DropdownOption {
   name: string;
   code: string;
@@ -13,7 +15,7 @@ interface DropdownOption {
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [SidebarComponent, ListTableComponent, PieDiagramComponent, DropdownComponent, TableDashboardComponent, ProfileCardComponent],
+  imports: [SidebarComponent, ListTableComponent, PieDiagramComponent, DropdownComponent, TableDashboardComponent, ProfileCardComponent, ProfileModalComponent, CommonModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
@@ -22,7 +24,14 @@ export class AdminDashboardComponent {
     selectedYear: string = '';
     selectedILP: string = '';
     selectedBatch: string = '';
-  
+
+    isModalVisible = false;
+
+  showModal() {
+    this.isModalVisible = true;
+    document.body.classList.add('overlay');
+  }
+
     tableData = [
       {
         batch: 'Batch 1',

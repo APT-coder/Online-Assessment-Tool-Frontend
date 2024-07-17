@@ -1,3 +1,4 @@
+<!-- profile-modal.component.html -->
 <div class="profile-modal">
   <div class="header">
     <button class="back-button" (click)="closeModal()">
@@ -19,6 +20,6 @@
         </td>
       </tr>
     </table>
-    <app-button-active class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</app-button-active>
+    <app-button-active class="logout-button" (buttonClick)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</app-button-active>
   </div>
 </div>

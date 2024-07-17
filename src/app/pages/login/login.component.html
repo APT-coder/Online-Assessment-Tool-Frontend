@@ -1,3 +1,4 @@
+@if(!loginDisplay){
 <div class="login-container">
     <div class="split-screen">
         <div class="content-card">
@@ -88,7 +89,7 @@
                         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is
                             required</mat-error>
                     </mat-form-field>
-                    <button class="buttons" [disabled]="!loginForm.valid"><span>Sign In</span></button>
+                    <button class="buttons" [disabled]="!loginForm.valid" (click)="loginRedirect()"><span>Sign In</span></button>
                 </div>
             </form>
         </div>
@@ -97,3 +98,4 @@
         <!-- Login End -->
     </div>
 </div>
+}
