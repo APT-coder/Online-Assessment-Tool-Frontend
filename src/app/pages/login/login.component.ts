@@ -114,6 +114,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   handleMicrosoftLogin() {
     console.log('Handle Microsoft login for email:', this.loginForm.get('email')?.value);
+    this.loginRedirect();
   }
 
   clickEvent(event: MouseEvent) {
