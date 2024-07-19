@@ -44,15 +44,18 @@ export class TestPageComponent {
 
     if(index==7){
       this.questions[this.count].questionstatus="unreviewed";
-      console.log(this.questions);
+      console.log("from test page " ,index);
       this.questions[this.count].selectedoption=-1;
+      console.log(this.questions);
     }
     else{
-    console.log('Button clicked in child component at index:', index);
+    // console.log('Button clicked in child component at index:', index);
     this.questions[this.count].questionstatus="done";
     this.questions[this.count].selectedoption=index;
     // console.log('Question index:', this.count+1);
     console.log(this.questions);
+
+    console.log("from test page " ,index);
     this.index=index;
     }
     // Your logic here

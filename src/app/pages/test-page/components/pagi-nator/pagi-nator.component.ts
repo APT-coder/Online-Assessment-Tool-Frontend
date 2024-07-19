@@ -21,7 +21,7 @@ export class PagiNatorComponent {
   handleClick(event: Event,item: string): void {
     event.preventDefault();
     this.itemClicked.emit(item);
-    console.log('Selected question id',this.selectedQuestionId); 
+    // console.log('Selected question id',this.selectedQuestionId); 
   }
 
   get paginatedQuestions() {

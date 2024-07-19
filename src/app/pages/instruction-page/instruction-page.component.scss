@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: white;
   }
   
   .modal-content {
@@ -13,7 +13,7 @@
     height: 80%;
     background-color: white;
     border-radius: 10px;
-    // box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
   
   .left-pane, .right-pane {
@@ -21,7 +21,8 @@
   }
   
   .left-pane {
-    background-color: #4b2e83;
+    background: rgb(38,29,66);
+    background: linear-gradient(360deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
     color: white;
     width: 40%;
     display: flex;
@@ -37,6 +38,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: rgb(255,255,255);
+    background: linear-gradient(145deg, rgba(255,255,255,1) 100%, rgba(191,191,191,1) 100%);
+    
 
   }
   
