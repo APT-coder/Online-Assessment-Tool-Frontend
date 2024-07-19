@@ -1,16 +1,16 @@
 <div class="card mt-3">
-  <div class="card-head">
-    <div class="row d-flex justify-content-between">
+  <div class="card-header">
+    <div class="row d-flex justify-content-between align-items-center">
       <div class="col-3">
-        <h5>Role Name</h5>
+        <h5>{{ isEditMode ? 'Edit Role' : 'Create Role' }}</h5>
       </div>
       <div class="col-5">
         <input type="text" class="form-control" placeholder="Enter role name" [(ngModel)]="role.roleName">
       </div>
-      <div class="col-2 text-right mr-auto">
-        <button class="btn btn-primary" (click)="submitRole()">{{ role.roleId ? 'Update' : 'Create' }}</button>
+      <div class="col-2 text-right">
+        <button class="btn btn-primary" (click)="submitRole()">{{ isEditMode ? 'Update' : 'Create' }}</button>
       </div>
-      <div class="col-2 text-right mr-auto">
+      <div class="col-2 text-right">
         <button class="btn btn-secondary" (click)="cancelRole()">Cancel</button>
       </div>
     </div>
@@ -23,13 +23,16 @@
       <div class="col-5">
         <div class="form-check">
           <input class="form-check-input custom-checkbox" type="checkbox" 
-                 [checked]="isPermissionSelected(permission)"
+                 [(ngModel)]="permission.isSelected"
                  (change)="togglePermission(permission)">
           <label class="form-check-label">
             {{ permission.description }}
           </label>
         </div>
       </div>
+    </div>
+    <div *ngIf="role.permissions.length === 0" class="text-danger mt-3">
+      Please select at least one permission.
     </div>
   </div>
 </div>

@@ -1,13 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Role } from '../../../models/role.interface';
 import { Permission } from '../../../models/permission.interface';
+
+interface ApiResponse {
+  isSuccess: boolean;
+  result: Role[];
+  statusCode: number;
+  message: string[];
+}
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TrainermanagementService {
 
  
@@ -18,7 +26,10 @@ export class TrainermanagementService {
     }
   
     getAllRoles(): Observable<Role[]> {
-      return this.http.get<Role[]>(`https://localhost:7095/api/Roles`);
+      return this.http.get<ApiResponse>(`https://localhost:7120/api/Roles/GetRoles`)
+        .pipe(
+          map(response => response.result)
+        );
     }
   
     createRoleWithPermissions(role: Role): Observable<Role> {

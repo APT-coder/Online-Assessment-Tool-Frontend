@@ -26,63 +26,54 @@ import { TrainerTableComponent } from "./components/trainer-table/trainer-table.
     standalone:true
 })
 export class TrainerManagementComponent {
+
     isAddTrainer: boolean = false;
-    isCardVisible: boolean = false;
-    isSidebarCollapsed: boolean = false;
-    isEditMode: boolean = false;
-    selectedRole: Role = { roleName: '', permissions: [] };
-    roles: Role[] = [];
+  isCardVisible: boolean = false;
+  isSidebarCollapsed: boolean = false;
+  selectedRole: Role = { id: 0, roleName: '', permissions: [] };
+  isEditMode: boolean = false; // Assuming this is set elsewhere based on your application logic
 
-    constructor(private apiService: TrainermanagementService) {}
+  constructor(private apiService: TrainermanagementService) {}
 
-    ngOnInit() {
-        this.loadRoles(); // Load roles when the component initializes
+  ngOnInit() {
+    // Optionally load initial data or setup
+  }
+
+  ShowTrainer() {
+    this.isAddTrainer = !this.isAddTrainer;
+    if (this.isAddTrainer) {
+      this.isCardVisible = false;
     }
+  }
 
-    ShowTrainer() {
-        this.isAddTrainer = !this.isAddTrainer;
-        if (this.isAddTrainer) {
-            this.isCardVisible = false;
-        }
+  toggleCard() {
+    this.isCardVisible = !this.isCardVisible;
+    if (this.isCardVisible) {
+      this.isAddTrainer = false;
+      this.isEditMode = false; // Ensure it's not in edit mode when toggling card for new role
+      this.selectedRole = { id: 0, roleName: '', permissions: [] }; // Clear the selected role for new role creation
     }
+  }
 
-    toggleCard() {
-        this.isCardVisible = !this.isCardVisible;
-        if (this.isCardVisible) {
-            this.isAddTrainer = false;
-            this.isEditMode = false; // Ensure it's not in edit mode when toggling card for new role
-            this.selectedRole = { roleName: '', permissions: [] }; // Clear the selected role for new role creation
-        }
-    }
+  editRole(role: Role) {
+    this.selectedRole = { ...role }; // Set the selected role (make a copy to avoid reference issues)
+    this.isCardVisible = true; // Show the role creation card
+    this.isEditMode = true; // Set the edit mode
+  }
 
-    editRole(role: Role) {
-        this.selectedRole = { ...role }; // Set the selected role (make a copy to avoid reference issues)
-        this.isCardVisible = true; // Show the role creation card
-        this.isEditMode = true; // Set the edit mode
-    }
+  onCancelRoleCreation() {
+    this.isCardVisible = false;
+    this.selectedRole = { id: 0, roleName: '', permissions: [] }; // Reset selected role for cancellation
+  }
 
-    onToggleSidebar(collapsed: boolean) {
-        this.isSidebarCollapsed = collapsed;
-    }
+  onRoleSaved() {
+    this.isCardVisible = false;
+    // Optionally reload data or perform other actions after role is saved
+  }
+  onToggleSidebar(collapsed: boolean) {
+    this.isSidebarCollapsed = collapsed;
+  }
 
-    onCancelRoleCreation() {
-        this.isCardVisible = false;
-        this.selectedRole = { roleName: '', permissions: [] }; // Reset selected role for cancellation
-    }
-
-    onRoleSaved() {
-        this.isCardVisible = false;
-        this.loadRoles(); // Reload roles after saving
-    }
-
-    loadRoles() {
-        this.apiService.getAllRoles().subscribe(
-            (roles: Role[]) => {
-                this.roles = roles;
-            },
-            (error) => {
-                console.error('Error loading roles:', error);
-            }
-        );
-    }
 }
+
+   

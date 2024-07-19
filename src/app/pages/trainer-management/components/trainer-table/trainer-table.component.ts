@@ -70,12 +70,13 @@ deleteRole(roleId: number): void {
 
 onConfirmDelete(): void {
   this.apiService.deleteRole(this.roleIdToDelete).subscribe(() => {
-    this.roles = this.roles.filter(role => role.roleId !== this.roleIdToDelete);
+    this.roles = this.roles.filter(role => role.id !== this.roleIdToDelete);
   });
 }
 
 onEditRole(role: Role) {
   this.editRole.emit(role);
+  console.log(role);
 }
 // calculateUserTotal(roleName: string): number {
 //     const role = this.roles.find(r => r.role === roleName);

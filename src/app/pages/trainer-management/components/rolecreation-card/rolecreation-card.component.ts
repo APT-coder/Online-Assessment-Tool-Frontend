@@ -14,33 +14,27 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './rolecreation-card.component.scss'
 })
 export class RolecreationCardComponent implements OnInit {
-  @Input() role: Role = {
-    roleId: 0,
-    roleName: '',
-    permissions: []
-  };
+  @Input() role: Role = { id: 0, roleName: '', permissions: [] };
+  @Input() isEditMode: boolean = false;
   @Output() cancelRoleCreation: EventEmitter<void> = new EventEmitter<void>();
   @Output() roleSaved: EventEmitter<void> = new EventEmitter<void>();
 
   permissions: Permission[] = [];
 
-  constructor(private apiService: TrainermanagementService, private router: Router) {}
+  constructor(private apiService: TrainermanagementService) {}
 
   ngOnInit(): void {
-    this.apiService.getPermissions().subscribe((data: Permission[]) => {
-      this.permissions = data;
-      console.log(this.permissions);
-    });
-
-    // Ensure role.permissions is always an array
-    if (!this.role) {
-      this.role = {
-        roleName: '',
-        permissions: []
-      };
-    } else if (!this.role.permissions) {
+    this.loadPermissions();
+    if (!this.role.permissions) {
       this.role.permissions = [];
     }
+  }
+
+  loadPermissions() {
+    this.apiService.getPermissions().subscribe((data: Permission[]) => {
+      this.permissions = data;
+      console.log('Permissions loaded:', this.permissions);
+    });
   }
 
   togglePermission(permission: Permission) {
@@ -57,43 +51,56 @@ export class RolecreationCardComponent implements OnInit {
   }
 
   submitRole() {
-    if (this.role.permissions.length === 0) {
-      console.error('Please select at least one permission');
-      return;
-    }
-
-    if (this.role.roleId) {
-      // Update role
-      this.apiService.updateRole(this.role.roleId, this.role)
-        .subscribe(
-          (response: Role) => {
-            console.log('Role updated successfully:', response);
-            this.roleSaved.emit();
-            this.resetForm();
-          },
-          error => {
-            console.error('Error updating role:', error);
-          }
-        );
+    if (this.isEditMode) {
+      this.updateRole();
     } else {
-      // Create new role
-      this.apiService.createRoleWithPermissions(this.role)
-        .subscribe(
-          (response: Role) => {
-            console.log('Role created successfully:', response);
-            this.roleSaved.emit();
-            this.resetForm();
-            window.location.reload();
-          },
-          error => {
-            console.error('Error creating role:', error);
-          }
-        );
+      this.createRole();
     }
   }
+  
+  createRole() {
+    // Ensure roleId is not set for create operation
+    this.apiService.createRoleWithPermissions(this.role)
+      .subscribe(
+        (response: Role) => {
+          console.log('Role created successfully:', response);
+         
+          this.roleSaved.emit();
+          this.resetForm();
+          window.location.reload(); // Consider a better way to refresh data
+        },
+        error => {
+          console.error('Error creating role:', error);
+        }
+      );
+  }
+  
+  updateRole() {
+    if (this.role.permissions.length === 0) {
+      console.error('Please select at least one permission');
+      // Optionally show a user-friendly message or alert
+      return;
+    }
+  
+    this.apiService.updateRole(this.role.id, this.role)
+      .subscribe(
+        (response) => {
+          console.log('Role updated successfully:', response);
+          
+          this.roleSaved.emit();
+          this.resetForm();
+        },
+        error => {
+          console.error('Error updating role:', error);
+          console.log(this.role.id)
+        }
+      );
+  }
+  
 
   resetForm() {
     this.role = {
+      id: 0,
       roleName: '',
       permissions: []
     };
