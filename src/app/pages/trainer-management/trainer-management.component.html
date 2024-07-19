@@ -2,6 +2,7 @@
   <div class="row">
     <div class="sidebar-col">
       <div class="sidebar">
+        <!-- Assuming app-sidebar component is correctly implemented -->
         <app-sidebar (toggle)="onToggleSidebar($event)"></app-sidebar>
       </div>
     </div>
@@ -15,18 +16,22 @@
       <br /><br />
 
       <app-rolecreation-card
-        *ngIf="isCardVisible" 
-        [role]="selectedRole" 
-        (cancelRoleCreation)="onCancelRoleCreation()" 
-        (roleSaved)="onRoleSaved()">
-      </app-rolecreation-card>
+      *ngIf="isCardVisible"
+      [role]="selectedRole"
+      [isEditMode]="isEditMode"
+      (cancelRoleCreation)="onCancelRoleCreation()"
+      (roleSaved)="onRoleSaved()">
+    </app-rolecreation-card>
+    
+    <app-accountcreation-modal 
+    *ngIf="isAddTrainer" 
+    [(visible)]="isAddTrainer">
+  </app-accountcreation-modal>
 
-      <app-accountcreation-modal 
-        *ngIf="isAddTrainer" 
-        [(visible)]="isAddTrainer">
-      </app-accountcreation-modal>
 
       <br /><br />
+
+      <!-- Trainer Table Component -->
       <app-trainer-table (editRole)="editRole($event)"></app-trainer-table>
     </div>
   </div>

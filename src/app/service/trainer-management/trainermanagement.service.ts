@@ -1,33 +1,47 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ApiService } from '../api-service/api.service'; 
+import { map, Observable } from 'rxjs';
 import { Role } from '../../../models/role.interface';
 import { Permission } from '../../../models/permission.interface';
+
+interface ApiResponse {
+  isSuccess: boolean;
+  result: Role[];
+  statusCode: number;
+  message: string[];
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TrainermanagementService {
 
-  constructor(private apiService: ApiService) { }
 
-  getPermissions(): Observable<Permission[]> {
-    return this.apiService.get<Permission[]>('permissions', 'getAll');
-  }
+    constructor(private http: HttpClient) { }
 
-  getAllRoles(): Observable<Role[]> {
-    return this.apiService.get<Role[]>('roles', 'getAll');
-  }
+    getPermissions(): Observable<Permission[]> {
+      return this.http.get<Permission[]>(`https://localhost:7095/api/Permission`);
+    }
 
-  createRoleWithPermissions(role: Role): Observable<Role> {
-    return this.apiService.post<Role>('roles', 'create', role);
-  }
+    getAllRoles(): Observable<Role[]> {
+      return this.http.get<ApiResponse>(`https://localhost:7120/api/Roles/GetRoles`)
+        .pipe(
+          map(response => response.result)
+        );
+    }
 
-  deleteRole(roleId: number): Observable<void> {
-    return this.apiService.delete<void>('roles', 'delete', { id: roleId });
-  }
+    createRoleWithPermissions(role: Role): Observable<Role> {
+      return this.http.post<Role>(`https://localhost:7095/api/Roles`, role);
+    }
 
-  updateRole(roleId: number, role: Role): Observable<Role> {
-    return this.apiService.put<Role>('roles', 'update', role, { id: roleId });
+    deleteRole(roleId: number): Observable<void> {
+      return this.http.delete<void>(`https://localhost:7095/api/Roles/${roleId}`);
+    }
+
+    updateRole(roleId: number, role: Role): Observable<Role> {
+      return this.http.put<Role>(`https://localhost:7095/api/Roles/${roleId}`, role);
+    }
   }
-}
+ 
