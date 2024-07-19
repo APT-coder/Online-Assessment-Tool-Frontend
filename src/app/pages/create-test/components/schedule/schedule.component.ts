@@ -2,12 +2,16 @@ import { Component, Input } from '@angular/core';
 import { Validators, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SidebarComponent } from '../../../../components/sidebar/sidebar.component'; 
-import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component'; 
+import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core'; 
+
 
 @Component({
   selector: 'app-schedule',
@@ -21,7 +25,10 @@ import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/butt
     MatSelectModule, 
     MatCheckboxModule,
     SidebarComponent,
-    ButtonActiveComponent],
+    ButtonActiveComponent,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxMaterialTimepickerModule],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'
 })

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-profile-card',
@@ -12,4 +12,11 @@ export class ProfileCardComponent {
   @Input() image: string = '';
   @Input() role: string = '';
   @Input() course: string = '';
+
+  @Output() cardClicked = new EventEmitter<void>();
+
+  onCardClick() {
+    this.cardClicked.emit();
+  }
+
 }

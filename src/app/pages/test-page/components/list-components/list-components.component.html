@@ -1,100 +1,79 @@
 @if (questionType=="multiple_choice") {
 <div class="list-container ">
   <ul class="grid-container">
-    <div *ngFor="let options of questions let i = index">
-      <button class="wrapper-button" (click)="handleClick(options[i],questionNumber,i)">
-      <div class="center-wrapper">
-        <div class="option-box" [ngClass]="{'clicked': clickedIndex === i}">
-          <span class="option-label">{{i+1}}.</span>
-          <span class="option-content">{{options}}</span>
-        </div>
-      </div>
-    </button>
-    </div>
-  </ul>
-  <!-- <div>
-    <input type="checkbox" id="review" name="review">
-    <label for="review">Mark for review</label>
-  </div> -->
-</div>
-}
 
-@if (questionType=="true_false") {
-  <div class="list-container ">
-    <ul class="grid-container">
-      <div *ngFor="let options of questions let i = index">
-        <button class="wrapper-button" (click)="handleClick('option',questionNumber,i)">
+    @if (selectedOption==-1) {
+    <div *ngFor="let options of questions let i = index">
+      <button class="wrapper-button"
+        (click)="handleClick(questionNumber,i)">
         <div class="center-wrapper">
-          <div class="option-box" [ngClass]="{'clicked': clickedIndex === i}">
+
+          <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
             <span class="option-label">{{i+1}}.</span>
+            <span class="option-content">{{options}}</span>
+          </div>
+
+        </div>
+      </button>
+    </div>
+  }
+  @else{
+    <div *ngFor="let options of questions let i = index">
+      <button class="wrapper-button"
+        (click)="handleClick(questionNumber,i)">
+        <div class="center-wrapper">
+          <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
+            <span class="option-label">{{i + 1}}.</span>
             <span class="option-content">{{options}}</span>
           </div>
         </div>
       </button>
-      </div>
-    </ul>
-    <!-- <div>
-      <input type="checkbox" id="review" name="review">
-      <label for="review">Mark for review</label>
-    </div> -->
-  </div>
-  }
-@if (questionType=="fill_in_the_blank") {
-  <div class="input-value">
-    <form>
-      <div class="form-group  text-field">
-        <input type="text" class=" custom-text-field" id="exampleInput"
-          [(ngModel)]="inputValue" name="exampleInput"
-          placeholder="Enter text">
-      </div>
-    </form>
-  </div>
-  }
-<div class="mark-for-review">
-      <input type="checkbox" id="review" name="review">
-      <label for="review">Mark for review</label>
-</div>
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- @for (option of questions; track questions.question_id | optionsFilter) {
-
-    
-    @for (option of options; track $index) {}
-    
-
-    } -->
-
-<!-- <div *ngFor="let options of questions | optionsFilter">
-      <div *ngFor="let opti of options">
-        {{ opti }}
-      </div>
-    </div> -->
-
-<!-- <div *ngFor="let options of questions | optionsFilter">
-      <div *ngFor="let option of options">
-        {{ option }}
-      </div>
     </div>
-     -->
+  }
+  </ul>
+</div>
+}
+
+@if (questionType=="true_false") {
+
+
+      
+  <div class="text-area-parent">
+    <div class="text-area">
+      <label for="exampleFormControlTextarea1" class="form-label">Enter Answer...</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="fullQuestions.answered" (input)="onTextareaChange()"></textarea>
+      
+
+    </div>
+  </div>
+  
+  
+}
+@if (questionType=="fill_in_the_blank") {
+<div class="input-value">
+  <form>
+    <div class="form-group  text-field">
+      <input type="text" class=" custom-text-field" id="exampleInput"
+        [(ngModel)]="fullQuestions.answered" name="exampleInput" (input)="onTextareaChange()"
+        placeholder="Enter text">
+    </div>
+  </form>
+</div>
+}
+
+
+
+@if (isChecked=="marked") {
+  <div class="mark-for-review">
+    <input type="checkbox" id="review" name="review" checked  (change)="onCheckboxChange($event)">
+    <label for="review">Mark for review</label>
+  </div>
+}
+@else{
+  <div class="mark-for-review">
+    <input type="checkbox" id="review" name="review"  (change)="onCheckboxChange($event)">
+    <label for="review">Mark for review</label>
+  </div>
+  
+}
+

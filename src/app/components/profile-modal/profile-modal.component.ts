@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import '@fortawesome/fontawesome-free/css/all.css';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
-
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-profile-modal',
@@ -14,26 +14,24 @@ import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-act
 export class ProfileModalComponent implements OnInit {
   hoveredRow: number | null = null;
   profileImage: string = "https://i.pravatar.cc/100";
-
   profileDetails = [
     { label: 'Name:', value: 'Your Name' },
     { label: 'Username:', value: 'Your Username' },
     { label: 'Email:', value: 'your.email@example.com' },
     { label: 'Phone:', value: '(123) 456-7890' }
   ];
-  elementRef: any;
 
-  constructor() { }
+  constructor(private elementRef: ElementRef, private authService: MsalService,) { }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
 
   closeModal() {
     const modal = this.elementRef.nativeElement.querySelector('.profile-modal');
     if (modal) {
       modal.style.display = 'none';
+      document.body.classList.remove('overlay');
     }
+    window.location.reload();
   }
 
   openFileExplorer() {
@@ -46,5 +44,9 @@ export class ProfileModalComponent implements OnInit {
         console.log('Selected file:', file.name);
       }
     };
+  }
+
+  logout() {
+    this.authService.logoutRedirect();
   }
 }

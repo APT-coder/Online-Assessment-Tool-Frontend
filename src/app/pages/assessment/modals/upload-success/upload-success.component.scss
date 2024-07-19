@@ -20,7 +20,7 @@ $border-color: #EBDAF0;
    
     border-radius: 50px;
     height: 250px;
-    border: 5px solid $border-color;
+    // border: 5px solid $border-color;
     overflow: hidden; 
     padding-right: 0 !important; 
 }
@@ -46,4 +46,7 @@ $border-color: #EBDAF0;
 .upload-buttons{
     justify-content: space-around;
     margin-top: 40px;
+}
+.modal-title{
+    margin-left: 25px;
 }
