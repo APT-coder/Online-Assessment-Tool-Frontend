@@ -1,6 +1,14 @@
 $font-color: #d9d9d9;
 $background-color: #251d40;
 
+::ng-deep {
+  /* Prevent overflow on the body */
+  body {
+    overflow: hidden;
+    height: 100vh;
+    margin: 0;
+  }
+}
 .login-container {
   display: flex;
   justify-content: center;
@@ -10,9 +18,11 @@ $background-color: #251d40;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-style: normal;
-  background-image: linear-gradient(to right, #9c9c9c 0%, #ffffff 100%);
+  // background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  background-image: linear-gradient(-20deg, #6e45e2 0%, #88d3ce 100%);
   background-size: cover;
   background-position: center;
+  // overflow: hidden;
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -25,6 +35,7 @@ $background-color: #251d40;
   width: 80vw;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  // overflow: hidden;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -165,6 +176,7 @@ mat-error {
 
   .carousel-item {
     height: 100%;
+    
 
     img {
       height: 100%;
@@ -201,6 +213,3 @@ mat-error {
     background: none;
   }
 }
-
-
-

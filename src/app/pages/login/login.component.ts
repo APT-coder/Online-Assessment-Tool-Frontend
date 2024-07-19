@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { AdminDashboardComponent } from '../admin-dashboard/admin-dashboard.component';
 
 @Component({
   selector: 'app-login',
@@ -22,14 +23,16 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    AdminDashboardComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
-  submitted: boolean = false;
+  showPassword = false;
+  hide = signal(true);
   loginDisplay: boolean = false;
   isIframe = false;
   private readonly _destroying$ = new Subject<void>();
@@ -39,15 +42,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: MsalService,
     private msalBroadcastService: MsalBroadcastService,
     private router: Router
-  ) {}
-
-  ngOnInit(): void {
-
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required])
+      password: new FormControl('')
     });
+  }
 
+  ngOnInit(): void {
     this.authService.handleRedirectObservable().subscribe();
     this.isIframe = window !== window.parent && !window.opener;
 
@@ -89,12 +91,31 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      this.submitted = true;
+    if (!this.showPassword) {
+      const email = this.loginForm.get('email')?.value;
+      this.checkEmailProvider(email);
+    } else {
+      console.log('Logging in with', this.loginForm.value);
     }
   }
-  hide = signal(true);
+
+  checkEmailProvider(email: string) {
+    const microsoftDomains = ['outlook.com', 'hotmail.com', 'live.com', 'microsoft.com'];
+    const domain = email.split('@')[1];
+
+    if (microsoftDomains.includes(domain)) {
+      this.handleMicrosoftLogin();
+    } else {
+      this.showPassword = true;
+      this.loginForm.get('password')?.setValidators([Validators.required]);
+      this.loginForm.get('password')?.updateValueAndValidity();
+    }
+  }
+
+  handleMicrosoftLogin() {
+    console.log('Handle Microsoft login for email:', this.loginForm.get('email')?.value);
+  }
+
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
