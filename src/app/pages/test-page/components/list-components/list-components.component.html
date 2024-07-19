@@ -2,10 +2,10 @@
 <div class="list-container ">
   <ul class="grid-container">
 
-     @if (selectedOption==-1) {
+    @if (selectedOption==-1) {
     <div *ngFor="let options of questions let i = index">
       <button class="wrapper-button"
-        (click)="handleClick('option',questionNumber,i)">
+        (click)="handleClick(questionNumber,i)">
         <div class="center-wrapper">
 
           <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
@@ -20,7 +20,7 @@
   @else{
     <div *ngFor="let options of questions let i = index">
       <button class="wrapper-button"
-        (click)="handleClick('option',questionNumber,i)">
+        (click)="handleClick(questionNumber,i)">
         <div class="center-wrapper">
           <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
             <span class="option-label">{{i + 1}}.</span>

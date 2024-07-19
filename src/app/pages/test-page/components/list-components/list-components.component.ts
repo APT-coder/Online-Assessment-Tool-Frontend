@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-list-components',
@@ -17,6 +18,8 @@ export class ListComponentsComponent {
   @Input() fullQuestions:any;
   @Input() isChecked: any = false;
   @Output() answerEntered = new EventEmitter<string>();
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   enteredAnswer: string = '';
 
@@ -35,7 +38,7 @@ export class ListComponentsComponent {
   clickedIndex: number | null = null;
   inputValue: string = '';
 
-  handleClick(option: string, index: number,i:number) {
+  handleClick( index: number,i:number) {
     if (this.clickedIndex === i) {
       this.clickedIndex = null;
       this.buttonClicked.emit(7);
@@ -43,6 +46,8 @@ export class ListComponentsComponent {
       this.clickedIndex = i;
       this.buttonClicked.emit(i);
     }
+    this.cdr.detectChanges();
+    // this.buttonClicked.emit(this.selectedOption);
   }
 
   onCheckboxChange(event: Event) {
