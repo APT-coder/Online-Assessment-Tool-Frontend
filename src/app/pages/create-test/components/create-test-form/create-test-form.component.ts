@@ -10,10 +10,14 @@ import { FillInTheBlanksFormComponent } from '../fill-in-the-blanks-form/fill-in
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component'; 
 import { ScheduleComponent } from '../schedule/schedule.component'; 
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssessmentPreviewComponent } from "../../../assessment/components/assessment-preview/assessment-preview.component";
 import { MessageServiceComponent } from '../../../../components/message-service/message-service.component';
 import { Router } from '@angular/router';
+import { MatFormField, MatInputModule } from '@angular/material/input';
+import { AssessmentService } from '../../../../service/assessment/assessment.service';
+import { Assessment } from '../../../../../models/assessment.interface'; 
+import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service';
 
 interface Option {
   option: string;
@@ -36,7 +40,10 @@ interface Option {
     MatIconModule,
     FormsModule,
     AssessmentPreviewComponent,
-    MessageServiceComponent
+    MessageServiceComponent,
+    MatInputModule,
+    MatFormField,
+    ReactiveFormsModule
   ],
   templateUrl: './create-test-form.component.html',
   styleUrls: ['./create-test-form.component.scss']
@@ -45,13 +52,17 @@ export class CreateTestFormComponent implements OnInit {
   @ViewChild('stepper')
   stepper!: MatStepper;
   @ViewChild('messageComponent') messageComponent!: MessageServiceComponent;
+  @ViewChild(ScheduleComponent) scheduleComponent!: ScheduleComponent;
+
 
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
   questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
-
-  constructor(private router: Router) {}
+  assessmentCreated!: boolean;
+  createdBy: number = 1;
+  assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
+  constructor(private router: Router, private assessmentService: AssessmentService, private scheduledAssessmentService: ScheduledAssessmentService) {}
 
   ngOnInit(): void {
     if (!sessionStorage.getItem('hasReloaded')) {
@@ -59,8 +70,37 @@ export class CreateTestFormComponent implements OnInit {
       window.location.reload();
     } else {
       sessionStorage.removeItem('hasReloaded');
-      // Any additional initialization logic can go here
     }
+  }
+
+  createAssessment(assessmentName: string) {
+    if (assessmentName) {
+      this.assessmentService.createAssessment(assessmentName, this.createdBy).subscribe(
+        (response: any) => {
+          this.assessmentCreated = true;
+          this.assessment = response.result;
+          this.messageService();
+          console.log('Assessment successfully created!', this.assessment);
+        },
+        (error: any) => {
+          console.error('Error creating assessment', error);
+        }
+      );
+    } else {
+      console.error('Assessment name is required.');
+    }
+  }
+
+  submitQuestions(formattedQuestions: any[]) {
+    const assessmentId = this.assessment.assessmentId;
+    formattedQuestions.forEach(question => {
+      this.assessmentService.postQuestion(assessmentId, question, this.createdBy).subscribe((response: any) => {
+        console.log('Question posted successfully', response);
+        this.completeStep();
+      }, (error: any) => {
+        console.error('Error posting question', error);
+      });
+    });
   }
 
   onQuestionTypeSelected(questionType: string, index: number) {
@@ -94,32 +134,54 @@ export class CreateTestFormComponent implements OnInit {
   }
 
   logQuestions() {
-    const currentStepIndex = this.stepper.selectedIndex;
-    if (currentStepIndex === 1) {
+    
       const formattedQuestions = this.questions.map(question => {
         let formattedQuestion = {
           id: question.id,
           type: question.type,
-          content: question.content, // Replace with actual content based on type if needed
-          options: question.options, // Replace with actual options if applicable
-          correctAnswer: question.correctAnswer, // Replace with actual correct answer if applicable
+          content: question.content,
+          options: question.options,
+          correctAnswer: question.correctAnswer,
           score: question.score
         };
         return formattedQuestion;
       });
 
       console.log('Formatted Questions:', formattedQuestions);
-    }
+      this.submitQuestions(formattedQuestions);
+  }
+
+  completeStep() {
+    this.stepper.next();
+    this.stepper.steps.toArray()[0].completed = true;
+    this.stepper.steps.toArray()[0].editable = false;
   }
 
   finishSchedule() {
-    this.scrollToTop();
+    if (this.scheduleComponent) {
+      const formResult = this.scheduleComponent.logFormValues();
+      console.log(formResult);
+      this.scheduledAssessmentService.scheduleAssessment(formResult).subscribe((response: any) => {
+        console.log('Question posted successfully', response);
+
+        this.scrollToTop();
+        this.messageComponent.isVisible = true; 
+        this.messageComponent.ngOnInit();
+
+        setTimeout(() => {
+          //this.router.navigate(['/sidebar']);
+        }, 5000);
+      }, (error: any) => {
+        console.error('Error posting question', error);
+      });
+    } 
+  }
+
+  messageService() {
     this.messageComponent.isVisible = true; 
     this.messageComponent.ngOnInit();
 
-    // After a delay, navigate to the dashboard
     setTimeout(() => {
-      this.router.navigate(['/sidebar']);
     }, 5000);
   }
 

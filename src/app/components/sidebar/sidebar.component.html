@@ -21,14 +21,12 @@
     </li>
     <li class="sidebar-item">
       <fa-icon [icon]="faUpload"></fa-icon>
-      <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!isCollapsed">Upload Question</button>
+      <button routerLink="/upload-assessment" *ngIf="!isCollapsed">Upload Question</button>
     </li>
     <li class="sidebar-item" *ngIf="isAdmin">
       <fa-icon [icon]="faUserCog"></fa-icon>
       <button routerLink="/trainer-management" *ngIf="!isCollapsed">Trainer Management</button>
   </li>
   </ul>
-
   <hr />
-  <app-file-upload></app-file-upload>
 </div>

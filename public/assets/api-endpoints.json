@@ -1,32 +1,35 @@
 {
-    "baseUrl": "https://localhost:7120/api",
-    "users": {
-      "getAll": "/Users",
-      "getById": "/Users/{id}",
-      "create": "/Users",
-      "update": "/Users/{id}",
-      "delete": "/Users/{id}"
-    },
-    "roles": {
-      "getAll": "/Roles",
-      "getById": "/Roles/{id}",
-      "create": "/Roles",
-      "update": "/Roles/{id}",
-      "delete": "/Roles/{id}"
-    },
-    "permissions": {
-      "getAll": "/Permissions",
-      "getById": "/Permissions/{id}",
-      "create": "/Permissions",
-      "update": "/Permissions/{id}",
-      "delete": "/Permissions/{id}"
-    },
-    "assessments": {
-      "getAll": "/Assessments",
-      "getById": "/Assessments/{id}",
-      "create": "/Assessments",
-      "update": "/Assessments/{id}",
-      "delete": "/Assessments/{id}"
-    }
+  "baseUrl": "https://localhost:7120",
+  "users": {
+    "getAll": "/Users",
+    "getById": "/Users/{id}",
+    "create": "/Users",
+    "update": "/Users/{id}",
+    "delete": "/Users/{id}"
+  },
+  "roles": {
+    "getAll": "/Roles",
+    "getById": "/Roles/{id}",
+    "create": "/Roles",
+    "update": "/Roles/{id}",
+    "delete": "/Roles/{id}"
+  },
+  "permissions": {
+    "getAll": "/Permissions",
+    "getById": "/Permissions/{id}",
+    "create": "/Permissions",
+    "update": "/Permissions/{id}",
+    "delete": "/Permissions/{id}"
+  },
+  "assessments": {
+    "getAll": "/Assessments",
+    "getById": "/Assessments/{id}",
+    "create": "/Assessment/CreateAssessment",
+    "addQuestion": "/Assessment/AddQuestionToAssessment/{id}/questions",
+    "update": "/Assessments/{id}",
+    "delete": "/Assessments/{id}"
+  },
+  "scheduledAssessments": {
+    "create": "/ScheduledAssessment/PostScheduledAssessment"
   }
-  
+}

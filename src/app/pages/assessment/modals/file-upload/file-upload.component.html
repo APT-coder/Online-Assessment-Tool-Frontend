@@ -1,22 +1,28 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">File Upload</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" #modalBody (drop)="onDrop($event)">
-        <div class="modal-inner-body">
-          <img src="assets/Uploadicon.png" alt="upload icon" class="upload-icon">
-          <p class="upload-content">Drag and Drop a File<br/>
-             or <label for="fileInput" class="select">select a file</label> from your computer</p>
-          <input type="file" id="fileInput" accept=".docx" style="display:none;" (change)="onFileSelected($event)">
-          <app-button-inactive class="template" [content]="'Get Template'"></app-button-inactive>
+<div *ngIf="!uploaded">
+  <div class="modal show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">File Upload</h1>
+          <button type="button" class="btn-close" aria-label="Close"></button>
         </div>
-        <p class="file-name" *ngIf="fileName">{{ fileName }} <span *ngIf="uploaded">- Uploaded</span></p>
+        <div class="modal-body" #modalBody (drop)="onDrop($event)">
+          <div class="modal-inner-body">
+            <img src="assets/Uploadicon.png" alt="upload icon" class="upload-icon">
+            <p class="upload-content">Drag and Drop a File<br/>
+              or <label for="fileInput" class="select">select a file</label> from your computer</p>
+            <input type="file" id="fileInput" accept=".docx" style="display:none;" (change)="onFileSelected($event)">
+            <app-button-inactive class="template" [content]="'Get Template'"></app-button-inactive>
+          </div>
+          <p class="file-name" *ngIf="fileName">{{ fileName }} <span *ngIf="uploaded">- Uploaded</span></p>
+        </div>
+        <p class="file-types">File types: Word Documents (.docx)</p>
+        <app-button-active class="upload-button" [content]="'Upload File'" (click)="uploadFile()"></app-button-active>
       </div>
-      <p class="file-types">File types: Word Documents (.docx)</p>
-      <app-button-active class="upload-button" [content]="'Upload File'" (click)="uploadFile()"></app-button-active>
     </div>
   </div>
+</div>
+
+<div *ngIf="uploaded">
+  <app-upload-success (prepareTest)="prepareTestAndCloseModal()"></app-upload-success>
 </div>
