@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class UploadSuccessComponent {
   htmlContent: string;
 
-  constructor()
+  constructor(private router: Router,)
   {
     this.htmlContent = localStorage.getItem("htmlContent") as string;
     console.log(this.htmlContent);
@@ -25,5 +25,9 @@ export class UploadSuccessComponent {
 
   onPrepareTest() {
     this.prepareTest.emit();
+  }
+
+  returnToDashboard() {
+    this.router.navigate(['/admin']);
   }
 }

@@ -1,11 +1,10 @@
 <div class="profileCard" (click)="onCardClick()">
-    <div class="name-course">
-      <div class="name">{{ name }}</div>
-      <div class="course">{{ course }}</div>
-    </div>
-    <div class="role">
-      <img src="{{ image }}" />
-      <div class="roleName">{{ role }}</div>
-    </div>
+  <div class="name-course">
+    <div class="name">{{ userDetail.name }}</div>
+    <div class="course">{{ userDetail.course }}</div>
   </div>
-  
+  <div class="role">
+    <img src="{{ userDetail.image }}" />
+    <div class="roleName">{{ userDetail.role }}</div>
+  </div>
+</div>

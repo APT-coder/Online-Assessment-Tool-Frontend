@@ -7,6 +7,7 @@ import { TableDashboardComponent } from './components/table-dashboard/table-dash
 import { ProfileCardComponent } from '../../components/profile-card/profile-card.component';
 import { ProfileModalComponent } from '../../components/profile-modal/profile-modal.component';
 import { CommonModule } from '@angular/common';
+
 interface DropdownOption {
   name: string;
   code: string;
@@ -20,12 +21,15 @@ interface DropdownOption {
   styleUrl: './admin-dashboard.component.scss'
 })
 export class AdminDashboardComponent {
+  userId: number = 1;
   isSidebarCollapsed: boolean = false;
     selectedYear: string = '';
     selectedILP: string = '';
     selectedBatch: string = '';
 
     isModalVisible = false;
+
+    constructor() {}
 
   showModal() {
     this.isModalVisible = true;
