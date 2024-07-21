@@ -1,108 +1,98 @@
-<!-- <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required."> -->
-  <form [formGroup]="secondFormGroup">
-    <!-- <ng-template matStepLabel>Configure</ng-template> -->
-
-    <div class="inputLabel">
-      <div class="col-auto labelName">
-        <label for="testName">Test Name:</label>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="w-100 inputbox">
-          <mat-label>Enter the name of your test</mat-label>
-          <input matInput placeholder="Ex. Soft Skills" formControlName="secondCtrl" required>
-        </mat-form-field>
-        <small id="testname-help" class="details">This name will be visible to students</small>
-      </div>
+<form [formGroup]="secondFormGroup">
+  <div class="inputLabel">
+    <div class="col-auto labelName">
+      <label for="testName">Test Name:</label>
     </div>
-
-    <div class="inputLabel">
-      <div class="col-auto labelName">
-        <label for="testDuration">Test Duration:</label>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="w-100 inputbox">
-          <mat-label>Enter the duration of test</mat-label>
-          <input matInput placeholder="Ex. 01:30:00" formControlName="secondCtrl" required>
-        </mat-form-field>
-        <small id="testduration-help" class="details">Students will only have the set time to complete the whole test. The time limit is entered in the format (hours : minutes : seconds)</small>
-      </div>
-    </div>
-
-    <div class="checkboxLabel">
-      <div class="col-auto labelName">
-        <label for="randomize">Randomize Questions:</label>
-      </div>
-      <mat-checkbox class="example-margin">Whole Test</mat-checkbox>
-    </div>
-    <small id="randomize-help" class="details-random">Questions will be displayed in a random order to each student in the whole test</small>
-
-    <div class="inputLabel">
-      <div class="col-auto labelName">
-        <label for="batchSelect">Select Batch:</label>
-      </div>
+    <div>
       <mat-form-field appearance="outline" class="w-100 inputbox">
-        <mat-label>Select Batch</mat-label>
-        <mat-select id="batches">
-          <mat-option value="one">ILP 01</mat-option>
-          <mat-option value="two">ILP 02</mat-option>
-          <mat-option value="three">ILP 03</mat-option>
-          <mat-option value="four">ILP 04</mat-option>
-        </mat-select>
+        <mat-label>Enter the name of your test</mat-label>
+        <input matInput placeholder="Ex. Soft Skills" formControlName="assessmentName" required>
       </mat-form-field>
+      <small id="testname-help" class="details">This name will be visible to students</small>
     </div>
+  </div>
 
-    <div class="inputLabel">
-      <div class="col-auto labelName">
-        <label for="schedule">Schedule:</label>
-      </div>
-      <div>
-        <label for="from">From:</label>
-        <mat-form-field  appearance="outline" class="w-100 inputbox from-to">
-          <mat-label>Start Date</mat-label>
-          <input  matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="secondCtrl" required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-100 inputbox from-to">
-          <mat-label>Start Time</mat-label>
-          <input matInput type="time" placeholder="Choose time" 
-                 formControlName="timeCtrl" required>
-        </mat-form-field>
-
-
-
-        <label for="from">To:</label>
-<mat-form-field appearance="outline" class="w-100 inputbox from-to">
-<mat-label>End Date</mat-label>
-<input matInput [matDatepicker]="endPicker"  placeholder="Choose a date" formControlName="endDateCtrl" required>
-<mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-<mat-datepicker #endPicker></mat-datepicker>
-</mat-form-field>
-
-<mat-form-field appearance="outline" class="w-100 inputbox from-to">
-<mat-label>End Time</mat-label>
-<input matInput type="time" placeholder="Choose time" formControlName="endTimeCtrl" required>
-</mat-form-field>
-
-        <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
-      </div>
+  <div class="inputLabel">
+    <div class="col-auto labelName">
+      <label for="testDuration">Test Duration:</label>
     </div>
-
-    <div class="checkboxLabel">
-      <div class="col-auto labelName">
-        <label for="display">Display result to trainees:</label>
-      </div>
-      <mat-checkbox class="example-margin"></mat-checkbox>
+    <div>
+      <mat-form-field appearance="outline" class="w-100 inputbox">
+        <mat-label>Enter the duration of test</mat-label>
+        <input matInput placeholder="Ex. 01:30:00" formControlName="assessmentDuration" required>
+      </mat-form-field>
+      <small id="testduration-help" class="details">Students will only have the set time to complete the whole test. The time limit is entered in the format (hours : minutes : seconds)</small>
     </div>
+  </div>
 
-    <div class="checkboxLabel">
-      <div class="col-auto labelName">
-        <label for="submit">Enable Submit:</label>
-      </div>
-      <mat-checkbox class="example-margin">Submit</mat-checkbox>
+  <div class="checkboxLabel">
+    <div class="col-auto labelName">
+      <label for="randomize">Randomize Questions:</label>
     </div>
-  </form>
+    <mat-checkbox formControlName="canRandomizeQuestion" class="example-margin">Whole Test</mat-checkbox>
+    <small id="randomize-help" class="details-random">Questions will be displayed in a random order to each student in the whole test</small>
+  </div>
 
- 
-<!-- </mat-step> -->
+  <div class="inputLabel">
+    <div class="col-auto labelName">
+      <label for="batchSelect">Select Batch:</label>
+    </div>
+    <mat-form-field appearance="outline" class="w-100 inputbox">
+      <mat-label>Select Batch</mat-label>
+      <mat-select id="batches" formControlName="batchId">
+        <mat-option value="one">ILP 01</mat-option>
+        <mat-option value="two">ILP 02</mat-option>
+        <mat-option value="three">ILP 03</mat-option>
+        <mat-option value="four">ILP 04</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="inputLabel">
+    <div class="col-auto labelName">
+      <label for="schedule">Schedule:</label>
+    </div>
+    <div>
+      <label for="from">From:</label>
+      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="startDate" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+        <mat-label>Start Time</mat-label>
+        <input matInput type="time" placeholder="Choose time" formControlName="startTime" required>
+      </mat-form-field>
+
+      <label for="from">To:</label>
+      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endPicker" placeholder="Choose a date" formControlName="endDate" required>
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+        <mat-label>End Time</mat-label>
+        <input matInput type="time" placeholder="Choose time" formControlName="endTime" required>
+      </mat-form-field>
+
+      <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
+    </div>
+  </div>
+
+  <div class="checkboxLabel">
+    <div class="col-auto labelName">
+      <label for="display">Display result to trainees:</label>
+    </div>
+    <mat-checkbox formControlName="canDisplayResult" class="example-margin"></mat-checkbox>
+  </div>
+
+  <div class="checkboxLabel">
+    <div class="col-auto labelName">
+      <label for="submit">Enable Submit:</label>
+    </div>
+    <mat-checkbox formControlName="canSubmitBeforeEnd" class="example-margin">Submit</mat-checkbox>
+  </div>
+</form>

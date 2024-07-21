@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Validators, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Validators, FormBuilder, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -35,16 +35,36 @@ import { MatNativeDateModule } from '@angular/material/core';
 export class ScheduleComponent {
   @Input()
   questions: any[] = [];
-
+  assessmentId: string = '';
+  secondFormGroup!: FormGroup;
   isSidebarCollapsed: boolean = false;
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
  
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder) {
+    console.log(localStorage.getItem("assessmentId"));
+
+    this.secondFormGroup = this._formBuilder.group({
+      batchId: ['', Validators.required],
+      assessmentId: [0, Validators.required],
+      scheduledDate: [new Date(), Validators.required],
+      assessmentDuration: ['00:00:00', Validators.required],
+      startDate: [new Date(), Validators.required],
+      endDate: [new Date(), Validators.required],
+      startTime: ['00:00', Validators.required],
+      endTime: ['00:00', Validators.required],
+      canRandomizeQuestion: [false],
+      canDisplayResult: [false],
+      canSubmitBeforeEnd: [false]
+    });
+  }
+
+  logFormValues() {
+    const formValues = this.secondFormGroup.value;
+    const logData = {
+      ...formValues,
+      assessmentId : parseInt(localStorage.getItem("assessmentId") as string)
+    };
+    return logData;
+  }
 
   onToggleSidebar(collapsed: boolean) {
     this.isSidebarCollapsed = collapsed;

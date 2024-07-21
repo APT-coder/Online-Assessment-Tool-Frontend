@@ -8,6 +8,19 @@
     </div>
     <div class="col-10">
       <mat-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="startFormGroup">
+          <button *ngIf="showScrollToTopButton" mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+          </button>
+          <form [formGroup]="startFormGroup">
+            <ng-template matStepLabel>Upload</ng-template>
+            <app-file-upload (uploadSuccess)="completeStep()"></app-file-upload>
+          </form>
+          <button *ngIf="showScrollToBottomButton" mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+        </mat-step>
+
         <mat-step [stepControl]="firstFormGroup">
           <button *ngIf="showScrollToTopButton" mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
             <mat-icon>keyboard_arrow_up</mat-icon>
@@ -29,8 +42,28 @@
           </button>
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Edit Assessment</ng-template>
-            <app-assessment-edit [questions]="editQuestions"></app-assessment-edit>
+
+            <div class="inputLabel" *ngIf="!assessmentCreated">
+              <div class="col-auto labelName">
+                <label for="testName">Test Name:</label>
+              </div>
+              <div>
+                <mat-form-field appearance="outline" class="w-100 inputbox">
+                  <mat-label>Enter the name of your test</mat-label>
+                  <input matInput placeholder="Ex. Soft Skills" #testNameInput required>
+                </mat-form-field>
+                <small id="testname-help" class="details">
+                  This name will be visible to students
+                </small>
+              </div>
+              <div class="form-group">
+                <button mat-button (click)="createAssessment(testNameInput.value)">Create Assessment</button>
+              </div>
+            </div>
+
+            <app-assessment-edit *ngIf="assessmentCreated" [questions]="editQuestions"></app-assessment-edit>
             <div class="fixed-buttons">
+              <button mat-button><app-button-active (buttonClick)="logQuestions()">Save Questions</app-button-active></button>
               <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
               <button mat-button matStepperNext><app-button-active>Next</app-button-active></button>
             </div>
