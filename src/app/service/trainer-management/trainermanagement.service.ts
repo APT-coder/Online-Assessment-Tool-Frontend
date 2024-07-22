@@ -31,20 +31,20 @@ export class TrainermanagementService {
     }
   
     getAllRoles(): Observable<ApiResponse<Role[]>> {
-      return this.http.get<ApiResponse<Role[]>>(`https://localhost:7120/api/Roles/GetRoles`);
+      return this.http.get<ApiResponse<Role[]>>(`https://localhost:7120/Roles/GetRoles`);
     }
   
     createRole(roleData: any): Observable<ApiResponse<Role>> {
-      return this.http.post<ApiResponse<Role>>(`https://localhost:7120/api/Roles/PostRole`, roleData);
+      return this.http.post<ApiResponse<Role>>(`https://localhost:7120/Roles/PostRole`, roleData);
     }
 
 
     getRoleById(id: number): Observable<ApiResponse<Role>> {
-      return this.http.get<ApiResponse<Role>>(`https://localhost:7120/api/Roles/GetRole/${id}`);
+      return this.http.get<ApiResponse<Role>>(`https://localhost:7120/Roles/GetRole/${id}`);
     }
   
   deleteRole(roleId: number): Observable<void> {
-    return this.http.delete<void>(`https://localhost:7120/api/Roles/DeleteRole/${roleId}`);
+    return this.http.delete<void>(`https://localhost:7120/Roles/DeleteRole/${roleId}`);
   }
   
   
@@ -55,7 +55,7 @@ export class TrainermanagementService {
     return this.http.post<any>(`https://localhost:7120/User/CreateUser/CreateUser`, userData);
   }
   getBatches(): Observable<ApiResponse<Batch[]>> {
-    return this.http.get<ApiResponse<Batch[]>>(`https://localhost:7120/api/Batch`);
+    return this.http.get<ApiResponse<Batch[]>>(`https://localhost:7120/Batch/GetBatches`);
   }
   getUsersByRoleName(roleName: string): Observable<any> {
     return this.http.get<any>(`https://localhost:7120/User/GetUsersByRoleName/byRole/${roleName}`);
