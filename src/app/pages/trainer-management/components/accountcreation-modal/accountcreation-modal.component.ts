@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -7,69 +7,225 @@ import { AvatarModule } from 'primeng/avatar';
 import { PasswordModule } from 'primeng/password';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Role } from '../../../../../models/role.interface';
-import { Permission } from '../../../../../models/permission.interface';
+import { Batch, TrainermanagementService } from '../../../../service/trainer-management/trainermanagement.service';
+import { CalendarModule } from 'primeng/calendar';
+import { SelectItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import { User } from '../../../../../models/user.interface';
 
 @Component({
   selector: 'app-accountcreation-modal',
   standalone: true,
-  imports: [DialogModule,
+  imports: [
+    DialogModule,
     ButtonModule, 
     InputTextModule,
     DropdownModule,
-    FormsModule,
     ReactiveFormsModule,
     PasswordModule,
-     AvatarModule,
+    AvatarModule,
     CheckboxModule,
-  MultiSelectModule,
-CommonModule],
+    MultiSelectModule,
+    CalendarModule,
+    CommonModule
+  ],
   templateUrl: './accountcreation-modal.component.html',
-  styleUrl: './accountcreation-modal.component.scss'
+  styleUrls: ['./accountcreation-modal.component.scss']
 })
-export class AccountcreationModalComponent   implements OnInit {
+export class AccountcreationModalComponent implements OnChanges, OnInit {
   @Input() visible: boolean = false;
-  @Output() visibleChange = new EventEmitter<boolean>(); 
-  trainerForm!: FormGroup;
-  roles: any[] = []; 
-  batches: any[] = []; 
-  permissions: any[] = []; 
+  @Output() visibleChange = new EventEmitter<boolean>();
+  @Input() mode: 'add' | 'edit' | 'delete' = 'add';
+  @Input() userData: any;
+  @Output() close = new EventEmitter<void>();
 
-  constructor(private fb: FormBuilder) {}
+  userForm: FormGroup;
+  userTypes: SelectItem[] = [
+    { label: 'Select User Type', value: null },
+    { label: 'Trainer', value: 'Trainer' },
+    { label: 'Trainee', value: 'Trainee' }
+  ];
+  roles: SelectItem[] = [];
+  batches: SelectItem[] = [];
+  roleMap: Map<string, number> = new Map(); // role name to id
+  batchMap: Map<string, number> = new Map(); 
 
-  ngOnInit() {
-    this.trainerForm = this.fb.group({
-      name: [''],
-      email: [''],
-      phone: [''],
-      role: [''],
+  constructor(private fb: FormBuilder, private userService: TrainermanagementService) {
+    this.userForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      usertype: [null, Validators.required],
       password: [''],
+      role: [null],
       selectedBatches: [[]],
-      permissions: this.fb.array([])
+      joiningDate: [''],
+      batch: [null]
     });
-
-    this.addPermissionsControls();
   }
 
-  addPermissionsControls() {
-    const permissionsArray = this.trainerForm.get('permissions') as FormArray;
-    this.permissions.forEach(() => {
-      permissionsArray.push(new FormControl(false));
+  ngOnInit() {
+    this.loadRoles();
+    this.loadBatches();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['userData'] && this.userData) {
+      this.userForm.patchValue(this.userData);
+      this.onUserTypeChange(this.userData.usertype);
+    }
+  }
+
+  loadRoles(): void {
+    this.userService.getAllRoles().subscribe(response => {
+      if (response.isSuccess) {
+        this.roles = this.mapRolesToSelectItems(response.result);
+        this.roleMap = new Map(response.result.map(role => [role.roleName, role.id]));
+      } else {
+        console.warn('Error loading roles:', response.message);
+      }
+    }, error => {
+      console.error('Error fetching roles', error);
     });
+  }
+  mapRolesToSelectItems(roles: Role[]): SelectItem[] {
+    return roles.map(role => ({
+      label: role.roleName,
+      value: role.id // Ensure this is the role ID
+    }));
+  }
+  selectedRoleId = 0;
+  onRoleChange(event: any) {
+    return this.selectedRoleId = event.value; // Extract the selected value
+  
+  }
+  traineeBatch = 0;
+  OnBatchSelect(event:any)
+  {
+    return this.traineeBatch = event.value;
+  }
+  
+  loadBatches(): void {
+    this.userService.getBatches().subscribe(
+      response => {
+        if (response.isSuccess) {
+          this.batches = response.result.map((batch: Batch) => ({
+            label: batch.batchname,
+            value: batch.batchid
+          }));
+          this.batchMap = new Map(response.result.map(batch => [batch.batchname, batch.batchid]));
+        } else {
+          console.warn('Batches loaded with isSuccess as false:', response.message);
+          this.batches = response.result.map((batch: Batch) => ({
+            label: batch.batchname,
+            value: batch.batchid
+          }));
+          this.batchMap = new Map(response.result.map(batch => [batch.batchname, batch.batchid]));
+        }
+      },
+      error => {
+        console.error('Error fetching batches:', error.message);
+      }
+    );
+  }
+  selectedBatchIds:number[] = []
+  onBatchChange(event: any) {
+     this.selectedBatchIds =event.value.map((batch: { label: string, value: number }) => batch.value);
+     console.log('Selected Batch IDs:', this.selectedBatchIds);
+    // Perform additional logic if needed
+  }
+
+  onUserTypeChange(selectedType: string) {
+    const form = this.userForm;
+    if (selectedType === 'Trainer') {
+      form.get('password')?.setValidators([Validators.required]);
+      form.get('role')?.setValidators([Validators.required]);
+      form.get('selectedBatches')?.setValidators([Validators.required]);
+      form.get('batch')?.clearValidators();
+    } else if (selectedType === 'Trainee') {
+      form.get('password')?.clearValidators();
+      form.get('role')?.clearValidators();
+      form.get('selectedBatches')?.clearValidators();
+      form.get('batch')?.setValidators([Validators.required]);
+    }
+    form.get('joiningDate')?.setValidators([Validators.required]);
+    form.get('password')?.updateValueAndValidity();
+    form.get('role')?.updateValueAndValidity();
+    form.get('selectedBatches')?.updateValueAndValidity();
+    form.get('batch')?.updateValueAndValidity();
+    form.get('joiningDate')?.updateValueAndValidity();
+  }
+
+  generateUUID(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c: string): string {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  saveUser() {
+    if (this.userForm.valid) {
+      const userData = this.userForm.value;
+      
+      const batchId = this.batches.find(batch => batch.label === userData.batch)?.value ?? null;
+  
+      const apiPayload = {
+        createUserDTO: {
+          username: userData.username,
+          email: userData.email,
+          phone: userData.phone,
+          isAdmin: false,
+          userType: userData.usertype === 'Trainer' ? 1 : 2,
+          uuid: this.generateUUID()
+        },
+        trainerDTO: {
+          joinedOn: userData.joiningDate,
+          password: userData.password,
+          roleId: this.selectedRoleId 
+        },
+        traineeDTO: {
+          joinedOn: userData.joiningDate,
+          batchId: this.traineeBatch
+        },
+        batchIds: this.selectedBatchIds
+        
+      };
+  
+      console.log('API Payload:', apiPayload); // Debug the payload
+  
+      if (this.mode === 'edit') {
+        
+      } else if (this.mode === 'add') {
+        this.userService.createUser(apiPayload).subscribe(
+          () => {
+            this.closeModal();
+          },
+          error => {
+            console.error('Error creating user:', error);
+          }
+        );
+      }
+    } else {
+      this.userForm.markAllAsTouched();
+    }
+  }
+  
+
+  deleteUser() {
+    if (this.userData) {
+      // Call service to delete user
+      // this.userService.deleteUser(this.userData.id).subscribe(() => {
+      //   this.closeModal();
+      // });
+    }
   }
 
   closeModal() {
     this.visible = false;
-  }
-
-  saveTrainer() {
-    if (this.trainerForm.valid) {
-      const trainerData = this.trainerForm.value;
-      console.log(trainerData);
-      // Implement your save logic here
-      this.closeModal();
-    }
+    this.visibleChange.emit(this.visible);
+    this.userForm.reset();
   }
 }
