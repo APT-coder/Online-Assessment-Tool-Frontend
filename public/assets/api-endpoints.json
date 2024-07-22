@@ -24,6 +24,7 @@
   "assessments": {
     "getAll": "/Assessments",
     "getById": "/Assessments/{id}",
+    "getTable": "/Assessment/GetAssessmentTable/AssessmentTable",
     "create": "/Assessment/CreateAssessment",
     "addQuestion": "/Assessment/AddQuestionToAssessment/{id}/questions",
     "update": "/Assessments/{id}",

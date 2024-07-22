@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiEndpointService } from '../api-service/api-endpoint.service';
 
 interface AssessmentTableDTO {
   assessmentName: string;
@@ -14,11 +15,12 @@ interface AssessmentTableDTO {
   providedIn: 'root'
 })
 export class TrainerDashboardService {
-  private apiUrl = 'https://localhost:7120/api/Assessment/dtos';
+  private apiUrl = 'https://localhost:7120/Assessment/GetAssessmentTable/AssessmentTable';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apiEndpointService: ApiEndpointService) {}
 
   getAssessments(): Observable<AssessmentTableDTO[]> {
+    //const url = this.apiEndpointService.getEndpoint('assessments', 'getTable');
     return this.http.get<AssessmentTableDTO[]>(this.apiUrl);
   }
 }
