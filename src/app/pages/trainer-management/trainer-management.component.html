@@ -11,7 +11,7 @@
       <div class="d-flex">
         <app-button-active [content]="'Add Role'" (buttonClick)="toggleCard()"></app-button-active>
         &nbsp;&nbsp;
-        <app-button-active [content]="'Add Trainer'" (buttonClick)="ShowTrainer()"></app-button-active>
+        <app-button-active [content]="'Add User'" (buttonClick)="ShowTrainer()"></app-button-active>
       </div>
       <br /><br />
 
@@ -23,10 +23,35 @@
       (roleSaved)="onRoleSaved()">
     </app-rolecreation-card>
     
-    <app-accountcreation-modal 
+    <!-- <app-accountcreation-modal 
     *ngIf="isAddTrainer" 
     [(visible)]="isAddTrainer">
-  </app-accountcreation-modal>
+  </app-accountcreation-modal> -->
+<!-- For adding a trainer -->
+<app-accountcreation-modal 
+  *ngIf="isAddTrainer" 
+  [(visible)]="isAddTrainer"
+  [mode]="'add'"
+  (close)="closeModal()">
+</app-accountcreation-modal>
+
+<!-- For editing a trainer -->
+<app-accountcreation-modal 
+  *ngIf="isEditTrainer" 
+  [(visible)]="isEditTrainer"
+  [mode]="'edit'"
+  [userData]="selectedUser"
+  (close)="closeModal()">
+</app-accountcreation-modal>
+
+<!-- For deleting a trainer -->
+<app-accountcreation-modal 
+  *ngIf="isDeleteTrainer" 
+  [(visible)]="isDeleteTrainer"
+  [mode]="'delete'"
+  [userData]="selectedUser"
+  (close)="closeModal()">
+</app-accountcreation-modal>
 
 
       <br /><br />

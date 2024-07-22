@@ -1,5 +1,6 @@
 export interface Permission {
-  permissionId: number;
+  id: number;
+  permissionName: string;
   description: string;
   isSelected?: boolean;
 }

@@ -27,7 +27,7 @@ import { TrainerTableComponent } from "./components/trainer-table/trainer-table.
 })
 export class TrainerManagementComponent {
 
-    isAddTrainer: boolean = false;
+    // isAddTrainer: boolean = false;
   isCardVisible: boolean = false;
   isSidebarCollapsed: boolean = false;
   selectedRole: Role = { id: 0, roleName: '', permissions: [] };
@@ -72,6 +72,34 @@ export class TrainerManagementComponent {
   }
   onToggleSidebar(collapsed: boolean) {
     this.isSidebarCollapsed = collapsed;
+  }
+  isAddTrainer: boolean = false;
+  isEditTrainer: boolean = false;
+  isDeleteTrainer: boolean = false;
+  selectedUser: any = null; // The user data to edit or delete
+
+  // Method to open modal for adding a new trainer
+  addTrainer() {
+    this.isAddTrainer = true;
+    this.selectedUser = null; // Clear selected user data
+  }
+  editTrainer(user: any) {
+    this.isEditTrainer = true;
+    this.selectedUser = user; // Set selected user data for editing
+  }
+
+  // Method to open modal for deleting a trainer
+  deleteTrainer(user: any) {
+    this.isDeleteTrainer = true;
+    this.selectedUser = user; // Set selected user data for deletion
+  }
+
+  // Method to close the modal
+  closeModal() {
+    this.isAddTrainer = false;
+    this.isEditTrainer = false;
+    this.isDeleteTrainer = false;
+    this.selectedUser = null;
   }
 
 }

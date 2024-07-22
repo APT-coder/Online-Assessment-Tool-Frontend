@@ -1,14 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { Role } from '../../../models/role.interface';
 import { Permission } from '../../../models/permission.interface';
+import { User } from '../../../models/user.interface'; 
 
-interface ApiResponse {
+export interface ApiResponse<T> {
   isSuccess: boolean;
-  result: Role[];
+  result: T;
   statusCode: number;
   message: string[];
+}
+export interface Batch {
+  batchid: number;
+  batchname: string;
 }
 
 
@@ -18,30 +23,60 @@ interface ApiResponse {
 
 export class TrainermanagementService {
 
-
-    constructor(private http: HttpClient) { }
-
-    getPermissions(): Observable<Permission[]> {
-      return this.http.get<Permission[]>(`https://localhost:7095/api/Permission`);
-    }
-
-    getAllRoles(): Observable<Role[]> {
-      return this.http.get<ApiResponse>(`https://localhost:7120/api/Roles/GetRoles`)
-        .pipe(
-          map(response => response.result)
-        );
-    }
-
-    createRoleWithPermissions(role: Role): Observable<Role> {
-      return this.http.post<Role>(`https://localhost:7095/api/Roles`, role);
-    }
-
-    deleteRole(roleId: number): Observable<void> {
-      return this.http.delete<void>(`https://localhost:7095/api/Roles/${roleId}`);
-    }
-
-    updateRole(roleId: number, role: Role): Observable<Role> {
-      return this.http.put<Role>(`https://localhost:7095/api/Roles/${roleId}`, role);
-    }
-  }
  
+    constructor(private http: HttpClient) { }
+  
+    getPermissions(): Observable<ApiResponse<Permission[]>> {
+      return this.http.get<ApiResponse<Permission[]>>(`https://localhost:7120/Permission/GetAllPermissions`);
+    }
+  
+    getAllRoles(): Observable<ApiResponse<Role[]>> {
+      return this.http.get<ApiResponse<Role[]>>(`https://localhost:7120/api/Roles/GetRoles`);
+    }
+  
+    createRole(roleData: any): Observable<ApiResponse<Role>> {
+      return this.http.post<ApiResponse<Role>>(`https://localhost:7120/api/Roles/PostRole`, roleData);
+    }
+
+
+    getRoleById(id: number): Observable<ApiResponse<Role>> {
+      return this.http.get<ApiResponse<Role>>(`https://localhost:7120/api/Roles/GetRole/${id}`);
+    }
+  
+  deleteRole(roleId: number): Observable<void> {
+    return this.http.delete<void>(`https://localhost:7120/api/Roles/DeleteRole/${roleId}`);
+  }
+  
+  
+    updateRole(roleId: number, role: Role): Observable<Role> {
+      return this.http.put<Role>(`https://localhost:7120/api/Roles/PutRole/${roleId}`, role);
+   }
+   createUser(userData: any): Observable<any> {
+    return this.http.post<any>(`https://localhost:7120/User/CreateUser/CreateUser`, userData);
+  }
+  getBatches(): Observable<ApiResponse<Batch[]>> {
+    return this.http.get<ApiResponse<Batch[]>>(`https://localhost:7120/api/Batch`);
+  }
+  getUsersByRoleName(roleName: string): Observable<any> {
+    return this.http.get<any>(`https://localhost:7120/User/GetUsersByRoleName/byRole/${roleName}`);
+  }
+  deleteUser(id: number): Observable<void> {
+    const url = `https://localhost:7120/User/DeleteUser/${id}`;
+    return this.http.delete<void>(url);
+  }
+
+  updateuser(userId: number): Observable<any> {
+    return this.http.put<any>(`https://localhost:7120/User/UpdateUser/user/${userId}`,userId);
+  }
+
+  getTrainerDetails(userId: number): Observable<any> {
+    return this.http.get<any>(`https://localhost:7120/User/GetTrainerDetails/trainer/${userId}`);
+  }
+
+  getTraineeDetails(userId: number): Observable<any> {
+    return this.http.get<any>(`https://localhost:7120/User/GetTraineeDetails/trainee/${userId}`);
+  }
+}
+  
+  
+  

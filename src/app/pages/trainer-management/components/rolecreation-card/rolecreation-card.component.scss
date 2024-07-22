@@ -1,49 +1,49 @@
 .card {
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2), inset 0 4px 4px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    background-color: #fff;
-  }
-  
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+ box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2), inset 0 4px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  background-color: #fff;
+}
+
 //   .card-header {
 //     background-color: #f8f9fa;
 //     border-bottom: 1px solid #ddd;
 //     box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.2);
 //   }
-  
-  .card-body h6 {
-    margin-top: 1rem;
-  }
-  
-  .hr {
-    margin: 0.5rem 0;
-  }
-  
-  .form-check-label {
-    margin-left: 0.5rem;
-  }
-  .custom-checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #7B62BD;
-    border-radius: 3px;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    outline: none;
-    cursor: pointer;
-  }
-  
-  .custom-checkbox:checked {
-    background-color: #7B62BD;
-  }
-  
-  .custom-checkbox:checked::before {
-    content: '✓';
-    display: block;
-    color: white;
-    font-size: 14px;
-    text-align: center;
-    line-height: 16px;
-  }
+
+.card-body h6 {
+  margin-top: 1rem;
+}
+
+.hr {
+  margin: 0.5rem 0;
+}
+
+.form-check-label {
+  margin-left: 0.5rem;
+}
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #7B62BD;
+  border-radius: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked {
+  background-color: #7B62BD;
+}
+
+.custom-checkbox:checked::before {
+  content: '✓';
+  display: block;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  line-height: 16px;
+}

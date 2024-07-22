@@ -19,18 +19,21 @@
   <div class="card-body">
     <h6>Permissions</h6>
     <hr>
-    <div class="row" *ngFor="let permission of permissions; let i = index">
+    <div class="row" *ngFor="let permission of permissions">
       <div class="col-5">
         <div class="form-check">
-          <input class="form-check-input custom-checkbox" type="checkbox" 
+          <input class="form-check-input custom-checkbox" type="checkbox"
+                 [value]="permission.id" 
                  [(ngModel)]="permission.isSelected"
-                 (change)="togglePermission(permission)">
+                 (change)="onCheckboxChange($event)">
           <label class="form-check-label">
             {{ permission.description }}
           </label>
         </div>
       </div>
     </div>
+
+    <!-- Optional validation message -->
     <div *ngIf="role.permissions.length === 0" class="text-danger mt-3">
       Please select at least one permission.
     </div>
