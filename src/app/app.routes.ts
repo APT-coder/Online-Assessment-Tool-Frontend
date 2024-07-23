@@ -11,6 +11,7 @@ import { TrainerDashboardComponent } from './pages/trainer-dashboard/trainer-das
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { MsalGuard } from '@azure/msal-angular';
 import { AuthComponent } from './components/auth/auth.component';
+import { AssessmentPerformanceComponent } from './pages/assessment/components/assessment-performance/assessment-performance.component';
 
 export const routes: Routes = [
     {
@@ -40,6 +41,9 @@ export const routes: Routes = [
     },
     {
         path: 'trainer-management', component: TrainerManagementComponent
+    },
+    {
+        path: 'performance/:id', component:AssessmentPerformanceComponent
     },
     {
         path: '**', component: NotFoundComponent
