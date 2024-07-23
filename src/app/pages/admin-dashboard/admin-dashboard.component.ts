@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { ListTableComponent } from './components/list-table/list-table.component';
 import { PieDiagramComponent } from './components/pie-diagram/pie-diagram.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { TableDashboardComponent } from './components/table-dashboard/table-dashboard.component';
 import { ProfileCardComponent } from '../../components/profile-card/profile-card.component';
-import { ProfileModalComponent } from '../../components/profile-modal/profile-modal.component';
+import { AdminDashboardService } from '../../service/admin-dashboard/admin-dashboard.service'; 
+import { AssessmentOverview } from '../../../models/assessmentOverview.interface'; 
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../service/user/user.service';
-
+import { ProfileModalComponent } from '../../components/profile-modal/profile-modal.component';
 interface DropdownOption {
   name: string;
   code: string;
@@ -17,214 +17,34 @@ interface DropdownOption {
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [SidebarComponent, ListTableComponent, PieDiagramComponent, DropdownComponent, TableDashboardComponent, ProfileCardComponent, ProfileModalComponent, CommonModule],
+  imports: [SidebarComponent, ListTableComponent, PieDiagramComponent, DropdownComponent, TableDashboardComponent, ProfileCardComponent,CommonModule, ProfileModalComponent],
   templateUrl: './admin-dashboard.component.html',
+
   styleUrl: './admin-dashboard.component.scss'
 })
-export class AdminDashboardComponent {
-  isSidebarCollapsed: boolean = false;
-    selectedYear: string = '';
-    selectedILP: string = '';
-    selectedBatch: string = '';
+export class AdminDashboardComponent  implements OnInit {
+  isSidebarCollapsed = false;
+  selectedYear = '';
+  selectedILP = '';
+  selectedBatch = '';
+  selectedAssessmentId: number | null = null;
 
-    isModalVisible = false;
+  tableData: AssessmentOverview[] = [];
+  yearOptions: DropdownOption[] = [];
+  ilpOptions: DropdownOption[] = [];
+  batchOptions: DropdownOption[] = [];
 
-    constructor(private userService: UserService) {}
+  isModalVisible = false;
 
   showModal() {
     this.isModalVisible = true;
     document.body.classList.add('overlay');
   }
 
-    tableData = [
-      {
-        batch: 'Batch 1',
-        year: '2023-24',
-        category: 'ILP',
-        totalLearners: 30,
-        assessments: [
-          {
-            assessmentName: 'OOPS',
-            trainerName: 'John Doe',
-            assessmentDate: '2024-01-15',
-            
-            maximumScore: 100,
-            highestScore: 95,
-            lowestScore: 60
-          },
-          {
-            assessmentName: 'Python',
-            trainerName: 'Jane Smith',
-            assessmentDate: '2024-02-20',
-          
-            maximumScore: 100,
-            highestScore: 90,
-            lowestScore: 50
-          },
-          {
-            assessmentName: 'Java',
-            trainerName: 'Alice Johnson',
-            assessmentDate: '2024-03-10',
-            
-            maximumScore: 100,
-            highestScore: 85,
-            lowestScore: 55
-          },
-          {
-            assessmentName: 'DevOps',
-            trainerName: 'Bob Brown',
-            assessmentDate: '2024-04-05',
-           
-            maximumScore: 100,
-            highestScore: 92,
-            lowestScore: 70
-          }
-        ]
-      },
-      {
-        batch: 'Batch 2',
-        year: '2022-23',
-        category: 'ILP',
-        totalLearners: 25,
-        assessments: [
-          {
-            assessmentName: 'DBMS',
-            trainerName: 'Carol White',
-            assessmentDate: '2023-11-15',
-           
-            maximumScore: 100,
-            highestScore: 85,
-            lowestScore: 45
-          },
-          {
-            assessmentName: 'Scrum',
-            trainerName: 'David Green',
-            assessmentDate: '2023-12-20',
-           
-            maximumScore: 100,
-            highestScore: 80,
-            lowestScore: 40
-          },
-          {
-            assessmentName: 'Soft Skills',
-            trainerName: 'Eve Black',
-            assessmentDate: '2024-01-10',
-           
-            maximumScore: 100,
-            highestScore: 90,
-            lowestScore: 50
-          },
-          {
-            assessmentName: 'OOPS',
-            trainerName: 'John Doe',
-            assessmentDate: '2024-02-05',
-           
-            maximumScore: 100,
-            highestScore: 95,
-            lowestScore: 60
-          }
-        ]
-      },
-      {
-        batch: 'Batch 3',
-        year: '2021-22',
-        category: 'ILP',
-        totalLearners: 20,
-        assessments: [
-          {
-            assessmentName: 'Python',
-            trainerName: 'Jane Smith',
-            assessmentDate: '2022-10-20',
-           
-            maximumScore: 100,
-            highestScore: 90,
-            lowestScore: 50
-          },
-          {
-            assessmentName: 'Java',
-            trainerName: 'Alice Johnson',
-            assessmentDate: '2022-11-05',
-          
-            maximumScore: 100,
-            highestScore: 88,
-            lowestScore: 55
-          },
-          {
-            assessmentName: 'DevOps',
-            trainerName: 'Bob Brown',
-            assessmentDate: '2022-11-25',
-           
-            maximumScore: 100,
-            highestScore: 92,
-            lowestScore: 70
-          },
-          {
-            assessmentName: 'DBMS',
-            trainerName: 'Carol White',
-            assessmentDate: '2022-12-10',
-          
-            maximumScore: 100,
-            highestScore: 85,
-            lowestScore: 45
-          }
-        ]
-      },
-      {
-        batch: 'Batch 4',
-        year: '2020-21',
-        category: 'ILP',
-        totalLearners: 15,
-        assessments: [
-          {
-            assessmentName: 'Scrum',
-            trainerName: 'David Green',
-            assessmentDate: '2021-09-15',
-            
-            maximumScore: 100,
-            highestScore: 80,
-            lowestScore: 40
-          },
-          {
-            assessmentName: 'Soft Skills',
-            trainerName: 'Eve Black',
-            assessmentDate: '2021-10-10',
-           
-            maximumScore: 100,
-            highestScore: 90,
-            lowestScore: 50
-          },
-          {
-            assessmentName: 'OOPS',
-            trainerName: 'John Doe',
-            assessmentDate: '2021-11-05',
-           
-            maximumScore: 100,
-            highestScore: 95,
-            lowestScore: 60
-          },
-          {
-            assessmentName: 'Python',
-            trainerName: 'Jane Smith',
-            assessmentDate: '2021-12-20',
-        
-            maximumScore: 100,
-            highestScore: 90,
-            lowestScore: 50
-          }
-        ]
-      }
-    ];
-  
-  
-    filteredData = this.tableData;
-
-  yearOptions: DropdownOption[] = [];
-  ilpOptions: DropdownOption[] = [];
-  batchOptions: DropdownOption[] = [];
+  constructor(private assessmentService: AdminDashboardService) {}
 
   ngOnInit() {
-    this.populateDropdownOptions();
-    console.log(localStorage.getItem("msalKey"));
+    this.fetchAssessments();
   }
 
   populateDropdownOptions() {
@@ -232,15 +52,11 @@ export class AdminDashboardComponent {
     const ilps = new Set<string>();
     const batches = new Set<string>();
 
-    this.tableData.forEach(data => {
-      years.add(data.year);
-      ilps.add(data.category);
-      batches.add(data.batch);
+    this.tableData.forEach(assessment => {
+      years.add(new Date(assessment.date).getFullYear().toString());
     });
 
     this.yearOptions = Array.from(years).map(year => ({ name: year, code: year }));
-    this.ilpOptions = Array.from(ilps).map(ilp => ({ name: ilp, code: ilp }));
-    this.batchOptions = Array.from(batches).map(batch => ({ name: batch, code: batch }));
   }
 
   onToggleSidebar(collapsed: boolean) {
@@ -263,10 +79,43 @@ export class AdminDashboardComponent {
   }
 
   filterData() {
-    this.filteredData = this.tableData.filter(data =>
-      (this.selectedYear ? data.year === this.selectedYear : true) &&
-      (this.selectedILP ? data.category === this.selectedILP : true) &&
-      (this.selectedBatch ? data.batch === this.selectedBatch : true)
+    this.tableData = this.tableData.filter(assessment =>
+      (!this.selectedYear || new Date(assessment.date).getFullYear().toString() === this.selectedYear)
     );
   }
-}
+
+  
+  fetchAssessments() {
+    this.assessmentService.getAllAssessmentOverviews().subscribe(
+      (data) => {
+        if (data.isSuccess) {
+          this.tableData = data.result;
+          console.log(this.tableData);
+          this.populateDropdownOptions();
+          this.initializeMostRecentAssessment(); // Initialize with the most recent assessment
+        } else {
+          console.error('Failed to fetch assessments:', data.message);
+        }
+      },
+      (error) => {
+        console.error('Error fetching assessments', error);
+      }
+    );
+  }
+
+  initializeMostRecentAssessment() {
+    if (this.tableData.length) {
+      const mostRecentAssessment = this.tableData.reduce((latest, assessment) => 
+        new Date(assessment.date) > new Date(latest.date) ? assessment : latest
+      );
+      this.selectedAssessmentId = mostRecentAssessment.assessmentId;
+    }
+  }
+
+  onAssessmentSelected(assessmentId: number) {
+    this.selectedAssessmentId = assessmentId;
+    console.log('Selected Assessment ID:', assessmentId);
+  }
+}  
+  
+

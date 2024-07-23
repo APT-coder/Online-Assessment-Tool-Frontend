@@ -35,14 +35,14 @@
 <p class="total">Total learners : 40</p>
 </div>
 
-<app-table-dashboard [tableData]="filteredData"></app-table-dashboard>
+<app-table-dashboard [tableData]="tableData" (assessmentSelected)="onAssessmentSelected($event)"></app-table-dashboard>
 
 <div class="performers">
-  <div class="chart">
-      <p class="score-analysis">Score Analysis</p>
-  <app-pie-diagram></app-pie-diagram>
+    <div class="chart">
+        <p class="score-analysis">Score Analysis</p>
+    <app-pie-diagram *ngIf="selectedAssessmentId" [assessmentId]="selectedAssessmentId"></app-pie-diagram>
 </div>
-<app-list-table batchName="Batch1" assessmentName="OOPS" performerType="top"></app-list-table>
-<app-list-table batchName="Batch1" assessmentName="OOPS" performerType="low"></app-list-table>
+<app-list-table batchName="Batch1" assessmentName="OOPS" performerType="top" *ngIf="selectedAssessmentId" [assessmentId]="selectedAssessmentId"> </app-list-table>
+<app-list-table batchName="Batch1" assessmentName="OOPS" performerType="low" *ngIf="selectedAssessmentId" [assessmentId]="selectedAssessmentId"></app-list-table>
 </div>
 </div>

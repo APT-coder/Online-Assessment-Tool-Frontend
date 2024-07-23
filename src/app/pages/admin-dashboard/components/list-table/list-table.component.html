@@ -1,20 +1,19 @@
 <div class="card">
-    <div class="card-body p-0" style="overflow-y: auto;">
-      <table class="table mb-0 ">
-        <thead>
-          <tr class="header-row">
-            <th class="header" colspan="2">{{Title}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let trainee of filteredData" >
-            <td class="name">{{ trainee.name }}</td>
-            <td class="score">{{ trainee.score }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="card-body p-0" style="overflow-y: auto;">
+    <table class="table mb-0 ">
+      <thead>
+        <tr class="header-row">
+          <th class="header" colspan="2">{{Title}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trainee of filteredData" >
+          <td class="name">{{ trainee.traineeName }}</td>
+          <td class="score">{{ trainee.score }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
-  
-  
+</div>
+
+
