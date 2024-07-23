@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiEndpointService } from '../api-service/api-endpoint.service';
 
 interface AssessmentTableDTO {
+  assessmentId: number;
   assessmentName: string;
   batchName: string;
   createdOn: string;

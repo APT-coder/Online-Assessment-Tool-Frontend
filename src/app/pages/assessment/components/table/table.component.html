@@ -1,46 +1,45 @@
 <div>
-    <div class="card">
-      <p-table class="table"
-      [value]="trainees"
-      [scrollable]="true" 
-    scrollHeight="350px">
-        <h1>Trainee Status and Marks Details</h1>
-        <ng-template pTemplate="header">
-          <tr>
-            <th>
-              <div style="display: flex; align-items: center;">
-                Trainee
-                <button (click)="showSearch = !showSearch" style="border: 0;">
-                  <i class="pi pi-angle-down"></i>
-                </button>
-                <input *ngIf="showSearch" type="text" (input)="onSearch($event)" placeholder="Search Trainee..." style="width:150px;" />
-              </div>
-            </th>
-            <th pSortableColumn="status">
-              Status <p-sortIcon field="status" />
-            </th>
-            <th pSortableColumn="marks">
-              Marks <p-sortIcon field="marks" />
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-trainee>
-          <tr>
-            <td>{{ trainee.trainee }}</td>
-            <td>
-              <p-tag 
-                [value]="trainee.status" 
-                [severity]="getSeverity(trainee.status)" />
-            </td>
-            <td>{{ trainee.marks }}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="3">No trainees found.</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
+  <div class="card">
+    <p-table class="table"
+             [value]="trainees"
+             [scrollable]="true" 
+             scrollHeight="350px">
+      <h1>Trainee Status and Marks Details</h1>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div style="display: flex; align-items: center;">
+              Trainee
+              <button (click)="showSearch = !showSearch" style="border: 0; background: none;">
+                <i class="pi pi-angle-down"></i>
+              </button>
+              <input *ngIf="showSearch" type="text" (input)="onSearch($event)" placeholder="Search Trainee..." style="width:150px; margin-left: 10px;" />
+            </div>
+          </th>
+          <th pSortableColumn="isPresent">
+            Status <p-sortIcon field="isPresent"></p-sortIcon>
+          </th>
+          <th pSortableColumn="score">
+            Marks <p-sortIcon field="score"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-trainee>
+        <tr>
+          <td>{{ trainee.traineeName }}</td>
+          <td>
+            <p-tag 
+              [value]="trainee.isPresent" 
+              [severity]="getSeverity(trainee.isPresent)"></p-tag>
+          </td>
+          <td>{{ trainee.score }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="3">No trainees found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
-  
+</div>
