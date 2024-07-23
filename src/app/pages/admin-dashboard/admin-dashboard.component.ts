@@ -7,6 +7,7 @@ import { TableDashboardComponent } from './components/table-dashboard/table-dash
 import { ProfileCardComponent } from '../../components/profile-card/profile-card.component';
 import { ProfileModalComponent } from '../../components/profile-modal/profile-modal.component';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../service/user/user.service';
 
 interface DropdownOption {
   name: string;
@@ -21,7 +22,6 @@ interface DropdownOption {
   styleUrl: './admin-dashboard.component.scss'
 })
 export class AdminDashboardComponent {
-  userId: number = 1;
   isSidebarCollapsed: boolean = false;
     selectedYear: string = '';
     selectedILP: string = '';
@@ -29,7 +29,7 @@ export class AdminDashboardComponent {
 
     isModalVisible = false;
 
-    constructor() {}
+    constructor(private userService: UserService) {}
 
   showModal() {
     this.isModalVisible = true;
@@ -224,6 +224,7 @@ export class AdminDashboardComponent {
 
   ngOnInit() {
     this.populateDropdownOptions();
+    console.log(localStorage.getItem("msalKey"));
   }
 
   populateDropdownOptions() {

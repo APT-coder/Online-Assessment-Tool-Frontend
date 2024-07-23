@@ -8,10 +8,12 @@ import { ApiEndpointService } from '../api-service/api-endpoint.service';
 })
 export class UserService {
 
+  private apiUrl = 'https://localhost:7120/Auth/GetUserRole/getUserRole';
+
   constructor(private http: HttpClient, private apiEndpointService: ApiEndpointService) {}
 
-  getUserById(userId: number): Observable<any> {
-    const url = this.apiEndpointService.getEndpoint('users', 'getById', { id: userId});
+  getUserRole(token: string): Observable<any> {
+    const url = `${this.apiUrl}/${token}`;
     return this.http.get<any>(url);
   }
 }

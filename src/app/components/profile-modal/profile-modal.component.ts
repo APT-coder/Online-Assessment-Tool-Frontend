@@ -3,7 +3,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import '@fortawesome/fontawesome-free/css/all.css';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { MsalService } from '@azure/msal-angular';
-import { UserService } from '../../service/user/user.service';
 
 @Component({
   selector: 'app-profile-modal',
@@ -13,7 +12,7 @@ import { UserService } from '../../service/user/user.service';
   imports: [CommonModule, ButtonActiveComponent]
 })
 export class ProfileModalComponent implements OnInit {
-  userId: number = 1;
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
   hoveredRow: number | null = null;
   profileImage: string = "https://i.pravatar.cc/100";
   profileDetails = [
@@ -23,18 +22,16 @@ export class ProfileModalComponent implements OnInit {
     { label: 'Phone:', value: '(123) 456-7890' }
   ];
 
-  constructor(private elementRef: ElementRef, private authService: MsalService, private userService: UserService) { }
+  constructor(private elementRef: ElementRef, private authService: MsalService) { }
 
   ngOnInit(): void {
-    this.userService.getUserById(this.userId).subscribe((response: any) => {
-      console.log(response);
-      this.profileDetails[0].value = response.username;
-      this.profileDetails[1].value = response.username;
-      this.profileDetails[2].value = response.email;
-      this.profileDetails[3].value = response.phone;
-    }, (error: any) => {
-      console.error('Error fetching user', error);
-    });
+
+    console.log(this.user);
+    
+      this.profileDetails[0].value = this.user.UserName;
+      this.profileDetails[1].value = this.user.UserName;
+      this.profileDetails[2].value = this.user.UserEmail;
+      this.profileDetails[3].value = this.user.UserPhone;
    }
 
   closeModal() {

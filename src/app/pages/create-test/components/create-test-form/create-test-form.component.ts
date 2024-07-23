@@ -54,13 +54,14 @@ export class CreateTestFormComponent implements OnInit {
   @ViewChild('messageComponent') messageComponent!: MessageServiceComponent;
   @ViewChild(ScheduleComponent) scheduleComponent!: ScheduleComponent;
 
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
 
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
   questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
   assessmentCreated!: boolean;
-  createdBy: number = 1;
+  createdBy: number = this.user.UserId;
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
   constructor(private router: Router, private assessmentService: AssessmentService, private scheduledAssessmentService: ScheduledAssessmentService) {}
 

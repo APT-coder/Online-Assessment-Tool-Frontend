@@ -35,6 +35,7 @@ export class SidebarComponent {
 
   isAdmin = false;
   isCollapsed: boolean = false;
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
 
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
@@ -44,7 +45,6 @@ export class SidebarComponent {
     this.checkUserRole();
   }
   checkUserRole() {
-    const userRole = 'admin'; 
-    this.isAdmin = userRole === 'admin';
+    this.isAdmin = this.user.UserAdmin;
   }
 }

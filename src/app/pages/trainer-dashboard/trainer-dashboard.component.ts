@@ -6,6 +6,7 @@ import { PieDiagramComponent } from './components/pie-diagram/pie-diagram.compon
 import { ProfileCardComponent } from '../../components/profile-card/profile-card.component';
 import { ProfileModalComponent } from '../../components/profile-modal/profile-modal.component';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../service/user/user.service';
 
 @Component({
   selector: 'app-trainer-dashboard',
@@ -16,10 +17,8 @@ import { CommonModule } from '@angular/common';
 })
 export class TrainerDashboardComponent {
   isModalVisible = false;
-  userId: number = 1;
-  userDetail = {name: '', image: '', role: '', course: '' };
 
-  constructor() { }
+  constructor(private userService : UserService) { }
 
   showModal() {
     this.isModalVisible = true;

@@ -58,6 +58,8 @@ export class AssessmentComponent implements OnInit {
   stepper!: MatStepper;
   @ViewChild('messageComponent') messageComponent!: MessageServiceComponent;
   @ViewChild(ScheduleComponent) scheduleComponent!: ScheduleComponent;
+
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
   
   htmlContent!: string;
   questions: Question[] = [];
@@ -73,7 +75,7 @@ export class AssessmentComponent implements OnInit {
 
   assessmentCreated!: boolean;
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
-  createdBy: number = 1;
+  createdBy: number = this.user.UserId;
 
   constructor(
     private route: ActivatedRoute,
