@@ -10,10 +10,14 @@ import { InstructionPageComponent } from './pages/instruction-page/instruction-p
 import { TrainerDashboardComponent } from './pages/trainer-dashboard/trainer-dashboard.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { MsalGuard } from '@azure/msal-angular';
+import { AuthComponent } from './components/auth/auth.component';
 
 export const routes: Routes = [
     {
         path: '', component: LoginComponent
+    },
+    {
+        path: 'auth', component: AuthComponent, canActivate: [MsalGuard],
     },
     {
         path: 'test', component: TestPageComponent

@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UserService } from '../../service/user/user.service';
-import { ApiEndpointService } from '../../service/api-service/api-endpoint.service';
 
 @Component({
   selector: 'app-profile-card',
@@ -10,28 +8,36 @@ import { ApiEndpointService } from '../../service/api-service/api-endpoint.servi
   styleUrl: './profile-card.component.scss'
 })
 export class ProfileCardComponent {
-  @Input() userId: number = 1;
   userDetail = {name: '', image: '', role: '', course: '' };
 
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
+
   @Output() cardClicked = new EventEmitter<void>();
-  constructor(private userService: UserService, private apiEndpointService: ApiEndpointService) {
-    this.apiEndpointService.loadEndpoints().subscribe();
+  constructor() {
+    this.fetchDetails();
   }
 
   ngOninit() {
     this.fetchDetails();
+    console.log(this.user);
   }
   onCardClick() {
     this.cardClicked.emit();
   }
 
   fetchDetails() {
-    this.userService.getUserById(this.userId).subscribe((response: any) => {
-      console.log(response);
-      
-    }, (error: any) => {
-      console.error('Error fetching user', error);
-    });
+    console.log(this.user);
+    this.userDetail.name = this.user.UserName;
+    this.userDetail.image = "assets/User.png";
+    if(this.user.UserAdmin){
+      this.userDetail.role = "Admin";
+    }
+    else if(this.user.UserType == 1){
+      this.userDetail.role = "Trainer";
+    }
+    else{
+      this.userDetail.role = "Trainee";
+    }
   }
 
 }

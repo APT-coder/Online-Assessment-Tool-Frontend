@@ -1,9 +1,8 @@
-// login.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { MSAL_GUARD_CONFIG, MsalGuardConfiguration, MsalService, MsalBroadcastService } from '@azure/msal-angular';
-import { InteractionStatus } from '@azure/msal-browser';
+import { InteractionStatus, AuthenticationResult } from '@azure/msal-browser';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,7 +49,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authService.handleRedirectObservable().subscribe();
+    // Handle redirect and store token if available
+    this.authService.handleRedirectObservable().subscribe((response: AuthenticationResult) => {
+      if (response && response.accessToken) {
+        console.log('Login successful', response);
+        localStorage.setItem('msalKey', response.accessToken);
+        this.router.navigate(['/auth']);
+      }
+    });
+
     this.isIframe = window !== window.parent && !window.opener;
 
     this.setLoginDisplay();
@@ -66,9 +73,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.checkAndSetActiveAccount();
       });
 
-      if (this.loginDisplay && !this.isIframe) {
-        this.router.navigate(['/admin']);
-      }
+    // Check for active account and store token
+    this.checkAndSetActiveAccount();
   }
 
   setLoginDisplay() {
@@ -78,7 +84,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   checkAndSetActiveAccount() {
     const activeAccount = this.authService.instance.getActiveAccount();
     if (!activeAccount && this.authService.instance.getAllAccounts().length > 0) {
-      this.authService.instance.setActiveAccount(this.authService.instance.getAllAccounts()[0]);
+      const account = this.authService.instance.getAllAccounts()[0];
+      this.authService.instance.setActiveAccount(account);
+      
+      // Acquire token silently
+      this.authService.acquireTokenSilent({
+        scopes: ["user.read"],
+        account: account
+      }).subscribe({
+        next: (response: AuthenticationResult) => {
+          if (response && response.accessToken) {
+            localStorage.setItem('msalKey', response.accessToken);
+            console.log('Token acquired silently', response.accessToken);
+          }
+        },
+        error: (error) => {
+          console.error('Silent token acquisition failed', error);
+        }
+      });
     }
   }
 

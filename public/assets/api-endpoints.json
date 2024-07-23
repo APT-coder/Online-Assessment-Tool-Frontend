@@ -2,7 +2,7 @@
   "baseUrl": "https://localhost:7120",
   "users": {
     "getAll": "/Users",
-    "getById": "/User/GetUser/user/{id}",
+    "getByEmail": "/User/GetUserDetails/details/{email}",
     "create": "/Users",
     "update": "/Users/{id}",
     "delete": "/Users/{id}"
