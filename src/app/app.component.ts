@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MessageServiceComponent } from './components/message-service/message-service.component';
 import { ApiEndpointService } from './service/api-service/api-endpoint.service';
-
 
 @Component({
     selector: 'app-root',

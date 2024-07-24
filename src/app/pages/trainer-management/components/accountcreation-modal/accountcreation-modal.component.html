@@ -32,10 +32,12 @@
       <input pInputText id="phone" class="input-text" formControlName="phone" autocomplete="off" />
     </div>
     
-    <div class="form-group mb-3">
-      <label for="usertype" class="font-semibold">User Type</label>
-      <p-dropdown class="p-dropdown" [options]="userTypes" formControlName="usertype" (onChange)="onUserTypeChange($event.value)" placeholder="Select User Type"></p-dropdown>
-    </div>
+    <p-dropdown
+    formControlName="usertype"
+    [options]="userTypes"
+    (onChange)="onUserTypeChange($event.value)">
+  </p-dropdown>
+  
     
     <ng-container *ngIf="userForm.get('usertype')?.value === 'Trainer'">
       <div class="form-group mb-3">

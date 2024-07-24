@@ -13,7 +13,7 @@ import { ApiResponse, TrainermanagementService } from '../../../../service/train
 import { Role } from '../../../../../models/role.interface';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { AccountcreationModalComponent } from "../accountcreation-modal/accountcreation-modal.component";
-import { User } from '../../../../../models/user.interface'; 
+import { User } from '../../../../../models/user.interface';
 import { Observable, switchMap } from 'rxjs';
 
 @Component({
@@ -29,8 +29,8 @@ export class TrainerTableComponent {
   faTrash = faTrash;
   faChevronDown = faChevronDown;
   roles: Role[] = [];
-  role: Role = { id: 0, roleName: '', permissions: [] };
-  users:any [] = [];
+  role: Role = { id: 0, roleName: '', permissionIds: [] };
+  users:User [] = [];
   roleIdToDelete: number = 0;
   expandedRoles: string[] = [];
   isEditTrainer: boolean = false;
@@ -41,13 +41,15 @@ export class TrainerTableComponent {
 
   ngOnInit(): void {
     this.loadRoles();
+   
   }
   
   onEditUser(user: User): void {
     this.selectedUser = user;
+    console.log(this.selectedUser)
     this.isEditTrainer = true;
     if(user.userType ===1){
-      this.loadTrainerDetails(user.userId);
+      //this.loadTrainerDetails(user.userId);
     }  else if (user.userType === 2) {
       this.loadTraineeDetails(user.userId);
     } else {
@@ -58,32 +60,35 @@ export class TrainerTableComponent {
 
  
 
-  loadTrainerDetails(userId: number): void {
-    this.apiService.getTrainerDetails(userId).subscribe(
-      trainerDetails => {
-        // Populate trainer-specific details
-        this.selectedUser = { ...this.selectedUser, ...trainerDetails };
-      },
-      error => {
-        console.error('Error loading trainer details:', error);
-        // Handle error
-      }
-    );
-  }
-
+  // loadTrainerDetails(userId: number): void {
+  //   this.apiService.getTrainerDetails(userId).subscribe(
+  //     (response) => {
+  //       if (response) {
+  //         console.log(response);
+  //       } else {
+  //         console.error('Trainer details not found');
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error loading trainer details', error);
+  //     }
+  //   );
+  // }
+  
   loadTraineeDetails(userId: number): void {
     this.apiService.getTraineeDetails(userId).subscribe(
-      traineeDetails => {
-        // Populate trainee-specific details
-        this.selectedUser = { ...this.selectedUser, ...traineeDetails };
+      (response) => {
+        if (response) {
+          console.log(response);
+        } else {
+          console.error('Trainee details not found');
+        }
       },
-      error => {
-        console.error('Error loading trainee details:', error);
-        // Handle error
+      (error) => {
+        console.error('Error loading trainer details', error);
       }
     );
   }
-
   
 
   loadRoles(): void {
@@ -124,13 +129,8 @@ export class TrainerTableComponent {
       response => {
         console.log('Users fetched:', response); 
           role.users = response 
-          console.log('Users assigned to role:', role.users); 
-       
-          console.error('Failed to load users for role:', response.result);
+         
         
-      },
-      error => {
-        console.error('Error loading users for role:', error);
       }
     );
   }
@@ -147,16 +147,21 @@ export class TrainerTableComponent {
   }
 
   onEditRole(role: Role): void {
-     this.apiService.getRoleById(role.id).subscribe(
+    this.apiService.getRoleById(role.id).subscribe(
       (response: ApiResponse<Role>) => {
         if (response.isSuccess) {
           this.role = response.result;
-          console.log(this.role);
+          console.log('Role retrieved:', this.role); // Debugging line
+          this.editRole.emit(this.role);
+        } else {
+          console.error('Error retrieving role:', response.message);
         }
-    this.editRole.emit(this.role);
-   
-      });
-    }
+      },
+      error => {
+        console.error('API call error:', error);
+      }
+    );
+  }
 
   deleteUser(userId: number): void {
     if (userId !== undefined && userId !== null) {

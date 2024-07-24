@@ -12,7 +12,6 @@ import { ScheduleComponent } from '../schedule/schedule.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssessmentPreviewComponent } from "../../../assessment/components/assessment-preview/assessment-preview.component";
-import { MessageServiceComponent } from '../../../../components/message-service/message-service.component';
 import { Router } from '@angular/router';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { AssessmentService } from '../../../../service/assessment/assessment.service';
@@ -40,7 +39,6 @@ interface Option {
     MatIconModule,
     FormsModule,
     AssessmentPreviewComponent,
-    MessageServiceComponent,
     MatInputModule,
     MatFormField,
     ReactiveFormsModule
@@ -51,7 +49,6 @@ interface Option {
 export class CreateTestFormComponent implements OnInit {
   @ViewChild('stepper')
   stepper!: MatStepper;
-  @ViewChild('messageComponent') messageComponent!: MessageServiceComponent;
   @ViewChild(ScheduleComponent) scheduleComponent!: ScheduleComponent;
 
   user = JSON.parse(localStorage.getItem('userDetails') as string);
@@ -80,7 +77,7 @@ export class CreateTestFormComponent implements OnInit {
         (response: any) => {
           this.assessmentCreated = true;
           this.assessment = response.result;
-          this.messageService();
+      
           console.log('Assessment successfully created!', this.assessment);
         },
         (error: any) => {
@@ -166,8 +163,6 @@ export class CreateTestFormComponent implements OnInit {
         console.log('Question posted successfully', response);
 
         this.scrollToTop();
-        this.messageComponent.isVisible = true; 
-        this.messageComponent.ngOnInit();
 
         setTimeout(() => {
           //this.router.navigate(['/sidebar']);
@@ -178,13 +173,6 @@ export class CreateTestFormComponent implements OnInit {
     } 
   }
 
-  messageService() {
-    this.messageComponent.isVisible = true; 
-    this.messageComponent.ngOnInit();
-
-    setTimeout(() => {
-    }, 5000);
-  }
 
   scrollToBottom() {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });

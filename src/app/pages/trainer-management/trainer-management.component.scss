@@ -23,4 +23,13 @@
       margin-left: 0;
       width: 100%;
   }
-  
+  .button-container {
+      display: flex; /* Use flexbox for easy spacing */
+      gap: 1rem; /* Adjust the gap size as needed */
+    }
+    .header-text {
+      font-size: 1.5rem; /* Adjust font size as needed */
+      font-weight: bold;
+      color: var(--primary-color); /* Use PrimeNG primary color */
+      margin-bottom: 1rem; /* Space below heading */
+    }

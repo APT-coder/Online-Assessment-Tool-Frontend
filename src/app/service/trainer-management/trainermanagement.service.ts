@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, switchMap } from 'rxjs';
 import { Role } from '../../../models/role.interface';
 import { Permission } from '../../../models/permission.interface';
-import { User } from '../../../models/user.interface'; 
+import { User } from '../../../models/user.interface';
 
 export interface ApiResponse<T> {
   isSuccess: boolean;
@@ -49,7 +49,7 @@ export class TrainermanagementService {
   
   
     updateRole(roleId: number, role: Role): Observable<Role> {
-      return this.http.put<Role>(`https://localhost:7120/api/Roles/PutRole/${roleId}`, role);
+      return this.http.put<Role>(`https://localhost:7120/Roles/PutRole/${roleId}`, role);
    }
    createUser(userData: any): Observable<any> {
     return this.http.post<any>(`https://localhost:7120/User/CreateUser/CreateUser`, userData);
@@ -64,10 +64,10 @@ export class TrainermanagementService {
     const url = `https://localhost:7120/User/DeleteUser/${id}`;
     return this.http.delete<void>(url);
   }
-
-  updateuser(userId: number): Observable<any> {
-    return this.http.put<any>(`https://localhost:7120/User/UpdateUser/user/${userId}`,userId);
+  updateUser(updateUserRequest: any): Observable<any> {
+    return this.http.put<any>(`https://localhost:7120/User/UpdateUser/update`, updateUserRequest);
   }
+  
 
   getTrainerDetails(userId: number): Observable<any> {
     return this.http.get<any>(`https://localhost:7120/User/GetTrainerDetails/trainer/${userId}`);

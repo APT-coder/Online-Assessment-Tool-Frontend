@@ -1,27 +1,30 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { Role } from '../../../../../models/role.interface';
 import { Permission } from '../../../../../models/permission.interface';
 import { ApiResponse, TrainermanagementService } from '../../../../service/trainer-management/trainermanagement.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-rolecreation-card',
   standalone: true,
-  imports: [CardModule, CommonModule, FormsModule],
+  imports: [CardModule, CommonModule, FormsModule, DialogModule,CheckboxModule,ButtonModule],
   templateUrl: './rolecreation-card.component.html',
   styleUrls: ['./rolecreation-card.component.scss']
 })
 export class RolecreationCardComponent implements OnInit {
-  @Input() role: Role = { id: 0, roleName: '', permissions: [] };
+  @Input() role: Role = { id: 0, roleName: '', permissionIds: [] };
   @Input() isEditMode: boolean = false;
+  @Input() isModalVisible: boolean = false;  // Add this line
+
   @Output() cancelRoleCreation: EventEmitter<void> = new EventEmitter<void>();
   @Output() roleSaved: EventEmitter<void> = new EventEmitter<void>();
 
- 
   permissions: Permission[] = [];
- 
 
   constructor(private roleService: TrainermanagementService) { }
 
@@ -29,49 +32,86 @@ export class RolecreationCardComponent implements OnInit {
     this.loadPermissions();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['role'] && !changes['role'].firstChange) {
+      this.loadPermissions();
+    }
+    if (changes['isModalVisible']) {
+      // Handle modal visibility changes if necessary
+    }
+  }
+
   loadPermissions() {
     this.roleService.getPermissions().subscribe(response => {
       if (response.isSuccess) {
-        this.permissions = response.result.slice(0,4);
+        this.permissions = response.result;
+        this.initializeSelectedPermissions();
+      } else {
+        console.error('Error loading permissions:', response.message);
       }
     });
+  }
+
+  initializeSelectedPermissions() {
+    this.permissions.forEach(permission => {
+      permission.isSelected = this.isPermissionSelected(permission.id);
+    });
+  }
+
+  isPermissionSelected(permissionId: number): boolean {
+    return this.role.permissionIds.includes(permissionId);
   }
 
   onCheckboxChange(event: any) {
     const permissionId = +event.target.value;
     const isChecked = event.target.checked;
-    
+
     if (isChecked) {
-      this.role.permissions.push({
-        id: permissionId,
-        permissionName: '',
-        description: ''
-      });
+      this.role.permissionIds.push(permissionId);
     } else {
-      this.role.permissions = this.role.permissions.filter(p => p.id !== permissionId);
+      this.role.permissionIds = this.role.permissionIds.filter(id => id !== permissionId);
     }
   }
 
-  isPermissionSelected(permissionId: number): boolean {
-    return this.role.permissions.some(p => p.id === permissionId);
-  }
-
   submitRole() {
-    this.roleService.createRole(this.role).subscribe(response => {
-      if (response.isSuccess) {
+    if (this.role.permissionIds.length === 0) {
+      alert('Please select at least one permission.');
+      return;
+    }
+
+    const roleData = {
+      id: this.role.id,
+      roleName: this.role.roleName,
+      permissionIds: this.role.permissionIds
+    };
+
+    if (this.isEditMode) {
+      this.roleService.updateRole(this.role.id, roleData).subscribe(response => {
         this.roleSaved.emit();
-        // Handle success (e.g., show a message or redirect)
-        console.log('Role created successfully', response.result);
-      } else {
-        // Handle error
-        console.error('Error creating role', response.message);
-      }
-    });
+        console.log('Role updated successfully', response);
+      }, error => {
+        console.error('Error updating role', error);
+      });
+    } else {
+      this.roleService.createRole(roleData).subscribe(response => {
+        if (response.isSuccess) {
+          this.roleSaved.emit();
+          console.log('Role created successfully', response.result);
+        } else {
+          console.error('Error creating role', response.message);
+        }
+      });
+    }
   }
 
   cancelRole() {
+    this.isModalVisible = false;
     this.cancelRoleCreation.emit();
   }
-
- 
+  closeModal() {
+    this.isModalVisible = false;
+    this.cancelRoleCreation.emit();
+    
+  }
+  
 }
