@@ -14,7 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
-import { MessageServiceComponent } from '../../components/message-service/message-service.component';
 import { Assessment } from '../../../models/assessment.interface';
 import { AssessmentService } from '../../service/assessment/assessment.service';
 import { FileUploadComponent } from './modals/file-upload/file-upload.component';
@@ -47,7 +46,6 @@ interface Question {
     MatIconModule,
     ButtonActiveComponent,
     ScheduleComponent,
-    MessageServiceComponent,
     FileUploadComponent
   ],
   templateUrl: './upload-assessment.component.html',
@@ -56,7 +54,7 @@ interface Question {
 export class AssessmentComponent implements OnInit {
   @ViewChild('stepper')
   stepper!: MatStepper;
-  @ViewChild('messageComponent') messageComponent!: MessageServiceComponent;
+
   @ViewChild(ScheduleComponent) scheduleComponent!: ScheduleComponent;
 
   user = JSON.parse(localStorage.getItem('userDetails') as string);
@@ -187,7 +185,7 @@ export class AssessmentComponent implements OnInit {
           this.assessmentCreated = true;
           this.assessment = response.result;
           localStorage.setItem("assessmentId", (this.assessment.assessmentId).toString());
-          this.messageService();
+         
           console.log('Assessment successfully created!', this.assessment);
         },
         (error: any) => {
@@ -245,8 +243,7 @@ export class AssessmentComponent implements OnInit {
         console.log('Question posted successfully', response);
 
         this.scrollToTop();
-        this.messageComponent.isVisible = true; 
-        this.messageComponent.ngOnInit();
+        
 
         setTimeout(() => {
           //this.router.navigate(['/sidebar']);
@@ -257,11 +254,5 @@ export class AssessmentComponent implements OnInit {
     } 
   }
 
-  messageService() {
-    this.messageComponent.isVisible = true; 
-    this.messageComponent.ngOnInit();
-
-    setTimeout(() => {
-    }, 5000);
-  }
+ 
 }

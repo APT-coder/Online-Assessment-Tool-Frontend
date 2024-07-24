@@ -1,50 +1,26 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faHome, faUpload, faBell, faCog,faPlus,faChevronLeft, faChevronRight,faUserCog  } from '@fortawesome/free-solid-svg-icons';
-import { FileUploadComponent } from '../../pages/assessment/modals/file-upload/file-upload.component';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+import { ButtonModule } from 'primeng/button';
+import { Sidebar, SidebarModule } from 'primeng/sidebar';
+import { RippleModule } from 'primeng/ripple';
+import { AvatarModule } from 'primeng/avatar';
+import { StyleClassModule } from 'primeng/styleclass';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [FontAwesomeModule,CommonModule, FileUploadComponent, RouterLink],
+  imports: [RouterLink,SidebarModule, ButtonModule, RippleModule, AvatarModule, StyleClassModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  animations: [
-    trigger('collapse', [
-      state('expanded', style({ width: '250px' })),
-      state('collapsed', style({ width: '80px' })),
-      transition('expanded <=> collapsed', animate('300ms ease-in-out'))
-    ])
-  ]
+ 
 })
 export class SidebarComponent {
-  faHome = faHome;
-  faPlus = faPlus;
-  faUpload = faUpload;
-  faBell = faBell;
-  faCog = faCog;
-  faChevronLeft = faChevronLeft;
-  faChevronRight = faChevronRight ;
-  faUserCog = faUserCog;
-
-  @Output() toggle = new EventEmitter<boolean>(); 
-
-  isAdmin = false;
-  isCollapsed: boolean = false;
-  user = JSON.parse(localStorage.getItem('userDetails') as string);
-
-  toggleCollapse() {
-    this.isCollapsed = !this.isCollapsed;
-    this.toggle.emit(this.isCollapsed); 
-  }
-  constructor() {
-    this.checkUserRole();
-  }
-  checkUserRole() {
-    this.isAdmin = this.user.UserAdmin;
-  }
+  // isAdmin = false;
+  // user = JSON.parse(localStorage.getItem('userDetails') as string);
+  // constructor() {
+  //   this.checkUserRole();
+  // }
+  // checkUserRole() {
+  //   this.isAdmin = this.user.UserAdmin;
+  // }
 }

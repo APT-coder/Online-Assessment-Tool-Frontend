@@ -3,7 +3,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
-
 import { TrainermanagementService } from '../../service/trainer-management/trainermanagement.service';
 import { Role } from '../../../models/role.interface';
 import { RolecreationCardComponent } from "./components/rolecreation-card/rolecreation-card.component";
@@ -11,10 +10,10 @@ import { AccountcreationModalComponent } from "./components/accountcreation-moda
 import { TrainerTableComponent } from "./components/trainer-table/trainer-table.component";
 
 @Component({
-    selector: 'app-trainer-management',
-    templateUrl: './trainer-management.component.html',
-    styleUrls: ['./trainer-management.component.scss'],
-    imports: [
+  selector: 'app-trainer-management',
+  templateUrl: './trainer-management.component.html',
+  styleUrls: ['./trainer-management.component.scss'],
+  imports: [
     FontAwesomeModule,
     CommonModule,
     RolecreationCardComponent,
@@ -22,16 +21,15 @@ import { TrainerTableComponent } from "./components/trainer-table/trainer-table.
     SidebarComponent,
     AccountcreationModalComponent,
     TrainerTableComponent
-],
-    standalone:true
+  ],
+  standalone:true
 })
 export class TrainerManagementComponent {
-
-    // isAddTrainer: boolean = false;
   isCardVisible: boolean = false;
   isSidebarCollapsed: boolean = false;
-  selectedRole: Role = { id: 0, roleName: '', permissions: [] };
-  isEditMode: boolean = false; // Assuming this is set elsewhere based on your application logic
+  selectedRole: Role = { id: 0, roleName: '', permissionIds: [] };
+  isEditMode: boolean = false;
+  isModalVisible: boolean = false;
 
   constructor(private apiService: TrainermanagementService) {}
 
@@ -46,62 +44,58 @@ export class TrainerManagementComponent {
     }
   }
 
-  toggleCard() {
-    this.isCardVisible = !this.isCardVisible;
-    if (this.isCardVisible) {
-      this.isAddTrainer = false;
-      this.isEditMode = false; // Ensure it's not in edit mode when toggling card for new role
-      this.selectedRole = { id: 0, roleName: '', permissions: [] }; // Clear the selected role for new role creation
-    }
+  openRoleCreationModal() {
+    this.isModalVisible = true;
+  }
+
+  closeRoleCreationModal() {
+    this.isModalVisible = false;
   }
 
   editRole(role: Role) {
-    this.selectedRole = { ...role }; // Set the selected role (make a copy to avoid reference issues)
-    this.isCardVisible = true; // Show the role creation card
-    this.isEditMode = true; // Set the edit mode
+    this.selectedRole = { ...role };
+    this.isEditMode = true;
+    this.openRoleCreationModal();
   }
 
   onCancelRoleCreation() {
-    this.isCardVisible = false;
-    this.selectedRole = { id: 0, roleName: '', permissions: [] }; // Reset selected role for cancellation
+    this.closeRoleCreationModal();
+    this.selectedRole = { id: 0, roleName: '', permissionIds: [] };
   }
 
   onRoleSaved() {
-    this.isCardVisible = false;
+    this.closeRoleCreationModal();
     // Optionally reload data or perform other actions after role is saved
   }
+
   onToggleSidebar(collapsed: boolean) {
     this.isSidebarCollapsed = collapsed;
   }
+
   isAddTrainer: boolean = false;
   isEditTrainer: boolean = false;
   isDeleteTrainer: boolean = false;
-  selectedUser: any = null; // The user data to edit or delete
+  selectedUser: any = null;
 
-  // Method to open modal for adding a new trainer
   addTrainer() {
     this.isAddTrainer = true;
-    this.selectedUser = null; // Clear selected user data
+    this.selectedUser = null;
   }
+
   editTrainer(user: any) {
     this.isEditTrainer = true;
-    this.selectedUser = user; // Set selected user data for editing
+    this.selectedUser = user;
   }
 
-  // Method to open modal for deleting a trainer
   deleteTrainer(user: any) {
     this.isDeleteTrainer = true;
-    this.selectedUser = user; // Set selected user data for deletion
+    this.selectedUser = user;
   }
 
-  // Method to close the modal
   closeModal() {
     this.isAddTrainer = false;
     this.isEditTrainer = false;
     this.isDeleteTrainer = false;
     this.selectedUser = null;
   }
-
 }
-
-   

@@ -25,11 +25,11 @@ export class DeleteConfirmationComponent {
       header: 'Do you want to delete role?',
       message: 'Please confirm to proceed.',
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have deleted the role', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'You have deleted the role', life: 3000 });
         this.confirmation.emit();
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected deletion', life: 3000 });
+        //this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected deletion', life: 3000 });
       }
     });
   }

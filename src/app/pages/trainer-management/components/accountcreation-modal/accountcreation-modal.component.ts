@@ -158,6 +158,7 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
     form.get('joiningDate')?.updateValueAndValidity();
   }
 
+
   generateUUID(): string {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c: string): string {
       const r = Math.random() * 16 | 0;
@@ -166,52 +167,64 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
     });
   }
 
-  saveUser() {
-    if (this.userForm.valid) {
-      const userData = this.userForm.value;
-      
-      const batchId = this.batches.find(batch => batch.label === userData.batch)?.value ?? null;
-  
-      const apiPayload = {
-        createUserDTO: {
-          username: userData.username,
-          email: userData.email,
-          phone: userData.phone,
-          isAdmin: false,
-          userType: userData.usertype === 'Trainer' ? 1 : 2,
-          uuid: this.generateUUID()
-        },
-        trainerDTO: {
-          joinedOn: userData.joiningDate,
-          password: userData.password,
-          roleId: this.selectedRoleId 
-        },
-        traineeDTO: {
-          joinedOn: userData.joiningDate,
-          batchId: this.traineeBatch
-        },
-        batchIds: this.selectedBatchIds
-        
-      };
-  
-      console.log('API Payload:', apiPayload); // Debug the payload
-  
-      if (this.mode === 'edit') {
-        
-      } else if (this.mode === 'add') {
-        this.userService.createUser(apiPayload).subscribe(
-          () => {
-            this.closeModal();
-          },
-          error => {
-            console.error('Error creating user:', error);
-          }
-        );
-      }
-    } else {
-      this.userForm.markAllAsTouched();
+ saveUser() {
+  if (this.userForm.valid) {
+    const userData = this.userForm.value;
+    
+    const batchId = this.batches.find(batch => batch.label === userData.batch)?.value ?? null;
+
+    const apiPayload: any = {
+      createUserDTO: {
+        username: userData.username,
+        email: userData.email,
+        phone: userData.phone,
+        isAdmin: false,
+        userType: userData.usertype === 'Trainer' ? 1 : 2,
+        uuid: this.generateUUID()
+      },
+      trainerDTO: {
+        joinedOn: userData.joiningDate,
+        password: userData.password,
+        roleId: this.selectedRoleId 
+      },
+      traineeDTO: {
+        joinedOn: userData.joiningDate,
+        batchId: this.traineeBatch
+      },
+      batchIds: this.selectedBatchIds
+    };
+
+    // Include userId only in case of update
+    if (this.mode === 'edit' && this.userData && this.userData.userId) {
+      apiPayload.createUserDTO.userId = this.userData.userId;
     }
+
+    console.log('API Payload:', apiPayload); // Debug the payload
+
+    if (this.mode === 'edit') {
+      this.userService.updateUser(apiPayload).subscribe(
+        () => {
+          this.closeModal();
+        },
+        error => {
+          console.error('Error updating user:', error);
+        }
+      );
+    } else if (this.mode === 'add') {
+      this.userService.createUser(apiPayload).subscribe(
+        () => {
+          this.closeModal();
+        },
+        error => {
+          console.error('Error creating user:', error);
+        }
+      );
+    }
+  } else {
+    this.userForm.markAllAsTouched();
   }
+}
+
   
 
   deleteUser() {
