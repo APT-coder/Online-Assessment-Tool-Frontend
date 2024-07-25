@@ -48,4 +48,8 @@ export class PagiNatorComponent {
   trackByQuestionNo(index: number, question: any): number {
     return question.questionno;
   }
+
+  ngOnInit(): void {
+        console.log(this.questions);
+    }
 }

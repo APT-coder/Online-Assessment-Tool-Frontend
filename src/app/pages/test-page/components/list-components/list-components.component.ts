@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PipePipe } from "../../../../pipes/optionsFilter/pipe.pipe";
 
 
 @Component({
@@ -8,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './list-components.component.html',
   styleUrl: './list-components.component.scss',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PipePipe],
 })
 export class ListComponentsComponent {
   @Input() questions: any;
@@ -31,23 +32,25 @@ export class ListComponentsComponent {
   }
  
 
-  @Output() buttonClicked = new EventEmitter<number>();
+  @Output() buttonClicked = new EventEmitter<{ answer: string, index: number }>();
   @Output() reviewMarked = new EventEmitter<boolean>();
 
   option: any;
   clickedIndex: number | null = null;
   inputValue: string = '';
 
-  handleClick( index: number,i:number) {
+  handleClick( answer: string,i:number) {
     if (this.clickedIndex === i) {
       this.clickedIndex = null;
-      this.buttonClicked.emit(7);
+      this.buttonClicked.emit({ answer: '', index: 7 });
     } else {
       this.clickedIndex = i;
-      this.buttonClicked.emit(i);
+      this.buttonClicked.emit({ answer: answer, index: i });
     }
     this.cdr.detectChanges();
     // this.buttonClicked.emit(this.selectedOption);
+    // console.log(i);
+    console.log(answer);
   }
 
   onCheckboxChange(event: Event) {

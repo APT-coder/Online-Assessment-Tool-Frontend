@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { ListComponentsComponent } from './components/list-components/list-components.component';
 import { PagiNatorComponent } from "./components/pagi-nator/pagi-nator.component";
-import { QuestionService } from '../../service/questions/question.service';
+import { QuestionService } from '../../service/assessment/question.service'; 
 import { QuestionComponent } from './components/question/question.component';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
-import { Question } from '../../service/questions/question';
+
+import { ActivatedRoute } from '@angular/router';
+import { Question } from '../../../models/test.interface'; 
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-test-page',
@@ -18,8 +22,10 @@ export class TestPageComponent {
 
     todos:any=[];
     enteredAnswer: string | undefined;
-    constructor(private api: QuestionService) {}
+    assessmentId: any;
+    constructor(private api: QuestionService,private route: ActivatedRoute,private dialog: MatDialog) {}
     public questions: any[] = [];
+    public assessment: any;
 
     count: number = 0;
     index:number=7;
@@ -40,76 +46,137 @@ export class TestPageComponent {
 
   }
 
-  handleButtonClick(index: number) {
+  handleButtonClick(event: { answer: string, index: number }) {
 
-    if(index==7){
-      this.questions[this.count].questionstatus="unreviewed";
-      console.log("from test page " ,index);
-      this.questions[this.count].selectedoption=-1;
-      console.log(this.questions);
+    if(event.index==7){
+      this.question[this.count].questionstatus="unreviewed";
+      console.log("from test page " ,event.index);
+      this.question[this.count].selectedoption=-1;
+      console.log(this.question);
+      this.question[this.count].answered=event.answer;
     }
     else{
     // console.log('Button clicked in child component at index:', index);
-    this.questions[this.count].questionstatus="done";
-    this.questions[this.count].selectedoption=index;
+    this.question[this.count].questionstatus="done";
+    this.question[this.count].selectedoption=event.index;
     // console.log('Question index:', this.count+1);
-    console.log(this.questions);
-
-    console.log("from test page " ,index);
-    this.index=index;
+    console.log(this.question);
+    this.question[this.count].answered=event.answer;
+    console.log("from test page " ,event.index);
+    this.index=event.index;
     }
-    // Your logic here
+    
   }
 
   onReviewMarked(isMarked: boolean) {
-    if(this.questions[this.count].questionstatus=="marked"){
-      this.questions[this.count].questionstatus="unreviewed";
+    if(this.question[this.count].questionstatus=="marked"){
+      this.question[this.count].questionstatus="unreviewed";
     }
     else{
-      this.questions[this.count].questionstatus="marked";
+      this.question[this.count].questionstatus="marked";
     }
     
-    // Handle the event here
+  
     console.log("Checked");
   }
 
   handleAnswerEntered(answer: string): void {
     this.enteredAnswer = answer;
     if (this.enteredAnswer.trim() === '') {
-      this.questions[this.count].questionstatus = "unreviewed";
+      this.question[this.count].questionstatus = "unreviewed";
       console.log("unreviewed");
     } else {
-      this.questions[this.count].questionstatus = "done";
+      this.question[this.count].questionstatus = "done";
     }
-    // Here you can perform any further actions with the entered answer
+  
 
-    this.questions[this.count].answered=this.enteredAnswer;
+    this.question[this.count].answered=this.enteredAnswer;
     console.log('Entered answer:', this.enteredAnswer);
   }
   
+
+  
+
+   
+
+
   
     ngOnInit(): void {
-        // this.api.getJSON()
-        //   .subscribe(response => {
-        //     this.questions =response.questions;
-        //     console.log(this.questions);
-        //     const questionLength = this.questions.length
-        //   });
+      this.assessmentId = this.route.snapshot.paramMap.get('id');
+        // this.fetchQuestions();
 
-        this.fetchQuestions();
+        this.fetchAssessments();
       }
 
 
-      fetchQuestions(): void {
-        this.api.getQuestions().subscribe(response => {
-              // this.questions =response.questions;
-              // console.log(response);
-              this.questions =response.sort((a, b) => a.questionno - b.questionno);
-              this.questions.forEach(question => {
-                question.answered = ''; // Reset answered field for each question
-              });
-              console.log(this.questions);
-              // const questionLength = this.questions.length
-            });
-          }
+     
+   
+      question:any
+      questionWithoutNumber:any
+     
+      fetchAssessments():void{
+        this.api.getAssessment().subscribe(response =>{
+          this.assessment= response;
+       
+
+          this.questionWithoutNumber =this.addFieldsToQuestions(this.assessment.result.questions)
+          console.log(this.questionWithoutNumber);
+
+          this.addQuestionNumbers(this.questionWithoutNumber);
+          console.log(this.questionWithoutNumber);
+          this.question = this.questionWithoutNumber;
+
+             
+      });
+      }
+
+       addFieldsToQuestions(assessment:any):any{
+        return assessment.map((question: any) => ({
+          ...question,
+          selectedoption: -1,
+          answered: '',
+          questionstatus: 'unreviewed'
+        }));
+      }
+
+       addQuestionNumbers(questions: Question[]): void {
+        questions.forEach((question, index) => {
+          question['questionNo'] = index+1;
+        });
+      }
+      
+      postAssessment() {
+      
+        // this.api.postAssessment(this.question).subscribe({
+        //   next: (response) => {
+        //     console.log('Assessment posted successfully:', response);
+        //   },
+        //   error: (error) => {
+        //     console.error('Error posting assessment:', error);
+        //   },
+        //   complete: () => {
+        //     console.log('Post assessment request completed');
+        //   }
+        // });
+
+        console.log("NEED BACKEND CONNECTION DONE");
+      }
+
+      openConfirmationDialog(): void {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          width: '300px'
+        });
+    
+        dialogRef.componentInstance.confirm.subscribe(() => {
+          this.postAssessment();
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          
+        });
+      }
+
+
 }
+
+

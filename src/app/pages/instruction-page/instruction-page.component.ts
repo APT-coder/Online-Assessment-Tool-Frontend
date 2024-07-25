@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from "../../ui/buttons/button/button.component";
 
 @Component({
@@ -11,10 +11,12 @@ import { ButtonComponent } from "../../ui/buttons/button/button.component";
 })
 export class InstructionPageComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private route: ActivatedRoute) { }
 
-  startTest() {
-    this.router.navigate(['/test']);
+
+  assessmentId:any;
+
+  ngOnInit(): void {
+    this.assessmentId = this.route.snapshot.paramMap.get('id');
   }
-
 }

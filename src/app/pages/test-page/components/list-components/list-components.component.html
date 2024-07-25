@@ -1,13 +1,12 @@
-@if (questionType=="multiple_choice") {
+@if (questionType=="mcq") {
 <div class="list-container ">
   <ul class="grid-container">
 
     @if (selectedOption==-1) {
-    <div *ngFor="let options of questions let i = index">
+    <div *ngFor="let options of questions[0] | optionsFilter let i = index">
       <button class="wrapper-button"
-        (click)="handleClick(questionNumber,i)">
+        (click)="handleClick(options,i)">
         <div class="center-wrapper">
-
           <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
             <span class="option-label">{{i+1}}.</span>
             <span class="option-content">{{options}}</span>
@@ -18,9 +17,9 @@
     </div>
   }
   @else{
-    <div *ngFor="let options of questions let i = index">
+    <div *ngFor="let options of questions[0] | optionsFilter let i = index">
       <button class="wrapper-button"
-        (click)="handleClick(questionNumber,i)">
+        (click)="handleClick(options,i)">
         <div class="center-wrapper">
           <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
             <span class="option-label">{{i + 1}}.</span>
