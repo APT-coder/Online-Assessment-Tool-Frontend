@@ -1,1 +1,4 @@
-<p>auth works!</p>
+<div *ngIf="isLoading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+    <p>Authenticating, Please wait...</p>
+  </div>
