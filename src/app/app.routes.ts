@@ -12,6 +12,7 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { MsalGuard } from '@azure/msal-angular';
 import { AuthComponent } from './components/auth/auth.component';
 import { AssessmentPerformanceComponent } from './pages/assessment/components/assessment-performance/assessment-performance.component';
+import { TraineeDashboardComponent } from './pages/trainee-dashboard/trainee-dashboard.component';
 
 export const routes: Routes = [
     {
@@ -21,10 +22,6 @@ export const routes: Routes = [
         path: 'auth', component: AuthComponent, canActivate: [MsalGuard],
     },
     {
-        path: 'test', component: TestPageComponent
-    },
-    { path: 'instructions', component:  InstructionPageComponent},
-    {
         path: 'sidebar', component: SidebarComponent, canActivate: [MsalGuard],
     },
     {
@@ -32,6 +29,14 @@ export const routes: Routes = [
     },
     {
         path: 'admin', component: AdminDashboardComponent, canActivate: [MsalGuard],
+    },
+    {
+        path: 'test/:id', component: TestPageComponent
+    },
+    { path: 'instructions/:id', component:  InstructionPageComponent   
+    },
+    {
+         path: 'trainee', component: TraineeDashboardComponent  
     },
     {
         path: 'upload-assessment', component: AssessmentComponent
