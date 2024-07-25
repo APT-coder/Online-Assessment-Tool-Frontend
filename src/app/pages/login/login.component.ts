@@ -1,3 +1,4 @@
+
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
@@ -116,6 +117,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (!this.showPassword) {
       const email = this.loginForm.get('email')?.value;
+      console.log(email);
       this.checkEmailProvider(email);
     } else {
       console.log('Logging in with', this.loginForm.value);
