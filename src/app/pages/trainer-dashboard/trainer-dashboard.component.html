@@ -9,10 +9,6 @@
     <div class="col mt-3 trainer">
       <div class="trainerpage-top">
         <h4>Welcome To Trainer Dashboard</h4>
-        <app-profile-card
-          (cardClicked)="showModal()"
-        ></app-profile-card>
-        <app-profile-modal *ngIf="isModalVisible"></app-profile-modal>
       </div>
       <app-table-dashboard></app-table-dashboard>
       <div class="chart-card">

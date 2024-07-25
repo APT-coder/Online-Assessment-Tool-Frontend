@@ -1,5 +1,6 @@
 a{
   text-decoration: none;
+  
 }
 .sidebar-container {
   position: fixed;
@@ -11,4 +12,12 @@ a{
 
 p-sidebar {
   height: 100%;
+}
+
+td{
+  margin: 2px;
+}
+.active-link {
+  background-color: #a8c9eb; 
+  color: #ffffff; 
 }

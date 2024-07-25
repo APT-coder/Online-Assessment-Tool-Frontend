@@ -4,11 +4,10 @@ import { ListTableComponent } from './components/list-table/list-table.component
 import { PieDiagramComponent } from './components/pie-diagram/pie-diagram.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { TableDashboardComponent } from './components/table-dashboard/table-dashboard.component';
-import { ProfileCardComponent } from '../../components/profile-card/profile-card.component';
 import { AdminDashboardService } from '../../service/admin-dashboard/admin-dashboard.service'; 
 import { AssessmentOverview } from '../../../models/assessmentOverview.interface'; 
 import { CommonModule } from '@angular/common';
-import { ProfileModalComponent } from '../../components/profile-modal/profile-modal.component';
+
 interface DropdownOption {
   name: string;
   code: string;
@@ -17,7 +16,7 @@ interface DropdownOption {
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [SidebarComponent, ListTableComponent, PieDiagramComponent, DropdownComponent, TableDashboardComponent, ProfileCardComponent,CommonModule, ProfileModalComponent],
+  imports: [SidebarComponent, ListTableComponent, PieDiagramComponent, DropdownComponent, TableDashboardComponent,CommonModule],
   templateUrl: './admin-dashboard.component.html',
 
   styleUrl: './admin-dashboard.component.scss'
