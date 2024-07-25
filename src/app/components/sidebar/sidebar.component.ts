@@ -34,6 +34,7 @@ export class SidebarComponent {
   //   this.isAdmin = this.user.UserAdmin;
   // }
 user = JSON.parse(localStorage.getItem('userDetails') as string);
+username = this.user.UserName;
   hoveredRow: number | null = null;
   profileImage: string = "https://i.pravatar.cc/100";
   profileDetails = [

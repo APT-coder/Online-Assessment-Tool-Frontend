@@ -13,7 +13,8 @@
           <div class="button-container">
             <app-button-active [content]="'Add Role'" (buttonClick)="openRoleCreationModal()"></app-button-active>
             <app-button-active [content]="'Add User'" (buttonClick)="ShowTrainer()"></app-button-active>
-            <app-button-active [content]="'Batch Upload'" ></app-button-active>
+            <app-button-active [content]="'Batch Upload'" (buttonClick)="onFileSelect()"></app-button-active>
+            <input type="file" #fileInput (change)="onFileChange($event)" style="display: none;" />
           </div>
         </div>
     

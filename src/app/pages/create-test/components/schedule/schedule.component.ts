@@ -44,7 +44,7 @@ export class ScheduleComponent {
 
     this.secondFormGroup = this._formBuilder.group({
       batchId: ['', Validators.required],
-      assessmentId: [0, Validators.required],
+      assessmentId: [1, Validators.required],
       scheduledDate: [new Date(), Validators.required],
       assessmentDuration: ['00:00:00', Validators.required],
       startDate: [new Date(), Validators.required],
@@ -61,9 +61,42 @@ export class ScheduleComponent {
     const formValues = this.secondFormGroup.value;
     const logData = {
       ...formValues,
-      assessmentId : parseInt(localStorage.getItem("assessmentId") as string)
+      assessmentId : 1
     };
-    return logData;
+    const outputlog = this.transformAssessmentData(logData);
+    return outputlog;
+  }
+
+  transformAssessmentData(input: any): any {
+    const output = {
+      batchId: this.convertBatchId(input.batchId),
+      assessmentId: input.assessmentId,
+      scheduledDate: input.scheduledDate,
+      assessmentDuration: input.assessmentDuration,
+      startDate: input.startDate,
+      endDate: input.endDate,
+      startTime: this.convertTimeToISO(input.startTime, input.scheduledDate),
+      endTime: this.convertTimeToISO(input.endTime, input.scheduledDate),
+      status: 0, // Assuming status is always 0 as per given format
+      canRandomizeQuestion: input.canRandomizeQuestion,
+      canDisplayResult: input.canDisplayResult,
+      canSubmitBeforeEnd: input.canSubmitBeforeEnd
+    };
+    return output;
+  }
+
+  private convertBatchId(batchId: string): number {
+    // Implement your logic to convert batchId to a number
+    // For this example, let's assume a simple conversion
+    const batchMapping: { [key: string]: number } = { 'one': 1, 'two': 2, 'three': 3 };
+    return batchMapping[batchId] || 0;
+  }
+
+  private convertTimeToISO(time: string, referenceDate: string): string {
+    const referenceDateObj = new Date(referenceDate);
+    const [hours, minutes] = time.split(':').map(Number);
+    referenceDateObj.setHours(hours, minutes);
+    return referenceDateObj.toISOString();
   }
 
   onToggleSidebar(collapsed: boolean) {
