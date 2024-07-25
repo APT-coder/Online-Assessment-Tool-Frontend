@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { AdminDashboardComponent } from '../admin-dashboard/admin-dashboard.component';
+import { AuthComponent } from '../../components/auth/auth.component';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ import { AdminDashboardComponent } from '../admin-dashboard/admin-dashboard.comp
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    AdminDashboardComponent
+    AuthComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']

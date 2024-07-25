@@ -4,6 +4,7 @@ import { map, Observable, switchMap } from 'rxjs';
 import { Role } from '../../../models/role.interface';
 import { Permission } from '../../../models/permission.interface';
 import { User } from '../../../models/user.interface';
+import { ApiEndpointService } from '../api-service/api-endpoint.service';
 
 export interface ApiResponse<T> {
   isSuccess: boolean;
@@ -24,58 +25,72 @@ export interface Batch {
 export class TrainermanagementService {
 
  
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private apiEndpointService: ApiEndpointService) { }
   
     getPermissions(): Observable<ApiResponse<Permission[]>> {
-      return this.http.get<ApiResponse<Permission[]>>(`https://localhost:7120/Permission/GetAllPermissions`);
+      const url = this.apiEndpointService.getEndpoint('permissions', 'getAll');
+      return this.http.get<ApiResponse<Permission[]>>(url);
     }
   
     getAllRoles(): Observable<ApiResponse<Role[]>> {
-      return this.http.get<ApiResponse<Role[]>>(`https://localhost:7120/Roles/GetRoles`);
+      const url = this.apiEndpointService.getEndpoint('roles', 'getAll');
+      return this.http.get<ApiResponse<Role[]>>(url);
     }
   
     createRole(roleData: any): Observable<ApiResponse<Role>> {
-      return this.http.post<ApiResponse<Role>>(`https://localhost:7120/Roles/PostRole`, roleData);
+      const url = this.apiEndpointService.getEndpoint('roles', 'create');
+      return this.http.post<ApiResponse<Role>>(url, roleData);
     }
-
 
     getRoleById(id: number): Observable<ApiResponse<Role>> {
-      return this.http.get<ApiResponse<Role>>(`https://localhost:7120/Roles/GetRole/${id}`);
+      const url = this.apiEndpointService.getEndpoint('roles', 'getById', {id: id});
+      return this.http.get<ApiResponse<Role>>(url);
     }
   
-  deleteRole(roleId: number): Observable<void> {
-    return this.http.delete<void>(`https://localhost:7120/Roles/DeleteRole/${roleId}`);
-  }
-  
+    deleteRole(roleId: number): Observable<void> {
+      const url = this.apiEndpointService.getEndpoint('roles', 'delete', {roleId: roleId});
+      return this.http.delete<void>(url);
+    }
   
     updateRole(roleId: number, role: Role): Observable<Role> {
-      return this.http.put<Role>(`https://localhost:7120/Roles/PutRole/${roleId}`, role);
-   }
-   createUser(userData: any): Observable<any> {
-    return this.http.post<any>(`https://localhost:7120/User/CreateUser/CreateUser`, userData);
-  }
-  getBatches(): Observable<ApiResponse<Batch[]>> {
-    return this.http.get<ApiResponse<Batch[]>>(`https://localhost:7120/Batch/GetBatches`);
-  }
-  getUsersByRoleName(roleName: string): Observable<any> {
-    return this.http.get<any>(`https://localhost:7120/User/GetUsersByRoleName/byRole/${roleName}`);
-  }
-  deleteUser(id: number): Observable<void> {
-    const url = `https://localhost:7120/User/DeleteUser/${id}`;
-    return this.http.delete<void>(url);
-  }
-  updateUser(updateUserRequest: any): Observable<any> {
-    return this.http.put<any>(`https://localhost:7120/User/UpdateUser/update`, updateUserRequest);
-  }
+      const url = this.apiEndpointService.getEndpoint('roles', 'update', {roleId: roleId});
+      return this.http.put<Role>(url, role);
+    }
+
+    createUser(userData: any): Observable<any> {
+      const url = this.apiEndpointService.getEndpoint('users', 'create');
+      return this.http.post<any>(url, userData);
+    }
+
+    getBatches(): Observable<ApiResponse<Batch[]>> {
+      const url = this.apiEndpointService.getEndpoint('batches', 'getAll');
+      return this.http.get<ApiResponse<Batch[]>>(url);
+    }
+
+    getUsersByRoleName(roleName: string): Observable<any> {
+      const url = this.apiEndpointService.getEndpoint('users', 'getByRoleName', {roleName: roleName});
+      return this.http.get<any>(url);
+    }
+
+    deleteUser(id: number): Observable<void> {
+      const url = this.apiEndpointService.getEndpoint('users', 'delete', {id: id});
+      return this.http.delete<void>(url);
+    }
+
+    updateUser(updateUserRequest: any): Observable<any> {
+      const url = this.apiEndpointService.getEndpoint('users', 'update');
+      return this.http.put<any>(url, updateUserRequest);
+    }
   
+    getTrainerDetails(userId: number): Observable<any> {
+      const url = this.apiEndpointService.getEndpoint('trainer', 'getDetails', {userId: userId});
+      return this.http.get<any>(url);
+    }
 
-  getTrainerDetails(userId: number): Observable<any> {
-    return this.http.get<any>(`https://localhost:7120/User/GetTrainerDetails/trainer/${userId}`);
-  }
-
-  getTraineeDetails(userId: number): Observable<any> {
-    return this.http.get<any>(`https://localhost:7120/User/GetTraineeDetails/trainee/${userId}`);
-  }
+    getTraineeDetails(userId: number): Observable<any> {
+      const url = this.apiEndpointService.getEndpoint('trainee', 'getDetails', {userId: userId});
+      return this.http.get<any>(url);
+    }
 }
   
   

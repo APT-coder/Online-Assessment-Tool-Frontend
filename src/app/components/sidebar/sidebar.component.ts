@@ -23,4 +23,6 @@ export class SidebarComponent {
   // checkUserRole() {
   //   this.isAdmin = this.user.UserAdmin;
   // }
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
+  username = this.user.UserName;
 }
