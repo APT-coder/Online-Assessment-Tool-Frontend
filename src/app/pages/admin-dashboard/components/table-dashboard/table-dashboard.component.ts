@@ -1,29 +1,48 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
-import { faFilter, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AdminDashboardService } from '../../../../service/admin-dashboard/admin-dashboard.service';
+import { Table, TableModule } from 'primeng/table';
+import { HttpClientModule } from '@angular/common/http';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { TagModule } from 'primeng/tag';
 import { AssessmentOverview } from '../../../../../models/assessmentOverview.interface';
+import { CommonModule } from '@angular/common';
+import { ButtonActiveComponent } from "../../../../ui/buttons/button-active/button-active.component";
 
 @Component({
   selector: 'app-table-dashboard',
   standalone: true,
-  imports: [CommonModule ,TableModule, ButtonModule, FontAwesomeModule],
+  imports: [TableModule, HttpClientModule, InputTextModule, TagModule, IconFieldModule, InputIconModule, CommonModule, ButtonActiveComponent],
   templateUrl: './table-dashboard.component.html',
-  styleUrl: './table-dashboard.component.scss'
+  styleUrls: ['./table-dashboard.component.scss']
 })
-export class TableDashboardComponent {
-  faPen = faPen;
-  faTrash = faTrash;
-  faFilter = faFilter;
+export class TableDashboardComponent implements OnInit {
+  @Output() assessmentIdSelected = new EventEmitter<number>();
+  @ViewChild('dt1') dt1!: Table;
+  assessments!: AssessmentOverview[];
+  selectedAssessment!: AssessmentOverview;
 
-  @Input() tableData: AssessmentOverview[] = [];
-  @Output() assessmentSelected = new EventEmitter<number>(); // Emit assessmentId
 
-  onRowClick(assessmentId: number) {
-    console.log('Clicked Assessment ID:', assessmentId); 
-    this.assessmentSelected.emit(assessmentId);
-    console.log('Assessment ID emitted:', assessmentId);
+  constructor(private adminDashboardService: AdminDashboardService) {}
+
+  ngOnInit() {
+    this.adminDashboardService.getAllAssessmentOverviews().subscribe((response) => {
+      if (response.isSuccess) {
+        this.assessments = response.result;
+      }
+    });
   }
+
+  filterGlobal(event: Event, field: string) {
+    const inputElement = event.target as HTMLInputElement;
+    const value = (inputElement?.value || '').toLowerCase(); 
+    this.dt1.filterGlobal(value, 'contains'); 
+}
+
+onRowClick(assessment: AssessmentOverview): void {
+  this.assessmentIdSelected.emit(assessment.assessmentId);
+  console.log(assessment.assessmentId);
+}
+  
 }

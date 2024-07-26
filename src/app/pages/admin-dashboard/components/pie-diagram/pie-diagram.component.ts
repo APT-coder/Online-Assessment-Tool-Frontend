@@ -1,8 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { AdminChart } from '../../../../../models/adminChart.interface'; 
 import { AdminDashboardService } from '../../../../service/admin-dashboard/admin-dashboard.service'; 
-import { ApiResponses } from '../../../../../models/apiResponse.interface'; 
 import { AdminChartResponse } from '../../../../../models/adminChartResponse.interface'; 
 import { CommonModule } from '@angular/common';
 
@@ -14,65 +12,80 @@ import { CommonModule } from '@angular/common';
   styleUrl: './pie-diagram.component.scss'
 })
 export class PieDiagramComponent {
-    @Input() assessmentId!: number;
-    data: any;
-    options: any;
+   
+    @Input() assessmentId!: number ;
+
+    data: any;  
+    options: any; 
   
     constructor(private chartService: AdminDashboardService) {}
   
     ngOnChanges(changes: SimpleChanges): void {
-      if (changes['assessmentId'] && this.assessmentId) {
+      if (changes['assessmentId'] && this.assessmentId !== null) {
         this.updateChart();
       }
     }
   
     updateChart(): void {
-      this.chartService.getChartValues(this.assessmentId).subscribe((chartData: AdminChartResponse) => {
-        const chartResult = chartData.result;
-        const scoreCategories = {
-          '80-90': 0,
-          '60-70': 0,
-          '70-80': 0,
-          '>90': 0,
-          'Below 60': 0
-        };
+      if (this.assessmentId === null) {
+        console.log(this.assessmentId);
+        return; 
+      }
   
-        chartResult.forEach(item => {
-          if (item.avergeScore > 90) {
-            scoreCategories['>90']++;
-          } else if (item.avergeScore >= 80) {
-            scoreCategories['80-90']++;
-          } else if (item.avergeScore >= 70) {
-            scoreCategories['70-80']++;
-          } else if (item.avergeScore >= 60) {
-            scoreCategories['60-70']++;
-          } else {
-            scoreCategories['Below 60']++;
-          }
-        });
+      this.chartService.getChartValues(this.assessmentId).subscribe(
+        (chartData: AdminChartResponse) => {
+          console.log(chartData.result); // For debugging purposes
+          const chartResult = chartData.result;
+          const scoreCategories = {
+            'Above 90': 0,
+            '80-90': 0,
+            '70-80': 0,
+            '60-70': 0,
+            'Below 60': 0
+          };
   
-        this.data = {
-          datasets: [
-            {
-              data: Object.values(scoreCategories),
-              backgroundColor: ['#D682C4', '#F1D0D0', '#D2A4BF', '#D682C4', '#9D4999'],
-              hoverBackgroundColor: ['#ed92d9', '#f3d9d9', '#d2abc1', '#c579b4', '#ab54a7']
+          chartResult.forEach(item => {
+            if (item.avergeScore > 90) {
+              scoreCategories['Above 90']++;
+            } else if (item.avergeScore >= 80) {
+              scoreCategories['80-90']++;
+            } else if (item.avergeScore >= 70) {
+              scoreCategories['70-80']++;
+            } else if (item.avergeScore >= 60) {
+              scoreCategories['60-70']++;
+            } else {
+              scoreCategories['Below 60']++;
             }
-          ]
-        };
+          });
   
-        this.options = {
-          responsive: true,
-          aspectRatio: 1.5,
-          plugins: {
-            legend: {
-              labels: {
-                usePointStyle: true,
-                color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+          this.data = {
+          
+            datasets: [
+              {
+                data: Object.values(scoreCategories),
+                backgroundColor: ['#008080', '#87CEEB', '#FFC107', '#FF5722', '#673AB7'],
+                hoverBackgroundColor: ['#006666', '#6BB3D6', '#FFB300', '#E64A19', '#5E35B1']
+              }
+            ],
+            labels: Object.keys(scoreCategories),
+          };
+  
+          this.options = {
+            responsive: true,
+            aspectRatio: 1.5,
+            plugins: {
+              legend: {
+                labels: {
+                  usePointStyle: true,
+                  color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+                }
               }
             }
-          }
-        };
-      });
+          };
+        },
+        (error: any) => {
+          console.error('Error fetching chart data:', error);
+        }
+      );
     }
 }

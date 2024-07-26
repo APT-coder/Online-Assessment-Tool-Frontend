@@ -1,32 +1,32 @@
+$color:var(--primary-color) ;
 
-.header {
-    background-color: #251D40;
-    color: white; 
-    text-align: center;
-  }
-  
-  
-  .card{
-    margin: 7px;
-    width:250px
-  }
+::ng-deep .custom-table th, 
+::ng-deep .custom-table td {
+  padding: 8px 12px; /* Reduce padding to make columns closer */
+}
 
-  .table thead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #fff;
+::ng-deep .custom-table th {
+
+
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
 }
-.name{
-    width:80%;
+
+::ng-deep .custom-table tr {
+  transition: background-color 0.3s;
 }
-.score{
-    width:20%;
+
+::ng-deep .custom-table td {
+  border-bottom: 1px solid #ddd;
 }
-.table tbody tr:nth-child(odd) td {
-    background-color: #D9D9D9; 
-  }
-  
-.table tbody tr:nth-child(even) td{
-    background-color: #F3F0FC; 
-  }
+
+/* Hover effect */
+::ng-deep .custom-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.title-header{
+  color: $color;
+  text-align: center;
+}

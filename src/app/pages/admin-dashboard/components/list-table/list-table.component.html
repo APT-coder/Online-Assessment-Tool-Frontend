@@ -1,19 +1,29 @@
 <div class="card">
-  <div class="card-body p-0" style="overflow-y: auto;">
-    <table class="table mb-0 ">
-      <thead>
-        <tr class="header-row">
-          <th class="header" colspan="2">{{Title}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let trainee of filteredData" >
-          <td class="name">{{ trainee.traineeName }}</td>
-          <td class="score">{{ trainee.score }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <p-table 
+    [value]="filteredData"
+    [scrollable]="" 
+    scrollHeight="400px"
+     
+    [virtualScroll]="true" 
+    [virtualScrollItemSize]="" 
+    class="custom-table">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th colspan="2" class="title-header">{{ Title }}</th>
+      </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-rowData>
+      <tr>
+        <td>{{ rowData.traineeName }}</td>
+        <td>{{ rowData.score }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
+
+
 
 

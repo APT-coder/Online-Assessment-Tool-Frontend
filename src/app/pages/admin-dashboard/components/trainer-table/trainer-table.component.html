@@ -1,0 +1,37 @@
+<div class="card">
+    <p-table #dt2 [value]="trainerList" [globalFilterFields]="['trainer']">
+      <ng-template pTemplate="caption">
+        <div class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="filterGlobal($event, 'contains')" 
+            placeholder="Global Search" />
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:22%">Name</th>
+        </tr>
+        <tr>
+          <th>
+            <p-columnFilter 
+              type="text"
+              field="trainerList" 
+              placeholder="Search by name" 
+              ariaLabel="Filter Name" />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-trainer>
+        <tr>
+         <td>
+            <span class="p-column-title">Trainers</span>
+            {{ trainer}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

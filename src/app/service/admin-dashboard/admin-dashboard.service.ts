@@ -9,8 +9,12 @@ import { AdminChartResponse } from '../../../models/adminChartResponse.interface
   providedIn: 'root'
 })
 export class AdminDashboardService {
-  private baseApiUrl = 'https://localhost:7120/api/Assessment';
+  getCustomersMini() {
+    throw new Error('Method not implemented.');
+  }
+  private baseApiUrl = 'https://localhost:7120/Assessment';
   private chartApiUrl='https://localhost:7120/AssessmentScore/GetAssessment';
+  private trainerApiUrl='https://localhost:7120/Trainer/GetTrainerList';
 
   constructor(private http: HttpClient) { }
   getAllAssessmentOverviews(): Observable<ApiResponses> {
@@ -28,5 +32,9 @@ export class AdminDashboardService {
 
   getChartValues(assessmentId: number):Observable<AdminChartResponse>{
     return this.http.get<AdminChartResponse>(`${this.chartApiUrl}/${assessmentId}`)
+  }
+
+  getTrainerList():Observable<string[]>{
+    return this.http.get<string[]>(`${this.trainerApiUrl}`)
   }
 }

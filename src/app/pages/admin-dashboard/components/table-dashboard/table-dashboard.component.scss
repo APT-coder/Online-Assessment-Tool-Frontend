@@ -1,54 +1,50 @@
-/* your-component.component.css */
-.header {
-    background-color: #251D40; /* Dark purple */
-    color: white; 
-    font-size: smaller;
-    text-align: center;/* Text color for headings */
-    
-  }
-  
-  .odd-row td {
-    background-color: #edebf7; /* Light purple */
-  }
-  
-  .even-row  td{
-    background-color: #d9d9d9; /* Light gray */
-  }
-  
-  .custom-table thead th {
-    padding: 0.5rem; /* Reduce padding to decrease header row height */
-  }
-  
-  .custom-table tbody td {
-    padding: 0.5rem; /* Reduce padding to decrease row height */
-  }
-  .card{
-    margin: 5%;
+::ng-deep {
+  .p-datatable {
+    width: 100%; /* Adjust the width as needed */
+    height: auto;
+    font-size: 0.8rem;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
-  .custom-table thead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #fff;
+  .p-datatable-header,
+  .p-datatable-thead > tr > th,
+  .p-datatable-tbody > tr > td {
+    padding: 0.25rem;
+  }
+
+  .p-datatable-header {
+    font-size: 0.85rem;
+  }
+
+  .p-datatable-thead > tr > th {
+    font-size: 15px;
+  }
+
+  .p-datatable-tbody > tr > td {
+    font-size: 13px;
+    padding:0.5rem 0.25rem;
+  }
+
+  .p-paginator {
+    font-size: 0.8rem;
+    padding: 0.25rem;
+  }
+
+  .p-datatable-wrapper {
+    padding: 0;
+    margin: 0;
+  }
+
+  .card {
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Adjust the width as needed */
+  }
 }
-.btn-group {
-    width: 90%;
-    display: flex;
-    justify-content: center;
+
+.details-btn{
+  width: fit-content;
   }
   
-  .btn-group .btn {
-    flex: 1;
-    padding: 10px 20px;
-    border-left: 2px solid #5940B7; 
-    border-right: 2px solid #5940B7; 
-  }
-  .small-text {
-    font-size: smaller;
-  }
-  .custom-table {
-    width: 100%;
-    table-layout: fixed;
-  }
- 
