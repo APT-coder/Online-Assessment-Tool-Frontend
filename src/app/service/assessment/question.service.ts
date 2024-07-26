@@ -12,21 +12,14 @@ export class QuestionService {
 
   constructor(private http:HttpClient) { }
 
+  private assessmentUrl ="https://localhost:7120/Assessment/GetAssessment";
+  private postAnswerUrl = "  https://localhost:7120/TraineeAnswer/AssessmentSubmit/2";
 
-  private apiUrl="https://localhost:7200/api/Question";
-  private assessmentUrl ="https://localhost:7120/Assessment/GetAssessment/2";
-  private postAnswerUl = "  https://localhost:7120/TraineeAnswer/AssessmentSubmit/2";
-
-
-  getQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(this.apiUrl);
+  getAssessment(assessmentId:number): Observable<Assessment[]> {
+    return this.http.get<Assessment[]>(`${this.assessmentUrl}/${assessmentId}`);
   }
-
-  getAssessment(): Observable<Assessment[]> {
-    return this.http.get<Assessment[]>(this.assessmentUrl);
-  }
-  postAssessment(assessment: any): Observable<any> {
-    return this.http.post<any>(this.postAnswerUl, assessment);
+  postAssessment(assessment: any, userId: number): Observable<any> {
+    return this.http.post<any>(`${this.postAnswerUrl}/${userId}`, assessment);
   }
 
 }

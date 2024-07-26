@@ -31,6 +31,8 @@ export class TestPageComponent {
     index:number=7;
     countTemp: number =0;
 
+    user = JSON.parse(localStorage.getItem('userDetails') as string);
+
   increment() {
     this.count++;
   }
@@ -115,7 +117,7 @@ export class TestPageComponent {
       questionWithoutNumber:any
      
       fetchAssessments():void{
-        this.api.getAssessment().subscribe(response =>{
+        this.api.getAssessment(this.assessmentId).subscribe(response =>{
           this.assessment= response;
        
 
@@ -146,18 +148,19 @@ export class TestPageComponent {
       }
       
       postAssessment() {
+        var userId = this.user.UserId;
       
-        this.api.postAssessment(this.question).subscribe({
-          next: (response) => {
-            console.log('Assessment posted successfully:', response);
-          },
-          error: (error) => {
-            console.error('Error posting assessment:', error);
-          },
-          complete: () => {
-            console.log('Post assessment request completed');
-          }
-        });
+        // this.api.postAssessment(this.question, userId).subscribe({
+        //   next: (response) => {
+        //     console.log('Assessment posted successfully:', response);
+        //   },
+        //   error: (error) => {
+        //     console.error('Error posting assessment:', error);
+        //   },
+        //   complete: () => {
+        //     console.log('Post assessment request completed');
+        //   }
+        // });
 
         console.log("NEED BACKEND CONNECTION DONE");
         ///MAIN
