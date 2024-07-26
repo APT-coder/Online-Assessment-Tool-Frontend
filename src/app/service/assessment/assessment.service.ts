@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Question } from '../../../models/question.interface'; 
-import { ApiEndpointService } from '../api-service/api-endpoint.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssessmentService {
+
+  assessmentApiUrl = `https://localhost:7120/Assessment`;
   
-  constructor(private http: HttpClient, private apiEndpointService: ApiEndpointService) {}
+  constructor(private http: HttpClient) {}
 
   transformData(question: Question, createdBy: number): any {
     return {
@@ -34,13 +35,11 @@ export class AssessmentService {
       assessmentName,
       createdBy
     };
-    const url = this.apiEndpointService.getEndpoint('assessments', 'create');
-    return this.http.post<any>(url, payload);
+    return this.http.post<any>(`${this.assessmentApiUrl}/CreateAssessment`, payload);
   }
 
   postQuestion(assessmentId: number, question: any, createdBy: number): Observable<any> {
     const transformedData = this.transformData(question, createdBy);
-    const url = this.apiEndpointService.getEndpoint('assessments', 'addQuestion', { id: assessmentId });
-    return this.http.post(url, transformedData);
+    return this.http.post(`${this.assessmentApiUrl}/AddQuestionToAssessment/${assessmentId}/questions`, transformedData);
   }
 }

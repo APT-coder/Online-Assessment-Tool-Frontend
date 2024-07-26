@@ -63,7 +63,7 @@ export class CreateTestFormComponent implements OnInit {
 
   questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
   assessmentCreated!: boolean;
-  createdBy: number = this.user.traineeId;
+  createdBy: number = this.user.TrainerId;
   dashboard = localStorage.getItem("dashboard");
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
   constructor(private router: Router, private assessmentService: AssessmentService, private scheduledAssessmentService: ScheduledAssessmentService, private messageService: MessageService) {}

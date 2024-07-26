@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiEndpointService } from '../api-service/api-endpoint.service';
 
 interface Trainee {
   traineeName: string;
@@ -14,12 +13,11 @@ interface Trainee {
 })
 export class PerformanceDetailsService {
 
-  private apiUrl = 'https://localhost:7120/Assessment/GetTraineeAssessmentDetails/GetTraineeAssessmentDetails'; // Replace with your actual API URL
+  private performanceApiUrl = 'https://localhost:7120/Assessment/GetTraineeAssessmentDetails/GetTraineeAssessmentDetails'; // Replace with your actual API URL
 
-  constructor(private http: HttpClient, private apiEndpointService: ApiEndpointService) { }
+  constructor(private http: HttpClient) { }
 
   getTrainees(assessmentId : number): Observable<Trainee[]> {
-    const url = this.apiEndpointService.getEndpoint('assessments', 'getTraineeScoresByAssessmentId', {assessmentId: assessmentId});
-    return this.http.get<Trainee[]>(url);
+    return this.http.get<Trainee[]>(`${this.performanceApiUrl}/${assessmentId}`);
   }
 }

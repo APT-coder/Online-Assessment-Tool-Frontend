@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ApiEndpointService } from './service/api-service/api-endpoint.service';
 
 @Component({
     selector: 'app-root',
@@ -12,9 +11,8 @@ import { ApiEndpointService } from './service/api-service/api-endpoint.service';
 export class AppComponent {
   title = 'Online-Assessment-Tool-Frontend';
 
-  constructor(private apiEndpointService: ApiEndpointService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.apiEndpointService.loadEndpoints().subscribe();
   }
 }

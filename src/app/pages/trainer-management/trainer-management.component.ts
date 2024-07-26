@@ -10,7 +10,6 @@ import { AccountcreationModalComponent } from "./components/accountcreation-moda
 import { TrainerTableComponent } from "./components/trainer-table/trainer-table.component";
 import * as XLSX from 'xlsx';
 import { v4 as uuidv4 } from 'uuid';
-import { ApiEndpointService } from '../../service/api-service/api-endpoint.service';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
@@ -41,10 +40,9 @@ export class TrainerManagementComponent {
   isModalVisible: boolean = false;
   jsonData: any;
 
-  constructor(private apiService: TrainermanagementService, private userService: TrainermanagementService, private apiEndpointService: ApiEndpointService, private messageService: MessageService) {}
+  constructor(private apiService: TrainermanagementService, private userService: TrainermanagementService, private messageService: MessageService) {}
 
   ngOnInit() {
-    this.apiEndpointService.loadEndpoints().subscribe();
   }
 
   ShowTrainer() {

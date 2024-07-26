@@ -33,7 +33,8 @@ export const routes: Routes = [
     {
         path: 'test/:id', component: TestPageComponent
     },
-    { path: 'instructions/:id', component:  InstructionPageComponent   
+    { 
+        path: 'instructions/:id', component:  InstructionPageComponent   
     },
     {
          path: 'trainee', component: TraineeDashboardComponent  
@@ -53,5 +54,4 @@ export const routes: Routes = [
     {
         path: '**', component: NotFoundComponent
     }
-
 ];

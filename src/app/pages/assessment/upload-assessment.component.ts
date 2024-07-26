@@ -78,7 +78,7 @@ export class AssessmentComponent implements OnInit {
 
   assessmentCreated!: boolean;
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
-  createdBy: number = this.user.traineeId;
+  createdBy: number = this.user.TrainerId;
   dashboard = localStorage.getItem("dashboard");
 
   constructor(
@@ -91,6 +91,8 @@ export class AssessmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.createdBy);
+    console.log(this.dashboard);
     if (!sessionStorage.getItem('hasReloaded')) {
       sessionStorage.setItem('hasReloaded', 'true');
       window.location.reload();
@@ -113,6 +115,9 @@ export class AssessmentComponent implements OnInit {
     });
     this.thirdFormGroup = this._formBuilder.group({
       thirdCtrl: ['', Validators.required]
+    });
+    this.startFormGroup = this._formBuilder.group({
+      startCtrl: ['', Validators.required]
     });
     this.editQuestions = this.questions;
   }

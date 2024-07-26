@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './upload-success.component.scss'
 })
 export class UploadSuccessComponent {
+  dashboard = localStorage.getItem("dashboard");
   htmlContent: string;
 
   constructor(private router: Router,)
