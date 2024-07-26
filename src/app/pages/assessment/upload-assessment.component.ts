@@ -78,7 +78,8 @@ export class AssessmentComponent implements OnInit {
 
   assessmentCreated!: boolean;
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
-  createdBy: number = this.user.UserId;
+  createdBy: number = this.user.traineeId;
+  dashboard = localStorage.getItem("dashboard");
 
   constructor(
     private route: ActivatedRoute,
@@ -253,7 +254,7 @@ export class AssessmentComponent implements OnInit {
         
 
         setTimeout(() => {
-          //this.router.navigate(['/sidebar']);
+          this.router.navigate(['/{{path}}']);
         }, 5000);
       }, (error: any) => {
         console.error('Error posting question', error);

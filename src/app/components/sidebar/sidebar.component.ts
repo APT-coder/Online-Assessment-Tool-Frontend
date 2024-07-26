@@ -38,6 +38,7 @@ user = JSON.parse(localStorage.getItem('userDetails') as string);
 username = this.user.UserName;
   hoveredRow: number | null = null;
   profileImage: string = "https://i.pravatar.cc/100";
+  path: string = '';
   profileDetails = [
     { label: 'Name:', value: 'Your Name' },
    // { label: 'Username:', value: 'Your Username' },
@@ -54,6 +55,15 @@ constructor(private elementRef: ElementRef, private authService: MsalService) { 
      // this.profileDetails[1].value = this.user.UserName;
       this.profileDetails[1].value = this.user.UserEmail;
       //this.profileDetails[3].value = this.user.UserPhone;
+
+      if (this.user.UserType === 0) {
+        this.path = "admin";
+      } else if (this.user.UserType === 1) {
+        this.path = "trainer";
+      } else {
+        this.path = "trainee";
+      }
+      localStorage.setItem("dashboard", this.path);
    }
 closeModal() {
   const modal = this.elementRef.nativeElement.querySelector('.profile-modal');
