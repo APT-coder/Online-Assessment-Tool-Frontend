@@ -147,19 +147,21 @@ export class TestPageComponent {
       
       postAssessment() {
       
-        // this.api.postAssessment(this.question).subscribe({
-        //   next: (response) => {
-        //     console.log('Assessment posted successfully:', response);
-        //   },
-        //   error: (error) => {
-        //     console.error('Error posting assessment:', error);
-        //   },
-        //   complete: () => {
-        //     console.log('Post assessment request completed');
-        //   }
-        // });
+        this.api.postAssessment(this.question).subscribe({
+          next: (response) => {
+            console.log('Assessment posted successfully:', response);
+          },
+          error: (error) => {
+            console.error('Error posting assessment:', error);
+          },
+          complete: () => {
+            console.log('Post assessment request completed');
+          }
+        });
 
         console.log("NEED BACKEND CONNECTION DONE");
+        ///MAIN
+        console.log(this.question)
       }
 
       openConfirmationDialog(): void {

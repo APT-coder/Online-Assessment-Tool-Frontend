@@ -14,8 +14,8 @@ export class QuestionService {
 
 
   private apiUrl="https://localhost:7200/api/Question";
-  private assessmentUrl ="https://localhost:7120/Assessment/GetAssessment/5";
-  
+  private assessmentUrl ="https://localhost:7120/Assessment/GetAssessment/2";
+  private postAnswerUl = "  https://localhost:7120/TraineeAnswer/AssessmentSubmit/2";
 
 
   getQuestions(): Observable<Question[]> {
@@ -25,8 +25,8 @@ export class QuestionService {
   getAssessment(): Observable<Assessment[]> {
     return this.http.get<Assessment[]>(this.assessmentUrl);
   }
-  postAssessment(assessment: Assessment): Observable<any> {
-    return this.http.post<any>(this.assessmentUrl, assessment);
+  postAssessment(assessment: any): Observable<any> {
+    return this.http.post<any>(this.postAnswerUl, assessment);
   }
 
 }
