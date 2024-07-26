@@ -15,6 +15,7 @@ import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confi
 import { AccountcreationModalComponent } from "../accountcreation-modal/accountcreation-modal.component";
 import { User } from '../../../../../models/user.interface';
 import { Observable, switchMap } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-trainer-table',
@@ -37,10 +38,12 @@ export class TrainerTableComponent {
   selectedUser: User | null = null;
   @ViewChild(DeleteConfirmationComponent) deleteConfirmationComponent!: DeleteConfirmationComponent;
 
-  constructor(private apiService: TrainermanagementService) {}
+  constructor(private apiService: TrainermanagementService, private messageService:MessageService) {}
 
   ngOnInit(): void {
     this.loadRoles();
+    this.loadUsersForRole
+    
    
   }
   
@@ -51,43 +54,11 @@ export class TrainerTableComponent {
     if(user.userType ===1){
       //this.loadTrainerDetails(user.userId);
     }  else if (user.userType === 2) {
-      this.loadTraineeDetails(user.userId);
+      //this.loadTraineeDetails(user.userId);
     } else {
       console.error('Invalid user type');
     }
    
-  }
-
- 
-
-  // loadTrainerDetails(userId: number): void {
-  //   this.apiService.getTrainerDetails(userId).subscribe(
-  //     (response) => {
-  //       if (response) {
-  //         console.log(response);
-  //       } else {
-  //         console.error('Trainer details not found');
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error('Error loading trainer details', error);
-  //     }
-  //   );
-  // }
-  
-  loadTraineeDetails(userId: number): void {
-    this.apiService.getTraineeDetails(userId).subscribe(
-      (response) => {
-        if (response) {
-          console.log(response);
-        } else {
-          console.error('Trainee details not found');
-        }
-      },
-      (error) => {
-        console.error('Error loading trainer details', error);
-      }
-    );
   }
   
 
@@ -96,6 +67,8 @@ export class TrainerTableComponent {
       response => {
         if (response.isSuccess) {
           this.roles = response.result;
+      
+          this.roles.forEach(role => this.loadUsersForRole(role));
         } else {
           console.error('Failed to load roles:', response.message);
         }
@@ -105,6 +78,7 @@ export class TrainerTableComponent {
       }
     );
   }
+ 
 
   toggleRoleExpansion(role: Role): void {
     const index = this.expandedRoles.indexOf(role.roleName);
@@ -118,7 +92,7 @@ export class TrainerTableComponent {
   
 
   loadUsersForRole(role: Role): void {
-    console.log('Loading users for role:', role); // Check if role has expected properties
+    console.log('Loading users for role:', role); 
   
     if (!role || !role.roleName) {
       console.error('Role or roleName is undefined:', role);
@@ -151,7 +125,7 @@ export class TrainerTableComponent {
       (response: ApiResponse<Role>) => {
         if (response.isSuccess) {
           this.role = response.result;
-          console.log('Role retrieved:', this.role); // Debugging line
+          console.log('Role retrieved:', this.role); 
           this.editRole.emit(this.role);
         } else {
           console.error('Error retrieving role:', response.message);
@@ -168,10 +142,11 @@ export class TrainerTableComponent {
       console.log('Deleting user with id:', userId);
       this.apiService.deleteUser(userId).subscribe(
         () => {
-          // Update the local role data to reflect the deletion
           this.roles.forEach(role => {
             if (role.users) {
               role.users = role.users.filter(user => user.userId !== userId);
+              this.messageService.add({ severity: 'success', summary: 'Deleted Successfully', detail: 'User Deleted Successfully', life: 3000 });
+
             }
           });
         },

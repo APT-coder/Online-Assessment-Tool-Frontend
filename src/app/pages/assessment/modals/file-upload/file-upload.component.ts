@@ -71,4 +71,10 @@ export class FileUploadComponent {
   prepareTestAndCloseModal(){
     this.uploadSuccess.emit();
   }
+  closeUploadModal(){
+    const modalElement = document.getElementById('exampleModal');
+    if (modalElement) {
+      modalElement.style.display = 'none'; // Hide the modal
+    }
+  }
 }

@@ -28,7 +28,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     ButtonActiveComponent,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxMaterialTimepickerModule],
+    NgxMaterialTimepickerModule,
+   ],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'
 })
@@ -99,7 +100,5 @@ export class ScheduleComponent {
     return referenceDateObj.toISOString();
   }
 
-  onToggleSidebar(collapsed: boolean) {
-    this.isSidebarCollapsed = collapsed;
-  }
+
 }

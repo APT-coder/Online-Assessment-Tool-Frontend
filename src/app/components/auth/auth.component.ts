@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../service/user/user.service';
 import { Router } from '@angular/router';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [MatProgressSpinnerModule, CommonModule],
+  imports: [ProgressSpinnerModule, CommonModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
@@ -35,7 +35,7 @@ export class AuthComponent {
         } else {
           this.route.navigate(['/trainee']);
         }
-      }, 8000);
+      }, 4000);
     } catch (error) {
       console.error('Error fetching user role data:', error);
       // Handle the error as needed, e.g., redirect to an error page

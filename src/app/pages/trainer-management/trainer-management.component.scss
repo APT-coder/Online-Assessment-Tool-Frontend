@@ -1,7 +1,11 @@
-
+.initial-row{
+    overflow-x: hidden;
+    width: 100%;
+}
 .container {
     margin: 5%;
       transition: all 0.3s ease;
+     
   }
   
   .sidebar-col {
@@ -10,8 +14,9 @@
   }
   
   .view-col {
-      width: 80%;
-      margin-left: 20%;
+      width: 70%;
+      margin-left: 25%;
+     
       transition: width 0.3s ease, margin-left 0.3s ease;
   }
   
@@ -28,8 +33,12 @@
       gap: 1rem; /* Adjust the gap size as needed */
     }
     .header-text {
-      font-size: 1.5rem; /* Adjust font size as needed */
+      font-size: 1.5rem; 
       font-weight: bold;
-      color: var(--primary-color); /* Use PrimeNG primary color */
-      margin-bottom: 1rem; /* Space below heading */
+      color: var(--primary-color); 
+      margin-bottom: 1rem; 
+      margin-left: -8%;
+    }
+    .table{
+        margin-top: -5%;
     }

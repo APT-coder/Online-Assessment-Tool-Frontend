@@ -11,9 +11,10 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Role } from '../../../../../models/role.interface';
 import { Batch, TrainermanagementService } from '../../../../service/trainer-management/trainermanagement.service';
 import { CalendarModule } from 'primeng/calendar';
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../../models/user.interface';
+
 
 @Component({
   selector: 'app-accountcreation-modal',
@@ -29,7 +30,8 @@ import { User } from '../../../../../models/user.interface';
     CheckboxModule,
     MultiSelectModule,
     CalendarModule,
-    CommonModule
+    CommonModule, 
+  
   ],
   templateUrl: './accountcreation-modal.component.html',
   styleUrls: ['./accountcreation-modal.component.scss']
@@ -52,7 +54,7 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
   roleMap: Map<string, number> = new Map(); // role name to id
   batchMap: Map<string, number> = new Map(); 
 
-  constructor(private fb: FormBuilder, private userService: TrainermanagementService) {
+  constructor(private fb: FormBuilder, private userService: TrainermanagementService,private messageService:MessageService) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -69,6 +71,7 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
   ngOnInit() {
     this.loadRoles();
     this.loadBatches();
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -140,7 +143,7 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
   onUserTypeChange(selectedType: string) {
     const form = this.userForm;
     if (selectedType === 'Trainer') {
-      form.get('password')?.setValidators([Validators.required]);
+      form.get('password')?.setValidators(null);
       form.get('role')?.setValidators([Validators.required]);
       form.get('selectedBatches')?.setValidators([Validators.required]);
       form.get('batch')?.clearValidators();
@@ -204,6 +207,8 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
     if (this.mode === 'edit') {
       this.userService.updateUser(apiPayload).subscribe(
         () => {
+          this.messageService.add({ severity: 'success', summary: 'User Updated', detail: 'User Updated Successfully', life: 3000 });
+
           this.closeModal();
         },
         error => {
@@ -214,6 +219,8 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
       this.userService.createUser(apiPayload).subscribe(
         () => {
           this.closeModal();
+          this.messageService.add({ severity: 'success', summary: 'User Created', detail: 'User Created Successfully', life: 3000 });
+
         },
         error => {
           console.error('Error creating user:', error);
@@ -227,14 +234,14 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
 
   
 
-  deleteUser() {
-    if (this.userData) {
-      // Call service to delete user
-      // this.userService.deleteUser(this.userData.id).subscribe(() => {
-      //   this.closeModal();
-      // });
-    }
-  }
+  // deleteUser() {
+  //   if (this.userData) {
+  //     // Call service to delete user
+  //     // this.userService.deleteUser(this.userData.id).subscribe(() => {
+  //     //   this.closeModal();
+  //     // });
+  //   }
+  // }
 
   closeModal() {
     this.visible = false;

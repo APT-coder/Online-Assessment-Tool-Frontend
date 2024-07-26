@@ -10,9 +10,5 @@ import { CreateTestFormComponent } from './components/create-test-form/create-te
   styleUrl: './create-test.component.scss'
 })
 export class CreateTestComponent {
-  isSidebarCollapsed: boolean = false;
-
-  onToggleSidebar(collapsed: boolean) {
-    this.isSidebarCollapsed = collapsed;
-  }
+  
 }
