@@ -18,7 +18,9 @@ import { Assessment } from '../../../models/assessment.interface';
 import { AssessmentService } from '../../service/assessment/assessment.service';
 import { FileUploadComponent } from './modals/file-upload/file-upload.component';
 import { ScheduledAssessmentService } from '../../service/scheduled-assessment/scheduled-assessment.service';
-
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 interface Question {
   id: string
   type: string;
@@ -46,8 +48,11 @@ interface Question {
     MatIconModule,
     ButtonActiveComponent,
     ScheduleComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    MessagesModule,
+    MessageModule
   ],
+  providers:[MessageService],
   templateUrl: './upload-assessment.component.html',
   styleUrls: ['./upload-assessment.component.scss']
 })
@@ -80,7 +85,8 @@ export class AssessmentComponent implements OnInit {
     private router: Router,
     private _formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
-    private scheduledAssessmentService: ScheduledAssessmentService
+    private scheduledAssessmentService: ScheduledAssessmentService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -241,6 +247,7 @@ export class AssessmentComponent implements OnInit {
       console.log(formResult);
       this.scheduledAssessmentService.scheduleAssessment(formResult).subscribe((response: any) => {
         console.log('Question posted successfully', response);
+        this.messageService.add({ severity: 'success', summary: ' Assessment Scheduled', detail: 'Sheduling Assessment Successful', life: 3000 });
 
         this.scrollToTop();
         

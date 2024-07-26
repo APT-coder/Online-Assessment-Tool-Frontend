@@ -8,12 +8,14 @@ import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-rolecreation-card',
   standalone: true,
   imports: [CardModule, CommonModule, FormsModule, DialogModule,CheckboxModule,ButtonModule],
   templateUrl: './rolecreation-card.component.html',
+  providers: [ MessageService],
   styleUrls: ['./rolecreation-card.component.scss']
 })
 export class RolecreationCardComponent implements OnInit {
@@ -26,9 +28,10 @@ export class RolecreationCardComponent implements OnInit {
 
   permissions: Permission[] = [];
 
-  constructor(private roleService: TrainermanagementService) { }
+  constructor(private roleService: TrainermanagementService, private messageService: MessageService) { }
 
   ngOnInit(): void {
+
     this.loadPermissions();
   }
 
@@ -88,6 +91,8 @@ export class RolecreationCardComponent implements OnInit {
     if (this.isEditMode) {
       this.roleService.updateRole(this.role.id, roleData).subscribe(response => {
         this.roleSaved.emit();
+        this.messageService.add({ severity: 'success', summary: 'Role Updated', detail: 'You have successfully Updated the role', life: 3000 });
+
         console.log('Role updated successfully', response);
       }, error => {
         console.error('Error updating role', error);
@@ -96,6 +101,8 @@ export class RolecreationCardComponent implements OnInit {
       this.roleService.createRole(roleData).subscribe(response => {
         if (response.isSuccess) {
           this.roleSaved.emit();
+          this.messageService.add({ severity: 'success', summary: 'Role Created', detail: 'You have successfully created the role', life: 3000 });
+
           console.log('Role created successfully', response.result);
         } else {
           console.error('Error creating role', response.message);

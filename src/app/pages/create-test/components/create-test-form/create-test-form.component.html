@@ -1,3 +1,6 @@
+
+<div class="d-flex justify-content-end w-40" style="margin-left: 30%;"><p-messages></p-messages></div>
+
 <mat-stepper linear #stepper>
   <!-- Step 1: Create Questions -->
   <mat-step>
@@ -48,8 +51,8 @@
         <button mat-button color="warn" (click)="removeQuestion(i)" class="delete-button">Delete Question</button>
       </div>
       <div class="form-group">
-        <app-button-active mat-button (click)="addNewQuestion()">Add New Question</app-button-active>
-        <button mat-button matStepperNext><app-button-active>Next</app-button-active></button>
+        <app-button-active mat-button [content]="'Add New Question'" (click)="addNewQuestion()"></app-button-active>
+        <button mat-button matStepperNext><app-button-active [content]="'Next'"></app-button-active></button>
       </div>
     </div>
     
@@ -65,9 +68,9 @@
     <ng-template matStepLabel>Preview</ng-template>
     <app-assessment-preview [questions]="questions"></app-assessment-preview>
     <div class="form-group">
-      <button mat-button><app-button-active (buttonClick)="logQuestions()">Save Questions</app-button-active></button>
-      <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
-      <button mat-button matStepperNext><app-button-active>Next</app-button-active></button>
+      <button mat-button><app-button-active (buttonClick)="logQuestions()" [content]="'Save Questions'" ></app-button-active></button>
+      <button mat-button matStepperPrevious><app-button-active [content]="'Back'"></app-button-active></button>
+      <button mat-button matStepperNext><app-button-active [content]="'Next'" ></app-button-active></button>
     </div>
     <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
       <mat-icon>keyboard_arrow_down</mat-icon>
@@ -82,8 +85,8 @@
     <ng-template matStepLabel>Schedule</ng-template>
     <app-schedule></app-schedule>
     <div class="form-group">
-      <button mat-button matStepperPrevious><app-button-active>Back</app-button-active></button>
-      <button mat-button matStepperNext><app-button-active (click)="finishSchedule()">Schedule</app-button-active></button>
+      <button mat-button matStepperPrevious><app-button-active [content]="'Back'" ></app-button-active></button>
+      <button mat-button matStepperNext><app-button-active (click)="finishSchedule()" [content]="'Schedule'" ></app-button-active></button>
     </div>
     <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
       <mat-icon>keyboard_arrow_down</mat-icon>

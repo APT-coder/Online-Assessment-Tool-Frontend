@@ -1,3 +1,101 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.form_main {
+  width: 400px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  padding: 30px 30px 30px 30px;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+.heading {
+  font-size: 2em;
+  color: #2e2e2e;
+  font-weight: 700;
+  margin: 5px 0 10px 0;
+  z-index: 2;
+}
+
+.inputContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 3px;
+}
+
+.inputField {
+  width: 100%;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid rgb(173, 173, 173);
+  margin: 10px 0;
+  color: black;
+  font-size: .8em;
+  font-weight: 500;
+  box-sizing: border-box;
+  padding-left: 30px;
+}
+
+.inputField:focus {
+  outline: none;
+  border-bottom: 2px solid rgb(199, 114, 255);
+}
+
+.inputField::placeholder {
+  color: rgb(80, 80, 80);
+  font-size: 1em;
+  font-weight: 500;
+}
+
+#button {
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  border: none;
+  background-color: rgb(162, 104, 255);
+  height: 30px;
+  color: white;
+  font-size: .8em;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#button:hover {
+  background-color: rgb(126, 84, 255);
+}
+
+.forgotLink {
+  z-index: 2;
+  font-size: .7em;
+  font-weight: 500;
+  color: rgb(44, 24, 128);
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+
 $font-color: #d9d9d9;
 $background-color: #251d40;
 
@@ -19,7 +117,7 @@ $background-color: #251d40;
   font-weight: 400;
   font-style: normal;
   // background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-  background-image: linear-gradient(-20deg, #6e45e2 0%, #88d3ce 100%);
+  //background-image: linear-gradient(-20deg, #6e45e2 0%, #88d3ce 100%);
   background-size: cover;
   background-position: center;
   // overflow: hidden;
@@ -32,7 +130,7 @@ $background-color: #251d40;
 .split-screen {
   display: flex;
   height: 80vh;
-  width: 80vw;
+  width: 70vw;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   // overflow: hidden;
@@ -60,7 +158,7 @@ $background-color: #251d40;
 
 .content-card {
   background-color: #ffffff;
-  width: 40%;
+  width: 30%;
   color: $background-color !important;
   text-align: center;
   padding: 0 !important;
@@ -105,17 +203,7 @@ $background-color: #251d40;
   align-items: center;
   width: 100%;
 }
-mat-form-field {
-  width: 120%; /* Increase the width as needed */
-  margin-bottom: 20px; /* Add gap between input fields */
-}
 
-mat-error {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: red;
-}
 
 .buttons {
   padding: 0.75rem 1.5rem;
@@ -213,3 +301,9 @@ mat-error {
     background: none;
   }
 }
+.error-msg{
+  color: red;
+}
+
+
+

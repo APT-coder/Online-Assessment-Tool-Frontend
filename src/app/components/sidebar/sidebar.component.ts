@@ -22,6 +22,7 @@ import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-act
     OverlayPanelModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ChipsModule, CommonModule, ButtonActiveComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
+  
  
 })
 export class SidebarComponent {
@@ -39,9 +40,9 @@ username = this.user.UserName;
   profileImage: string = "https://i.pravatar.cc/100";
   profileDetails = [
     { label: 'Name:', value: 'Your Name' },
-    { label: 'Username:', value: 'Your Username' },
+   // { label: 'Username:', value: 'Your Username' },
     { label: 'Email:', value: 'your.email@example.com' },
-    { label: 'Phone:', value: '(123) 456-7890' }
+    //{ label: 'Phone:', value: '(123) 456-7890' }
   ];
 constructor(private elementRef: ElementRef, private authService: MsalService) { }
 
@@ -50,9 +51,9 @@ constructor(private elementRef: ElementRef, private authService: MsalService) { 
     console.log(this.user);
     
       this.profileDetails[0].value = this.user.UserName;
-      this.profileDetails[1].value = this.user.UserName;
-      this.profileDetails[2].value = this.user.UserEmail;
-      this.profileDetails[3].value = this.user.UserPhone;
+     // this.profileDetails[1].value = this.user.UserName;
+      this.profileDetails[1].value = this.user.UserEmail;
+      //this.profileDetails[3].value = this.user.UserPhone;
    }
 closeModal() {
   const modal = this.elementRef.nativeElement.querySelector('.profile-modal');

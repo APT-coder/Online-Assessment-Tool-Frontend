@@ -17,7 +17,9 @@ import { MatFormField, MatInputModule } from '@angular/material/input';
 import { AssessmentService } from '../../../../service/assessment/assessment.service';
 import { Assessment } from '../../../../../models/assessment.interface'; 
 import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service';
-
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 interface Option {
   option: string;
   isCorrect: boolean;
@@ -41,8 +43,11 @@ interface Option {
     AssessmentPreviewComponent,
     MatInputModule,
     MatFormField,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MessagesModule,
+    MessageModule
   ],
+  providers:[MessageService],
   templateUrl: './create-test-form.component.html',
   styleUrls: ['./create-test-form.component.scss']
 })
@@ -60,7 +65,7 @@ export class CreateTestFormComponent implements OnInit {
   assessmentCreated!: boolean;
   createdBy: number = this.user.UserId;
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
-  constructor(private router: Router, private assessmentService: AssessmentService, private scheduledAssessmentService: ScheduledAssessmentService) {}
+  constructor(private router: Router, private assessmentService: AssessmentService, private scheduledAssessmentService: ScheduledAssessmentService, private messageService: MessageService) {}
 
   ngOnInit(): void {
     if (!sessionStorage.getItem('hasReloaded')) {
@@ -161,6 +166,7 @@ export class CreateTestFormComponent implements OnInit {
       console.log(formResult);
       this.scheduledAssessmentService.scheduleAssessment(formResult).subscribe((response: any) => {
         console.log('Question posted successfully', response);
+        this.messageService.add({ severity: 'success', summary: 'Assessment Scheduled ', detail: 'Assessment Scheduled Successfully', life: 3000 });
 
         this.scrollToTop();
 

@@ -11,6 +11,9 @@ import { TrainerTableComponent } from "./components/trainer-table/trainer-table.
 import * as XLSX from 'xlsx';
 import { v4 as uuidv4 } from 'uuid';
 import { ApiEndpointService } from '../../service/api-service/api-endpoint.service';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-trainer-management',
@@ -23,8 +26,11 @@ import { ApiEndpointService } from '../../service/api-service/api-endpoint.servi
     ButtonActiveComponent,
     SidebarComponent,
     AccountcreationModalComponent,
-    TrainerTableComponent
+    TrainerTableComponent, MessagesModule,
+    MessageModule
   ],
+  providers:[MessageService],
+
   standalone:true
 })
 export class TrainerManagementComponent {
@@ -35,7 +41,7 @@ export class TrainerManagementComponent {
   isModalVisible: boolean = false;
   jsonData: any;
 
-  constructor(private apiService: TrainermanagementService, private userService: TrainermanagementService, private apiEndpointService: ApiEndpointService) {}
+  constructor(private apiService: TrainermanagementService, private userService: TrainermanagementService, private apiEndpointService: ApiEndpointService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.apiEndpointService.loadEndpoints().subscribe();
