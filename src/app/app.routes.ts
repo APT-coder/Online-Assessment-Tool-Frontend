@@ -13,6 +13,7 @@ import { MsalGuard } from '@azure/msal-angular';
 import { AuthComponent } from './components/auth/auth.component';
 import { AssessmentPerformanceComponent } from './pages/assessment/components/assessment-performance/assessment-performance.component';
 import { TraineeDashboardComponent } from './pages/trainee-dashboard/trainee-dashboard.component';
+import { AssessmentEvaluateComponent } from './pages/assessment/components/assessment-evaluate/assessment-evaluate.component';
 
 export const routes: Routes = [
     {
@@ -44,6 +45,9 @@ export const routes: Routes = [
     },
     {
         path: 'create-test', component: CreateTestComponent
+    },
+    {
+        path: 'evaluate', component: AssessmentEvaluateComponent
     },
     {
         path: 'user-management', component: TrainerManagementComponent
