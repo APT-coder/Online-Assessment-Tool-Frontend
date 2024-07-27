@@ -14,5 +14,6 @@ export class AppComponent {
   constructor() { }
 
   ngOnInit(): void {
+    console.log("test");
   }
 }
