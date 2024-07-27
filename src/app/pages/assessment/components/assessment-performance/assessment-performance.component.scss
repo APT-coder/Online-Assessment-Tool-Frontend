@@ -16,7 +16,7 @@ $letterColor:#1D335F;
 }
 .performanceBatch h4{
     font-weight: 700;
-    color: $letterColor;
+    color: var(--primary-color);
 }
 .shareOption{
     display: flex;
