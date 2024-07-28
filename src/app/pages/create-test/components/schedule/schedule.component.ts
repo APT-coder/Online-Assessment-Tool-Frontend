@@ -81,7 +81,8 @@ export class ScheduleComponent {
       status: 0, // Assuming status is always 0 as per given format
       canRandomizeQuestion: input.canRandomizeQuestion,
       canDisplayResult: input.canDisplayResult,
-      canSubmitBeforeEnd: input.canSubmitBeforeEnd
+      canSubmitBeforeEnd: input.canSubmitBeforeEnd,
+      Link: this.generateAssessmentLink(input.assessmentId)
     };
     return output;
   }
@@ -100,5 +101,7 @@ export class ScheduleComponent {
     return referenceDateObj.toISOString();
   }
 
-
+  generateAssessmentLink(assessmentId: number) {
+    const link = "https://localhost:7200/tests/" + assessmentId.toString();
+  }
 }

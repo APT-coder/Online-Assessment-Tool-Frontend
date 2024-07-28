@@ -9,6 +9,8 @@ import { Question } from '../../../models/question.interface';
 export class AssessmentService {
 
   assessmentApiUrl = `https://localhost:7120/api/Assessment`;
+  // https://localhost:7120/api/Assessment/UpdateAssessmentTotalScore/2
+
   
   constructor(private http: HttpClient) {}
 
@@ -36,6 +38,13 @@ export class AssessmentService {
       createdBy
     };
     return this.http.post<any>(`${this.assessmentApiUrl}/CreateAssessment`, payload);
+  }
+
+  updateAssessment(assessmentId: number, totalScore: number): Observable<any> {
+    const payload = {
+      totalScore
+    }
+    return this.http.put<any>(`${this.assessmentApiUrl}/UpdateAssessmentTotalScore/${assessmentId}`, payload);
   }
 
   postQuestion(assessmentId: number, question: any, createdBy: number): Observable<any> {

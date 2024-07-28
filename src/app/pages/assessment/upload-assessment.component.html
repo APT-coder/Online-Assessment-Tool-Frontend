@@ -17,7 +17,7 @@
           </button>
           <form [formGroup]="startFormGroup">
             <ng-template matStepLabel>Upload</ng-template>
-            <app-file-upload (uploadSuccess)="completeStep()"></app-file-upload>
+            <app-file-upload (uploadSuccess)="completeStep(0)"></app-file-upload>
           </form>
           <button *ngIf="showScrollToBottomButton" mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
             <mat-icon>keyboard_arrow_down</mat-icon>

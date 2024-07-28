@@ -77,6 +77,7 @@ export class AssessmentComponent implements OnInit {
   showScrollToBottomButton = true;
 
   assessmentCreated!: boolean;
+  totalScore: number = 0;
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
   createdBy: number = this.user.TrainerId;
   dashboard = localStorage.getItem("dashboard");
@@ -122,10 +123,10 @@ export class AssessmentComponent implements OnInit {
     this.editQuestions = this.questions;
   }
 
-  completeStep() {
+  completeStep(id: number) {
     this.stepper.next();
-    this.stepper.steps.toArray()[0].completed = true;
-    this.stepper.steps.toArray()[0].editable = false;
+    this.stepper.steps.toArray()[id].completed = true;
+    this.stepper.steps.toArray()[id].editable = false;
   }
 
   onQuestionsChange(updatedQuestions: Question[]) {
@@ -209,6 +210,25 @@ export class AssessmentComponent implements OnInit {
     }
   }
 
+  calculateTotalScore() {
+    this.questions.forEach(question => {
+      this.totalScore += question.score;
+    })
+    return this.totalScore;
+  }
+
+  updateTotalScore() {
+    const assessmentId = this.assessment.assessmentId; 
+    const totalScore = this.calculateTotalScore();
+    this.assessmentService.updateAssessment(assessmentId, totalScore).subscribe((response: any) => {
+      console.log('Question score posted successfully', response);
+      this.completeStep(1);
+      this.completeStep(2);
+    }, (error: any) => {
+      console.error('Error posting question', error);
+    });
+  }
+
   logQuestions() {
     
     const formattedQuestions = this.questions.map(question => {
@@ -232,7 +252,9 @@ export class AssessmentComponent implements OnInit {
     formattedQuestions.forEach(question => {
       this.assessmentService.postQuestion(assessmentId, question, this.createdBy).subscribe((response: any) => {
         console.log('Question posted successfully', response);
-        this.completeStep();
+        this.updateTotalScore();
+        this.completeStep(1);
+        this.completeStep(2);
       }, (error: any) => {
         console.error('Error posting question', error);
       });
@@ -252,7 +274,7 @@ export class AssessmentComponent implements OnInit {
       const formResult = this.scheduleComponent.logFormValues();
       console.log(formResult);
       this.scheduledAssessmentService.scheduleAssessment(formResult).subscribe((response: any) => {
-        console.log('Question posted successfully', response);
+        console.log('Question scheduled successfully', response);
         this.messageService.add({ severity: 'success', summary: ' Assessment Scheduled', detail: 'Sheduling Assessment Successful', life: 3000 });
 
         this.scrollToTop();

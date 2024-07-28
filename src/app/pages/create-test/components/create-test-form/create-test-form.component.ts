@@ -63,6 +63,7 @@ export class CreateTestFormComponent implements OnInit {
 
   questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
   assessmentCreated!: boolean;
+  totalScore: number = 0;
   createdBy: number = this.user.TrainerId;
   dashboard = localStorage.getItem("dashboard");
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
@@ -95,12 +96,33 @@ export class CreateTestFormComponent implements OnInit {
     }
   }
 
+  calculateTotalScore() {
+    this.questions.forEach(question => {
+      this.totalScore += question.score;
+    })
+    return this.totalScore;
+  }
+
+  updateTotalScore() {
+    const assessmentId = this.assessment.assessmentId; 
+    const totalScore = this.calculateTotalScore();
+    this.assessmentService.updateAssessment(assessmentId, totalScore).subscribe((response: any) => {
+      console.log('Question score posted successfully', response);
+      this.completeStep(1);
+      this.completeStep(2);
+    }, (error: any) => {
+      console.error('Error posting question', error);
+    });
+  }
+
+
   submitQuestions(formattedQuestions: any[]) {
     const assessmentId = this.assessment.assessmentId;
     formattedQuestions.forEach(question => {
       this.assessmentService.postQuestion(assessmentId, question, this.createdBy).subscribe((response: any) => {
         console.log('Question posted successfully', response);
-        this.completeStep();
+        this.completeStep(0);
+        this.completeStep(1);
       }, (error: any) => {
         console.error('Error posting question', error);
       });
@@ -155,10 +177,10 @@ export class CreateTestFormComponent implements OnInit {
       this.submitQuestions(formattedQuestions);
   }
 
-  completeStep() {
+  completeStep(id: number) {
     this.stepper.next();
-    this.stepper.steps.toArray()[0].completed = true;
-    this.stepper.steps.toArray()[0].editable = false;
+    this.stepper.steps.toArray()[id].completed = true;
+    this.stepper.steps.toArray()[id].editable = false;
   }
 
   finishSchedule() {
@@ -166,7 +188,7 @@ export class CreateTestFormComponent implements OnInit {
       const formResult = this.scheduleComponent.logFormValues();
       console.log(formResult);
       this.scheduledAssessmentService.scheduleAssessment(formResult).subscribe((response: any) => {
-        console.log('Question posted successfully', response);
+        console.log('Question scheduled successfully', response);
         this.messageService.add({ severity: 'success', summary: 'Assessment Scheduled ', detail: 'Assessment Scheduled Successfully', life: 3000 });
 
         this.scrollToTop();
