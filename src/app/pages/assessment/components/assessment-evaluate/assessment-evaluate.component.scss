@@ -2,12 +2,13 @@ $letterColor:#3b82f6;
 $correctOption:rgba(209,234,215);
 $incorrectOption:rgba(212, 40, 40,0.3);
 $bg-color: linear-gradient(#261D42, #8061C3);
-body{
-    height:100vh;
-    width:100vw;
-}
+// body{
+//     height:100vh;
+//     width:100vw;
+// }
 .col-10 {
     padding-right: 0;
+    height: 100vh;
 }
 
 
@@ -24,6 +25,7 @@ padding:20px;
 padding-right: 20px;
 height:100%;
 margin-left: 50px;
+
 // width:calc(100% - 80px);
 display:flex;
 flex-direction: column;
