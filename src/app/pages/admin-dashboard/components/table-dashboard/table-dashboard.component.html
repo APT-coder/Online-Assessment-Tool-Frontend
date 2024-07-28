@@ -2,7 +2,7 @@
   <p-table
     #dt1
     [value]="assessments"
-    [globalFilterFields]="['assessmentName', 'trainer','date','batch']"
+    [globalFilterFields]="['assessmentName', 'trainer','date','batchName','status']"
     selectionMode="single"
     [(selection)]="selectedAssessment"
     dataKey="assessmentId"
@@ -34,8 +34,11 @@
         <th pSortableColumn="trainer" style="width:15%">
           Trainer <p-sortIcon field="trainer"></p-sortIcon>
         </th>
-        <th pSortableColumn="batch" style="width:15%">
-          Batch <p-sortIcon field="batch"></p-sortIcon>
+        <th pSortableColumn="batchName" style="width:15%">
+          Batch <p-sortIcon field="batchName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="status" style="width:15%">
+          Status <p-sortIcon field="status"></p-sortIcon>
         </th>
         <th pSortableColumn="maximumScore" style="width:15%">
           More Details <p-sortIcon field="moredetails"></p-sortIcon>
@@ -51,7 +54,7 @@
         </td>
         <td>
           <span class="p-column-title">Date</span>
-          {{ assessment.date | date }}
+          {{ assessment.date |  date }}
         </td>
         <td>
           <span class="p-column-title">Trainer</span>
@@ -62,9 +65,14 @@
           {{ assessment.batchName }}
         </td>
         <td>
+          <span class="p-column-title">Status</span>
+          {{ assessment.status }}
+        </td>
+        <td>
           <span class="p-column-title">More Details</span>
           <div class="details-btn">
-            <app-button-active [content]='"More Details"'></app-button-active>
+            <a [routerLink]="['/performance', assessment.assessmentId]">
+            <app-button-active [content]='"More Details"'></app-button-active></a>
           </div>
         </td>
       </tr>

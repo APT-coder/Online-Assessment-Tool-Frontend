@@ -9,19 +9,22 @@ import { TagModule } from 'primeng/tag';
 import { AssessmentOverview } from '../../../../../models/assessmentOverview.interface';
 import { CommonModule } from '@angular/common';
 import { ButtonActiveComponent } from "../../../../ui/buttons/button-active/button-active.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-table-dashboard',
   standalone: true,
-  imports: [TableModule, HttpClientModule, InputTextModule, TagModule, IconFieldModule, InputIconModule, CommonModule, ButtonActiveComponent],
+  imports: [TableModule, HttpClientModule, InputTextModule, TagModule, IconFieldModule, InputIconModule, CommonModule, ButtonActiveComponent,RouterModule],
   templateUrl: './table-dashboard.component.html',
   styleUrls: ['./table-dashboard.component.scss']
 })
 export class TableDashboardComponent implements OnInit {
-  @Output() assessmentIdSelected = new EventEmitter<number>();
-  @ViewChild('dt1') dt1!: Table;
+@Output() assessmentIdSelected = new EventEmitter<any>();
+@ViewChild('dt1') dt1!: Table;
   assessments!: AssessmentOverview[];
   selectedAssessment!: AssessmentOverview;
+  datePipeString: string = 'dd/MM/yyyy'; 
+ 
 
 
   constructor(private adminDashboardService: AdminDashboardService) {}
@@ -40,9 +43,9 @@ export class TableDashboardComponent implements OnInit {
     this.dt1.filterGlobal(value, 'contains'); 
 }
 
-onRowClick(assessment: AssessmentOverview): void {
-  this.assessmentIdSelected.emit(assessment.assessmentId);
-  console.log(assessment.assessmentId);
-}
+onRowClick(scheduledAssessmentIdssessmentId: any) {
+      console.log(scheduledAssessmentIdssessmentId);
+      this.assessmentIdSelected.emit(scheduledAssessmentIdssessmentId);
   
+} 
 }

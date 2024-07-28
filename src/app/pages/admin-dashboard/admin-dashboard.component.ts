@@ -7,10 +7,6 @@ import { AdminDashboardService } from '../../service/admin-dashboard/admin-dashb
 import { AssessmentOverview } from '../../../models/assessmentOverview.interface'; 
 import { CommonModule } from '@angular/common';
 import { TrainerTableComponent } from "./components/trainer-table/trainer-table.component";
-interface DropdownOption {
-  name: string;
-  code: string;
-}
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -25,11 +21,15 @@ export class AdminDashboardComponent  implements OnInit {
   tableData: AssessmentOverview[] = [];
   selectedAssessmentId!: number 
   defaultAssessmentId!: number 
+  selectedAssessmentStatus!:string
+  isDataAvailable: boolean = false;
+  noDataMessage: string = 'Select the evaluated assessment to see the data';
 
   constructor(private assessmentService: AdminDashboardService) {}
 
   ngOnInit(): void {
     this.fetchAssessments();
+    this.noDataMessage = 'Select the evaluated assessment to see the data';
   }
 
   fetchAssessments(): void {
@@ -60,9 +60,16 @@ export class AdminDashboardComponent  implements OnInit {
   }
 
 
-  receiveAssessmentId(assessmentId: number) {
-    this.selectedAssessmentId = assessmentId;
-    console.log(assessmentId);
+  receiveAssessment(obj: any) {
+    this.selectedAssessmentId =obj.assessmentId;
+    console.log(obj.assessmentId);
+    this.selectedAssessmentStatus=obj.status;
+    if (!obj.isEvaluated) {
+      this.isDataAvailable = false;
+      this.noDataMessage = 'No data available';
+    } else {
+      this.isDataAvailable = true;
+    }
   }
 
   onAssessmentSelected(assessmentId: number): void {

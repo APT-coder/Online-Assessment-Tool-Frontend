@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="row">
     <div class="col-2 mr-5">
@@ -8,46 +9,52 @@
 
     <div class="col mt-1 dashboard">
       <div class="profile">
-        <h4 class="welcome">Welcome to Admin Dashboard</h4>
+        <h4 class="welcome dashboard-table">Welcome to Admin Dashboard</h4>
       </div>
 
-      <app-table-dashboard (assessmentIdSelected)="receiveAssessmentId($event)" class="dashboard-table"></app-table-dashboard>
+      <app-table-dashboard (assessmentIdSelected)="receiveAssessment($event)" class="dashboard-table"></app-table-dashboard>
       
-      <div class="row down-section mt-3">
-        
-        <div class="col-4">
-          <app-list-table
-            [title]="'High Performers'"
-            [performerType]="'top'"
-            [batchName]="'Batch 1'"
-            [assessmentName]="'Assessment 1'"
-            [assessmentId]="selectedAssessmentId"
-          >
-          </app-list-table>
-        </div>
-        <div class="col-4">
-          <app-list-table
-            [title]="'Low Performers'"
-            [performerType]="'low'"
-            [batchName]="'Batch 1'"
-            [assessmentName]="'Assessment 1'"
-            [assessmentId]="selectedAssessmentId"
-          >
-          </app-list-table>
-        </div>
-        
-        <div class="col-4">
-          <div class="chart">
-           
-            <app-pie-diagram  [assessmentId]="selectedAssessmentId"></app-pie-diagram>
+      <div class="row down-section ">
+        @if(selectedAssessmentStatus=="Evaluated"){
+          <div class="col-4 mt-3 dashboard-table">
+            <app-list-table
+              [title]="'High Performers'"
+              [performerType]="'top'"
+              [batchName]="'Batch 1'"
+              [assessmentName]="'Assessment 1'"
+              [assessmentId]="selectedAssessmentId"
+            >
+            </app-list-table>
+          </div>
+          <div class="col-4 mt-3 dashboard-table">
+            <app-list-table
+              [title]="'Low Performers'"
+              [performerType]="'low'"
+              [batchName]="'Batch 1'"
+              [assessmentName]="'Assessment 1'"
+              [assessmentId]="selectedAssessmentId"
+            >
+            </app-list-table>
+          </div>
+          
+          <div class="col-3 piechart">
+            <div class="chart">
+             
+              <app-pie-diagram class="pie"  [assessmentId]="selectedAssessmentId"></app-pie-diagram>
+            </div>
+          </div>
+        }
+      @else {
+        <div class="no-data-container mt-3 ">
+          <div class="no-data-message">
+            <svg class="no-data-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <span>{{ noDataMessage }}</span>
           </div>
         </div>
+      }
         </div>
-        <div class="row">
-          <div class="col-4">
-       <app-trainer-table></app-trainer-table>
-      </div>
-      </div>
     </div>
   </div>
 </div>
