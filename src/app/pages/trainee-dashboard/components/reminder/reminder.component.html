@@ -7,7 +7,7 @@
           <input pInputText type="text" (input)="filterTable($event, dt1)" placeholder="Search by assessment name" />
         </div>
       </div> -->
-      <p-table #dt1 [value]="assessments | scheduled" [tableStyle]="{ 'min-width': '50rem' }">
+      <p-table #dt1 [value]="assessments " [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
           <tr>
             <th>Assessment</th>

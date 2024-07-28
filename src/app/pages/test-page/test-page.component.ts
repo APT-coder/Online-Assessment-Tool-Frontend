@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ListComponentsComponent } from './components/list-components/list-components.component';
 import { PagiNatorComponent } from "./components/pagi-nator/pagi-nator.component";
 import { QuestionService } from '../../service/assessment/question.service'; 
 import { QuestionComponent } from './components/question/question.component';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../../models/test.interface'; 
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { TimerService } from '../../service/timer/timer.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
     selector: 'app-test-page',
@@ -18,14 +21,25 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
     providers: [],
     imports: [ListComponentsComponent, PagiNatorComponent, QuestionComponent,ButtonActiveComponent]
 })
-export class TestPageComponent {
+export class TestPageComponent implements OnInit, OnDestroy {
 
     todos:any=[];
+    data:any;
     enteredAnswer: string | undefined;
     assessmentId: any;
-    constructor(private api: QuestionService,private route: ActivatedRoute,private dialog: MatDialog) {}
+    constructor(private router: Router, private api: QuestionService,private route: ActivatedRoute,private dialog: MatDialog,private timerService: TimerService){
+      const navigation = this.router.getCurrentNavigation();
+      if (navigation?.extras.state) {
+        this.data = navigation.extras.state['data'];
+      }
+    }
+
+
     public questions: any[] = [];
     public assessment: any;
+
+    timer: number = 0;
+    private timerSubscription:Subscription | undefined;
 
     count: number = 0;
     index:number=7;
@@ -108,9 +122,35 @@ export class TestPageComponent {
         // this.fetchQuestions();
 
         this.fetchAssessments();
+      console.log(this.data.assessmentDuration);
+      
+        this.timerService.startTimer(this.data.assessmentDuration);
+       this.timerSubscription = this.timerService.getTimer().subscribe(time => {
+      this.timer = time;
+      if (time <= 0) {
+        this.onComplete();
+      }
+    });
+
       }
 
+      ngOnDestroy(): void {
+        this.timerService.stopTimer();
+        if (this.timerSubscription) {
+          this.timerSubscription.unsubscribe();
+        }
+      }
 
+      onComplete(): void {
+       console.log("backend have to be called");
+       
+      }
+      formatTime(seconds: number): string {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return [h, m, s].map(val => val < 10 ? `0${val}` : val).join(':');
+      }
      
    
       question:any
@@ -120,7 +160,9 @@ export class TestPageComponent {
         this.api.getAssessment(this.assessmentId).subscribe(response =>{
           this.assessment= response;
 
-          console.log(this.assessment.result.assessmentName);
+          console.log(this.assessment.result);
+          // console.log(this.assessment.result.assessmentDuration);
+          
           
        
 

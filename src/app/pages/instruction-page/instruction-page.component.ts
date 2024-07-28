@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from "../../ui/buttons/button/button.component";
 import { TimeFormatPipe } from "../../pipes/timeFormat/timeformat.pipe";
 
@@ -12,7 +12,9 @@ import { TimeFormatPipe } from "../../pipes/timeFormat/timeformat.pipe";
 })
 export class InstructionPageComponent {
 
+
   data:any;
+
 
   constructor(private router: Router,private route: ActivatedRoute) {
     const navigation = this.router.getCurrentNavigation();
@@ -20,8 +22,19 @@ export class InstructionPageComponent {
       this.data = navigation.extras.state['data'];
     }
   }
+  
+onRowClicked() {
 
+  const navigationExtras: NavigationExtras = {
+    state: {
+      data: this.data
+    }
+  };
 
+  this.router.navigate(['/test', this.assessmentId],navigationExtras);
+}
+
+ 
   assessmentId:any;
 
   ngOnInit(): void {

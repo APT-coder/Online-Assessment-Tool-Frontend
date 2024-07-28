@@ -6,6 +6,7 @@ import { map, Observable, of } from 'rxjs';
 import { ScheduledResponse } from '../../../models/Schedule.interface'; 
 import { CheckAttended } from '../../../models/checkAttende.interface';
 import { CheckAttendedPostBody } from '../../../models/checkAttendedpostbody.interface';
+import {Score} from '../../../models/Score.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class ScheduledService {
 
   private apiUrl="https://localhost:7120/ScheduledAssessment/GetScheduledByUserId";
   private checkAttendedUrl ="https://localhost:7120/TraineeAnswer/CheckTraineeAnswerExists";
+  private assessentScore = "https://localhost:7120/AssessmentScore/GetAssessmentScoresByTraineeId";
 
  
 
@@ -29,13 +31,15 @@ export class ScheduledService {
   }
 
   checkAttended(userId:number , scheduledAssessmentId:number): Observable<CheckAttended> {
-
     const body: CheckAttendedPostBody = {
       scheduledAssessmentId: scheduledAssessmentId,
       userId: userId
     };
-
     return this.http.post<CheckAttended>(this.checkAttendedUrl, body);
+  }
+
+  getScores(userId : number): Observable<Score> {
+    return this.http.get<Score>(`${this.assessentScore}/${userId}`);
   }
 
 
