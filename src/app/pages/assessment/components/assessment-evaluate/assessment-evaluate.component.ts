@@ -34,7 +34,7 @@ students: TraineeStatusDTO | any;
 absentStudents: TraineeStatusDTO|any;
 selectedStudentResponses:any;
 evaluatedStudentIds: Set<number> = new Set<number>();
-scheduledAssessmentId:number=2;
+scheduledAssessmentId:number=1;
 scheduledAssessmentDetails: AssessmentTableDTO|any;
 
 Title:string=""
@@ -95,7 +95,7 @@ onStudentClick(traineeId: number): void {
   this.scheduledAssessmentService.getTraineeAnswerDetails(traineeId,this.scheduledAssessmentId)
     .subscribe( data => {
       this.selectedStudentResponses = data.result;
-      
+      console.log(this.selectedStudentResponses);
     });
 }
 

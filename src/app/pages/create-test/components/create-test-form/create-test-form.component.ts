@@ -127,6 +127,7 @@ export class CreateTestFormComponent implements OnInit {
         console.error('Error posting question', error);
       });
     });
+    this.updateTotalScore();
   }
 
   onQuestionTypeSelected(questionType: string, index: number) {
@@ -194,7 +195,7 @@ export class CreateTestFormComponent implements OnInit {
         this.scrollToTop();
 
         setTimeout(() => {
-          this.router.navigate(['/{{path}}']);
+          this.router.navigate([`/${this.dashboard}`]);
         }, 5000);
       }, (error: any) => {
         console.error('Error posting question', error);

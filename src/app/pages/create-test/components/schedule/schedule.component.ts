@@ -103,5 +103,6 @@ export class ScheduleComponent {
 
   generateAssessmentLink(assessmentId: number) {
     const link = "https://localhost:7200/tests/" + assessmentId.toString();
+    return link;
   }
 }

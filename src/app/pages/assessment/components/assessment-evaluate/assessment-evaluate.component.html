@@ -74,11 +74,11 @@
                   >
                     {{ option }}
                   </li>
+                  <div class="correct-answer">
+                    <strong>Correct Answer:</strong>
+                    {{ question.questionOptions.correctAnswer }}
+                  </div>
                 </ul>
-                <div class="correct-answer">
-                  <strong>Correct Answer:</strong>
-                  {{ question.questionOptions.correctAnswer }}
-                </div>
                 <div *ngSwitchCase="'descriptive'" class="descriptive">
                   <div class="mark-box">
                     <input type="number"
@@ -101,10 +101,10 @@
                   </div>
                   <div class="correct-answer">
                     <strong>Correct Answer:</strong>
-                    {{ question.correctAnswer }}
+                    {{ question.questionOptions.correctAnswer }}
                   </div>
                 </div>
-                <div *ngSwitchCase="'fill_up'" class="fill-up">
+                <div *ngSwitchCase="'fillup'" class="fill-up">
                   <div class="mark-box">
                     <input type="number"
                     name="score{{i}}"
@@ -122,12 +122,13 @@
                   <input
                     type="text"
                     class="answer-box"
-                    [(ngModel)]="question.Answer"
+                    [(ngModel)]="question.answer"
+                    [ngModelOptions]="{standalone: true}"
                     readonly
                   />
                   <div class="correct-answer">
                     <strong>Correct Answer:</strong>
-                    {{ question.correctAnswer }}
+                    {{ question.questionOptions.correctAnswer }}
                   </div>
                 </div>
               </ng-container>
