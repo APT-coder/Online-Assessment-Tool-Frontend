@@ -11,11 +11,10 @@
                         <h4>KnowliX</h4>
                     </div>
                 </div>
-                <h1>OOPS JAVA</h1>
+                <h1>{{assessment.result.assessmentName}}</h1>
             </div>
 
         </div>
-
         <div class="avatar">
             <div class="profile-card">
                 <div class="profile-info">
@@ -42,7 +41,7 @@
                             <h4>Time</h4>
                         </div> -->
                         <div class="time-running">
-                            <h2>00:00:00</h2>
+                            <h2>{{ formatTime(timer) }}</h2>
                         <!-- </div> -->
                     </div>
                 </div>

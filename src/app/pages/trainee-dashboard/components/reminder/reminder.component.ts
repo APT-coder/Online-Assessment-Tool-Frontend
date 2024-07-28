@@ -1,24 +1,73 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { ScheduledService } from '../../../../service/scheduled-assessment/scheduled.service'; 
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink ,NavigationExtras} from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Table, TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { TimeFormatPipe } from '../../../../pipes/timeFormat/timeformat.pipe';
+import { ScheduledPipe } from "../../../../pipes/scheduledFilter/scheduled.pipe";
 
 @Component({
   selector: 'app-reminder',
   standalone: true,
-  imports: [MatTableModule,CommonModule,RouterLink],
+  imports: [MatTableModule, CommonModule, RouterLink, MatSnackBarModule, TableModule, ButtonModule, FormsModule, TimeFormatPipe, ScheduledPipe],
   templateUrl: './reminder.component.html',
   styleUrl: './reminder.component.scss'
 })
 export class ReminderComponent {
 
   @Input() assessments: any;
+  searchValue: string | undefined;
 
-  onRowClick(assessment: ScheduledService): void {
-    // Handle the click event here
-    console.log('Row clicked:', assessment);
-    // You can navigate to a detail page, open a modal, etc.
+
+
+clear(table: Table) {
+  table.clear();
+  this.searchValue = ''
+}
+
+filterTable(event: Event, dt: any) {
+  const target = event.target as HTMLInputElement;
+  const filterValue = target?.value || ''; // Safe access to the value property
+  dt.filterGlobal(filterValue, 'contains');
+}
+
+  constructor(private router: Router,private api: ScheduledService,private snackBar: MatSnackBar) {}
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
+  
+  onRowClicked(assessmentId: number, assessment:any) {
+      this.api.checkAttended(this.user.TraineeId , assessmentId).subscribe((response) =>{
+        console.log(response.result.exists);
+        if(response.result.exists){
+          this.openSnackBar();
+        }else{
+          
+          const navigationExtras: NavigationExtras = {
+            state: {
+              data: assessment
+            }
+          };
+
+          this.router.navigate(['/instructions', assessmentId],navigationExtras);
+        }
+      })
+
   }
+
+
+
+  openSnackBar(): void {
+    this.snackBar.open('You have already completed the assessment.', 'Close', {
+      duration: 3000,
+      verticalPosition: 'top', // 'top' or 'bottom'
+      horizontalPosition: 'center', // 'start', 'center', 'end', 'left', 'right'
+    });
+  }
+
+
+  
 
 }

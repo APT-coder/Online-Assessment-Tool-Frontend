@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from "../../components/sidebar/sidebar.component";
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
 import { TrainermanagementService } from '../../service/trainer-management/trainermanagement.service';
 import { Role } from '../../../models/role.interface';
