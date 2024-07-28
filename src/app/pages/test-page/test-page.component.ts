@@ -32,7 +32,7 @@ export class TestPageComponent {
     countTemp: number =0;
 
     user = JSON.parse(localStorage.getItem('userDetails') as string);
-
+  
   increment() {
     this.count++;
   }
@@ -100,7 +100,7 @@ export class TestPageComponent {
   
 
    
-
+ 
 
   
     ngOnInit(): void {
@@ -119,6 +119,9 @@ export class TestPageComponent {
       fetchAssessments():void{
         this.api.getAssessment(this.assessmentId).subscribe(response =>{
           this.assessment= response;
+
+          console.log(this.assessment.result.assessmentName);
+          
        
 
           this.questionWithoutNumber =this.addFieldsToQuestions(this.assessment.result.questions)

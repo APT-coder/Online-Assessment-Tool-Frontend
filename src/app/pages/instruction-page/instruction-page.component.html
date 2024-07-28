@@ -7,12 +7,12 @@
           
         </div>
         <div class="test-name">
-          <h1>OOPS TEST</h1>
+          <h1>{{data.assessmentName}}</h1>
         </div>
         <div class="child test-details">
           <div class="details">
-            <h6>Time : 1 hr </h6> 
-          <h6>Questions: 30 </h6>
+            <h6>Duration : {{data.assessmentDuration | timeformat}} hr</h6> 
+          <!-- <h6>Questions: 30 </h6> -->
           </div>
         </div>
       </div>

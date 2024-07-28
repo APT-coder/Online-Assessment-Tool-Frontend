@@ -1,22 +1,32 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from "../../ui/buttons/button/button.component";
+import { TimeFormatPipe } from "../../pipes/timeFormat/timeformat.pipe";
 
 @Component({
   selector: 'app-instruction-page',
   standalone: true,
-  imports: [RouterLink, ButtonComponent],
+  imports: [RouterLink, ButtonComponent, TimeFormatPipe],
   templateUrl: './instruction-page.component.html',
   styleUrl: './instruction-page.component.scss'
 })
 export class InstructionPageComponent {
 
-  constructor(private router: Router,private route: ActivatedRoute) { }
+  data:any;
+
+  constructor(private router: Router,private route: ActivatedRoute) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      this.data = navigation.extras.state['data'];
+    }
+  }
 
 
   assessmentId:any;
 
   ngOnInit(): void {
     this.assessmentId = this.route.snapshot.paramMap.get('id');
+    console.log(this.data);
+    
   }
 }
