@@ -21,8 +21,8 @@ export interface TraineeAssessmentTableDTO {
   providedIn: 'root'
 })
 export class TrainerDashboardService {
-  private assessmentApiUrl = 'https://localhost:7120/Assessment';
-  private assessmentScoreApiUrl = 'https://localhost:7120/AssessmentScore';
+  private assessmentApiUrl = 'https://localhost:7120/api/Assessment';
+  private assessmentScoreApiUrl = 'https://localhost:7120/api/AssessmentScore';
 
   constructor(private http: HttpClient) {}
 

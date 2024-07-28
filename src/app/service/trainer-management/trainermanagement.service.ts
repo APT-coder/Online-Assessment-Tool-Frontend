@@ -23,10 +23,10 @@ export interface Batch {
  
 export class TrainermanagementService {
 
-    userApiUrl = `https://localhost:7120/User`;
-    roleApiUrl = `https://localhost:7120/Roles`;
-    permissionApiUrl = `https://localhost:7120/Permission`;
-    batchApiUrl =  `https://localhost:7120/Batch`;
+    userApiUrl = `https://localhost:7120/api/User`;
+    roleApiUrl = `https://localhost:7120/api/Roles`;
+    permissionApiUrl = `https://localhost:7120/api/Permission`;
+    batchApiUrl =  `https://localhost:7120/api/Batch`;
 
     constructor(private http: HttpClient) { }
 
@@ -74,11 +74,4 @@ export class TrainermanagementService {
     getBatches(): Observable<ApiResponse<Batch[]>> {
       return this.http.get<ApiResponse<Batch[]>>(`${this.batchApiUrl}/GetBatches`);
     }
-    // getTrainerDetails(userId: number): Observable<any> {
-    //   return this.http.get<any>(`https://localhost:7120/User/GetTrainerDetails/trainer/${userId}`);
-    // }
-  
-    // getTraineeDetails(userId: number): Observable<any> {
-    //   return this.http.get<any>(`https://localhost:7120/User/GetTraineeDetails/trainee/${userId}`);
-    // }
 }

@@ -13,7 +13,7 @@ interface Trainee {
 })
 export class PerformanceDetailsService {
 
-  private performanceApiUrl = 'https://localhost:7120/Assessment/GetTraineeAssessmentDetails/GetTraineeAssessmentDetails'; // Replace with your actual API URL
+  private performanceApiUrl = 'https://localhost:7120/api/Assessment/GetTraineeAssessmentDetails/GetTraineeAssessmentDetails'; // Replace with your actual API URL
 
   constructor(private http: HttpClient) { }
 

@@ -12,8 +12,8 @@ export class QuestionService {
 
   constructor(private http:HttpClient) { }
 
-  private assessmentUrl ="https://localhost:7120/Assessment/GetAssessment";
-  private postAnswerUrl = "  https://localhost:7120/TraineeAnswer/AssessmentSubmit/2";
+  private assessmentUrl ="https://localhost:7120/api/Assessment/GetAssessment";
+  private postAnswerUrl = "  https://localhost:7120/api/TraineeAnswer/AssessmentSubmit/2";
 
   getAssessment(assessmentId:number): Observable<Assessment[]> {
     return this.http.get<Assessment[]>(`${this.assessmentUrl}/${assessmentId}`);

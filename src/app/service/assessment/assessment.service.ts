@@ -8,7 +8,7 @@ import { Question } from '../../../models/question.interface';
 })
 export class AssessmentService {
 
-  assessmentApiUrl = `https://localhost:7120/Assessment`;
+  assessmentApiUrl = `https://localhost:7120/api/Assessment`;
   
   constructor(private http: HttpClient) {}
 

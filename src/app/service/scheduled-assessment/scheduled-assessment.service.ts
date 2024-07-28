@@ -10,7 +10,7 @@ import { UpdateScoreDTO } from '../../../models/UpdateScoreDTO.interface';
 })
 export class ScheduledAssessmentService {
 
-  scheduleAssessmentApiUrl = `https://localhost:7120/ScheduledAssessment`
+  scheduleAssessmentApiUrl = `https://localhost:7120/api/sScheduledAssessment`
 
   constructor(private http: HttpClient) {}
 
@@ -39,7 +39,7 @@ export class ScheduledAssessmentService {
   
   updateScores(updateScoresDTO: UpdateScoreDTO): Observable<any> {
     console.log(updateScoresDTO);
-    return this.http.put('https://localhost:7120/TraineeAnswer/UpdateScore/updateScore', updateScoresDTO);
+    return this.http.put('https://localhost:7120/api/TraineeAnswer/UpdateScore/updateScore', updateScoresDTO);
   }
 
   updateTotalScores(newScore: number, traineeId: number, assessmentId: number): Observable<any> {
@@ -53,6 +53,6 @@ export class ScheduledAssessmentService {
         }
       ]    
     }
-    return this.http.put('https://localhost:7120/AssessmentScore/UpdateAssessmentScores/update-assessment-scores', payload);
+    return this.http.put('https://localhost:7120/api/AssessmentScore/UpdateAssessmentScores/update-assessment-scores', payload);
   }
 }
