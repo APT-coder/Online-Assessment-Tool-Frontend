@@ -3,7 +3,8 @@
 }
 ::ng-deep {
   .p-datatable {
-    width: 100%; /* Adjust the width as needed */
+    margin-top: 5px;
+    width: 100%; 
     height: auto;
     font-size: 0.8rem;
     border: none;
@@ -29,7 +30,7 @@
  
   .p-datatable-tbody > tr > td {
     font-size: 13px;
-    padding: 0.5rem 0.25rem; /* Adjusting padding to reduce row height */
+    padding: 0.5rem 0.25rem; 
   }
  
   .p-paginator {
@@ -45,7 +46,7 @@
   .card {
     padding: 0;
     margin: 0;
-    width: 100%; /* Adjust the width as needed */
+    width: 100%; 
   }
 }
 
