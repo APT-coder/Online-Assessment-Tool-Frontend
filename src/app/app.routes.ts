@@ -53,7 +53,7 @@ export const routes: Routes = [
         path: 'user-management', component: TrainerManagementComponent
     },
     {
-        path: 'performance/:id', component:AssessmentPerformanceComponent
+        path: 'performance/:scheduledAssessmentId', component:AssessmentPerformanceComponent
     },
     {
         path: '**', component: NotFoundComponent
