@@ -3,10 +3,13 @@ import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/butt
 import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
-import { ConfirmationService, MessageService } from 'primeng/api';
+
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { TraineeStatusDTO } from '../../../../../models/TraineeStatusDTO.interface';
 import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service'; 
 import { TraineeAnswerDetailDTO } from '../../../../../models/TraineeAnswerDetailDTO.interface';
@@ -20,7 +23,9 @@ import { AssessmentStatus } from '../../../../../models/AssessmentTableDTO.inter
     standalone: true,
     templateUrl: './assessment-evaluate.component.html',
     styleUrl: './assessment-evaluate.component.scss',
-    imports: [ButtonActiveComponent, SidebarComponent,CommonModule,FormsModule ]
+    imports: [ButtonActiveComponent, SidebarComponent,CommonModule,FormsModule,MessagesModule,
+      MessageModule,ConfirmDialogModule, ToastModule, ButtonModule ],
+    providers:[ConfirmationService, MessageService]
     
 })
 export class AssessmentEvaluateComponent {
@@ -29,7 +34,7 @@ students: TraineeStatusDTO | any;
 absentStudents: TraineeStatusDTO|any;
 selectedStudentResponses:any;
 evaluatedStudentIds: Set<number> = new Set<number>();
-scheduledAssessmentId:number=1;
+scheduledAssessmentId:number=2;
 scheduledAssessmentDetails: AssessmentTableDTO|any;
 
 Title:string=""
@@ -39,7 +44,7 @@ numberOfSubmittedTrainee: number=0;
 numberOfAbsentTrainee:number=0;
 updatedScores: UpdateScoreDTO[] = [];
 
-constructor(private scheduledAssessmentService: ScheduledAssessmentService) { 
+constructor(private scheduledAssessmentService: ScheduledAssessmentService,private messageService:MessageService,private confirmationService: ConfirmationService) { 
   this.loadAttendedStudents(this.scheduledAssessmentId);
   this.loadAbsentStudents(this.scheduledAssessmentId);  
   this.loadStudentCount(this.scheduledAssessmentId);
@@ -149,6 +154,7 @@ submitScores(): void {
     next: responses => {
       console.log('All scores submitted successfully',responses);
       this.updateAssessmentStatus();
+      
     },
     error: error => {
       console.error('Error submitting scores', error);
@@ -183,5 +189,24 @@ updateScore(selectedStudentResponses: any) {
     selectedStudent.score = newScore;
   }
   console.log(this.students);
+}
+
+
+confirm() {
+  this.confirmationService.confirm({
+      header: 'Confirmation',
+      message: 'Please confirm to proceed moving forward.',
+      acceptIcon: 'pi pi-check mr-2 ',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm m-2',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm m-2',
+      accept: () => {
+        this.submitScores();
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Updated assessment scores successfully', life: 3000 });
+      },
+      reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Cancelled', detail: 'Scores not published', life: 3000 });
+      }
+  });
 }
 }
