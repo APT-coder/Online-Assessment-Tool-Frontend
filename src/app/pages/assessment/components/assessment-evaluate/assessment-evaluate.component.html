@@ -5,8 +5,10 @@
         <app-sidebar></app-sidebar>
       </div>
     </div>
+
     <div class="col-10">
       <div class="qn-body">
+        <form #evaluateForm="ngForm">
         <div class="qn-intro">
           <h3>{{ Title }}</h3>
           <div class="save-and-submit">
@@ -27,12 +29,19 @@
               <ng-container [ngSwitch]="question.questionType">
                 <ul *ngSwitchCase="'mcq'" class="mcq">
                   <div class="mark-box">
-                    <input type="number" [(ngModel)]="question.score" [min]="0" 
+                    <input type="number"
+                    name="score{{i}}"
+                    #score="ngModel"
+                    [(ngModel)]="question.score" [min]="0" 
                     [max]="question.points" 
                     [class.invalid]="question.score < 0 || question.score > question.points"
                     (ngModelChange)="onScoreChange(question.questionId,$event)"/>&nbsp;
                     <span>out of {{ question.points }}</span>
+                    
                   </div>
+                  <div *ngIf="question.score < 0 || question.score > question.points" class="error-message">
+                    Score must be between 0 and {{ question.points }}.
+                 </div>
                   <li
                     *ngFor="
                       let option of [
@@ -60,12 +69,19 @@
                 </div>
                 <div *ngSwitchCase="'descriptive'" class="descriptive">
                   <div class="mark-box">
-                    <input type="number" [(ngModel)]="question.score" [min]="0" 
-                    [max]="question.points"
+                    <input type="number"
+                    name="score{{i}}"
+                    #score="ngModel"
+                    [(ngModel)]="question.score" [min]="0" 
+                    [max]="question.points" 
                     [class.invalid]="question.score < 0 || question.score > question.points"
                     (ngModelChange)="onScoreChange(question.questionId,$event)"/>&nbsp;
-                    <span>out of {{ question.score }}</span>
+                    <span>out of {{ question.points }}</span>
+                    
                   </div>
+                  <div *ngIf="question.score < 0 || question.score > question.points" class="error-message">
+                    Score must be between 0 and {{ question.points }}.
+                 </div>
                   <div class="response-box">
                     <textarea class="learner-response" readonly>{{
                       question.answer
@@ -78,12 +94,19 @@
                 </div>
                 <div *ngSwitchCase="'fill_up'" class="fill-up">
                   <div class="mark-box">
-                    <input type="number" [(ngModel)]="question.score" [min]="0" 
+                    <input type="number"
+                    name="score{{i}}"
+                    #score="ngModel"
+                    [(ngModel)]="question.score" [min]="0" 
                     [max]="question.points" 
                     [class.invalid]="question.score < 0 || question.score > question.points"
-                    (ngModelChange)="onScoreChange(question.questionId,$event)"/>
-                    <div>out of {{ question.score }}</div>
+                    (ngModelChange)="onScoreChange(question.questionId,$event)"/>&nbsp;
+                    <span>out of {{ question.points }}</span>
+                    
                   </div>
+                  <div *ngIf="question.score < 0 || question.score > question.points" class="error-message">
+                    Score must be between 0 and {{ question.points }}.
+                 </div>
                   <input
                     type="text"
                     class="answer-box"
@@ -154,6 +177,7 @@
             </div>
           </div>
         </div>
+      </form>
       </div>
     </div>
   </div>

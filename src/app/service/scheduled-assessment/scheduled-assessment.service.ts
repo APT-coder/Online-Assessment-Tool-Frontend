@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { TraineeAnswerDetailDTO } from '../../../models/TraineeAnswerDetailDTO.interface';
 import { TraineeStatusDTO } from '../../../models/TraineeStatusDTO.interface';
 import { UpdateScoreDTO } from '../../../models/UpdateScoreDTO.interface';
+import { AssessmentStatus, AssessmentTableDTO } from '../../../models/AssessmentTableDTO.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduledAssessmentService {
 
-  scheduleAssessmentApiUrl = `https://localhost:7120/api/sScheduledAssessment`
+  scheduleAssessmentApiUrl = `https://localhost:7120/api/ScheduledAssessment`
 
   constructor(private http: HttpClient) {}
 
@@ -54,5 +55,17 @@ export class ScheduledAssessmentService {
       ]    
     }
     return this.http.put('https://localhost:7120/api/AssessmentScore/UpdateAssessmentScores/update-assessment-scores', payload);
+  }
+
+  fetchAssessmentName(scheduledAssessmentId:number): Observable<AssessmentTableDTO> {
+    return this.http.get<AssessmentTableDTO>(`${this.scheduleAssessmentApiUrl}/GetAssessmentTableByScheduledAssessmentId/AssessmentTable/${scheduledAssessmentId}`);
+  }
+
+  updateScheduledAssessmentStatus(scheduledAssessmentId: number, status: AssessmentStatus): Observable<any> {
+    const payload = {
+      Status: status
+    };
+    console.log(status);
+    return this.http.put(`${this.scheduleAssessmentApiUrl}/UpdateScheduledAssessmentStatus/update-status/${scheduledAssessmentId}`, payload);
   }
 }

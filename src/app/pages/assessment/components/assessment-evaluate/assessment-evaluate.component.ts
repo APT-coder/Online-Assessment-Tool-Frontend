@@ -1,23 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component'; 
-import { SidebarComponent } from '../../../../components/sidebar/sidebar.component'; 
+import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
-import { TraineeStatusDTO } from '../../../../../models/TraineeStatusDTO.interface'; 
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { TraineeStatusDTO } from '../../../../../models/TraineeStatusDTO.interface';
 import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service'; 
-import { TraineeAnswerDetailDTO } from '../../../../../models/TraineeAnswerDetailDTO.interface'; 
+import { TraineeAnswerDetailDTO } from '../../../../../models/TraineeAnswerDetailDTO.interface';
 import { UpdateScoreDTO } from '../../../../../models/UpdateScoreDTO.interface'; 
 import { forkJoin } from 'rxjs';
-
-interface Question {
-  id: string;
-  type: string;
-  content: string;
-  options?: string[];
-  correctAnswer: string;
-  score: number;
-  learnerResponse: string;
-}
+import { AssessmentTableDTO } from '../../../../../models/AssessmentTableDTO.interface'; 
+import { AssessmentStatus } from '../../../../../models/AssessmentTableDTO.interface'; 
 
 @Component({
     selector: 'app-assessment-evaluate',
@@ -29,72 +25,78 @@ interface Question {
 })
 export class AssessmentEvaluateComponent {
 
-  students: TraineeStatusDTO | any; 
-  absentStudents: TraineeStatusDTO|any;
-  selectedStudentResponses:any;
-  evaluatedStudentIds: Set<number> = new Set<number>();
-  scheduledAssessmentId:number=2;
+students: TraineeStatusDTO | any; 
+absentStudents: TraineeStatusDTO|any;
+selectedStudentResponses:any;
+evaluatedStudentIds: Set<number> = new Set<number>();
+scheduledAssessmentId:number=1;
+scheduledAssessmentDetails: AssessmentTableDTO|any;
+
+Title:string=""
+totalTrainee:number=0;
+selectedStudentId: any;
+numberOfSubmittedTrainee: number=0;
+numberOfAbsentTrainee:number=0;
+updatedScores: UpdateScoreDTO[] = [];
+
+constructor(private scheduledAssessmentService: ScheduledAssessmentService) { 
+  this.loadAttendedStudents(this.scheduledAssessmentId);
+  this.loadAbsentStudents(this.scheduledAssessmentId);  
+  this.loadStudentCount(this.scheduledAssessmentId);
+  this.GetAssessmentName(this.scheduledAssessmentId);
+}
 
 
-  Title:string="OOPs Assessment"
-  totalTrainee:number=0;
-  selectedStudentId: any;
-  numberOfSubmittedTrainee: number=0;
-  numberOfAbsentTrainee:number=0;
-  updatedScores: UpdateScoreDTO[] = [];
+ngOnInit(): void {
 
-  constructor(private scheduledAssessmentService: ScheduledAssessmentService) { 
-    this.loadAttendedStudents(this.scheduledAssessmentId);
-    this.loadAbsentStudents(this.scheduledAssessmentId);  
-    this.loadStudentCount(this.scheduledAssessmentId);
-  }
+}
+GetAssessmentName(scheduledAssessmentId:number):void{
+  this.scheduledAssessmentService.fetchAssessmentName(scheduledAssessmentId).subscribe(data => {
+    this.scheduledAssessmentDetails = data;
+    this.Title=this.scheduledAssessmentDetails.assessmentName;
+  });
+}
 
+loadAttendedStudents(scheduledAssessmentId: number): void {
+  this.scheduledAssessmentService.getAttendedStudents(scheduledAssessmentId)
+    .subscribe((data) => {
+      this.students = data;
+      const numberOfSubmittedTrainee = this.students.length;
+      this.numberOfSubmittedTrainee=numberOfSubmittedTrainee;
+      this.onStudentClick(1);
+    });
+}
 
-  ngOnInit(): void {
+loadAbsentStudents(scheduledAssessmentId: number): void {
+  this.scheduledAssessmentService.getAbsentStudents(scheduledAssessmentId)
+    .subscribe(data => {
+      this.absentStudents = data;
+      const numberOfAbsentTrainee = this.absentStudents.length;
+      this.numberOfAbsentTrainee=numberOfAbsentTrainee;
+    });
+}
 
-  }
-
-
-  loadAttendedStudents(scheduledAssessmentId: number): void {
-    this.scheduledAssessmentService.getAttendedStudents(scheduledAssessmentId)
-      .subscribe((data) => {
-        this.students = data;
-        const numberOfSubmittedTrainee = this.students.length;
-        this.numberOfSubmittedTrainee=numberOfSubmittedTrainee;
-        this.onStudentClick(1);
-      });
-  }
-
-  loadAbsentStudents(scheduledAssessmentId: number): void {
-    this.scheduledAssessmentService.getAbsentStudents(scheduledAssessmentId)
-      .subscribe(data => {
-        this.absentStudents = data;
-        const numberOfAbsentTrainee = this.absentStudents.length;
-        this.numberOfAbsentTrainee=numberOfAbsentTrainee;
-      });
-  }
-
-  loadStudentCount(scheduledAssessmentId: number): void {
-    this.scheduledAssessmentService.getStudentCountByAssessment(scheduledAssessmentId)
-      .subscribe(data => {
-        this.totalTrainee = data;
-      });
-  }
+loadStudentCount(scheduledAssessmentId: number): void {
+  this.scheduledAssessmentService.getStudentCountByAssessment(scheduledAssessmentId)
+    .subscribe(data => {
+      this.totalTrainee = data;
+    });
+}
 
 
-  onStudentClick(traineeId: number): void {
-    console.log('Clicked trainee ID:', traineeId); 
-    this.selectedStudentId = traineeId; // Update the selected student ID
-    this.scheduledAssessmentService.getTraineeAnswerDetails(traineeId,2)
-      .subscribe( data => {
-        this.selectedStudentResponses = data.result;
-        
-      });
-  }
+onStudentClick(traineeId: number): void {
+  console.log('Clicked trainee ID:', traineeId); 
+  this.selectedStudentId = traineeId; // Update the selected student ID
+  this.scheduledAssessmentService.getTraineeAnswerDetails(traineeId,this.scheduledAssessmentId)
+    .subscribe( data => {
+      this.selectedStudentResponses = data.result;
+      
+    });
+}
 
-  onScoreChange(questionId: number, newScore: number): void {
-    const assessmentId = 2;
-    const traineeId = this.selectedStudentId;
+onScoreChange(questionId: number, newScore: number): void {
+  const assessmentId = this.scheduledAssessmentId;
+  const traineeId = this.selectedStudentId;
   
 
   const index = this.updatedScores.findIndex(score => score.questionId === questionId && score.traineeId === traineeId);
@@ -137,16 +139,33 @@ saveScores(): void {
 }
 
 submitScores(): void {
+  // Collect scores for all students
   const updateRequests = this.students.map((student: TraineeStatusDTO) => 
     this.scheduledAssessmentService.updateTotalScores(student.score, student.traineeId, this.scheduledAssessmentId)
   );
 
+  // Execute all update requests
   forkJoin(updateRequests).subscribe({
     next: responses => {
-      console.log('All scores submitted successfully', responses);
+      console.log('All scores submitted successfully',responses);
+      this.updateAssessmentStatus();
     },
     error: error => {
       console.error('Error submitting scores', error);
+    }
+  });
+}
+
+updateAssessmentStatus(): void {
+  this.scheduledAssessmentService.updateScheduledAssessmentStatus(
+    this.scheduledAssessmentId, 
+    AssessmentStatus.Evaluated // Set status to Evaluated
+  ).subscribe({
+    next: statusResponse => {
+      console.log('Status updated successfully', statusResponse);
+    },
+    error: statusError => {
+      console.error('Error updating status', statusError);
     }
   });
 }
@@ -164,8 +183,5 @@ updateScore(selectedStudentResponses: any) {
     selectedStudent.score = newScore;
   }
   console.log(this.students);
-  }
-  getIconClass(status: string): string {
-    return status === 'present' ? 'fas fa-check-circle' : 'fas fa-times-circle';
-  }
+}
 }

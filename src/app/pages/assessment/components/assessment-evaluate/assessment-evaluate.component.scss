@@ -2,15 +2,11 @@ $letterColor:#3b82f6;
 $correctOption:rgba(209,234,215);
 $incorrectOption:rgba(212, 40, 40,0.3);
 $bg-color: linear-gradient(#261D42, #8061C3);
-// body{
-//     height:100vh;
-//     width:100vw;
-// }
+
 .col-10 {
     padding-right: 0;
     height: 100vh;
 }
-
 
 .EvaluateMCQ{
     height:100%;
@@ -25,24 +21,18 @@ padding:20px;
 padding-right: 20px;
 height:100%;
 margin-left: 50px;
-
-// width:calc(100% - 80px);
 display:flex;
 flex-direction: column;
-// margin-right: -80px;
 }
 .qn-intro h3{
     margin:0;
     color:$letterColor;
-    font-weight: 700;
 }
 .qn-intro{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 5px;
-    // margin-top: 2px;
-    // padding-right: 5px;
 }
 .save-and-submit{
   display: flex;
@@ -51,7 +41,7 @@ flex-direction: column;
 .qn-content{
     display: flex;
     flex-direction: row;
-    height:500px;
+    height:80vh;
 }
 
 .qn {
@@ -243,6 +233,7 @@ flex-direction: column;
   background-color:rgb(251, 253, 254);
 }
 
+
 .mark-box input{
   width:50px;
 }
@@ -300,3 +291,8 @@ flex-direction: column;
 }
 
 
+.error-message{
+  color:red;
+  display: flex;
+  justify-content: flex-end;
+}
