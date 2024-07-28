@@ -1,0 +1,88 @@
+<div class="card">
+  <p-table
+    #dt1
+    [value]="assessments"
+    [globalFilterFields]="['assessmentName', 'trainer','date','batchName','status']"
+    selectionMode="single"
+    [(selection)]="selectedAssessment"
+    dataKey="assessmentId"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rows]="5"
+    [paginator]="true"
+    stateStorage="session"
+    stateKey="statedemo-session">
+    
+    <ng-template pTemplate="caption">
+      <div class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input 
+          pInputText 
+          type="text" 
+          (input)="filterGlobal($event, 'contains')" 
+          placeholder="Global Search" />
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="assessmentName" style="width:15%">
+          Assessment <p-sortIcon field="assessmentName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="date" style="width:15%">
+          Date <p-sortIcon field="date"></p-sortIcon>
+        </th>
+        <th pSortableColumn="trainer" style="width:15%">
+          Trainer <p-sortIcon field="trainer"></p-sortIcon>
+        </th>
+        <th pSortableColumn="batchName" style="width:15%">
+          Batch <p-sortIcon field="batchName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="status" style="width:15%">
+          Status <p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th pSortableColumn="maximumScore" style="width:15%">
+          More Details <p-sortIcon field="moredetails"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-assessment>
+      <tr (click)="onRowClick(assessment)">
+        <td>
+          <span class="p-column-title">Assessment</span>
+          {{ assessment.assessmentName }}
+        </td>
+        <td>
+          <span class="p-column-title">Date</span>
+          {{ assessment.date |  date }}
+        </td>
+        <td>
+          <span class="p-column-title">Trainer</span>
+          {{ assessment.trainer }}
+        </td>
+        <td>
+          <span class="p-column-title">Batch</span>
+          {{ assessment.batchName }}
+        </td>
+        <td>
+          <span class="p-column-title">Status</span>
+          {{ assessment.status }}
+        </td>
+        <td>
+          <span class="p-column-title">More Details</span>
+          <div class="details-btn">
+            <a [routerLink]="['/performance', assessment.assessmentId]">
+            <app-button-active [content]='"More Details"'></app-button-active></a>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">No assessments found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

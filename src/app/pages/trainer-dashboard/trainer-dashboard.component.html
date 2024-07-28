@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-2">
+      <div class="sidebar">
+        <app-sidebar></app-sidebar>
+      </div>
+    </div>
+
+    <div class="col mt-3 trainer">
+      <div class="trainerpage-top">
+        <h4>Welcome To Trainer Dashboard</h4>
+      </div>
+      <app-table-dashboard (assessmentSelected)="onAssessmentSelected($event)"></app-table-dashboard>
+      <div class="chart-card">
+        <div class="row">
+          @if(selectedAssessmentStatus == "Evaluated"){
+          <div class="col-md-6">
+            <app-bar-graph [assessmentId]="selectedAssessmentId"></app-bar-graph>
+          </div>
+          <div class="col-md-6">
+            <app-pie-diagram [assessmentId]="selectedAssessmentId"></app-pie-diagram>
+          </div>
+          }@else{
+          No data yet
+          }
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

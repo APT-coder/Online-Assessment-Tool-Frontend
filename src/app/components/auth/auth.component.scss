@@ -1,0 +1,17 @@
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the viewport */
+  text-align: center;
+}
+
+.spinner-container mat-spinner {
+  margin-bottom: 20px; /* Space between spinner and text */
+}
+
+.spinner-container p {
+  font-size: 1.5rem; /* Increase font size */
+  margin: 0; /* Remove default margin */
+}

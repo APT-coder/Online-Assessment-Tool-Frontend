@@ -5,13 +5,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { PerformanceDetailsService } from '../../../../service/performance-details/performance-details.service';
 
 interface Trainee {
-  trainee: string;
-  status: string;
-  marks: number;
+  traineeName: string;
+  isPresent: string;
+  score: number;
 }
-
 @Component({
   selector: 'app-table',
   standalone: true,
@@ -19,49 +20,46 @@ interface Trainee {
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   trainees!: Trainee[];
   statuses!: any[];
   loading: boolean = true;
   showSearch = false;
   originalProducts!: Trainee[];
+  assessmentId: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private route: ActivatedRoute,private performanceService: PerformanceDetailsService) {}
 
   ngOnInit() {
-    this.fetchTraineesData();
-
+      this.route.paramMap.subscribe(params => {
+      this.assessmentId = params.get('id')!;
+      this.fetchTraineesData(this.assessmentId);
+    });
     this.statuses = [
       { label: 'Completed', value: 'completed' },
       { label: 'Absent', value: 'absent' },
     ];
   }
 
-  fetchTraineesData() {
-    const data = {
-      data: [
-        { trainee: 'John Doe', status: 'completed', marks: 45 },
-        { trainee: 'Jane Smith', status: 'absent', marks: 0 },
-        { trainee: 'Alice Johnson', status: 'completed', marks: 40 },
-        { trainee: 'Bob Brown', status: 'completed', marks: 48 },
-        { trainee: 'Charlie Davis', status: 'completed', marks: 38 },
-        { trainee: 'Diana Evans', status: 'absent', marks: 0 },
-        { trainee: 'Eve White', status: 'completed', marks: 47 },
-        { trainee: 'Frank Green', status: 'completed', marks: 44 },
-        { trainee: 'Grace Hall', status: 'completed', marks: 50 },
-        { trainee: 'Hank Lee', status: 'completed', marks: 42 }
-      ]
-    };
-    this.trainees = data.data;
-    this.originalProducts = [...this.trainees]; 
-    this.loading = false;
+  fetchTraineesData(assessmentId:number) {
+    this.performanceService.getTrainees(assessmentId).subscribe(
+      (data: Trainee[]) => {
+        this.trainees = data;
+        this.originalProducts = [...this.trainees]; 
+        this.loading = false;
+      },
+      error => {
+        console.error('Error fetching trainees data', error);
+        this.loading = false;
+      }
+    );
   }
 
   getSeverity(status: string) {
     switch (status) {
-      case 'completed':
+      case 'Completed':
         return 'success';
-      case 'absent':
+      case 'Absent':
         return 'danger';
       default:
         return 'info';
@@ -72,7 +70,7 @@ export class TableComponent {
     const searchTerm = event.target.value.toLowerCase();
     if (searchTerm) {
       this.trainees = this.originalProducts.filter(trainee =>
-        trainee.trainee.toLowerCase().includes(searchTerm)
+        trainee.traineeName.toLowerCase().includes(searchTerm)
       );
     } else {
       this.trainees = [...this.originalProducts];

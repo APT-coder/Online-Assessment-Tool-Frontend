@@ -1,5 +1,5 @@
-import { Component, Input, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AssessmentPreviewComponent } from './components/assessment-preview/assessment-preview.component';
@@ -7,15 +7,22 @@ import { AssessmentEditComponent } from './components/assessment-edit/assessment
 import { AssessmentEvaluateComponent } from './components/assessment-evaluate/assessment-evaluate.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { MatIconModule } from '@angular/material/icon';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
-
+import { Assessment } from '../../../models/assessment.interface';
+import { AssessmentService } from '../../service/assessment/assessment.service';
+import { FileUploadComponent } from './modals/file-upload/file-upload.component';
+import { ScheduledAssessmentService } from '../../service/scheduled-assessment/scheduled-assessment.service';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 interface Question {
+  id: string
   type: string;
   content: string;
   options?: string[];
@@ -40,30 +47,53 @@ interface Question {
     SidebarComponent,
     MatIconModule,
     ButtonActiveComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    FileUploadComponent,
+    MessagesModule,
+    MessageModule
   ],
+  providers:[MessageService],
   templateUrl: './upload-assessment.component.html',
   styleUrls: ['./upload-assessment.component.scss']
 })
 export class AssessmentComponent implements OnInit {
-  @Input() evaluate: boolean = false;
+  @ViewChild('stepper')
+  stepper!: MatStepper;
+
+  @ViewChild(ScheduleComponent) scheduleComponent!: ScheduleComponent;
+
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
+  
   htmlContent!: string;
   questions: Question[] = [];
   showPreview = true;
   editQuestions: any;
   isLinear = false;
+  startFormGroup!: FormGroup;
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
+  assessmentCreated!: boolean;
+  totalScore: number = 0;
+  assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
+  createdBy: number = this.user.TrainerId;
+  dashboard = localStorage.getItem("dashboard");
+
   constructor(
     private route: ActivatedRoute,
-    private _formBuilder: FormBuilder
+    private router: Router,
+    private _formBuilder: FormBuilder,
+    private assessmentService: AssessmentService,
+    private scheduledAssessmentService: ScheduledAssessmentService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
+    console.log(this.createdBy);
+    console.log(this.dashboard);
     if (!sessionStorage.getItem('hasReloaded')) {
       sessionStorage.setItem('hasReloaded', 'true');
       window.location.reload();
@@ -74,13 +104,9 @@ export class AssessmentComponent implements OnInit {
   }
 
   initializeComponent(): void {
-    this.htmlContent = history.state.htmlContent;
+    this.htmlContent = localStorage.getItem("htmlContent") as string;
     console.log('Received HTML Content:', this.htmlContent);
     this.parseQuestions(this.htmlContent);
-
-    if (this.evaluate) {
-      this.showPreview = false;
-    }
 
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -91,7 +117,16 @@ export class AssessmentComponent implements OnInit {
     this.thirdFormGroup = this._formBuilder.group({
       thirdCtrl: ['', Validators.required]
     });
+    this.startFormGroup = this._formBuilder.group({
+      startCtrl: ['', Validators.required]
+    });
     this.editQuestions = this.questions;
+  }
+
+  completeStep(id: number) {
+    this.stepper.next();
+    this.stepper.steps.toArray()[id].completed = true;
+    this.stepper.steps.toArray()[id].editable = false;
   }
 
   onQuestionsChange(updatedQuestions: Question[]) {
@@ -156,6 +191,76 @@ export class AssessmentComponent implements OnInit {
     console.log('Parsed questions:', this.questions);
   }
 
+  createAssessment(assessmentName: string) {
+    if (assessmentName) {
+      this.assessmentService.createAssessment(assessmentName, this.createdBy).subscribe(
+        (response: any) => {
+          this.assessmentCreated = true;
+          this.assessment = response.result;
+          localStorage.setItem("assessmentId", (this.assessment.assessmentId).toString());
+         
+          console.log('Assessment successfully created!', this.assessment);
+        },
+        (error: any) => {
+          console.error('Error creating assessment', error);
+        }
+      );
+    } else {
+      console.error('Assessment name is required.');
+    }
+  }
+
+  calculateTotalScore() {
+    this.questions.forEach(question => {
+      this.totalScore += question.score;
+    })
+    return this.totalScore;
+  }
+
+  updateTotalScore() {
+    const assessmentId = this.assessment.assessmentId; 
+    const totalScore = this.calculateTotalScore();
+    this.assessmentService.updateAssessment(assessmentId, totalScore).subscribe((response: any) => {
+      console.log('Question score posted successfully', response);
+      this.completeStep(1);
+      this.completeStep(2);
+    }, (error: any) => {
+      console.error('Error posting question', error);
+    });
+  }
+
+  logQuestions() {
+    
+    const formattedQuestions = this.questions.map(question => {
+      let formattedQuestion = {
+        id: question.id,
+        type: question.type,
+        content: question.content,
+        options: question.options,
+        correctAnswer: question.correctAnswer,
+        score: question.score
+      };
+      return formattedQuestion;
+    });
+
+    console.log('Formatted Questions:', formattedQuestions);
+    this.submitQuestions(formattedQuestions);
+}
+
+  submitQuestions(formattedQuestions: any[]) {
+    const assessmentId = this.assessment.assessmentId; 
+    formattedQuestions.forEach(question => {
+      this.assessmentService.postQuestion(assessmentId, question, this.createdBy).subscribe((response: any) => {
+        console.log('Question posted successfully', response);
+        this.updateTotalScore();
+        this.completeStep(1);
+        this.completeStep(2);
+      }, (error: any) => {
+        console.error('Error posting question', error);
+      });
+    });
+  }
+
   scrollToBottom() {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
@@ -163,4 +268,26 @@ export class AssessmentComponent implements OnInit {
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  finishSchedule() {
+    if (this.scheduleComponent) {
+      const formResult = this.scheduleComponent.logFormValues();
+      console.log(formResult);
+      this.scheduledAssessmentService.scheduleAssessment(formResult).subscribe((response: any) => {
+        console.log('Question scheduled successfully', response);
+        this.messageService.add({ severity: 'success', summary: ' Assessment Scheduled', detail: 'Sheduling Assessment Successful', life: 3000 });
+
+        this.scrollToTop();
+        
+
+        setTimeout(() => {
+          this.router.navigate(['/{{path}}']);
+        }, 5000);
+      }, (error: any) => {
+        console.error('Error posting question', error);
+      });
+    } 
+  }
+
+ 
 }

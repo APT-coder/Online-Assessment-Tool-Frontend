@@ -1,68 +1,82 @@
 <div class="card">
-    <p-table [value]="roles"  dataKey="roleId" [tableStyle]="{'min-width': '200px'}">
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width:30%">Role</th>
-                <th style="width:20%">No of users</th>
-                <th style="width:20%">Edit</th>
-                <th style="width:20%">Delete</th>
-                <th style="width:10%"></th> 
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-role>
-            
-            <tr class="role-row">
-                <td>
-                    <div class="role-card">
-                        <div class="role-header">
-                            <img [alt]="role.role" src="https://cdn.pixabay.com/animation/2022/12/05/10/47/10-47-58-930_512.gif"
-                                width="32" style="vertical-align: middle" />
-                            <span class="font-bold ml-2">{{role.role}}</span>
-                        </div>
-                    </div>
-               
-                <td>
-                    <span class="users-count">{{role.numberOfUsers}} Users</span>
-                </td>
-                <td>
-                    <button type="button" pButton icon="pi pi-pencil"
-                        class="p-button p-button-rounded p-button-text"><img src="assets\edit (1).png" width="20"></button>
-                </td>
-                <td>
-                    <button type="button" pButton icon="pi pi-trash"
-                        class="p-button p-button-rounded p-button-text"><img src="assets\delete_1345874.png" width="20"></button>
-                </td>
-                <td>
-                    <button type="button" pButton pRipple [pRowToggler]="role"
-                        class="p-button p-button-text p-button-rounded p-button-plain mr-2"
-                        [icon]="expandedRoles.includes(role.role) ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-                        (click)="toggleRoleExpansion(role.role)"><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/dropdown-1480596-1253423.png?f=webp&w=512">
+  <p-table [value]="roles" dataKey="id" [tableStyle]="{'min-width': '200px'}">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:30%">Role</th>
+        <th style="width:20%">No of users</th>
+        <th style="width:20%">Edit</th>
+        <th style="width:20%">Delete</th>
+        <th style="width:10%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-role>
+      <tr class="role-row">
+        <td>
+          <div class="role-card">
+            <div class="role-header">
+              <img [alt]="role.roleName" src="https://cdn.pixabay.com/animation/2022/12/05/10/47/10-47-58-930_512.gif"
+                width="32" style="vertical-align: middle" />
+              <span class="font-bold ml-2">{{role.roleName}}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span class="users-count">{{role.users?.length || 0}} Users</span>
+        </td>
+        <td>
+          <button type="button" pButton class="p-button p-button-text" (click)="onEditRole(role)">
+            <fa-icon [icon]="faPen"></fa-icon>
+          </button>
+        </td>
+        <td>
+          <button type="button" pButton class="p-button p-button-text" (click)="deleteRole(role.id)">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </button>
+        </td>
+        <td>
+          <button type="button" pButton pRipple [pRowToggler]="role"
+            class="p-button p-button-text p-button-plain mr-2"
+            (click)="toggleRoleExpansion(role)">
+            <fa-icon [icon]="faChevronDown"></fa-icon>
+          </button>
+        </td>
+      </tr>
+
+      <tr *ngIf="expandedRoles.includes(role.roleName)" class="role-body">
+        <td colspan="5">
+          <table>
+              <tr *ngFor="let user of role.users ?? []" class="m-5">
+                  <td>
+                    <img [alt]="user.username" src="https://cdn.pixabay.com/animation/2022/12/05/10/47/10-47-58-930_512.gif"
+                      width="32" style="vertical-align: middle" />
+                    {{user.username}}
+                  </td>
+                  <td>
+                    <button type="button" pButton class="p-button p-button-text" (click)="onEditUser(user)">
+                      Update
                     </button>
-                </td>
-            </tr>
-    
-            <tr *ngIf="expandedRoles.includes(role.role)" class="role-body ">
-                <td colspan="5">
-                    <table>
-                        <tr *ngFor="let user of role.users" class="m-5">
-                           
-                            <td>
-                                <img [alt]="role.role" src="https://cdn.pixabay.com/animation/2022/12/05/10/47/10-47-58-930_512.gif"
-                                width="32" style="vertical-align: middle" />
-                                {{user.name}}</td>
-                            <td>
-                                <button type="button"
-                                    class="p-button p-button-rounded p-button-text ml-2"><img src="assets\edit (1).png" width="20"></button>
-                            </td>
-                            <td>
-                                <button type="button" 
-                                    class="p-button p-button-rounded p-button-text ml-2">
-                                    <img src="assets\delete_1345874.png" width="20"></button>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+                  </td>
+                  <td>
+                    <button type="button" pButton class="p-button p-button-text" (click)="deleteUser(user.userId)">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+                
+          </table>
+        </td>
+      </tr>
+
+    </ng-template>
+  </p-table>
 </div>
+
+<app-delete-confirmation (confirmation)="onConfirmDelete()" ></app-delete-confirmation>
+
+<app-accountcreation-modal 
+  *ngIf="isEditTrainer" 
+  [(visible)]="isEditTrainer"
+  [mode]="'edit'"
+  [userData]="selectedUser"
+  >
+</app-accountcreation-modal>

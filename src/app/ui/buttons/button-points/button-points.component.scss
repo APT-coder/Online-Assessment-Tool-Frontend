@@ -1,13 +1,26 @@
-$bg-color: linear-gradient(#261D42, #8061C3);
+$bg-color: #8061C3;
 
-.button-points{
-     background: $bg-color;
-     color: #FFFFFF;
+// .button-points{
+//      background: $bg-color;
+//      color: #FFFFFF;
+//      height:30px;
+//      width: 100px;
+//      border-radius: 20px;
+//     display: flex;
+//     align-items: center;
+//     font-size: 14px;
+//     justify-content: center;
+//     }
+    ::ng-deep .button-points{
+     border: 1.5px solid $bg-color;
+     color:$bg-color;
      height:30px;
-     width: 100px;
+     width: 90px;
      border-radius: 20px;
     display: flex;
     align-items: center;
     font-size: 14px;
     justify-content: center;
+    transition: none;
+    --bs-btn-hover-border-color:1.5px solid $bg-color;
     }

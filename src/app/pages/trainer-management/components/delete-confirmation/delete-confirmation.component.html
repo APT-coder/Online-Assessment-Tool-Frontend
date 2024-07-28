@@ -1,0 +1,31 @@
+<div class="card flex justify-content-center">
+    <p-toast></p-toast>
+    <p-confirmDialog #cd>
+        <ng-template pTemplate="headless" let-message>
+            <div class="flex flex-column align-items-center p-5 surface-overlay border-round shadow-2" style="background-color: white;">
+                
+                    <i class="pi pi-question text-5xl"></i>
+               
+                <span class="font-bold text-2xl block mb-2 mt-4">
+                    {{ message.header }}
+                </span>
+               
+                <div class="d-flex gap-2 mt-4">
+                   
+                    <p-button  
+                        label="Cancel"
+                        (click)="cd.reject()" 
+                      
+                        />
+                      
+                    
+                    <p-button 
+                    label="Yes" 
+                    (click)="cd.accept()" 
+                    />
+               
+                </div>
+            </div>
+        </ng-template>
+    </p-confirmDialog>
+</div>

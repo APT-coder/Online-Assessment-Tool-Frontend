@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ButtonNormalComponent } from '../../../../ui/buttons/button-normal/button-normal.component';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
@@ -13,19 +13,22 @@ import { Router } from '@angular/router';
   styleUrl: './upload-success.component.scss'
 })
 export class UploadSuccessComponent {
+  dashboard = localStorage.getItem("dashboard");
   htmlContent: string;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { htmlContent: string },
-    private router: Router,
-    private dialogRef: MatDialogRef<UploadSuccessComponent>
-  ) {
-    this.htmlContent = data.htmlContent;
+  constructor(private router: Router,)
+  {
+    this.htmlContent = localStorage.getItem("htmlContent") as string;
     console.log(this.htmlContent);
   }
 
-  prepareTestAndCloseModal() {
-    this.dialogRef.close();
-    this.router.navigate(['/upload-assessment'], { state: { htmlContent: this.htmlContent } });
+  @Output() prepareTest = new EventEmitter<void>();
+
+  onPrepareTest() {
+    this.prepareTest.emit();
+  }
+
+  returnToDashboard() {
+    this.router.navigate(['/admin']);
   }
 }

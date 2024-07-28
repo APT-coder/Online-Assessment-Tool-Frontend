@@ -1,33 +1,111 @@
-<div class="login-container">
-    <div class="split-screen">
-        <div class="content-card">
-            <h5>Welcome to</h5>
-            <h2>Knowlix</h2>
-            <p>The Online Assessment Tool of Experion Technologies</p>
-        </div>
-        <div class="login-card">
-            <h1>Login</h1>
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="field">
-                    
-                    <input type="text" placeholder="Username" name="username" id="userName" formControlName="userName" />
-                    <div *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched">
-                        <div class="error-msg" *ngIf="loginForm.get('userName')?.errors?.['required']">Username is required.</div>
-                        <div class="error-msg" *ngIf="loginForm.get('userName')?.errors?.['minlength']">Minimum length must be 4.</div>
-                      </div>
+@if(!loginDisplay){
+    <div class="login-container">
+        <div class="split-screen">
+            <div class="content-card">
+                <!-- Carousel Start -->
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="carousel-image">
+                                <img src="https://img.freepik.com/premium-vector/female-student-passing-online-test-checking-answers-flat-vector-illustration_128772-860.jpg?w=900" class="d-block w-100" alt="Logo Background">
+                            </div>
+                            <div class="carousel-caption">
+                                <h1>Knowlix</h1>
+                                <p>Streamline Assessments, Elevate Excellence</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="carousel-image">
+                                <img src="https://www.formpl.us/static/images/features/file-upload.svg" class="d-block w-100" alt="File Upload">
+                            </div>
+                            <div class="carousel-caption">
+                                <h3>Upload Made Easy</h3>
+                                <p>Seamlessly upload Word documents to convert them into assessment questions.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="carousel-image">
+                                <img src="https://img.freepik.com/free-vector/emotional-feedback-concept-illustration_114360-21832.jpg?size=626&ext=jpg&ga=GA1.1.1287833827.1715692930&semt=sph" class="d-block w-100" alt="Automated Grading">
+                            </div>
+                            <div class="carousel-caption">
+                                <h3>Automated Grading</h3>
+                                <p>Receive immediate feedback with our automated grading system.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="carousel-image">
+                                <img src="https://ninjainterview.com/images/blog/how-to-use-these-online-assessment-tools-in-your-business.png?v=1687782014562448262" class="d-block w-100"
+                                    alt="Performance Analysis">
+                            </div>
+                            <div class="carousel-caption">
+                                <h3>Detailed Insights</h3>
+                                <p>Analyze student performance with comprehensive reports and analytics.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <div class="field">
-                    
-                    <input type="password" placeholder="Password" name="password" id="password" formControlName="password"/>
+                <!-- Carousel End -->
+    
+            </div>
+    
+            <!-- Login Start -->
+                <div class="form-container">
+                    <form action="" [formGroup]="loginForm" class="form_main" (ngSubmit)="onSubmit()">
+                        <p class="heading">Login</p>
+                        <div class="inputContainer" *ngIf="!showPassword">
+                            <svg class="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2e2e2e" viewBox="0 0 16 16">
+                            <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"></path>
+                            </svg>
+                        <input type="text" class="inputField" id="username" placeholder="email" formControlName="email">
+                           
+                    </div>
+                    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                        <div class="error-msg" *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+                      </div> 
+                        
+                    <div class="inputContainer" *ngIf="showPassword">
+                        <svg class="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2e2e2e" viewBox="0 0 16 16">
+                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
+                        </svg>
+                        <input type="password" class="inputField" id="password" placeholder="Password" formControlName="password">
+                        
+                    </div>    
                     <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
                         <div class="error-msg" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
-                      </div>
+                      </div>     
+                    <button id="button" [disabled]="loginForm.invalid">Submit</button>
+                        <a class="forgotLink" href="#">Forgot your password?</a>
+                    </form>
+                    
                 </div>
-                <div class="clearfix">
-                    <button type="submit" [disabled]="loginForm.invalid"><span>Login</span></button>
-                  </div>
-                
-            </form>
+            </div>
+            
+            <!-- Login End -->
         </div>
-    </div>
-</div>
+
+}
+
+@if (loginDisplay) {
+    @if (!isIframe) {
+    <app-auth></app-auth>}
+    }

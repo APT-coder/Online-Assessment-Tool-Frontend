@@ -1,0 +1,24 @@
+$introcolor:#5F529D;
+.trainer{
+    display: flex;
+    flex-direction: column;
+}
+.trainerpage-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.trainerpage-top h4{
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.live-card{
+    margin-top: 10px;
+}
+
+.chart-card .col-md-6 {
+    padding: 10px; /* Adjust the padding as needed */
+  }
+  

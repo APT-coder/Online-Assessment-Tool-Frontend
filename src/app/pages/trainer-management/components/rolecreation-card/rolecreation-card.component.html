@@ -1,76 +1,54 @@
-<div class="card mt-3">
-    <div class="card-head">
-      <div class="row d-flex justify-content-between  ">
-        <div class="col-3">
-          <h5>Role Name</h5>
-        </div>
-        <div class="col-5">
-          <input type="text" class="form-control" placeholder="Enter name">
-        </div>
-        <div class="col-4 text-right mr-auto">
-          <button class="btn btn-primary">Submit</button>
-        </div>
-      </div>
+<p-dialog header="{{ isEditMode ? 'Edit Role' : 'Create Role' }}" [(visible)]="isModalVisible" [modal]="true" (onHide)="closeModal()"   [style]="{'width': '40vw'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="roleName" class="mb-3">Role Name</label>
+      <input id="roleName" type="text" class="p-inputtext p-component" placeholder="Enter role name" [(ngModel)]="role.roleName">
     </div>
-    <div class="card-body">
+
+
+    <div class="card-body mt-3">
       <h6>Permissions</h6>
       <hr>
-      <div class="row">
-        <div class="col-4">
+      <div class="row" *ngFor="let permission of permissions">
+        <div class="col-7">
           <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission1">
-            <label class="form-check-label" for="permission1">
-              Permission 1
+            <input class="form-check-input custom-checkbox" type="checkbox"
+                   [value]="permission.id" 
+                   [(ngModel)]="permission.isSelected"
+                   (change)="onCheckboxChange($event)">
+            <label class="form-check-label">
+              {{ permission.description }}
             </label>
           </div>
         </div>
-        <div class="col-4">
-          <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission2">
-            <label class="form-check-label" for="permission2">
-              Permission 2
-            </label>
-          </div>
-        </div>
-       
       </div>
-      <div class="row mt-2">
-        <div class="col-4">
-          <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission4">
-            <label class="form-check-label" for="permission4">
-              Permission 3
-            </label>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="form-check">
-            <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission5">
-            <label class="form-check-label" for="permission5">
-              Permission 4
-            </label>
-          </div>
-        </div>
-        
-      </div>
-      <div class="row mt-2">
-      <div class="col-4">
-        <div class="form-check">
-          <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission3">
-          <label class="form-check-label" for="permission3">
-            Permission 5
-          </label>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="form-check">
-          <input class="form-check-input  custom-checkbox" type="checkbox" value="" id="permission6">
-          <label class="form-check-label" for="permission6">
-            Permission 6
-          </label>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
   
+      <!-- Optional validation message
+      <div *ngIf="role.permissionIds.length === 0" class="text-danger mt-3">
+        Please select at least one permission.
+      </div>-->
+    </div> 
+
+    <!-- <p-footer>
+      <button type="button" pButton label="{{ isEditMode ? 'Update' : 'Create' }}" icon="pi pi-check" (click)="submitRole()"></button>
+    
+      <button type="button" pButton label="Cancel" (click)="cancelRole()"></button>
+    </p-footer> -->
+    
+      <div class="d-flex gap-4  mt-4">
+        <p-button  severity="secondary" [text]="true" [raised]="true" [rounded]="true" 
+        label="Cancel" 
+        (click)="cancelRole()"/>
+
+      <p-button
+              label="{{ isEditMode ? 'Update' : 'Create' }}" 
+          
+              (click)="submitRole()"
+              [raised]="true"/>
+    
+     
+            </div>
+   
+ 
+  </div>
+</p-dialog>

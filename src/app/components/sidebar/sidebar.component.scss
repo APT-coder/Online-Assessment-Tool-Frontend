@@ -1,69 +1,46 @@
-$sidebar-background: #261D42;
-$sidebar-text: #b3b3b3;
-$dull-white: #b3b3b3;
-
-
-.sidebar {
-  background-color: $sidebar-background;
-  color: $sidebar-text;
-  width: 18%; 
-  height: 100vh; 
+a{
+  text-decoration: none;
+  
+}
+.sidebar-container {
   position: fixed;
-  top: 0; 
-  left: 0; 
-  padding: 1rem; 
-  overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 0;
 }
 
-.sidebar-heading {
-  font-size: 1rem;
-  color:white;
-  
+p-sidebar {
+  height: 100%;
 }
 
-.dull-white-hr {
-  border-top: 1px solid $dull-white;
-  
+td{
+  margin: 2px;
+}
+.active-link {
+  background-color: #a8c9eb; 
+  color: #ffffff; 
 }
 
-.sidebar-list {
-  list-style: none; 
-  padding-left: 0;
-  margin: 10%; 
-  margin-bottom: 70%;
+.profile-details {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; 
+}
+.text-full{
+  background-color: #a8c9eb;
+}
+::ng-deep .custom-image img {
+  border-radius: 50%; 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+.small-button {
+  font-size: 12px; 
+  padding: 5px 10px; 
+  height: 30px; 
+  width: auto; 
 }
 
-.sidebar-item {
-  margin-bottom: 1rem; 
-  display: flex; 
-  align-items: center; 
-}
 
-.sidebar.collapsed .sidebar-item button {
-    display: none; 
-  }
-
-.sidebar-item button {
-  background-color: transparent; 
-  border: none; 
-  color: inherit; 
-  padding: 0.5rem 0rem; 
-  cursor: pointer; 
-  text-align: left;
-  font-size: 0.9rem; 
-  transition: all 0.2s ease-in-out; 
-  margin-left: 10%;
-}
-
-.sidebar-item button:hover {
-  background-color: rgba(0, 0, 0, 0.1); 
-}
-
-  @media (max-width: 768px) {
-    .sidebar {
-    display: none;
-    }
-    
-  
-  }

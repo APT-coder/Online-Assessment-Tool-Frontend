@@ -1,0 +1,29 @@
+<div class="card">
+  <p-table 
+    [value]="filteredData"
+    [scrollable]="" 
+    scrollHeight="400px"
+     
+    [virtualScroll]="true" 
+    [virtualScrollItemSize]="" 
+    class="custom-table">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th colspan="2" class="title-header">{{ Title }}</th>
+      </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-rowData>
+      <tr>
+        <td>{{ rowData.traineeName }}</td>
+        <td>{{ rowData.score }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+
+

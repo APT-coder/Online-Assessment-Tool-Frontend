@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
 import { ButtonInactiveComponent } from '../../../../ui/buttons/button-inactive/button-inactive.component';
 import { ButtonNormalComponent } from '../../../../ui/buttons/button-normal/button-normal.component';
@@ -15,11 +15,8 @@ import { UploadSuccessComponent } from '../upload-success/upload-success.compone
   styleUrl: './file-upload.component.scss'
 })
 export class FileUploadComponent {
-  @ViewChild('modalBody') modalBody!: ElementRef;
-
   fileName: string | undefined;
   uploaded: boolean = false;
-  dialogRef: MatDialogRef<UploadSuccessComponent> | undefined;
 
   constructor(
     private wordParserService: WordParserService,
@@ -37,18 +34,12 @@ export class FileUploadComponent {
 
   async onDrop(event: DragEvent) {
     event.preventDefault();
-    this.modalBody.nativeElement.classList.remove('dragover');
     const file = event.dataTransfer?.files?.[0];
     if (file && file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
       try {
         const htmlContent = await this.wordParserService.readWordFile(file);
-        console.log('HTML Content:', htmlContent);
-
-        if (this.dialogRef) {
-          this.dialogRef.close();
-        }
-        this.openResultModal(htmlContent);
-        
+        console.log('HTML Content:', htmlContent); 
+        localStorage.setItem("htmlContent", htmlContent);       
         this.uploaded = true;
       } catch (error) {
         console.error('Error parsing the Word file:', error);
@@ -65,12 +56,7 @@ export class FileUploadComponent {
       try {
         const htmlContent = await this.wordParserService.readWordFile(file);
         console.log('HTML Content:', htmlContent);
-        
-        if (this.dialogRef) {
-          this.dialogRef.close();
-        }
-        this.openResultModal(htmlContent);
-        
+        localStorage.setItem("htmlContent", htmlContent);
         this.uploaded = true;
       } catch (error) {
         console.error('Error parsing the Word file:', error);
@@ -80,15 +66,15 @@ export class FileUploadComponent {
     }
   }
 
-  openResultModal(htmlContent: string) {
-    this.dialogRef = this.dialog.open(UploadSuccessComponent, {
-      width: '400px',
-      height: '250px',
-      data: { htmlContent }
-    });
+  @Output() uploadSuccess = new EventEmitter<void>();
 
-    this.dialogRef.afterClosed().subscribe(() => {
-      this.dialogRef = undefined;
-    });
+  prepareTestAndCloseModal(){
+    this.uploadSuccess.emit();
+  }
+  closeUploadModal(){
+    const modalElement = document.getElementById('exampleModal');
+    if (modalElement) {
+      modalElement.style.display = 'none'; // Hide the modal
+    }
   }
 }

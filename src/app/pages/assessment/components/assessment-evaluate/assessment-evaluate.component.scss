@@ -1,10 +1,11 @@
-$letterColor:#1D335F;
+$letterColor:#3b82f6;
 $correctOption:rgba(209,234,215);
 $incorrectOption:rgba(212, 40, 40,0.3);
 $bg-color: linear-gradient(#261D42, #8061C3);
 
 .col-10 {
-    padding-left: 30px;
+    padding-right: 0;
+    height: 100vh;
 }
 
 .EvaluateMCQ{
@@ -15,31 +16,36 @@ $bg-color: linear-gradient(#261D42, #8061C3);
     overflow: hidden;
 }
 
-.Mcq-body{
+.qn-body{
 padding:20px;
 padding-right: 20px;
 height:100%;
+margin-left: 50px;
 display:flex;
 flex-direction: column;
 }
-.Mcq-intro h3{
+.qn-intro h3{
     margin:0;
     color:$letterColor;
 }
-.Mcq-intro{
+.qn-intro{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 5px;
 }
-.Mcq-content{
+.save-and-submit{
+  display: flex;
+  gap:12px;
+}
+.qn-content{
     display: flex;
     flex-direction: row;
-    height:498px;
+    height:80vh;
 }
 
 .qn {
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), inset 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
     border-bottom: none;
     border-radius: 10px;
     width: 90%;
@@ -110,7 +116,12 @@ flex-direction: column;
     border: none; 
   }
   
-.Mcq-side{
+.mark-box{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Mark-side{
     display: flex;
     flex-direction: column;
     width: 30%;height: 100%;
@@ -132,8 +143,11 @@ flex-direction: column;
 
 .submitted-student{
     font-size: 15px;
-    padding:2px;
+    // padding:1px;
+    cursor: pointer;
 }
+
+
 .submitted-student span{
   border-bottom: 1px solid rgb(201, 198, 198);
   padding-bottom: 5px;
@@ -143,12 +157,28 @@ flex-direction: column;
   overflow-y: auto;
 }
 
+.submitted-student.active-student {
+  background-color: #d6dce5; 
+  // border: 2px solid #155724;
+  color: #3b82f6; 
+}
+
+.submitted-student:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.02);  
+}
+
+
 .submitted-student span{
     display:flex;
     flex-direction: row;
     justify-content: space-between;
   
 }
+// .evaluated-student {
+//   background-color: #d4edda; 
+// }
+
 .icon-name{
     display: flex;
     flex-direction: row;
@@ -156,7 +186,8 @@ flex-direction: column;
 }
 .absentees{
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+    
 }
 .absent p{
     font-size: 14px;
@@ -169,6 +200,7 @@ flex-direction: column;
    overflow-y: auto;
    height: 150px;
    overflow-y: auto;
+   cursor: pointer;
 }
 
 .absent-student-name{
@@ -176,6 +208,11 @@ flex-direction: column;
   padding-bottom: 5px;
   display: flex;
   gap:20px;
+}
+
+.absent-student-name:hover{
+  background-color: #f1f1f1;
+  transform: scale(1.02); 
 }
 
 .descriptive{
@@ -195,49 +232,67 @@ flex-direction: column;
   border-color: rgb(206, 203, 203);
   background-color:rgb(251, 253, 254);
 }
-.mark-box{
-  display: flex;
-  justify-content: flex-end;
-}
+
+
 .mark-box input{
   width:50px;
+}
+
+.mark-box input.invalid {
+  border: 1px solid red;
+  background-color: #fdd;
 }
 
 .fill-up{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 100px;
-  width: 200px;
+  height: 130px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
-.fill-up input{
+
+.fill-up .answer-box{
   background-color:rgb(251, 253, 254);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   height:40px;
+  width:200px;
   border:.3px solid rgb(206, 203, 203);
 }
 
 .correct-answer{
   color: green;
   width:600px;
+  margin-bottom: 10px;
 }
 
+/* Styles for scrollbar */
 ::-webkit-scrollbar {
-  width: 3px;
-  height: 4px;
+  width: 3px; /* Width of the scrollbar */
+  height: 4px; /* Height of the scrollbar */
 }
 
+/* Track (background of the scrollbar) */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f1f1f1; /* Light grey background */
 }
 
+/* Handle (the draggable part of the scrollbar) */
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #ccc, #999);
-  border-radius: 10px;
+  background: linear-gradient(45deg, #ccc, #999); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
 }
 
+/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #aaa, #777);
+  background: linear-gradient(45deg, #aaa, #777); /* Darker gradient background on hover */
+}
+
+
+.error-message{
+  color:red;
+  display: flex;
+  justify-content: flex-end;
 }

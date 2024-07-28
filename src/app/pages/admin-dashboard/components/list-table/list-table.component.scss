@@ -1,0 +1,32 @@
+$color:var(--primary-color) ;
+
+::ng-deep .custom-table th, 
+::ng-deep .custom-table td {
+  padding: 8px 12px; /* Reduce padding to make columns closer */
+}
+
+::ng-deep .custom-table th {
+
+
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+::ng-deep .custom-table tr {
+  transition: background-color 0.3s;
+}
+
+::ng-deep .custom-table td {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Hover effect */
+::ng-deep .custom-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.title-header{
+  color: $color;
+  text-align: center;
+}

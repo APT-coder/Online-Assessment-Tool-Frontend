@@ -1,25 +1,44 @@
-
-.container {
-  margin: 5%;
-    transition: all 0.3s ease;
-}
-
-.sidebar-col {
-    width: 20%;
-    transition: width 0.3s ease;
-}
-
-.view-col {
-    width: 80%;
-    margin-left: 20%;
-    transition: width 0.3s ease, margin-left 0.3s ease;
-}
-
-.sidebar-collapsed .sidebar-col {
-    width: 0;
-}
-
-.sidebar-collapsed .view-col {
-    margin-left: 0;
+.initial-row{
+    overflow-x: hidden;
     width: 100%;
 }
+.container {
+    margin: 5%;
+      transition: all 0.3s ease;
+     
+  }
+  
+  .sidebar-col {
+      width: 20%;
+      transition: width 0.3s ease;
+  }
+  
+  .view-col {
+      width: 70%;
+      margin-left: 25%;
+     
+      transition: width 0.3s ease, margin-left 0.3s ease;
+  }
+  
+  .sidebar-collapsed .sidebar-col {
+      width: 0;
+  }
+  
+  .sidebar-collapsed .view-col {
+      margin-left: 0;
+      width: 100%;
+  }
+  .button-container {
+      display: flex; /* Use flexbox for easy spacing */
+      gap: 1rem; /* Adjust the gap size as needed */
+    }
+    .header-text {
+      font-size: 1.5rem; 
+      font-weight: bold;
+      color: var(--primary-color); 
+      margin-bottom: 1rem; 
+      margin-left: -8%;
+    }
+    .table{
+        margin-top: -5%;
+    }

@@ -1,0 +1,96 @@
+<div class="card">
+  <p-table
+    #dt1
+    [value]="filteredData"
+    [globalFilterFields]="['assessmentName', 'batchName', 'createdOn', 'scheduledDate', 'status']"
+    selectionMode="single"
+    [(selection)]="selectedAssessment"
+    dataKey="assessmentId"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rows]="5"
+    [paginator]="true"
+    stateStorage="session"
+    stateKey="assessment-table-session">
+    <ng-template pTemplate="caption">
+      <p-iconField iconPosition="left">
+        <p-inputIcon>
+          <i class="pi pi-search"></i>
+        </p-inputIcon>
+        <input
+          pInputText
+          type="text"
+          (input)="filterGlobal($event, 'contains')"
+          placeholder="Global Search" />
+      </p-iconField>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="assessmentName" style="width:20%">
+          Test <p-sortIcon field="assessmentName" />
+        </th>
+        <th pSortableColumn="batchName" style="width:15%">
+          Batch <p-sortIcon field="batchName" />
+        </th>
+        <th pSortableColumn="createdOn" style="width:15%">
+          Created On <p-sortIcon field="createdOn" />
+        </th>
+        <th pSortableColumn="scheduledDate" style="width:15%">
+          Scheduled Date <p-sortIcon field="scheduledDate" />
+        </th>
+        <th pSortableColumn="status" style="width:15%">
+          Status <p-sortIcon field="status" />
+        </th>
+        <th pSortableColumn="status" style="width:15%">
+          Details 
+        </th>
+        <th style="width:15%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr [pSelectableRow]="item" (click)="onRowClick(item)">
+        <td>
+          <span class="p-column-title">Test</span>
+          {{ item.assessmentName }}
+        </td>
+        <td>
+          <span class="p-column-title">Batch</span>
+          {{ item.batchName }}
+        </td>
+        <td>
+          <span class="p-column-title">Created On</span>
+          {{ item.createdOn | date }}
+        </td>
+        <td>
+          <span class="p-column-title">Scheduled Date</span>
+          {{ item.scheduledDate |date }}
+        </td>
+        <td>
+          <span class="p-column-title">Status</span>
+          {{ item.status }}
+        </td>
+        <td>
+          <span class="p-column-title">Details</span>
+          <div class="detail-btn">
+            <a [routerLink]="['/performance', item.scheduledAssessmentId]">
+              @if (item.status == "Evaluated") {
+                <app-button-active [content]='"View Details"'></app-button-active>
+              }
+              @else if(item.status == "Upcoming"){
+
+                <app-button-active class="edit-btn" [content]='"Edit"'></app-button-active>
+              }
+              @else if(item.status == "Completed"){
+                <app-button-active [content]='"Evaluate"'></app-button-active>
+              }
+          </a>
+          </div>  
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No assessments found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

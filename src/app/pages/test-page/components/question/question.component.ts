@@ -10,7 +10,15 @@ import { FormsModule } from '@angular/forms';
 })
 export class QuestionComponent {
 
-  @Input() question:any;
+  @Input() question!: string;
   @Input() questionNumber:number=1;
   @Input() totalQuestion:number=0;
+
+
+
+
+
+
+
+
 }

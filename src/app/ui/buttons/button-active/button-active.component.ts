@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-button-active',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ButtonModule],
   templateUrl: './button-active.component.html',
   styleUrl: './button-active.component.scss'
 })

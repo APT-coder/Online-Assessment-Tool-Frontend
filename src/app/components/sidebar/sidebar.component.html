@@ -1,34 +1,127 @@
-<div class="sidebar" [@collapse]="isCollapsed ? 'collapsed' : 'expanded'">
-  <div class="d-flex">
-      <div>
-          <h2 class="sidebar-heading m-3" *ngIf="!isCollapsed">Knowlix</h2>
-      </div>
-   
-      <div (click)="toggleCollapse()" class="mt-3">
-          <fa-icon [icon]="isCollapsed ? faChevronRight : faChevronLeft"></fa-icon>
+<div class="sidebar-container">
+  <p-sidebar #sidebarRef [style]="{'width':'250px'}" [position]="'left'" [visible]="true" [modal]="false" [baseZIndex]="1000">
+    <ng-template pTemplate="headless">
+      <div class="flex flex-column h-full">
+        <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
+          <span class="inline-flex align-items-center gap-2">
+            <span class="font-semibold text-2xl text-primary">Knowlix</span>
+          </span>
+          <!-- Optional close button -->
         </div>
-  </div>
-  <hr class="dull-white-hr">
-
-  <ul class="sidebar-list">
-    <li class="sidebar-item mb-4">
-      <fa-icon [icon]="faHome"></fa-icon>
-      <button routerLink="/" *ngIf="!isCollapsed">Dashboard</button>
-    </li>
-    <li class="sidebar-item">
-      <fa-icon [icon]="faPlus"></fa-icon>
-      <button routerLink="/create-test" *ngIf="!isCollapsed">Create Test</button>
-    </li>
-    <li class="sidebar-item">
-      <fa-icon [icon]="faUpload"></fa-icon>
-      <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!isCollapsed">Upload Question</button>
-    </li>
-    <li class="sidebar-item" *ngIf="isAdmin">
-      <fa-icon [icon]="faUserCog"></fa-icon>
-      <button routerLink="/trainer-management" *ngIf="!isCollapsed">Trainer Management</button>
-  </li>
-  </ul>
-
-  <hr />
-  <app-file-upload></app-file-upload>
+        <div class="overflow-y-auto">
+          <ul class="list-none p-3 m-0">
+            <li>
+              <ul class="list-none p-0 m-0 overflow-hidden">
+                <li>
+                  <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" routerLink="/{{path}}" routerLinkActive="active-link">
+                    <i class="pi pi-home mr-2"></i>
+                    <span class="font-medium">Dashboard</span>
+                  </a>
+                </li>
+                @if(user.UserType === 0 || user.UserType === 1){
+                  @if(user.UserType === 0){
+                    <li>
+                      <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" routerLink="/user-management" routerLinkActive="active-link">
+                        <i class="pi pi-users mr-2"></i>
+                        <span class="font-medium">User Management</span>
+                      </a>
+                    </li>
+                  }
+                  <li>
+                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" routerLink="/create-test" routerLinkActive="active-link">
+                      <i class="pi pi-plus mr-2"></i>
+                      <span class="font-medium">Create Test</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" routerLink="/upload-assessment" routerLinkActive="active-link">
+                      <i class="pi pi-upload mr-2"></i>
+                      <span class="font-medium">Upload Questions</span>
+                    </a>
+                  </li>
+                }
+                @else if(user.UserType === 2){
+                  <li>
+                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" routerLink="/create-test" routerLinkActive="active-link">
+                      <i class="pi pi-plus mr-2"></i>
+                      <span class="font-medium">Scheduled Tests</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" routerLink="/upload-assessment" routerLinkActive="active-link">
+                      <i class="pi pi-upload mr-2"></i>
+                      <span class="font-medium">Attended Tests</span>
+                    </a>
+                  </li>
+                }  
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="mt-auto" >
+          <hr class=" border-top-1 border-none surface-border" />
+          <p-button (onClick)="op.toggle($event)" [plain]="true" [severity]="'secondary'" [text]="true" pRipple class="m-5 p-3 flex align-items-center cursor-pointer gap-2 border-round text-700 hover:surface-100 transition-duration-150 p-ripple">
+            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+            <span class="font-bold">{{username}}</span>
+          </p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-sidebar>
 </div>
+
+
+
+
+<p-overlayPanel #op  >
+  <div class="flex flex-column gap-5 w-8rem h-15rem ">
+      <div >
+          <span class="font-medium text-900 block mb-2"></span>
+          <div class="d-flex align-items-center justify-content-center">
+              <div class="content m-3">
+                  <div class="profile-picture">
+                      <p-image 
+                          [src]="profileImage"
+                          alt="Image"
+                          (click)="openFileExplorer()"
+                          width="50"
+                          styleClass="custom-image"
+                      />
+                  </div>
+              </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-center text-center text-primary">
+            <table class="profile-details">
+              <tr *ngFor="let detail of profileDetails; let i = index"
+                  (mouseover)="hoveredRow = i"
+                  (mouseleave)="hoveredRow = null">
+                <td class="value">
+                  <!-- Truncated view -->
+                  <span class="text-truncated" [ngClass]="{'hidden': hoveredRow === i && (detail.value || '').length > 14}">
+                    {{ (detail.value || '').length > 14 ? (detail.value || '').substring(0, 14) + '...' : detail.value }}
+                  </span>
+                  <!-- Full view, shown only on hover -->
+                  <span class="text-full" *ngIf="hoveredRow === i && (detail.value || '').length > 14">
+                    {{ detail.value }}
+                  </span>
+                </td>
+                <!-- <td class="arrow-icon" *ngIf="hoveredRow === i">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </td> -->
+              </tr>
+            </table>
+          </div>
+          
+               
+          
+          
+         
+          <div class="d-flex align-items-center justify-content-center mt-1 mb-2">
+            <app-button-active (buttonClick)="logout()" [content]="'LogOut'" class="small-button"></app-button-active>
+        </div>
+        
+      </div>
+  </div>
+</p-overlayPanel>
+
+

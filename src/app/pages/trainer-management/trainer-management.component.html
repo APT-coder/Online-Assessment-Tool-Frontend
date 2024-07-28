@@ -1,23 +1,68 @@
-<div class="container"  [ngClass]="{'sidebar-collapsed': isSidebarCollapsed}">
-    <div class="row">
-      <div class="sidebar-col">
-        <div class="sidebar">
-          <app-sidebar (toggle)="onToggleSidebar($event)"></app-sidebar>
-        </div>
-      </div>
-  
-      <div class="view-col">
-        <div class="d-flex">
-          <app-button-active [content]="'Add Role'" (buttonClick)="toggleCard()"></app-button-active>
-          &nbsp;&nbsp;
-          <app-button-active [content]="'Add Trainer'" (buttonClick)="ShowTrainer()"></app-button-active>
-        </div>
-        <br/><br/>
-  
-        <app-rolecreation-card *ngIf="isCardVisible"></app-rolecreation-card>
-        <app-accountcreation-modal *ngIf="isAddTrainer" [(visible)]="isAddTrainer"></app-accountcreation-modal>
-     <app-trainer-table></app-trainer-table>
+
+  <div class="row mt-5 initial-row">
+    <div class="sidebar-col">
+      <div class="sidebar">
+         <app-sidebar></app-sidebar>
       </div>
     </div>
+    <div class="d-flex justify-content-end w-50" style="margin-left: 30%;"><p-messages></p-messages></div>
+
+    <div class="view-col">
+      <div class="header-section d-flex flex-row  justify-content-around">
+        <h1 class="header-text">User Account Management</h1>
+        <div class="d-flex justify-content-end">
+          <div class="button-container">
+            <app-button-active [content]="'Add Role'" (buttonClick)="openRoleCreationModal()"></app-button-active>
+            <app-button-active [content]="'Add User'" (buttonClick)="ShowTrainer()"></app-button-active>
+            <app-button-active [content]="'Batch Upload'" (buttonClick)="onFileSelect()"></app-button-active>
+            <input type="file" #fileInput (change)="onFileChange($event)" style="display: none;" />
+          </div>
+        </div>
+    
+        
+      </div>
+      <br /><br />
+
+      <app-rolecreation-card
+      *ngIf="isModalVisible"
+      [role]="selectedRole"
+      [isEditMode]="isEditMode"
+      [isModalVisible]="isModalVisible"   
+      (cancelRoleCreation)="onCancelRoleCreation()"
+      (roleSaved)="onRoleSaved()">
+    </app-rolecreation-card>
+    
+
+      <app-accountcreation-modal 
+        *ngIf="isAddTrainer" 
+        [(visible)]="isAddTrainer"
+        [mode]="'add'"
+        (close)="closeModal()">
+      </app-accountcreation-modal>
+
+      <app-accountcreation-modal 
+        *ngIf="isEditTrainer" 
+        [(visible)]="isEditTrainer"
+        [mode]="'edit'"
+        [userData]="selectedUser"
+        (close)="closeModal()">
+      </app-accountcreation-modal>
+
+      <app-accountcreation-modal 
+        *ngIf="isDeleteTrainer" 
+        [(visible)]="isDeleteTrainer"
+        [mode]="'delete'"
+        [userData]="selectedUser"
+        (close)="closeModal()">
+      </app-accountcreation-modal>
+
+      <br /><br />
+
+      <!-- Trainer Table Component -->
+       <div class="table">
+        <app-trainer-table (editRole)="editRole($event)"></app-trainer-table>
+       </div>
+    
+    </div>
   </div>
-  
+

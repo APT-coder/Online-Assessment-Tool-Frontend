@@ -1,0 +1,102 @@
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+ 
+  margin-bottom: 15px;
+  
+  label {
+    font-weight: 600;
+    margin-bottom: 5px;
+  
+    width: 100%; 
+  }
+
+  .input-text,
+  .p-password input {
+    width: 100%;
+    max-width: 300px; /* Max width for input elements */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+  }
+
+  .p-checkbox {
+    margin-right: 5px;
+  }
+}
+
+/* Align checkbox and permission label */
+.form-group .p-checkbox,
+.form-group label[for^="permission-"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.p-checkbox {
+  margin-right: 5px;
+}
+
+/* Modal footer styles */
+.p-dialog .p-dialog-footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  border-top: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    p-button {
+      margin-left: 10px;
+
+      &[severity="primary"] {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+
+        &:hover {
+          background-color: #0056b3;
+          border-color: #0056b3;
+        }
+      }
+
+      &[severity="secondary"] {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: #fff;
+
+        &:hover {
+          background-color: #5a6268;
+          border-color: #545b62;
+        }
+      }
+
+      &[outlined="true"] {
+        background-color: transparent;
+        border-color: #007bff;
+        color: #007bff;
+
+        &:hover {
+          background-color: rgba(0, 123, 255, 0.1);
+          border-color: #007bff;
+        }
+      }
+    }
+  }
+}
+.p-dropdown{
+  border: none;
+}
+p-multiselect {
+  border: none; /* Remove default border */
+  width: 100%; /* Ensure full width */
+}
