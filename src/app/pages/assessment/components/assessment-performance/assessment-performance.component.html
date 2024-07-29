@@ -1,34 +1,33 @@
 
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-2">
-        <app-sidebar></app-sidebar>
-      </div>
-      <div class="col-10" >
-        <div class="performancePage">
-          <div class="performanceIntro">
-               <div class="performanceBatch">
-                <h4>OOP Assessment - Batch 03</h4>
-               </div>
-               <div class="shareOption">
-                <app-button-active [content]="'Export as CSV'" [customStyles]="{'height':'38px','width':'120px','font-size':'14px'}"></app-button-active>
-                <app-button-active [content]="'Share'"  [customStyles]="{'height':'38px','width':'120px','font-size':'14px'}"></app-button-active>
-               </div>
-          </div>
-          <div class="moreDetails">
-              <app-card [name]=name4 [title] = maxScore></app-card>  
-              <app-card [name]=name1 [title] = totalTrainees></app-card>
-              <app-card [name]=name2 [title] = totalAttendees></app-card>
-              <app-card [name]=name3 [title] = absentees></app-card>
-              <app-card [name]=name5 [title] = date [h4Styles]="{  'font-size': '18px','padding-bottom':'5px' }"></app-card>
-            
-          </div>
-          <div class="performanceTable">
-           <app-table></app-table>
-          </div>
+  <div class="row">
+    <div class="col-2">
+      <app-sidebar></app-sidebar>
     </div>
-    
-      </div>
-    </div>
+    <div class="col-10" >
+      <div class="performancePage">
+        <div class="performanceIntro">
+             <div class="performanceBatch">
+              <h4>OOP Assessment - Batch 03</h4>
+             </div>
+             <div class="shareOption">
+              <app-button-active [content]="'Export as CSV'" [customStyles]="{'height':'38px','width':'120px','font-size':'14px'}"></app-button-active>
+              <app-button-active [content]="'Share'"  [customStyles]="{'height':'38px','width':'120px','font-size':'14px'}"></app-button-active>
+             </div>
+        </div>
+        <div class="moreDetails">
+            <app-card [name]=name4 [title] = "maximumScore"></app-card>  
+            <app-card [name]=name1 [title] = "totalTrainees"></app-card>
+            <app-card [name]=name2 [title] = "traineesAttended"></app-card>
+            <app-card [name]=name3 [title] = "absentees"></app-card>
+            <app-card [name]=name5 [title] = "getFormattedDate(assessmentDate)" [h4Styles]="{  'font-size': '18px','padding-bottom':'5px' }"></app-card>
+          
+        </div>
+        <div class="performanceTable">
+         <app-table></app-table>
+        </div>
   </div>
   
+    </div>
+  </div>
+</div>

@@ -218,7 +218,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   updateTotalScore() {
-    const assessmentId = this.assessment.assessmentId; 
+    const assessmentId = this.assessment.assessmentId;
     const totalScore = this.calculateTotalScore();
     this.assessmentService.updateAssessment(assessmentId, totalScore).subscribe((response: any) => {
       console.log('Question score posted successfully', response);
@@ -252,13 +252,11 @@ export class AssessmentComponent implements OnInit {
     formattedQuestions.forEach(question => {
       this.assessmentService.postQuestion(assessmentId, question, this.createdBy).subscribe((response: any) => {
         console.log('Question posted successfully', response);
-        this.updateTotalScore();
-        this.completeStep(1);
-        this.completeStep(2);
       }, (error: any) => {
         console.error('Error posting question', error);
       });
     });
+    this.updateTotalScore();
   }
 
   scrollToBottom() {
@@ -281,13 +279,11 @@ export class AssessmentComponent implements OnInit {
         
 
         setTimeout(() => {
-          this.router.navigate(['/{{path}}']);
+          this.router.navigate([`/${this.dashboard}`]);
         }, 5000);
       }, (error: any) => {
         console.error('Error posting question', error);
       });
     } 
   }
-
- 
 }

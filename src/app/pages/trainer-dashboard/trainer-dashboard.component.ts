@@ -18,6 +18,8 @@ export class TrainerDashboardComponent {
   isModalVisible = false;
   selectedAssessmentId!: number;
   selectedAssessmentStatus!:string;
+  isDataAvailable: boolean = false;
+  noDataMessage: string = 'Select the evaluated assessment to see the data';
 
   constructor(private userService: UserService) {}
 
@@ -32,5 +34,12 @@ export class TrainerDashboardComponent {
     console.log("Assmnt Id" + Obj.scheduledAssessmentId);
     this.selectedAssessmentStatus = Obj.status;
     console.log(Obj.status);
+    if (!Obj.isEvaluated) {
+      this.isDataAvailable = false;
+      this.noDataMessage = 'No data available';
+    } else {
+      this.isDataAvailable = true;
+    }
   }
 }
+

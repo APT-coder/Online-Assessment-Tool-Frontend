@@ -217,4 +217,123 @@ export class TestPageComponent implements OnInit, OnDestroy {
     }
     this.question[this.count].answered = this.enteredAnswer;
   }
+
+  
+
+  
+
+   
+ 
+
+  
+    ngOnInit(): void {
+      this.assessmentId = this.route.snapshot.paramMap.get('id');
+        // this.fetchQuestions();
+
+        this.fetchAssessments();
+      console.log(this.data.assessmentDuration);
+      
+        this.timerService.startTimer(this.data.assessmentDuration);
+       this.timerSubscription = this.timerService.getTimer().subscribe(time => {
+      this.timer = time;
+      if (time <= 0) {
+        this.onComplete();
+      }
+    });
+
+      }
+
+      ngOnDestroy(): void {
+        this.timerService.stopTimer();
+        if (this.timerSubscription) {
+          this.timerSubscription.unsubscribe();
+        }
+      }
+
+      onComplete(): void {
+       console.log("backend have to be called");
+       
+      }
+      formatTime(seconds: number): string {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return [h, m, s].map(val => val < 10 ? `0${val}` : val).join(':');
+      }
+     
+   
+      question:any
+      questionWithoutNumber:any
+     
+      fetchAssessments():void{
+        this.api.getAssessment(this.assessmentId).subscribe(response =>{
+          this.assessment= response;
+
+          console.log(this.assessment.result);
+          // console.log(this.assessment.result.assessmentDuration);
+          
+          
+       
+
+          this.questionWithoutNumber =this.addFieldsToQuestions(this.assessment.result.questions)
+          console.log(this.questionWithoutNumber);
+
+          this.addQuestionNumbers(this.questionWithoutNumber);
+          console.log(this.questionWithoutNumber);
+          this.question = this.questionWithoutNumber;
+
+             
+      });
+      }
+
+       addFieldsToQuestions(assessment:any):any{
+        return assessment.map((question: any) => ({
+          ...question,
+          selectedoption: -1,
+          answered: '',
+          questionstatus: 'unreviewed'
+        }));
+      }
+
+       addQuestionNumbers(questions: Question[]): void {
+        questions.forEach((question, index) => {
+          question['questionNo'] = index+1;
+        });
+      }
+      
+      postAssessment() {
+        var userId = this.user.TraineeId;
+      
+        this.api.postAssessment(this.question, userId).subscribe({
+          next: (response) => {
+            console.log('Assessment posted successfully:', response);
+          },
+          error: (error) => {
+            console.error('Error posting assessment:', error);
+          },
+          complete: () => {
+            console.log('Post assessment request completed');
+          }
+        });
+
+        console.log("NEED BACKEND CONNECTION DONE");
+        ///MAIN
+        console.log(this.question)
+      }
+
+      openConfirmationDialog(): void {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          width: '300px'
+        });
+    
+        dialogRef.componentInstance.confirm.subscribe(() => {
+          this.postAssessment();
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          
+        });
+      }
+
+
 }

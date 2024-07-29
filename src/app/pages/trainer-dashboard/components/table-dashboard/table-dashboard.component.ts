@@ -11,6 +11,7 @@
   import { TrainerDashboardService } from '../../../../service/trainer-dashboard/trainer-dashboard.service';
   import { ButtonActiveComponent } from "../../../../ui/buttons/button-active/button-active.component";
   import { CommonModule } from '@angular/common';
+import { ButtonDashboardComponent } from "../../../../ui/buttons/button-dashboard/button-dashboard.component";
 
   interface AssessmentTableDTO {
     scheduledAssessmentId: number;
@@ -24,7 +25,7 @@
   @Component({
     selector: 'app-table-dashboard',
     standalone: true,
-    imports: [TableModule, HttpClientModule, InputTextModule, TagModule, IconFieldModule, InputIconModule, RouterModule, FontAwesomeModule, ButtonActiveComponent, CommonModule],
+    imports: [TableModule, HttpClientModule, InputTextModule, TagModule, IconFieldModule, InputIconModule, RouterModule, FontAwesomeModule, ButtonActiveComponent, CommonModule, ButtonDashboardComponent],
     templateUrl: './table-dashboard.component.html',
     styleUrls: ['./table-dashboard.component.scss']
   })
@@ -66,9 +67,9 @@
       }
     }
 
-    onRowClick(scheduledAssessmentIdssessmentId: any) {
-      console.log(scheduledAssessmentIdssessmentId);
-      this.assessmentSelected.emit(scheduledAssessmentIdssessmentId);
+    onRowClick(scheduledAssessmentId: any) {
+      console.log(scheduledAssessmentId);
+      this.assessmentSelected.emit(scheduledAssessmentId);
       
     }
 
@@ -90,6 +91,7 @@
       const value = (inputElement?.value || '').toLowerCase();
       this.dt1.filterGlobal(value, 'contains');
     }
+
 
     
   }

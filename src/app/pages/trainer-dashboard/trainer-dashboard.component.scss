@@ -1,24 +1,54 @@
-$introcolor:#5F529D;
-.trainer{
-    display: flex;
-    flex-direction: column;
+$introcolor: #5f529d;
+.trainer {
+  display: flex;
+  flex-direction: column;
 }
-.trainerpage-top{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.trainerpage-top h4{
-    font-weight: 700;
-    color: var(--primary-color);
+.trainerpage-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.live-card{
-    margin-top: 10px;
+.trainerpage-top h4 {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.live-card {
+  margin-top: 10px;
 }
 
 .chart-card .col-md-6 {
-    padding: 10px; /* Adjust the padding as needed */
+  padding: 10px; 
+}
+
+.no-data-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+  width: 98%;
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 1.25rem;
+  color: #555555;
+}
+
+.no-data-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    fill: #007bff;
   }
-  
