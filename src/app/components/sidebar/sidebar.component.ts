@@ -1,5 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { Sidebar, SidebarModule } from 'primeng/sidebar';
 import { RippleModule } from 'primeng/ripple';
@@ -19,7 +19,8 @@ import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-act
   selector: 'app-sidebar',
   standalone: true,
   imports: [RouterLink, SidebarModule, ButtonModule, RippleModule, AvatarModule, StyleClassModule,ImageModule,
-    OverlayPanelModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ChipsModule, CommonModule, ButtonActiveComponent],
+    OverlayPanelModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ChipsModule, CommonModule, ButtonActiveComponent,
+    RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   
@@ -37,7 +38,7 @@ export class SidebarComponent {
 user = JSON.parse(localStorage.getItem('userDetails') as string);
 username = this.user.UserName;
   hoveredRow: number | null = null;
-  profileImage: string = "https://i.pravatar.cc/100";
+  profileImage: string = "assets/Ellipse 56.svg";
   path: string = '';
   profileDetails = [
     { label: 'Name:', value: 'Your Name' },
