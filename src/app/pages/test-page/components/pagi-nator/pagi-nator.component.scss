@@ -67,3 +67,10 @@ li{
     cursor: not-allowed;
     border: 1px solid #ccc;
 }  
+.paginator-sizer{
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+}

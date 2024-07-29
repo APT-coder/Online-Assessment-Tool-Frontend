@@ -1,40 +1,42 @@
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item" [class.disabled]="currentPage === 1">
-      <button type="button" class="btn prev" (click)="prevPage()" [class.disabledprev]="currentPage === 1">Prev</button>
-    </li>
-    @for (question of paginatedQuestions; track question.questionId) {
-    <li class="page-item" (click)="handleClick($event,question.questionNo)">
-
-      @if(question.questionstatus=="done"){
-      <a class="page-link done "
-        href="#">{{question.questionNo}}
-      </a>
+<div class="paginator-sizer">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button type="button" class="btn prev" (click)="prevPage()" [class.disabledprev]="currentPage === 1">Prev</button>
+      </li>
+      @for (question of paginatedQuestions; track question.questionId) {
+      <li class="page-item" (click)="handleClick($event,question.questionNo)">
+  
+        @if(question.questionstatus=="done"){
+        <a class="page-link done "
+          href="#">{{question.questionNo}}
+        </a>
+        }
+  
+        @if(question.questionstatus=="unreviewed"){
+        <a class="page-link active"
+          [ngClass]="{
+            'active': selectedQuestionId === question.questionNo
+          }"
+          href="#">{{question.questionNo}}
+        </a>
+        }
+  
+        @if(question.questionstatus=="marked"){
+        <a class="page-link marked"
+          [ngClass]="{'active': selectedQuestionId === question.questionNo}"
+          href="#">{{question.questionNo}}
+        </a>
+        }
+  
+      </li>
       }
-
-      @if(question.questionstatus=="unreviewed"){
-      <a class="page-link active"
-        [ngClass]="{
-          'active': selectedQuestionId === question.questionNo
-        }"
-        href="#">{{question.questionNo}}
-      </a>
-      }
-
-      @if(question.questionstatus=="marked"){
-      <a class="page-link marked"
-        [ngClass]="{'active': selectedQuestionId === question.questionNo}"
-        href="#">{{question.questionNo}}
-      </a>
-      }
-
-    </li>
-    }
-    <li class="page-item" [class.disabled]="currentPage >= getTotalPages()">
-      <button type="button" class="btn next" (click)="nextPage()" [class.disablednext]="currentPage >= getTotalPages()">Next</button>
-    </li>
-  </ul>
-</nav>
+      <li class="page-item" [class.disabled]="currentPage >= getTotalPages()">
+        <button type="button" class="btn next" (click)="nextPage()" [class.disablednext]="currentPage >= getTotalPages()">Next</button>
+      </li>
+    </ul>
+  </nav>
+</div>
 
 <!-- 
 <nav aria-label="Page navigation example">
