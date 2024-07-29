@@ -17,6 +17,7 @@ import { UpdateScoreDTO } from '../../../../../models/UpdateScoreDTO.interface';
 import { forkJoin } from 'rxjs';
 import { AssessmentTableDTO } from '../../../../../models/AssessmentTableDTO.interface'; 
 import { AssessmentStatus } from '../../../../../models/AssessmentTableDTO.interface'; 
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-assessment-evaluate',
@@ -34,7 +35,7 @@ students: TraineeStatusDTO | any;
 absentStudents: TraineeStatusDTO|any;
 selectedStudentResponses:any;
 evaluatedStudentIds: Set<number> = new Set<number>();
-scheduledAssessmentId:number=1;
+scheduledAssessmentId:number=0;
 scheduledAssessmentDetails: AssessmentTableDTO|any;
 
 Title:string=""
@@ -44,7 +45,12 @@ numberOfSubmittedTrainee: number=0;
 numberOfAbsentTrainee:number=0;
 updatedScores: UpdateScoreDTO[] = [];
 
-constructor(private scheduledAssessmentService: ScheduledAssessmentService,private messageService:MessageService,private confirmationService: ConfirmationService) { 
+constructor(private scheduledAssessmentService: ScheduledAssessmentService,private messageService:MessageService,private confirmationService: ConfirmationService, private route: ActivatedRoute) { 
+  this.route.paramMap.subscribe(params => {
+    const paramId = params.get('scheduledAssessmentId');
+    this.scheduledAssessmentId = paramId ? +paramId : 0; 
+  });
+
   this.loadAttendedStudents(this.scheduledAssessmentId);
   this.loadAbsentStudents(this.scheduledAssessmentId);  
   this.loadStudentCount(this.scheduledAssessmentId);
@@ -53,7 +59,10 @@ constructor(private scheduledAssessmentService: ScheduledAssessmentService,priva
 
 
 ngOnInit(): void {
-
+  this.route.paramMap.subscribe(params => {
+    const paramId = params.get('scheduledAssessmentId');
+    this.scheduledAssessmentId = paramId ? +paramId : 0; 
+  });
 }
 GetAssessmentName(scheduledAssessmentId:number):void{
   this.scheduledAssessmentService.fetchAssessmentName(scheduledAssessmentId).subscribe(data => {

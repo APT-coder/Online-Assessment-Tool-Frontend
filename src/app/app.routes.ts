@@ -47,7 +47,7 @@ export const routes: Routes = [
         path: 'create-test', component: CreateTestComponent
     },
     {
-        path: 'evaluate', component: AssessmentEvaluateComponent
+        path: 'evaluate/:scheduledAssessmentId', component: AssessmentEvaluateComponent
     },
     {
         path: 'user-management', component: TrainerManagementComponent

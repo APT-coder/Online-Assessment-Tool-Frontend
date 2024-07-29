@@ -218,7 +218,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   updateTotalScore() {
-    const assessmentId = this.assessment.assessmentId; 
+    const assessmentId = this.assessment.assessmentId;
     const totalScore = this.calculateTotalScore();
     this.assessmentService.updateAssessment(assessmentId, totalScore).subscribe((response: any) => {
       console.log('Question score posted successfully', response);

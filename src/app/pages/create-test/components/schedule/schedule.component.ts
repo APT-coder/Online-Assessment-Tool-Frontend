@@ -45,7 +45,7 @@ export class ScheduleComponent {
 
     this.secondFormGroup = this._formBuilder.group({
       batchId: ['', Validators.required],
-      assessmentId: [1, Validators.required],
+      assessmentId: [0, Validators.required],
       scheduledDate: [new Date(), Validators.required],
       assessmentDuration: ['00:00:00', Validators.required],
       startDate: [new Date(), Validators.required],
@@ -62,7 +62,7 @@ export class ScheduleComponent {
     const formValues = this.secondFormGroup.value;
     const logData = {
       ...formValues,
-      assessmentId : 1
+      assessmentId : parseInt(localStorage.getItem("assessmentId") as string)
     };
     const outputlog = this.transformAssessmentData(logData);
     return outputlog;
@@ -71,7 +71,7 @@ export class ScheduleComponent {
   transformAssessmentData(input: any): any {
     const output = {
       batchId: this.convertBatchId(input.batchId),
-      assessmentId: input.assessmentId,
+      assessmentId: parseInt(localStorage.getItem("assessmentId") as string),
       scheduledDate: input.scheduledDate,
       assessmentDuration: input.assessmentDuration,
       startDate: input.startDate,
