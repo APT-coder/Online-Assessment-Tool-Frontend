@@ -193,19 +193,19 @@ export class TestPageComponent implements OnInit, OnDestroy {
       }
       
       postAssessment() {
-        var userId = this.user.UserId;
+        var userId = this.user.TraineeId;
       
-        // this.api.postAssessment(this.question, userId).subscribe({
-        //   next: (response) => {
-        //     console.log('Assessment posted successfully:', response);
-        //   },
-        //   error: (error) => {
-        //     console.error('Error posting assessment:', error);
-        //   },
-        //   complete: () => {
-        //     console.log('Post assessment request completed');
-        //   }
-        // });
+        this.api.postAssessment(this.question, userId).subscribe({
+          next: (response) => {
+            console.log('Assessment posted successfully:', response);
+          },
+          error: (error) => {
+            console.error('Error posting assessment:', error);
+          },
+          complete: () => {
+            console.log('Post assessment request completed');
+          }
+        });
 
         console.log("NEED BACKEND CONNECTION DONE");
         ///MAIN

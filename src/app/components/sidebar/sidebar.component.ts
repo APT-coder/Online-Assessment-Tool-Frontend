@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { Sidebar, SidebarModule } from 'primeng/sidebar';
@@ -26,6 +26,14 @@ import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-act
  
 })
 export class SidebarComponent {
+
+
+  @Output() isSchedule =new EventEmitter<boolean>();
+
+changeIsSchedule(scheduled:boolean) {
+    this.isSchedule.emit(scheduled);
+}
+
   // isAdmin = false;
   // user = JSON.parse(localStorage.getItem('userDetails') as string);
   // constructor() {

@@ -12,6 +12,14 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
   styleUrl: './trainee-dashboard.component.scss',
 })
 export class TraineeDashboardComponent {
+
+isScheduled:boolean=true;
+  
+handleIsScheduled(isScheduled: boolean) {
+  this.isScheduled =isScheduled
+  console.log(isScheduled);
+  
+}
   selected: string = 'scheduled';
 
   handleClick(buttonType: string) {
@@ -31,7 +39,7 @@ export class TraineeDashboardComponent {
   }
 
   fetchScheduled(): void {
-    this.api.getScheduled(this.user.UserId).subscribe((response) => {
+    this.api.getScheduled(this.user.TraineeId).subscribe((response) => {
       this.scheduled = response;
       console.log(this.scheduled);
     });
