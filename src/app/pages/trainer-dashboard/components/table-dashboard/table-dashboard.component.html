@@ -71,18 +71,18 @@
         <td>
           <span class="p-column-title">Details</span>
           <div class="detail-btn">
-            <a [routerLink]="['/performance', item.scheduledAssessmentId]">
               @if (item.status == "Evaluated") {
-                <app-button-dashboard [content]='"View Details"'></app-button-dashboard>
+                <a [routerLink]="['/performance', item.scheduledAssessmentId]">
+                <app-button-dashboard [content]='"View Details"'></app-button-dashboard></a>
               }
               @else if(item.status == "Upcoming"){
 
                 <app-button-dashboard class="edit-btn" [content]='"Edit"'></app-button-dashboard>
               }
               @else if(item.status == "Completed"){
-                <app-button-dashboard [content]='"Evaluate"'></app-button-dashboard>
+                <a [routerLink]="['/evaluate', item.scheduledAssessmentId]">
+                <app-button-dashboard [content]='"Evaluate"'></app-button-dashboard></a>
               }
-          </a>
           </div>  
         </td>
       </tr>
