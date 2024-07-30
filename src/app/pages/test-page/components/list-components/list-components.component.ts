@@ -52,7 +52,7 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
   };
 
   ngAfterViewInit(): void {
-    
+    this.setOptionBoxSizes();
   }
 
   setOptionBoxSizes(): void {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener, ViewChild, AfterViewInit } from '@angular/core';
 import { ListComponentsComponent } from './components/list-components/list-components.component';
 import { PagiNatorComponent } from './components/pagi-nator/pagi-nator.component';
 import { QuestionService } from '../../service/assessment/question.service';
@@ -53,8 +53,11 @@ export class TestPageComponent implements OnInit, OnDestroy {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.data = navigation.extras.state['data'];
+      console.log(this.data);
+      
     }
   }
+  
 
   @ViewChild('child2') child2Component!: ListComponentsComponent;
 
@@ -164,9 +167,8 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   sendDataBeforeClosing() {
-    // Your logic to send data
-    // this.postAssessment();
-    // console.log('Sending data before closing.');
+    this.postAssessment();
+    console.log('Sending data before closing.');
   }
 
   openConfirmationDialog(): void {
@@ -233,6 +235,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
       selectedoption: -1,
       answered: '',
       questionstatus: 'unreviewed',
+      assessmentId:this.data.scheduledAssessmentId
     }));
   }
 
