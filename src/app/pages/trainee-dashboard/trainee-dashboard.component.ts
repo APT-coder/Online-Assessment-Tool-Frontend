@@ -39,7 +39,7 @@ handleIsScheduled(isScheduled: boolean) {
   }
 
   fetchScheduled(): void {
-    this.api.getScheduled(this.user.UserId).subscribe((response) => {
+    this.api.getScheduled(this.user.TraineeId).subscribe((response) => {
       this.scheduled = response;
       console.log(this.scheduled);
     });

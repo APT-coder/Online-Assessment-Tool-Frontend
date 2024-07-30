@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { TimerService } from '../../service/timer/timer.service';
 import { Subscription } from 'rxjs';
+import { RemainingChanceDailogueComponent } from './components/remaining-chance-dailogue/remaining-chance-dailogue.component';
+
 
 
 @Component({
@@ -41,7 +43,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   question: any;
   questionWithoutNumber: any;
   private attemptCounter = 0;
-  private maxAttempts = 3;
+  private maxAttempts = 2;
 
   constructor(
     private router: Router,
@@ -105,22 +107,39 @@ export class TestPageComponent implements OnInit, OnDestroy {
   handleVisibilityChange() {
     if (document.hidden) {
       this.attemptCounter++;
-
       const attemptsLeft = this.maxAttempts - this.attemptCounter;
 
-      
-        // Exceeded maximum attempts, navigate away and close the window
-        console.log("User has exceeded maximum attempts, navigating to /trainee.");
-        // alert(`You have caught switching tab.`);
-        document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
-        this.router.navigate(["/trainee"]);
-        
-
-      
-    } 
-
-   
-      
+      if (attemptsLeft > 0) {
+        const message = `You have ${attemptsLeft} attempt(s) left. If you switch tabs again, you will be exited from the assessment.`;
+        this.dialog
+          .open(RemainingChanceDailogueComponent, {
+            data: { message, attemptsLeft },
+          })
+          .afterClosed()
+          .subscribe(() => {
+            this.toggleFullScreen();
+          });
+      } else {
+        const message = `You have been caught switching tabs. You will be exited from the assessment.`;
+        if (attemptsLeft == 0) {
+          this.dialog
+            .open(RemainingChanceDailogueComponent, {
+              data: { message },
+            })
+            .afterClosed()
+            .subscribe(() => {
+              console.log(
+                'User has exceeded maximum attempts, navigating to /trainee.'
+              );
+              document.removeEventListener(
+                'visibilitychange',
+                this.handleVisibilityChange.bind(this)
+              );
+              this.router.navigate(['/trainee']);
+            });
+        }
+      }
+    }
   }
 
   onComplete(): void {
@@ -243,6 +262,17 @@ export class TestPageComponent implements OnInit, OnDestroy {
     questions.forEach((question, index) => {
       question['questionNo'] = index + 1;
     });
+  }
+  @HostListener('document:contextmenu', ['$event'])
+  onRightClick(event: MouseEvent) {
+    event.preventDefault();
+  }
+  @HostListener('window:keydown', ['$event'])
+  disableF12(event: KeyboardEvent) {
+    if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C' || event.key === 'J'))) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   }
 }
  
