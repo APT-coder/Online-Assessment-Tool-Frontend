@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { PipePipe } from "../../../../pipes/optionsFilter/pipe.pipe";
 
 
+
 @Component({
   selector: 'app-list-components',
   standalone: true,
@@ -107,5 +108,6 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
     const inputElement = event.target as HTMLInputElement;
     this.reviewMarked.emit(inputElement.checked);
   }
-
+  
+ 
 }

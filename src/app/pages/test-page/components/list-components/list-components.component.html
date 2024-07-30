@@ -1,5 +1,5 @@
 <div class="option-sizer">
-  @if (questionType=="mcq") {
+  @if (questionType=="MCQ") {
     <div class="list-container ">
       <ul class="grid-container">
     
@@ -32,21 +32,21 @@
       </ul>
     </div>
     }
-    
-    @if (questionType=="descriptive") {
-    
-    
-          
+   
+    @if (questionType=="Descriptive") {
+   
+   
+         
       <div class="text-area-parent">
         <div class="text-area">
           <label for="exampleFormControlTextarea1" class="form-label">Enter Answer...</label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="fullQuestions.answered" (input)="onTextareaChange()"></textarea>
-          
-    
+         
+   
         </div>
       </div>
-      
-      
+     
+     
     }
     @if (questionType=="fillup") {
     <div class="input-value">
@@ -59,9 +59,9 @@
       </form>
     </div>
     }
-    
-    
-    
+   
+   
+   
     @if (isChecked=="marked") {
       <div class="mark-for-review">
         <input type="checkbox" id="review" name="review" checked  (change)="onCheckboxChange($event)">
@@ -73,8 +73,8 @@
         <input type="checkbox" id="review" name="review"  (change)="onCheckboxChange($event)">
         <label for="review">Mark for review</label>
       </div>
-      
+     
     }
-    
-    
+   
+   
 </div>
