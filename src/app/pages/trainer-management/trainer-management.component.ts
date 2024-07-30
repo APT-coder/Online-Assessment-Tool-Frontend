@@ -75,11 +75,7 @@ export class TrainerManagementComponent {
     this.closeRoleCreationModal();
     // Optionally reload data or perform other actions after role is saved
   }
-
-  onToggleSidebar(collapsed: boolean) {
-    this.isSidebarCollapsed = collapsed;
-  }
-
+  
   isAddTrainer: boolean = false;
   isEditTrainer: boolean = false;
   isDeleteTrainer: boolean = false;
