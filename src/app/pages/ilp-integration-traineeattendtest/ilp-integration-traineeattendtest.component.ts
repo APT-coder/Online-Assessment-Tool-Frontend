@@ -76,7 +76,7 @@ export class IlpIntegrationTraineeattendtestComponent implements OnInit {
         localStorage.removeItem('userDetails');
         localStorage.setItem('userDetails', JSON.stringify(this.userRoleData));
 
-        this.scheduledService.getScheduled(this.userRoleData.UserId)
+        this.scheduledService.getScheduled(this.userRoleData.TraineeId)
         .subscribe((data) => {
           this.assessmentPayload = data.filter(d => d.assessmentId == this.id);
           console.log(this.assessmentPayload[0]);
