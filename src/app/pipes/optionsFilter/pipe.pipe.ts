@@ -15,7 +15,7 @@ export class PipePipe implements PipeTransform {
     const result = [option1, option2, option3, option4];
 
     // Log the result to the console
-    console.log('Filtered options:', result);
+    // console.log('Filtered options:', result);
 
     return result;
   }
