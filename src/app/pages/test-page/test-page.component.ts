@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener, ViewChild } from '@angular/core';
 import { ListComponentsComponent } from './components/list-components/list-components.component';
 import { PagiNatorComponent } from './components/pagi-nator/pagi-nator.component';
 import { QuestionService } from '../../service/assessment/question.service';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { TimerService } from '../../service/timer/timer.service';
 import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-test-page',
@@ -39,6 +40,8 @@ export class TestPageComponent implements OnInit, OnDestroy {
   public assessment: any;
   question: any;
   questionWithoutNumber: any;
+  private attemptCounter = 0;
+  private maxAttempts = 3;
 
   constructor(
     private router: Router,
@@ -51,6 +54,12 @@ export class TestPageComponent implements OnInit, OnDestroy {
     if (navigation?.extras.state) {
       this.data = navigation.extras.state['data'];
     }
+  }
+
+  @ViewChild('child2') child2Component!: ListComponentsComponent;
+
+  handleActionTriggered() {
+    this.child2Component.performAction();
   }
 
   ngOnInit(): void {
@@ -73,6 +82,8 @@ export class TestPageComponent implements OnInit, OnDestroy {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+    
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -90,18 +101,29 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
   handleVisibilityChange() {
     if (document.hidden) {
-      alert('You are trying to switch tabs. Please stay on this page.');
+      this.attemptCounter++;
 
-    }
-    window.close()
-    console.log("CLOSSS");
+      const attemptsLeft = this.maxAttempts - this.attemptCounter;
 
+      
+        // Exceeded maximum attempts, navigate away and close the window
+        console.log("User has exceeded maximum attempts, navigating to /trainee.");
+        // alert(`You have caught switching tab.`);
+        document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+        this.router.navigate(["/trainee"]);
+        
+
+      
+    } 
+
+   
+      
   }
 
   onComplete(): void {
     console.log('Backend have to be called');
     this.sendDataBeforeClosing();
-    window.close();
+    this.router.navigate(["/trainee"]);
   }
 
   formatTime(seconds: number): string {
@@ -120,24 +142,9 @@ export class TestPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  addFieldsToQuestions(assessment: any): any {
-    return assessment.map((question: any) => ({
-      ...question,
-      selectedoption: -1,
-      answered: '',
-      questionstatus: 'unreviewed',
-    }));
-  }
-
-  addQuestionNumbers(questions: Question[]): void {
-    questions.forEach((question, index) => {
-      question['questionNo'] = index + 1;
-    });
-  }
 
   postAssessment() {
     var userId = this.user.TraineeId;
-
     this.api.postAssessment(this.question, userId).subscribe({
       next: (response) => {
         console.log('Assessment posted successfully:', response);
@@ -153,6 +160,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
     console.log('NEED BACKEND CONNECTION DONE');
     ///MAIN
     console.log(this.question);
+    this.router.navigate(["/trainee"]);
   }
 
   sendDataBeforeClosing() {
@@ -197,6 +205,8 @@ export class TestPageComponent implements OnInit, OnDestroy {
       this.question[this.count].answered = event.answer;
       this.index = event.index;
     }
+    // console.log(this.question);
+    
   }
 
   onReviewMarked(isMarked: boolean) {
@@ -215,6 +225,21 @@ export class TestPageComponent implements OnInit, OnDestroy {
       this.question[this.count].questionstatus = 'done';
     }
     this.question[this.count].answered = this.enteredAnswer;
+  }
+  
+  addFieldsToQuestions(assessment: any): any {
+    return assessment.map((question: any) => ({
+      ...question,
+      selectedoption: -1,
+      answered: '',
+      questionstatus: 'unreviewed',
+    }));
+  }
+
+  addQuestionNumbers(questions: Question[]): void {
+    questions.forEach((question, index) => {
+      question['questionNo'] = index + 1;
+    });
   }
 }
  

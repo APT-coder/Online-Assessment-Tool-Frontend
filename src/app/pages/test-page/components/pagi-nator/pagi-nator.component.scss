@@ -13,8 +13,8 @@ li{
 
 .active{
     color: white;
-    background-color:rgb(38,29,66);
-    border-color: rgb(38,29,66);
+    background-color:#3b82f6;
+    border-color: #3b82f6;
 }
 .normal{
     color: rgb(38,29,66);
@@ -57,10 +57,10 @@ li{
   }
 
   .next{
-    background: rgb(38,29,66);
-    background: linear-gradient(100deg, rgba(38,29,66,1) 0%, rgba(128,97,195,1) 100%);
-    color: antiquewhite;
-    border: 1px solid rgb(38,29,66);
+    background: rgb(160,196,255);
+    background: linear-gradient(90deg, rgba(160,196,255,1) 0%, rgba(47,124,244,1) 100%);
+    color: white;
+    border: 1px solid white;
 }
 .disablednext{
     opacity: 0.5;

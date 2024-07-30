@@ -41,7 +41,7 @@ filterTable(event: Event, dt: any) {
   onRowClicked(assessmentId: number, assessment:any) {
       this.api.checkAttended(this.user.TraineeId , assessmentId).subscribe((response) =>{
         console.log(response.result.exists);
-        if(response.result.exists){
+        if(false){
           this.openSnackBar();
         }else{
           
