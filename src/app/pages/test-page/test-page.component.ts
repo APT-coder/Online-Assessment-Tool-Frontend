@@ -225,9 +225,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
       this.question[this.count].selectedoption = event.index;
       this.question[this.count].answered = event.answer;
       this.index = event.index;
-    }
-    // console.log(this.question);
-    
+    }    
   }
 
   onReviewMarked(isMarked: boolean) {
