@@ -98,7 +98,7 @@ export class IlpIntegrationTraineeattendtestComponent implements OnInit {
       }
     }
     setTimeout(() => {
-      this.router.navigate(['/test', this.id], navigationExtras);
+      this.router.navigate(['/instructions', this.id], navigationExtras);
     }, 3000);
   } 
 }
