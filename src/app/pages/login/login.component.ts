@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { AuthComponent } from '../../components/auth/auth.component';
+import { AuthComponent } from '../../guard/auth/auth.component'; 
 
 @Component({
   selector: 'app-login',

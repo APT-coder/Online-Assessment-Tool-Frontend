@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
-import { msalConfig } from './auth/auth-config';
-import { apiConfig } from './auth/auth-config';
+import { msalConfig } from './guard/auth/auth.config';
+import { apiConfig } from './guard/auth/auth.config';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
