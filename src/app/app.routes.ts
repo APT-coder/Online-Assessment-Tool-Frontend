@@ -14,9 +14,10 @@ import { InstructionPageComponent } from './pages/instruction-page/instruction-p
 import { AssessmentPerformanceComponent } from './pages/assessment/components/assessment-performance/assessment-performance.component';
 import { AssessmentEvaluateComponent } from './pages/assessment/components/assessment-evaluate/assessment-evaluate.component';
 import { IlpIntegrationTraineeattendtestComponent } from './pages/ilp-integration-traineeattendtest/ilp-integration-traineeattendtest.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NotFoundComponent } from './components/error/404-not-found/not-found.component';
 import { PermissionsGuard } from './guard/route/permissions.guard';
-import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
+import { AccessDeniedComponent } from './components/error/403-access-denied/access-denied.component';
+import { InternalServerErrorComponent } from './components/error/500-internal-server-error/internal-server-error/internal-server-error.component'; 
 
 export const routes: Routes = [
     {
@@ -90,6 +91,9 @@ export const routes: Routes = [
         component: InstructionPageComponent, 
         canActivate: [MsalGuard, RouteGuard],
         data: { expectedRole: 2 }  // Only Trainee can access this route
+    },
+    {
+        path: 'server-error', component: InternalServerErrorComponent
     },
     {
         path: 'access-denied', component: AccessDeniedComponent

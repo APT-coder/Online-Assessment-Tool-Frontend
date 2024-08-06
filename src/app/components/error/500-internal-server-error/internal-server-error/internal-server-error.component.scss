@@ -1,0 +1,87 @@
+.body{
+  background: #233142;
+  height: 100vh;
+}
+
+.gear-set {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+#gear1, #gear2, #gear3 {
+  color: #888;
+  display: block;
+  float:left;
+  position: absolute;
+}
+
+#gear1 {
+  top: 190px;
+}
+
+#gear2 {
+  left:590px;
+}
+
+#gear3 {
+  top: 260px;
+  left: 700px;
+}
+
+.spin {
+  animation: spinCycle 9s linear infinite;
+}
+
+.spin-back {
+  animation: spinBackCycle 9s linear infinite;
+}
+
+h1{
+  transform: translateY(-250px);
+  color: #facf5a;
+  text-align: center;
+  font-family: 'Raleway';
+  font-size: 90px;
+  font-weight: 800;
+}
+h2{
+  transform: translateY(-230px);
+  color: #455d7a;
+  text-align: center;
+  font-family: 'Raleway';
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+@keyframes spinCycle {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(1080deg); /* 3 seconds of normal spinning */
+  }
+  66% {
+    transform: rotate(1080deg); /* Hold position */
+  }
+  100% {
+    transform: rotate(720deg); /* Reverse slowly */
+  }
+}
+
+@keyframes spinBackCycle {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(-1080deg); /* 3 seconds of normal spinning */
+  }
+  66% {
+    transform: rotate(-1080deg); /* Hold position */
+  }
+  100% {
+    transform: rotate(-720deg); /* Reverse slowly */
+  }
+}
