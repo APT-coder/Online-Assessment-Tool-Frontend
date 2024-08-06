@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
-import { msalConfig } from './auth/auth-config';
-import { apiConfig } from './auth/auth-config';
+import { msalConfig } from './guard/auth/auth.config';
+import { apiConfig } from './guard/auth/auth.config';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
@@ -36,6 +36,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { ErrorInterceptor } from './core/interceptors/http-error.interceptor';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -88,6 +89,9 @@ export const appConfig: ApplicationConfig = {
       MsalService,
       MsalGuard,
       MsalBroadcastService,
+      {
+        provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true
+      }
   ],
 };
  

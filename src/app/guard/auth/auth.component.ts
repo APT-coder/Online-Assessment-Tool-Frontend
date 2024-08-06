@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../service/user/user.service';
+import { UserService } from '../../service/user/user.service'; 
 import { Router } from '@angular/router';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AuthComponent {
   userRoleData: any;
-  isLoading = true; // Added property to control spinner visibility
+  isLoading = true;
 
   constructor(private userService: UserService, private route: Router) {
     this.initializeUserRoleAndRoute();
@@ -25,7 +25,6 @@ export class AuthComponent {
       localStorage.setItem("userDetails", JSON.stringify(this.userRoleData));
       console.log('User role data:', this.userRoleData);
 
-      // Wait for 3 seconds before redirecting
       setTimeout(() => {
         
         if (this.userRoleData.UserType === 0) {
@@ -35,10 +34,9 @@ export class AuthComponent {
         } else {
           this.route.navigate(['/trainee']);
         }
-      }, 4000);
+      }, 3000);
     } catch (error) {
       console.error('Error fetching user role data:', error);
-      // Handle the error as needed, e.g., redirect to an error page
     }
   }
 

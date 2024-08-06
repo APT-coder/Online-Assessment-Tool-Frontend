@@ -31,39 +31,38 @@ export class SidebarComponent {
 
   @Output() isSchedule =new EventEmitter<boolean>();
 
-changeIsSchedule(scheduled:boolean) {
-    this.isSchedule.emit(scheduled);
-}
+  changeIsSchedule(scheduled:boolean) {
+      this.isSchedule.emit(scheduled);
+  }
 
-  // isAdmin = false;
-  // user = JSON.parse(localStorage.getItem('userDetails') as string);
-  // constructor() {
-  //   this.checkUserRole();
-  // }
-  // checkUserRole() {
-  //   this.isAdmin = this.user.UserAdmin;
-  // }
-user = JSON.parse(localStorage.getItem('userDetails') as string);
-username = this.user.UserName;
-  hoveredRow: number | null = null;
-  profileImage: string = "assets/Ellipse 56.svg";
-  path: string = '';
-  profileDetails = [
-    { label: 'Name:', value: 'Your Name' },
-   // { label: 'Username:', value: 'Your Username' },
-    { label: 'Email:', value: 'your.email@example.com' },
-    //{ label: 'Phone:', value: '(123) 456-7890' }
-  ];
-constructor(private elementRef: ElementRef, private authService: MsalService) { }
+  user = JSON.parse(localStorage.getItem('userDetails') as string);
+  username = this.user.UserName;
+    hoveredRow: number | null = null;
+    profileImage: string = "assets/Ellipse 56.svg";
+    path: string = '';
+    profileDetails = [
+      { label: 'Name:', value: 'Your Name' },
+      { label: 'Email:', value: 'your.email@example.com' },
+      { label: 'Designation:', value: 'Your Role' }
+    ];
+  constructor(private elementRef: ElementRef, private authService: MsalService) { }
 
   ngOnInit(): void {
 
     console.log(this.user);
     
       this.profileDetails[0].value = this.user.UserName;
-     // this.profileDetails[1].value = this.user.UserName;
       this.profileDetails[1].value = this.user.UserEmail;
-      //this.profileDetails[3].value = this.user.UserPhone;
+
+      if(this.user.UserAdmin){
+        this.profileDetails[2].value = "Admin";
+      }
+      else if(this.user.TrainerId){
+        this.profileDetails[2].value = this.user.UserRole.roleName;
+      }
+      else{
+        this.profileDetails[2].value = "Trainee";
+      }
 
       if (this.user.UserType === 0) {
         this.path = "admin";

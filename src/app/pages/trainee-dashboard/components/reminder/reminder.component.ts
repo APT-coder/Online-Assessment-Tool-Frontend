@@ -9,11 +9,12 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { TimeFormatPipe } from '../../../../pipes/timeFormat/timeformat.pipe';
 import { ScheduledPipe } from "../../../../pipes/scheduledFilter/scheduled.pipe";
+import { UtcToIstPipe } from '../../../../pipes/utcToIst/utc-to-ist.pipe';
 
 @Component({
   selector: 'app-reminder',
   standalone: true,
-  imports: [MatTableModule, CommonModule, RouterLink, MatSnackBarModule, TableModule, ButtonModule, FormsModule, TimeFormatPipe, ScheduledPipe],
+  imports: [MatTableModule, CommonModule, RouterLink, MatSnackBarModule, TableModule, ButtonModule, FormsModule, TimeFormatPipe, ScheduledPipe, UtcToIstPipe],
   templateUrl: './reminder.component.html',
   styleUrl: './reminder.component.scss'
 })
@@ -41,7 +42,7 @@ filterTable(event: Event, dt: any) {
   onRowClicked(assessmentId: number, assessment:any) {
       this.api.checkAttended(this.user.TraineeId , assessmentId).subscribe((response) =>{
         console.log(response.result.exists);
-        if(false){
+        if(response.result.exists){
           this.openSnackBar();
         }else{
           

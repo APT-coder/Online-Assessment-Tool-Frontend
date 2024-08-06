@@ -68,7 +68,7 @@
 
       </mat-form-field> -->
       <label for="appt-time" class="start">Start Time: </label>
-     <input id="appt-time" type="time" name="appt-time" value="13:30" />
+     <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="startTime"/>
     </div>
     
       <label for="from">To:</label>
@@ -85,7 +85,7 @@
         <input matInput type="time" placeholder="Choose time" formControlName="endTime" required>
       </mat-form-field> -->
       <label for="appt-time" class="start">End Time: </label>
-      <input id="appt-time" type="time" name="appt-time" value="13:30" />
+      <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="endTime"/>
     </div>
       <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
     </div>
