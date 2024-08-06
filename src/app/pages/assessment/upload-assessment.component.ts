@@ -94,19 +94,13 @@ export class AssessmentComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.createdBy);
     console.log(this.dashboard);
+  
     if (!sessionStorage.getItem('hasReloaded')) {
       sessionStorage.setItem('hasReloaded', 'true');
       window.location.reload();
     } else {
       sessionStorage.removeItem('hasReloaded');
-      this.initializeComponent();
     }
-  }
-
-  initializeComponent(): void {
-    this.htmlContent = localStorage.getItem("htmlContent") as string;
-    console.log('Received HTML Content:', this.htmlContent);
-    this.parseQuestions(this.htmlContent);
 
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -120,6 +114,19 @@ export class AssessmentComponent implements OnInit {
     this.startFormGroup = this._formBuilder.group({
       startCtrl: ['', Validators.required]
     });
+  }
+
+  async previewTest() {
+    this.completeStep(0);
+    this.initializeComponent();
+  }
+  
+  async initializeComponent(): Promise<void> {
+    this.htmlContent = localStorage.getItem("htmlContent") as string;
+    console.log('Received HTML Content:', this.htmlContent);
+  
+    await this.parseQuestions(this.htmlContent); // Wait for parsing to complete
+  
     this.editQuestions = this.questions;
   }
 
@@ -143,53 +150,57 @@ export class AssessmentComponent implements OnInit {
     this.showScrollToBottomButton = scrollPosition + windowHeight < documentHeight - 500;
   }
 
-  parseQuestions(htmlContent: string) {
-    console.log('Parsing HTML content:', htmlContent);
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, 'text/html');
-    const paragraphs = doc.querySelectorAll('p');
-
-    let currentQuestion: any | null = null;
-
-    paragraphs.forEach((p) => {
-      const text = p.innerText.trim();
-
-      if (text.startsWith('Question:')) {
-        if (currentQuestion) {
-          this.questions.push(currentQuestion);
+  parseQuestions(htmlContent: string): Promise<void> {
+    return new Promise((resolve) => {
+      console.log('Parsing HTML content:', htmlContent);
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlContent, 'text/html');
+      const paragraphs = doc.querySelectorAll('p');
+  
+      let currentQuestion: any | null = null;
+  
+      paragraphs.forEach((p) => {
+        const text = p.innerText.trim();
+  
+        if (text.startsWith('Question:')) {
+          if (currentQuestion) {
+            this.questions.push(currentQuestion);
+          }
+          currentQuestion = {
+            type: 'unknown',
+            content: text.replace('Question:', '').trim(),
+            options: [],
+            correctAnswer: '',
+            score: 0
+          };
+        } else if (text.startsWith('Options:')) {
+          currentQuestion!.type = 'mcq';
+        } else if (text.startsWith('Correct Answer:')) {
+          currentQuestion!.correctAnswer = text.replace('Correct Answer:', '').trim();
+        } else if (text.startsWith('Score:')) {
+          currentQuestion!.score = parseInt(text.replace('Score:', '').trim(), 10);
+        } else if (currentQuestion && currentQuestion.type === 'mcq' && /^[A-Z]\./.test(text)) {
+          currentQuestion.options!.push(text);
+        } else if (currentQuestion && currentQuestion.type === 'unknown') {
+          if (currentQuestion.content.startsWith('Fill in the blank')) {
+            currentQuestion.type = 'fillup';
+            currentQuestion.correctAnswer = text.replace('____', '').trim();
+          } else {
+            currentQuestion.type = 'descriptive';
+            currentQuestion.correctAnswer = text.trim();
+          }
         }
-        currentQuestion = {
-          type: 'unknown',
-          content: text.replace('Question:', '').trim(),
-          options: [],
-          correctAnswer: '',
-          score: 0
-        };
-      } else if (text.startsWith('Options:')) {
-        currentQuestion!.type = 'mcq';
-      } else if (text.startsWith('Correct Answer:')) {
-        currentQuestion!.correctAnswer = text.replace('Correct Answer:', '').trim();
-      } else if (text.startsWith('Score:')) {
-        currentQuestion!.score = parseInt(text.replace('Score:', '').trim(), 10);
-      } else if (currentQuestion && currentQuestion.type === 'mcq' && /^[A-Z]\./.test(text)) {
-        currentQuestion.options!.push(text);
-      } else if (currentQuestion && currentQuestion.type === 'unknown') {
-        if (currentQuestion.content.startsWith('Fill in the blank')) {
-          currentQuestion.type = 'fillup';
-          currentQuestion.correctAnswer = text.replace('____', '').trim();
-        } else {
-          currentQuestion.type = 'descriptive';
-          currentQuestion.correctAnswer = text.trim();
-        }
+      });
+  
+      if (currentQuestion) {
+        this.questions.push(currentQuestion);
       }
+  
+      console.log('Parsed questions:', this.questions);
+      resolve();
     });
-
-    if (currentQuestion) {
-      this.questions.push(currentQuestion);
-    }
-
-    console.log('Parsed questions:', this.questions);
   }
+  
 
   createAssessment(assessmentName: string) {
     if (assessmentName) {

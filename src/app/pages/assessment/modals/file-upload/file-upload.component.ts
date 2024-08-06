@@ -39,6 +39,7 @@ export class FileUploadComponent {
       try {
         const htmlContent = await this.wordParserService.readWordFile(file);
         console.log('HTML Content:', htmlContent); 
+        localStorage.removeItem("htmlContent");
         localStorage.setItem("htmlContent", htmlContent);       
         this.uploaded = true;
       } catch (error) {
@@ -56,6 +57,7 @@ export class FileUploadComponent {
       try {
         const htmlContent = await this.wordParserService.readWordFile(file);
         console.log('HTML Content:', htmlContent);
+        localStorage.removeItem("htmlContent");
         localStorage.setItem("htmlContent", htmlContent);
         this.uploaded = true;
       } catch (error) {

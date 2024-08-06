@@ -15,17 +15,37 @@ import { Router } from '@angular/router';
 export class UploadSuccessComponent {
   dashboard = localStorage.getItem("dashboard");
   htmlContent: string;
+  questionCount: number = 0;
 
   constructor(private router: Router,)
   {
     this.htmlContent = localStorage.getItem("htmlContent") as string;
     console.log(this.htmlContent);
+
+    this.questionCount = this.getQuestionCount(this.htmlContent);
   }
 
   @Output() prepareTest = new EventEmitter<void>();
 
   onPrepareTest() {
     this.prepareTest.emit();
+  }
+
+  getQuestionCount(htmlContent: string): number {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    const paragraphs = doc.querySelectorAll('p');
+  
+    let questionCount = 0;
+  
+    paragraphs.forEach((p) => {
+      const text = p.innerText.trim();
+      if (text.startsWith('Question:')) {
+        questionCount++;
+      }
+    });
+  
+    return questionCount;
   }
 
   returnToDashboard() {
