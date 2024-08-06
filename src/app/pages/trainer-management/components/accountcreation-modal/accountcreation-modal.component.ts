@@ -31,7 +31,7 @@ import { User } from '../../../../../models/user.interface';
     MultiSelectModule,
     CalendarModule,
     CommonModule, 
-  
+
   ],
   templateUrl: './accountcreation-modal.component.html',
   styleUrls: ['./accountcreation-modal.component.scss']
@@ -102,14 +102,14 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
   selectedRoleId = 0;
   onRoleChange(event: any) {
     return this.selectedRoleId = event.value; // Extract the selected value
-  
+
   }
   traineeBatch = 0;
   OnBatchSelect(event:any)
   {
     return this.traineeBatch = event.value;
   }
-  
+
   loadBatches(): void {
     this.userService.getBatches().subscribe(
       response => {
@@ -170,69 +170,71 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
     });
   }
 
- saveUser() {
-  if (this.userForm.valid) {
-    const userData = this.userForm.value;
-    
-    const batchId = this.batches.find(batch => batch.label === userData.batch)?.value ?? null;
+  saveUser() {
+    if (this.userForm.valid) {
+      const userData = this.userForm.value;
 
-    const apiPayload: any = {
-      createUserDTO: {
-        username: userData.username,
-        email: userData.email,
-        phone: userData.phone,
-        isAdmin: false,
-        userType: userData.usertype === 'Trainer' ? 1 : 2,
-        uuid: this.generateUUID()
-      },
-      trainerDTO: {
-        joinedOn: userData.joiningDate,
-        password: userData.password,
-        roleId: this.selectedRoleId 
-      },
-      traineeDTO: {
-        joinedOn: userData.joiningDate,
-        batchId: this.traineeBatch
-      },
-      batchIds: this.selectedBatchIds
-    };
+      const batchId = this.batches.find(batch => batch.label === userData.batch)?.value ?? null;
 
-    // Include userId only in case of update
-    if (this.mode === 'edit' && this.userData && this.userData.userId) {
-      apiPayload.createUserDTO.userId = this.userData.userId;
-    }
-
-    console.log('API Payload:', apiPayload); // Debug the payload
-
-    if (this.mode === 'edit') {
-      this.userService.updateUser(apiPayload).subscribe(
-        () => {
-          this.messageService.add({ severity: 'success', summary: 'User Updated', detail: 'User Updated Successfully', life: 3000 });
-
-          this.closeModal();
+      // Prepare the payload based on the user type
+      const apiPayload: any = {
+        createUserDTO: {
+          username: userData.username,
+          email: userData.email,
+          phone: userData.phone,
+          isAdmin: false,
+          userType: userData.usertype === 'Trainer' ? 1 : 2,
+          uuid: this.generateUUID()
         },
-        error => {
-          console.error('Error updating user:', error);
-        }
-      );
-    } else if (this.mode === 'add') {
-      this.userService.createUser(apiPayload).subscribe(
-        () => {
-          this.closeModal();
-          this.messageService.add({ severity: 'success', summary: 'User Created', detail: 'User Created Successfully', life: 3000 });
+        trainerDTO: userData.usertype === 'Trainer' ? {
+          joinedOn: new Date(userData.joiningDate).toISOString(),
+          password: userData.password,
+          roleId: this.selectedRoleId
+        } : null,
+        traineeDTO: userData.usertype === 'Trainee' ? {
+          joinedOn: new Date(userData.joiningDate).toISOString(),
+          batchId: this.traineeBatch
+        } : null,
+        batchIds: userData.usertype === 'Trainer' ? this.selectedBatchIds : []
+      };
 
-        },
-        error => {
-          console.error('Error creating user:', error);
-        }
-      );
+      // Include userId only in case of update
+      if (this.mode === 'edit' && this.userData && this.userData.userId) {
+        apiPayload.createUserDTO.userId = this.userData.userId;
+      }
+
+      console.log('API Payload:', apiPayload); // Debug the payload
+
+      if (this.mode === 'edit') {
+        this.userService.updateUser(apiPayload).subscribe(
+          () => {
+            this.messageService.add({ severity: 'success', summary: 'User Updated', detail: 'User Updated Successfully', life: 3000 });
+            this.closeModal();
+          },
+          error => {
+            console.error('Error updating user:', error);
+            this.messageService.add({ severity: 'error', summary: 'Update Failed', detail: 'Failed to update user. Please try again.', life: 5000 });
+          }
+        );
+      } else if (this.mode === 'add') {
+        this.userService.createUser(apiPayload).subscribe(
+          () => {
+            this.messageService.add({ severity: 'success', summary: 'User Created', detail: 'User Created Successfully', life: 3000 });
+            this.closeModal();
+          },
+          error => {
+            console.error('Error creating user:', error);
+            this.messageService.add({ severity: 'error', summary: 'Creation Failed', detail: 'Failed to create user. Please try again.', life: 5000 });
+          }
+        );
+      }
+    } else {
+      this.userForm.markAllAsTouched();
     }
-  } else {
-    this.userForm.markAllAsTouched();
   }
-}
 
-  
+
+
 
   // deleteUser() {
   //   if (this.userData) {

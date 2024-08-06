@@ -84,6 +84,7 @@ export class CreateTestFormComponent implements OnInit {
         (response: any) => {
           this.assessmentCreated = true;
           this.assessment = response.result;
+          localStorage.setItem("assessmentId", (this.assessment.assessmentId).toString());
       
           console.log('Assessment successfully created!', this.assessment);
         },
@@ -104,7 +105,7 @@ export class CreateTestFormComponent implements OnInit {
   }
 
   updateTotalScore() {
-    const assessmentId = this.assessment.assessmentId; 
+    const assessmentId = this.assessment.assessmentId;
     const totalScore = this.calculateTotalScore();
     this.assessmentService.updateAssessment(assessmentId, totalScore).subscribe((response: any) => {
       console.log('Question score posted successfully', response);
@@ -127,6 +128,7 @@ export class CreateTestFormComponent implements OnInit {
         console.error('Error posting question', error);
       });
     });
+    this.updateTotalScore();
   }
 
   onQuestionTypeSelected(questionType: string, index: number) {
@@ -194,7 +196,7 @@ export class CreateTestFormComponent implements OnInit {
         this.scrollToTop();
 
         setTimeout(() => {
-          this.router.navigate(['/{{path}}']);
+          this.router.navigate([`/${this.dashboard}`]);
         }, 5000);
       }, (error: any) => {
         console.error('Error posting question', error);

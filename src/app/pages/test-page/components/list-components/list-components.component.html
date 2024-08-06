@@ -1,78 +1,80 @@
-@if (questionType=="mcq") {
-<div class="list-container ">
-  <ul class="grid-container">
-
-    @if (selectedOption==-1) {
-    <div *ngFor="let options of questions[0] | optionsFilter let i = index">
-      <button class="wrapper-button"
-        (click)="handleClick(options,i)">
-        <div class="center-wrapper">
-          <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
-            <span class="option-label">{{i+1}}.</span>
-            <span class="option-content">{{options}}</span>
-          </div>
-
+<div class="option-sizer">
+  @if (questionType=="mcq") {
+    <div class="list-container ">
+      <ul class="grid-container">
+    
+        <!-- @if (selectedOption==-1) { -->
+        <div *ngFor="let option of questions[0] | optionsFilter; let i = index">
+          <button class="wrapper-button" (click)="handleClick(option, i)">
+            <div class="center-wrapper">
+              <div class="option-box" #optionBox [ngClass]="{'clicked': selectedOption === i}">
+                <span class="option-label">{{ i + 1 }}.</span>
+                <span class="option-content">{{ option }}</span>
+              </div>
+            </div>
+          </button>
         </div>
-      </button>
-    </div>
-  }
-  @else{
-    <div *ngFor="let options of questions[0] | optionsFilter let i = index">
-      <button class="wrapper-button"
-        (click)="handleClick(options,i)">
-        <div class="center-wrapper">
-          <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
-            <span class="option-label">{{i + 1}}.</span>
-            <span class="option-content">{{options}}</span>
-          </div>
+        
+      <!-- } -->
+      <!-- @else{
+        <div *ngFor="let options of questions[0] | optionsFilter let i = index">
+          <button class="wrapper-button"
+            (click)="handleClick(options,i)">
+            <div class="center-wrapper">
+              <div class="option-box" [ngClass]="{'clicked': selectedOption === i}">
+                <span class="option-label">{{i + 1}}.</span>
+                <span class="option-content">{{options}}</span>
+              </div>
+            </div>
+          </button>
         </div>
-      </button>
+      } -->
+      </ul>
     </div>
-  }
-  </ul>
+    }
+   
+    @if (questionType=="descriptive") {
+   
+   
+         
+      <div class="text-area-parent">
+        <div class="text-area">
+          <label for="exampleFormControlTextarea1" class="form-label">Enter Answer...</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="fullQuestions.answered" (input)="onTextareaChange()"></textarea>
+         
+   
+        </div>
+      </div>
+     
+     
+    }
+    @if (questionType=="fillup") {
+    <div class="input-value">
+      <form>
+        <div class="form-group  text-field">
+          <input type="text" class=" custom-text-field" id="exampleInput"
+            [(ngModel)]="fullQuestions.answered" name="exampleInput" (input)="onTextareaChange()"
+            placeholder="Enter text">
+        </div>
+      </form>
+    </div>
+    }
+   
+   
+   
+    @if (isChecked=="marked") {
+      <div class="mark-for-review">
+        <input type="checkbox" id="review" name="review" checked  (change)="onCheckboxChange($event)">
+        <label for="review">Mark for review</label>
+      </div>
+    }
+    @else{
+      <div class="mark-for-review">
+        <input type="checkbox" id="review" name="review"  (change)="onCheckboxChange($event)">
+        <label for="review">Mark for review</label>
+      </div>
+     
+    }
+   
+   
 </div>
-}
-
-@if (questionType=="descriptive") {
-
-
-      
-  <div class="text-area-parent">
-    <div class="text-area">
-      <label for="exampleFormControlTextarea1" class="form-label">Enter Answer...</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="fullQuestions.answered" (input)="onTextareaChange()"></textarea>
-      
-
-    </div>
-  </div>
-  
-  
-}
-@if (questionType=="fillup") {
-<div class="input-value">
-  <form>
-    <div class="form-group  text-field">
-      <input type="text" class=" custom-text-field" id="exampleInput"
-        [(ngModel)]="fullQuestions.answered" name="exampleInput" (input)="onTextareaChange()"
-        placeholder="Enter text">
-    </div>
-  </form>
-</div>
-}
-
-
-
-@if (isChecked=="marked") {
-  <div class="mark-for-review">
-    <input type="checkbox" id="review" name="review" checked  (change)="onCheckboxChange($event)">
-    <label for="review">Mark for review</label>
-  </div>
-}
-@else{
-  <div class="mark-for-review">
-    <input type="checkbox" id="review" name="review"  (change)="onCheckboxChange($event)">
-    <label for="review">Mark for review</label>
-  </div>
-  
-}
-

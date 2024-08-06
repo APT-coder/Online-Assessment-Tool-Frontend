@@ -63,4 +63,12 @@ export class McqFormComponent {
   removeOption(index: number) {
     this.options.removeAt(index);
   }
+
+  onCheckboxChange(index: number) {
+    this.options.controls.forEach((group, i) => {
+      if (i !== index) {
+        group.get('isCorrect')?.setValue(false);
+      }
+    });
+  }
 }

@@ -15,6 +15,13 @@ $bg-color: linear-gradient(#261D42, #8061C3);
     flex-direction:row;
     overflow: hidden;
 }
+::ng-deep .custom-button {
+  border-radius: 12px; 
+  font-weight: bold;
+  background-color: #4CAF50; 
+  color: white;
+  padding: 10px 20px; 
+}
 
 .qn-body{
 padding:20px;
@@ -175,9 +182,6 @@ flex-direction: column;
     justify-content: space-between;
   
 }
-// .evaluated-student {
-//   background-color: #d4edda; 
-// }
 
 .icon-name{
     display: flex;
@@ -270,24 +274,24 @@ flex-direction: column;
 
 /* Styles for scrollbar */
 ::-webkit-scrollbar {
-  width: 3px; /* Width of the scrollbar */
-  height: 4px; /* Height of the scrollbar */
+  width: 3px; 
+  height: 4px; 
 }
 
 /* Track (background of the scrollbar) */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Light grey background */
+  background: #f1f1f1;
 }
 
 /* Handle (the draggable part of the scrollbar) */
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #ccc, #999); /* Gradient background */
-  border-radius: 10px; /* Rounded corners */
+  background: linear-gradient(45deg, #ccc, #999); 
+  border-radius: 10px; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #aaa, #777); /* Darker gradient background on hover */
+  background: linear-gradient(45deg, #aaa, #777); 
 }
 
 
@@ -295,4 +299,8 @@ flex-direction: column;
   color:red;
   display: flex;
   justify-content: flex-end;
+}
+
+.student-score{
+  padding-right: 10px;
 }

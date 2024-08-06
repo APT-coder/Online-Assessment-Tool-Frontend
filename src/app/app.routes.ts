@@ -14,6 +14,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { AssessmentPerformanceComponent } from './pages/assessment/components/assessment-performance/assessment-performance.component';
 import { TraineeDashboardComponent } from './pages/trainee-dashboard/trainee-dashboard.component';
 import { AssessmentEvaluateComponent } from './pages/assessment/components/assessment-evaluate/assessment-evaluate.component';
+import { IlpIntegrationTraineeattendtestComponent } from './pages/ilp-integration-traineeattendtest/ilp-integration-traineeattendtest.component';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,9 @@ export const routes: Routes = [
     {
         path: 'test/:id', component: TestPageComponent
     },
+    {
+        path: 'tests/:id/:token', component: IlpIntegrationTraineeattendtestComponent
+    },
     { 
         path: 'instructions/:id', component:  InstructionPageComponent   
     },
@@ -47,13 +51,16 @@ export const routes: Routes = [
         path: 'create-test', component: CreateTestComponent
     },
     {
-        path: 'evaluate', component: AssessmentEvaluateComponent
+        path: 'evaluate/:scheduledAssessmentId', component: AssessmentEvaluateComponent
     },
     {
         path: 'user-management', component: TrainerManagementComponent
     },
     {
-        path: 'performance/:id', component:AssessmentPerformanceComponent
+        path: 'performance/:scheduledAssessmentId', component:AssessmentPerformanceComponent
+    },
+    {
+        path: 'not-found', component: NotFoundComponent
     },
     {
         path: '**', component: NotFoundComponent

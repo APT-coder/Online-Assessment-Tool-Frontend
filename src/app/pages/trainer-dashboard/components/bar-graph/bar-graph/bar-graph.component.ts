@@ -74,7 +74,7 @@ export class BarGraphComponent implements OnInit,OnChanges{
         labels: labels,
         datasets: [
           {
-            label: 'Score Distribution',
+            label: 'No.of Trainees',
             backgroundColor: '#42A5F5',
             data: scores
           }

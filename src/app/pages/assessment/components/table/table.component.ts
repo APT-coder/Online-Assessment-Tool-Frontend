@@ -32,7 +32,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
       this.route.paramMap.subscribe(params => {
-      this.assessmentId = params.get('id')!;
+      this.assessmentId = params.get('scheduledAssessmentId')!;
       this.fetchTraineesData(this.assessmentId);
     });
     this.statuses = [

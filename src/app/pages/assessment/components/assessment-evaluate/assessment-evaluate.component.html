@@ -9,6 +9,18 @@
     <div class="col-10">
       <div class="qn-body">
         <form #evaluateForm="ngForm">
+          <!-- <div class="card flex justify-content-center"> -->
+            <p-toast />
+            <p-confirmDialog>
+                <ng-template pTemplate="message" let-message>
+                    <div class="flex flex-column align-items-center w-full gap-5 border-bottom-1 surface-border">
+                        <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
+                        <p>{{ message.message }}</p>
+                    </div>
+                </ng-template>
+            </p-confirmDialog>
+           
+        <!-- </div> -->
         <div class="qn-intro">
           <h3>{{ Title }}</h3>
           <div class="save-and-submit">
@@ -16,7 +28,7 @@
               <app-button-active [content]="'Save'"(click)="saveScores()"></app-button-active>
             </div>
             <div>
-              <app-button-active [content]="'Submit'" (click)="submitScores()"></app-button-active>
+              <app-button-active [content]="'Submit'" (click)="confirm()"></app-button-active>
             </div>
           </div>
         </div>
@@ -31,6 +43,7 @@
                   <div class="mark-box">
                     <input type="number"
                     name="score{{i}}"
+                    readonly
                     #score="ngModel"
                     [(ngModel)]="question.score" [min]="0" 
                     [max]="question.points" 
@@ -62,11 +75,11 @@
                   >
                     {{ option }}
                   </li>
+                  <div class="correct-answer">
+                    <strong>Correct Answer:</strong>
+                    {{ question.questionOptions.correctAnswer }}
+                  </div>
                 </ul>
-                <div class="correct-answer">
-                  <strong>Correct Answer:</strong>
-                  {{ question.questionOptions.correctAnswer }}
-                </div>
                 <div *ngSwitchCase="'descriptive'" class="descriptive">
                   <div class="mark-box">
                     <input type="number"
@@ -89,13 +102,14 @@
                   </div>
                   <div class="correct-answer">
                     <strong>Correct Answer:</strong>
-                    {{ question.correctAnswer }}
+                    {{ question.questionOptions.correctAnswer }}
                   </div>
                 </div>
-                <div *ngSwitchCase="'fill_up'" class="fill-up">
+                <div *ngSwitchCase="'fillup'" class="fill-up">
                   <div class="mark-box">
                     <input type="number"
                     name="score{{i}}"
+                    readonly
                     #score="ngModel"
                     [(ngModel)]="question.score" [min]="0" 
                     [max]="question.points" 
@@ -110,18 +124,20 @@
                   <input
                     type="text"
                     class="answer-box"
-                    [(ngModel)]="question.Answer"
+                    [(ngModel)]="question.answer"
+                    [ngModelOptions]="{standalone: true}"
                     readonly
                   />
                   <div class="correct-answer">
                     <strong>Correct Answer:</strong>
-                    {{ question.correctAnswer }}
+                    {{ question.questionOptions.correctAnswer }}
                   </div>
                 </div>
               </ng-container>
             </div>
           </div>
           <div class="Mark-side">
+           
             <div class="Marks">
               <div class="submitted">
                 <h6>Submitted</h6>
@@ -145,7 +161,7 @@
                       </div>
                       <div>{{ student.name }}</div>
                     </div>
-                    <div>{{ student.score }}</div>
+                    <div class = "student-score">{{ student.score }}</div>
                   </span>
                 </div>
               </div>

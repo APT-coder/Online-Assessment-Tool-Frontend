@@ -14,6 +14,7 @@ export class PagiNatorComponent {
   @Input() selectedQuestionId: number | null = null;
   @Output() itemClicked = new EventEmitter<string>();
   @Input() questionNo : any;
+  @Output() actionTriggered = new EventEmitter<void>();
   
   currentPage: number = 1;
   questionsPerPage: number = 10;
@@ -21,6 +22,7 @@ export class PagiNatorComponent {
   handleClick(event: Event,item: string): void {
     event.preventDefault();
     this.itemClicked.emit(item);
+    this.actionTriggered.emit();
     // console.log('Selected question id',this.selectedQuestionId); 
   }
 

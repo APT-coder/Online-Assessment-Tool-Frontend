@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { ScheduledService } from '../../../../service/scheduled-assessment/scheduled.service'; 
@@ -41,7 +41,7 @@ filterTable(event: Event, dt: any) {
   onRowClicked(assessmentId: number, assessment:any) {
       this.api.checkAttended(this.user.TraineeId , assessmentId).subscribe((response) =>{
         console.log(response.result.exists);
-        if(response.result.exists){
+        if(false){
           this.openSnackBar();
         }else{
           

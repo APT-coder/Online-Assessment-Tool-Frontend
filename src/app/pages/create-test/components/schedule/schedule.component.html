@@ -53,31 +53,40 @@
       <label for="schedule">Schedule:</label>
     </div>
     <div>
+     
       <label for="from">From:</label>
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+      <div class="from">
+      <mat-form-field appearance="outline" class="w-100 inputbox from-to-from">
         <mat-label>Start Date</mat-label>
         <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="startDate" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+      <!-- <mat-form-field appearance="outline" class="w-100 inputbox from-to">
         <mat-label>Start Time</mat-label>
         <input matInput type="time" placeholder="Choose time" formControlName="startTime" required>
-      </mat-form-field>
 
+      </mat-form-field> -->
+      <label for="appt-time" class="start">Start Time: </label>
+     <input id="appt-time" type="time" name="appt-time" value="13:30" />
+    </div>
+    
       <label for="from">To:</label>
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+      <div class="to">
+      <mat-form-field appearance="outline" class="w-100 inputbox from-to-to">
         <mat-label>End Date</mat-label>
         <input matInput [matDatepicker]="endPicker" placeholder="Choose a date" formControlName="endDate" required>
         <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
-
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to">
+   
+      <!-- <mat-form-field appearance="outline" class="w-100 inputbox from-to">
         <mat-label>End Time</mat-label>
         <input matInput type="time" placeholder="Choose time" formControlName="endTime" required>
-      </mat-form-field>
-
+      </mat-form-field> -->
+      <label for="appt-time" class="start">End Time: </label>
+      <input id="appt-time" type="time" name="appt-time" value="13:30" />
+    </div>
       <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
     </div>
   </div>

@@ -112,11 +112,11 @@
   align-items: center;
   justify-content: center;
   padding: 10px 20px;
-  width: 200px; /* Adjust width as needed */
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Optional: for smooth resizing */
 }
 
 .option-label {
@@ -132,12 +132,16 @@
   text-align: left;
   width: 100%;
   cursor: pointer;
+  margin-right: 15px;
 }
+
+
+
+
 
 .wrapper-button:focus {
   outline: none;
 }
-
 
 .option-box.clicked {
   background-color: green; /* Example style for clicked state */
@@ -152,4 +156,10 @@
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+}
+.option-sizer{
+  height: 32vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
