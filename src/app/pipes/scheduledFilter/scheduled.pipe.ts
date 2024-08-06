@@ -8,7 +8,7 @@ export class ScheduledPipe implements PipeTransform {
 
   transform(assessments: any[], currentDate: Date = new Date()): any[] {
     return assessments.filter(assessment => {
-      const scheduledDate = new Date(assessment.startDate);
+      const scheduledDate = new Date(assessment.endTime);
       return scheduledDate >= currentDate;
     });
   }

@@ -20,9 +20,9 @@
         <ng-template pTemplate="body" let-assessment >
           <tr (click)="onRowClicked(assessment.assessmentId, assessment)">
             <td>{{ assessment.assessmentName }}</td>
-            <td>{{ assessment.startDate | date: 'dd-MM-yyyy' }}</td>
-            <td>{{ assessment.startTime | date: 'shortTime' }}</td>
-            <td>{{ assessment.endTime | date: 'shortTime' }}</td>
+            <td>{{ assessment.startDate |utcToIst| date: 'dd-MM-yyyy' }}</td>
+            <td>{{ assessment.startTime |utcToIst| date: 'shortTime' }}</td>
+            <td>{{ assessment.endTime |utcToIst| date: 'shortTime' }}</td>
             <td>{{ assessment.assessmentDuration | timeformat}} hr</td>
           </tr>
         </ng-template>
