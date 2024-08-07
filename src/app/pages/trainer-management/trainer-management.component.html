@@ -14,8 +14,18 @@
           <div class="button-container">
             <app-button-active [content]="'Add Role'" (buttonClick)="openRoleCreationModal()"></app-button-active>
             <app-button-active [content]="'Add User'" (buttonClick)="ShowTrainer()"></app-button-active>
-            <app-button-active [content]="'Batch Upload'" (buttonClick)="onFileSelect()"></app-button-active>
-            <input type="file" #fileInput (change)="onFileChange($event)" style="display: none;" />
+            <app-button-active [content]="'Batch Upload'" (buttonClick)="showUploadDialog()"></app-button-active>
+            <p-dialog [(visible)]="displayDialog" header="Batch Upload Options" [modal]="true" [closable]="true" [style]="{width: '300px'}">
+              <div class="p-fluid">
+                <div class="p-field">
+                  <p-button label="Download Template" icon="pi pi-download" (click)="downloadTemplate()"></p-button>
+                </div>
+                <div class="p-field button-top">
+                  <p-button label="Upload CSV File" icon="pi pi-upload" (click)="openFileUpload()" class="mt-2"></p-button>
+                  <input type="file" #fileInput (change)="onFileChange($event)" style="display: none;" />
+                </div>
+              </div>
+            </p-dialog>
           </div>
         </div>
     

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,7 +21,7 @@ interface Trainee {
   styleUrl: './table.component.scss'
 })
 export class TableComponent implements OnInit {
-  trainees!: Trainee[];
+  @Input() trainees!: Trainee[];
   statuses!: any[];
   loading: boolean = true;
   showSearch = false;
@@ -31,28 +31,10 @@ export class TableComponent implements OnInit {
   constructor(private route: ActivatedRoute,private performanceService: PerformanceDetailsService) {}
 
   ngOnInit() {
-      this.route.paramMap.subscribe(params => {
-      this.assessmentId = params.get('scheduledAssessmentId')!;
-      this.fetchTraineesData(this.assessmentId);
-    });
     this.statuses = [
       { label: 'Completed', value: 'completed' },
       { label: 'Absent', value: 'absent' },
     ];
-  }
-
-  fetchTraineesData(assessmentId:number) {
-    this.performanceService.getTrainees(assessmentId).subscribe(
-      (data: Trainee[]) => {
-        this.trainees = data;
-        this.originalProducts = [...this.trainees]; 
-        this.loading = false;
-      },
-      error => {
-        console.error('Error fetching trainees data', error);
-        this.loading = false;
-      }
-    );
   }
 
   getSeverity(status: string) {

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { Role } from '../../../models/role.interface';
 import { Permission } from '../../../models/permission.interface';
 import { User } from '../../../models/user.interface';
@@ -59,7 +59,13 @@ export class TrainermanagementService {
     }
 
     getUsersByRoleName(roleName: string): Observable<any> {
-      return this.http.get<any>(`${this.userApiUrl}/GetUsersByRoleName/byRole/${roleName}`);
+      return this.http.get<any>(`${this.userApiUrl}/GetUsersByRoleName/byRole/${roleName}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {        
+            console.error('Resource not found');
+            return of([]);
+        })
+      );
     }
 
     updateUser(updateUserRequest: any): Observable<any> {
