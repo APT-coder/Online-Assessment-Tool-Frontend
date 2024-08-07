@@ -30,67 +30,67 @@ export const routes: Routes = [
         path: 'trainer', 
         component: TrainerDashboardComponent, 
         canActivate: [MsalGuard, RouteGuard],
-        data: { expectedRole: 1 }
+        data: { expectedRole: [1] }
     },
     {
         path: 'admin', 
         component: AdminDashboardComponent, 
         canActivate: [MsalGuard, RouteGuard],
-        data: { expectedRole: 0 }
+        data: { expectedRole: [0] }
     },
     {
         path: 'trainee', 
         component: TraineeDashboardComponent, 
         canActivate: [MsalGuard, RouteGuard],
-        data: { expectedRole: 2 }
+        data: { expectedRole: [2] }
     },
     {
         path: 'upload-assessment', 
         component: AssessmentComponent, 
         canActivate: [MsalGuard, RouteGuard, PermissionsGuard],
-        data: { expectedRole: 1, expectedPermission: 'UPLOAD_QUESTION' }  // Trainer and Admin can access this route
+        data: { expectedRole: [0, 1], expectedPermission: 'UPLOAD_QUESTION' }  // Trainer and Admin can access this route
     },
     {
         path: 'create-test', 
         component: CreateTestComponent, 
         canActivate: [MsalGuard, RouteGuard, PermissionsGuard],
-        data: { expectedRole: 1, expectedPermission: 'CREATE_ASSESSMENT' }  // Trainer and Admin can access this route
+        data: { expectedRole: [0, 1], expectedPermission: 'CREATE_ASSESSMENT' }  // Trainer and Admin can access this route
     },
     {
         path: 'evaluate/:scheduledAssessmentId', 
         component: AssessmentEvaluateComponent, 
         canActivate: [MsalGuard, RouteGuard, PermissionsGuard],
-        data: { expectedRole: 1, expectedPermission: 'EVALUATE_TEST' }  // Trainer and Admin can access this route
+        data: { expectedRole: [0, 1], expectedPermission: 'EVALUATE_TEST' }  // Trainer and Admin can access this route
     },
     {
         path: 'user-management', 
         component: TrainerManagementComponent, 
         canActivate: [MsalGuard, RouteGuard, PermissionsGuard],
-        data: { expectedRole: 0, expectedPermission: 'TRAINER_MANAGEMENT' || 'ROLE_MANAGEMENT' }  // Only Admin can access this route
+        data: { expectedRole: [0], expectedPermission: 'TRAINER_MANAGEMENT' || 'ROLE_MANAGEMENT' }  // Only Admin can access this route
     },
     {
         path: 'performance/:scheduledAssessmentId', 
         component: AssessmentPerformanceComponent, 
         canActivate: [MsalGuard, RouteGuard],
-        data: { expectedRole: 1, expectedPermission: 'VIEW_PERFORMANCE_DETAILS' }  // Trainer and Admin can access this route
+        data: { expectedRole: [0, 1], expectedPermission: 'VIEW_PERFORMANCE_DETAILS' }  // Trainer and Admin can access this route
     },
     {
         path: 'test/:id', 
         component: TestPageComponent, 
         canActivate: [MsalGuard, RouteGuard],
-        data: { expectedRole: 2 }  // Only Trainee can access this route
+        data: { expectedRole: [2] }  // Only Trainee can access this route
     },
     {
         path: 'tests/:id/:token', 
         component: IlpIntegrationTraineeattendtestComponent, 
         canActivate: [MsalGuard, RouteGuard],
-        data: { expectedRole: 2 }  // Only Trainee can access this route
+        data: { expectedRole: [2] }  // Only Trainee can access this route
     },
     { 
         path: 'instructions/:id', 
         component: InstructionPageComponent, 
         canActivate: [MsalGuard, RouteGuard],
-        data: { expectedRole: 2 }  // Only Trainee can access this route
+        data: { expectedRole: [2] }  // Only Trainee can access this route
     },
     {
         path: 'server-error', component: InternalServerErrorComponent
