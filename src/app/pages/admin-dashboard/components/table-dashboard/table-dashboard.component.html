@@ -1,7 +1,7 @@
 <div class="card">
   <p-table
     #dt1
-    [value]="assessments"
+    [value]="assessments.length ? assessments : skeletonData"
     [globalFilterFields]="['assessmentName', 'trainer','date','batchName','status']"
     selectionMode="single"
     [(selection)]="selectedAssessment"
@@ -47,7 +47,7 @@
     </ng-template>
     
     <ng-template pTemplate="body" let-assessment>
-      <tr (click)="onRowClick(assessment)">
+      <tr *ngIf="assessments.length; else skeletonTemplate" (click)="onRowClick(assessment)">
         <td>
           <span class="p-column-title">Assessment</span>
           {{ assessment.assessmentName }}
@@ -88,6 +88,17 @@
       </tr>
     </ng-template>
     
+    <ng-template #skeletonTemplate>
+      <tr>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+      </tr>
+    </ng-template>
+
     <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="6">No assessments found.</td>
