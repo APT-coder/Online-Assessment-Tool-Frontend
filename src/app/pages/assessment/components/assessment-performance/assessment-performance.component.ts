@@ -36,7 +36,7 @@ export class AssessmentPerformanceComponent implements OnInit {
 
   trainees!: Trainee[];
   originalProducts!: Trainee[];
-  performanceData!: {maximumScore: string, totalTrainees: string, traineesAttended: string, absentees: string, assessmentDate: Date};
+  performanceData!: {maximumScore: string, totalTrainees: string, traineesAttended: string, absentees: string, assessmentDate: Date, assessmentName: string, batchName: string};
 
   constructor(private route: ActivatedRoute, private performanceService: PerformanceDetailsService) {}
 
@@ -56,7 +56,9 @@ export class AssessmentPerformanceComponent implements OnInit {
         totalTrainees: data.totalTrainees.toString(),
         traineesAttended: data.traineesAttended.toString(),
         absentees: data.absentees.toString(),
-        assessmentDate: new Date(data.assessmentDate)
+        assessmentDate: new Date(data.assessmentDate),
+        assessmentName: data.assessmentName.toString(),
+        batchName: data.batchName.toString()
       };   
       console.log('Performance Data JSON:', this.performanceData);
     });
@@ -83,16 +85,18 @@ export class AssessmentPerformanceComponent implements OnInit {
     const workbook = XLSX.utils.book_new();
 
     const performanceRow = [
+      ['Assessment Name', this.performanceData.assessmentName],
+      ['Batch Name', this.performanceData.batchName],
+      ['Scheduled Date', this.getFormattedDate(this.performanceData.assessmentDate)],
       ['Maximum Score', this.performanceData.maximumScore],
       ['Total Trainees', this.performanceData.totalTrainees],
       ['Trainees Attended', this.performanceData.traineesAttended],
       ['Absentees', this.performanceData.absentees],
-      ['Scheduled Date', this.getFormattedDate(this.performanceData.assessmentDate)]
     ];
 
     const worksheet = XLSX.utils.aoa_to_sheet(performanceRow);
     XLSX.utils.sheet_add_aoa(worksheet, [[]], { origin: -1 });
-    XLSX.utils.sheet_add_json(worksheet, this.originalProducts, { origin: 'A8', skipHeader: false });
+    XLSX.utils.sheet_add_json(worksheet, this.originalProducts, { origin: 'A10', skipHeader: false });
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Performance Data');
     XLSX.writeFile(workbook, 'assessment_performance.xlsx');
   }
