@@ -6,12 +6,19 @@ import { catchError, Observable, throwError } from 'rxjs';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
+  userDetails = JSON.parse(localStorage.getItem("userDetails") || '{}');
+
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('An error occurred:', error.message);
-        this.router.navigate(['/server-error']);
+        if(error.status >= 500 && error.status < 600){
+          this.router.navigate(['/server-error']);
+        }
+        else{
+          console.log("Error occured");
+        }
         return throwError(() => new Error('An error occurred'));
       })
     );

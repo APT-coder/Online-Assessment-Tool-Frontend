@@ -13,6 +13,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { Dialog, DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-trainer-management',
@@ -26,7 +29,9 @@ import { MessageModule } from 'primeng/message';
     SidebarComponent,
     AccountcreationModalComponent,
     TrainerTableComponent, MessagesModule,
-    MessageModule
+    MessageModule,
+    DialogModule,
+    ButtonModule
   ],
   providers:[MessageService],
 
@@ -40,7 +45,7 @@ export class TrainerManagementComponent {
   isModalVisible: boolean = false;
   jsonData: any;
 
-  constructor(private apiService: TrainermanagementService, private userService: TrainermanagementService, private messageService: MessageService) {}
+  constructor(private apiService: TrainermanagementService, private userService: TrainermanagementService, private messageService: MessageService, private http: HttpClient) {}
 
   ngOnInit() {
   }
@@ -105,9 +110,27 @@ export class TrainerManagementComponent {
 
   @ViewChild('fileInput', { static: false })
   fileInput!: ElementRef;
+  displayDialog: boolean = false;
 
-  onFileSelect(): void {
+  showUploadDialog() {
+    this.displayDialog = true;
+  }
+
+  openFileUpload(): void {
+    this.displayDialog = false;
     this.fileInput.nativeElement.click();
+  }
+
+  downloadTemplate() {
+    const templateUrl = 'assets/sample.csv';
+    this.http.get(templateUrl, { responseType: 'blob' }).subscribe((data: Blob) => {
+      const downloadURL = window.URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = 'template.csv';
+      link.click();
+      this.displayDialog = false;
+    });
   }
 
   onFileChange(event: any) {
@@ -176,9 +199,11 @@ export class TrainerManagementComponent {
     this.userService.createUser(user).subscribe(
       () => {
         console.log("User added successfully");
+        this.messageService.add({ severity: 'success', summary: 'User Created', detail: 'User batch created successfully', life: 3000 });
       },
       (error: any) => {
         console.error('Error creating user:', error);
+        this.messageService.add({ severity: 'error', summary: 'User creation failed', detail: 'User batch not created', life: 5000 });
       }
     );
   }
