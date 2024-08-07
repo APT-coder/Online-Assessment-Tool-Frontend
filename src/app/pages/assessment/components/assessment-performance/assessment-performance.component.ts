@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PerformanceDetailsService } from '../../../../service/performance-details/performance-details.service';
 import { PerformanceDetails } from '../../../../../models/performanceDetails.interface';
 import * as XLSX from 'xlsx';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 interface Trainee {
   traineeName: string;
@@ -22,7 +23,8 @@ interface Trainee {
     CardComponent,
     TableComponent,
     SidebarComponent,
-    CommonModule],
+    CommonModule,
+    ProgressBarModule],
   templateUrl: './assessment-performance.component.html',
   styleUrl: './assessment-performance.component.scss'
 })
@@ -37,6 +39,8 @@ export class AssessmentPerformanceComponent implements OnInit {
   trainees!: Trainee[];
   originalProducts!: Trainee[];
   performanceData!: {maximumScore: string, totalTrainees: string, traineesAttended: string, absentees: string, assessmentDate: Date, assessmentName: string, batchName: string};
+
+  isLoading: boolean = true; // Loading state
 
   constructor(private route: ActivatedRoute, private performanceService: PerformanceDetailsService) {}
 
@@ -59,10 +63,11 @@ export class AssessmentPerformanceComponent implements OnInit {
         assessmentDate: new Date(data.assessmentDate),
         assessmentName: data.assessmentName.toString(),
         batchName: data.batchName.toString()
-      };   
+      };
+      this.isLoading = false; // Data is loaded, stop loading
       console.log('Performance Data JSON:', this.performanceData);
     });
-}
+  }
 
   fetchTraineesData(assessmentId:number) {
     this.performanceService.getTrainees(assessmentId).subscribe(
@@ -73,6 +78,7 @@ export class AssessmentPerformanceComponent implements OnInit {
       },
       error => {
         console.error('Error fetching trainees data', error);
+        this.isLoading = false; // Even if there's an error, stop loading
       }
     );
   }

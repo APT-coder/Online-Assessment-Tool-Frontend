@@ -13,7 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('An error occurred:', error.message);
-        if(error.status >= 500 && error.status < 600){
+        if(error.status != 404){
           this.router.navigate(['/server-error']);
         }
         else{

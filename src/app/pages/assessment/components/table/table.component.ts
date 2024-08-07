@@ -35,6 +35,8 @@ export class TableComponent implements OnInit {
       { label: 'Completed', value: 'completed' },
       { label: 'Absent', value: 'absent' },
     ];
+
+    this.originalProducts = [...this.trainees];
   }
 
   getSeverity(status: string) {
