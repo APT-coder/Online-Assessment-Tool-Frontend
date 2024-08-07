@@ -10,11 +10,12 @@ import { AssessmentOverview } from '../../../../../models/assessmentOverview.int
 import { CommonModule } from '@angular/common';
 import { ButtonActiveComponent } from "../../../../ui/buttons/button-active/button-active.component";
 import { RouterModule } from '@angular/router';
+import { ButtonDashboardComponent } from "../../../../ui/buttons/button-dashboard/button-dashboard.component";
 
 @Component({
   selector: 'app-table-dashboard',
   standalone: true,
-  imports: [TableModule, HttpClientModule, InputTextModule, TagModule, IconFieldModule, InputIconModule, CommonModule, ButtonActiveComponent,RouterModule],
+  imports: [TableModule, HttpClientModule, InputTextModule, TagModule, IconFieldModule, InputIconModule, CommonModule, ButtonActiveComponent, RouterModule, ButtonDashboardComponent],
   templateUrl: './table-dashboard.component.html',
   styleUrls: ['./table-dashboard.component.scss']
 })

@@ -69,11 +69,21 @@
           {{ assessment.status }}
         </td>
         <td>
-          <span class="p-column-title">More Details</span>
-          <div class="details-btn">
-            <a [routerLink]="['/performance', assessment.assessmentId]">
-            <app-button-active [content]='"More Details"'></app-button-active></a>
-          </div>
+          <span class="p-column-title">Details</span>
+          <div class="detail-btn">
+              @if (assessment.status == "Evaluated") {
+                <a [routerLink]="['/performance', assessment.assessmentId]">
+                <app-button-dashboard [content]='"View Details"'></app-button-dashboard></a>
+              }
+              @else if(assessment.status == "Upcoming"){
+
+                <app-button-dashboard class="edit-btn" [content]='"Edit"'></app-button-dashboard>
+              }
+              @else if(assessment.status == "Completed"){
+                <a [routerLink]="['/evaluate', assessment.assessmentId]">
+                <app-button-dashboard [content]='"Evaluate"'></app-button-dashboard></a>
+              }
+          </div>  
         </td>
       </tr>
     </ng-template>
