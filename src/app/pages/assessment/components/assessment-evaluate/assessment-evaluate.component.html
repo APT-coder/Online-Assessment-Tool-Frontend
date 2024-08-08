@@ -7,7 +7,10 @@
     </div>
 
     <div class="col-10">
-      <div class="qn-body">
+      <div *ngIf="isLoading" class="loading-indicator">
+        <p-progressBar mode="indeterminate" [style]="{ height: '6px', width: '400px' }" />
+      </div>
+      <div *ngIf="!isLoading" class="qn-body">
         <form #evaluateForm="ngForm">
           <!-- <div class="card flex justify-content-center"> -->
             <p-toast />

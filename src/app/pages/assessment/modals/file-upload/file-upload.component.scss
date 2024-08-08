@@ -54,7 +54,7 @@ $text-colour:#3b82f6;
 .file-types{
     position: relative;
     bottom: 30px;
-    margin-left: 90px;
+    margin-left: 100px;
 }
 .upload-button{
     position: relative;
@@ -64,4 +64,8 @@ $text-colour:#3b82f6;
 }
 .select{
     color: blue;
+}
+.file-name{
+    margin-left: 85px;
+    color: blue
 }

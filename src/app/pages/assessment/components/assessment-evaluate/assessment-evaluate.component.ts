@@ -18,6 +18,7 @@ import { forkJoin } from 'rxjs';
 import { AssessmentTableDTO } from '../../../../../models/AssessmentTableDTO.interface'; 
 import { AssessmentStatus } from '../../../../../models/AssessmentTableDTO.interface'; 
 import { ActivatedRoute } from '@angular/router';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
     selector: 'app-assessment-evaluate',
@@ -25,7 +26,7 @@ import { ActivatedRoute } from '@angular/router';
     templateUrl: './assessment-evaluate.component.html',
     styleUrl: './assessment-evaluate.component.scss',
     imports: [ButtonActiveComponent, SidebarComponent,CommonModule,FormsModule,MessagesModule,
-      MessageModule,ConfirmDialogModule, ToastModule, ButtonModule ],
+      MessageModule,ConfirmDialogModule, ToastModule, ButtonModule, ProgressBarModule ],
     providers:[ConfirmationService, MessageService]
     
 })
@@ -44,6 +45,8 @@ selectedStudentId: any;
 numberOfSubmittedTrainee: number=0;
 numberOfAbsentTrainee:number=0;
 updatedScores: UpdateScoreDTO[] = [];
+
+isLoading: boolean = true; // Loading state
 
 constructor(private scheduledAssessmentService: ScheduledAssessmentService,private messageService:MessageService,private confirmationService: ConfirmationService, private route: ActivatedRoute) { 
   this.route.paramMap.subscribe(params => {
@@ -106,6 +109,7 @@ onStudentClick(traineeId: number): void {
       this.selectedStudentResponses = data.result;
       console.log(this.selectedStudentResponses);
     });
+    this.isLoading = false; // Data is loaded, stop loading
 }
 
 onScoreChange(questionId: number, newScore: number): void {
