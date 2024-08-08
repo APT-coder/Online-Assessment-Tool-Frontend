@@ -65,6 +65,7 @@ export class AssessmentComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('userDetails') as string);
   
   htmlContent!: string;
+  questionContent: any;
   questions: Question[] = [];
   showPreview = true;
   editQuestions: any;
@@ -123,9 +124,14 @@ export class AssessmentComponent implements OnInit {
   
   async initializeComponent(): Promise<void> {
     this.htmlContent = localStorage.getItem("htmlContent") as string;
-    console.log('Received HTML Content:', this.htmlContent);
-  
-    await this.parseQuestions(this.htmlContent); // Wait for parsing to complete
+    this.questionContent = JSON.parse(localStorage.getItem("questionContent") as string);
+    
+    if(this.htmlContent != null){
+      await this.parseQuestions(this.htmlContent); // Wait for parsing to complete
+    }
+    else{
+      await this.convertData(this.questionContent);
+    }
   
     this.editQuestions = this.questions;
   }
@@ -201,6 +207,46 @@ export class AssessmentComponent implements OnInit {
     });
   }
   
+  convertData(inputData: any[]): Promise<Question[]> {
+    return new Promise((resolve, reject) => {
+      try {
+        // Extract header and data
+        const headers = inputData[0];
+        const data = inputData.slice(1);
+
+        // Define the mapping for indices
+        const indexMap = {
+          id: 0,
+          type: 1,
+          content: 2,
+          options: 3,
+          correctAnswer: 4,
+          score: 5
+        };
+
+        // Convert data to the desired format
+        this.questions = data.map(row => {
+          return {
+            id: row[indexMap.id],
+            type: row[indexMap.type],
+            content: row[indexMap.content],
+            options: row[indexMap.options] ? this.parseOptions(row[indexMap.options]) : [],
+            correctAnswer: row[indexMap.correctAnswer] || null,
+            score: row[indexMap.score]
+          };
+        });
+        console.log(this.questions);
+        resolve(this.questions);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  private parseOptions(optionsString: string): string[] {
+    // Split the options string into an array
+    return optionsString.split(', ').map(option => option.split(': ')[1]);
+  }
 
   createAssessment(assessmentName: string) {
     if (assessmentName) {

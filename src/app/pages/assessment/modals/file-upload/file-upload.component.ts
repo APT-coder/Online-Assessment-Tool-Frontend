@@ -53,17 +53,34 @@ export class FileUploadComponent {
   async uploadFile() {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     const file = fileInput.files?.[0];
-    if (file && file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      try {
-        const htmlContent = await this.wordParserService.readWordFile(file);
-        console.log('HTML Content:', htmlContent);
-        localStorage.removeItem("htmlContent");
-        localStorage.setItem("htmlContent", htmlContent);
-        this.uploaded = true;
-      } catch (error) {
-        console.error('Error parsing the Word file:', error);
+    if (file) {
+      if(file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
+        try {
+          const htmlContent = await this.wordParserService.readWordFile(file);
+          console.log('HTML Content:', htmlContent);
+          localStorage.removeItem("questionContent");
+          localStorage.removeItem("htmlContent");
+          localStorage.setItem("htmlContent", htmlContent);
+          this.uploaded = true;
+        } catch (error) {
+          console.error('Error parsing the Word file:', error);
+        }
       }
-    } else {
+      else if(file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
+        file.type === 'application/vnd.ms-excel'){
+        try {
+          const questionContent = await this.wordParserService.readExcelFile(file);
+          console.log('File Content', questionContent);
+          localStorage.removeItem("questionContent");
+          localStorage.removeItem("htmlContent");
+          localStorage.setItem("questionContent", JSON.stringify(questionContent));
+          this.uploaded = true;
+        } catch (error) {
+          console.error('Error parsing the Excel file:', error);
+        }
+      }
+    } 
+    else {
       console.log('No valid file selected.');
     }
   }
