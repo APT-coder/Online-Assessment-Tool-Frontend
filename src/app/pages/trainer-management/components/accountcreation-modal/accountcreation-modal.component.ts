@@ -58,8 +58,8 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      usertype: [null, Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('^\\+?[1-9]\\d{1,14}$')]], 
+      usertype: [null],
       password: [''],
       role: [null],
       selectedBatches: [[]],
