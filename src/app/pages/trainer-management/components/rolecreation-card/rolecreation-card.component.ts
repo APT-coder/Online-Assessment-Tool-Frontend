@@ -13,26 +13,27 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-rolecreation-card',
   standalone: true,
-  imports: [CardModule, CommonModule, FormsModule, DialogModule,CheckboxModule,ButtonModule],
+  imports: [CardModule, CommonModule, FormsModule, DialogModule, CheckboxModule, ButtonModule],
   templateUrl: './rolecreation-card.component.html',
-  providers: [ MessageService],
+  providers: [MessageService],
   styleUrls: ['./rolecreation-card.component.scss']
 })
 export class RolecreationCardComponent implements OnInit {
   @Input() role: Role = { id: 0, roleName: '', permissionIds: [] };
   @Input() isEditMode: boolean = false;
-  @Input() isModalVisible: boolean = false;  // Add this line
+  @Input() isModalVisible: boolean = false;
 
   @Output() cancelRoleCreation: EventEmitter<void> = new EventEmitter<void>();
   @Output() roleSaved: EventEmitter<void> = new EventEmitter<void>();
 
   permissions: Permission[] = [];
+  existingRoles: Role[] = [];  // Array to store existing roles for uniqueness check
 
   constructor(private roleService: TrainermanagementService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-
     this.loadPermissions();
+    this.loadExistingRoles();  // Load existing roles
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -51,6 +52,16 @@ export class RolecreationCardComponent implements OnInit {
         this.initializeSelectedPermissions();
       } else {
         console.error('Error loading permissions:', response.message);
+      }
+    });
+  }
+
+  loadExistingRoles() {
+    this.roleService.getAllRoles().subscribe(response => {
+      if (response.isSuccess) {
+        this.existingRoles = response.result;
+      } else {
+        console.error('Error loading roles:', response.message);
       }
     });
   }
@@ -76,9 +87,18 @@ export class RolecreationCardComponent implements OnInit {
     }
   }
 
+  isRoleNameUnique(roleName: string): boolean {
+    return !this.existingRoles.some(role => role.roleName.toLowerCase() === roleName.toLowerCase() && role.id !== this.role.id);
+  }
+
   submitRole() {
     if (this.role.permissionIds.length === 0) {
       alert('Please select at least one permission.');
+      return;
+    }
+
+    if (!this.isRoleNameUnique(this.role.roleName)) {
+      alert('Role name already exists. Please choose a different name.');
       return;
     }
 
@@ -92,7 +112,6 @@ export class RolecreationCardComponent implements OnInit {
       this.roleService.updateRole(this.role.id, roleData).subscribe(response => {
         this.roleSaved.emit();
         this.messageService.add({ severity: 'success', summary: 'Role Updated', detail: 'You have successfully Updated the role', life: 3000 });
-
         console.log('Role updated successfully', response);
       }, error => {
         console.error('Error updating role', error);
@@ -102,7 +121,6 @@ export class RolecreationCardComponent implements OnInit {
         if (response.isSuccess) {
           this.roleSaved.emit();
           this.messageService.add({ severity: 'success', summary: 'Role Created', detail: 'You have successfully created the role', life: 3000 });
-
           console.log('Role created successfully', response.result);
         } else {
           console.error('Error creating role', response.message);
@@ -115,10 +133,9 @@ export class RolecreationCardComponent implements OnInit {
     this.isModalVisible = false;
     this.cancelRoleCreation.emit();
   }
+
   closeModal() {
     this.isModalVisible = false;
     this.cancelRoleCreation.emit();
-    
   }
-  
 }

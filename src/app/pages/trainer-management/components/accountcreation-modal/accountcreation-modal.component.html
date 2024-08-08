@@ -20,16 +20,27 @@
     <div class="form-group mb-3">
       <label for="username" class="font-semibold">Username</label>
       <input pInputText id="username" class="input-text" formControlName="username" autocomplete="off" />
+      <div *ngIf="userForm.get('username')?.touched && userForm.get('username')?.invalid" class="error-message">
+        Username is required.
+      </div>
     </div>
     
     <div class="form-group mb-3">
       <label for="email" class="font-semibold">Email</label>
       <input pInputText id="email" class="input-text" formControlName="email" autocomplete="off" />
+      <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="error-message">
+        <div *ngIf="userForm.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="userForm.get('email')?.errors?.['email']">Invalid email format.</div>
+      </div>
     </div>
     
     <div class="form-group mb-3">
       <label for="phone" class="font-semibold">Phone</label>
       <input pInputText id="phone" class="input-text" formControlName="phone" autocomplete="off" />
+      <div *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.invalid" class="error-message">
+        <div *ngIf="userForm.get('phone')?.errors?.['required']">Phone number is required.</div>
+        <div *ngIf="userForm.get('phone')?.errors?.['pattern']">Invalid phone number format.</div>
+      </div>
     </div>
     
     <p-dropdown
@@ -53,7 +64,9 @@
         placeholder="Select Role"
         (onChange)="onRoleChange($event)"
       ></p-dropdown>
-      
+      <div *ngIf="userForm.get('role')?.touched && userForm.get('role')?.invalid" class="error-message">
+        Role is required.
+      </div>
       </div>
       
       <div class="form-group mb-3">
@@ -66,6 +79,9 @@
           placeholder="Select batches"
           (onChange)="onBatchChange($event)"
         ></p-multiSelect>
+        <div *ngIf="userForm.get('selectedBatches')?.touched && userForm.get('selectedBatches')?.invalid" class="error-message">
+          At least one batch selection is required.
+        </div>
       </div>
       
       <div class="form-group mb-3">
@@ -78,6 +94,9 @@
       <div class="form-group mb-3">
         <label for="batch" class="font-semibold">Batch</label>
         <p-dropdown class="p-dropdown" [options]="batches" formControlName="batch" placeholder="Select a batch" (onChange)="OnBatchSelect($event)"></p-dropdown>
+        <div *ngIf="userForm.get('batch')?.touched && userForm.get('batch')?.invalid" class="error-message">
+          Batch is required.
+        </div>
       </div>
       
       <div class="form-group mb-3">
