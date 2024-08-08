@@ -40,56 +40,58 @@
     <mat-form-field appearance="outline" class="w-100 inputbox">
       <mat-label>Select Batch</mat-label>
       <mat-select id="batches" formControlName="batchId">
-        <mat-option value="one">ILP 01</mat-option>
-        <mat-option value="two">ILP 02</mat-option>
-        <mat-option value="three">ILP 03</mat-option>
-        <mat-option value="four">ILP 04</mat-option>
+        <mat-option *ngFor="let batch of batches" [value]="batch.batchid">
+          {{ batch.batchname }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
-  <div class="inputLabel">
-    <div class="col-auto labelName">
-      <label for="schedule">Schedule:</label>
+  <form [formGroup]="secondFormGroup">
+    <div class="inputLabel">
+      <div class="col-auto labelName">
+        <label for="schedule">Schedule:</label>
+      </div>
+      <div>
+        <label for="from">From:</label>
+        <div class="from">
+          <mat-form-field appearance="outline" class="w-100 inputbox from-to-from">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="startDate" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <label for="appt-time" class="start">Start Time:</label>
+          <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="startTime"/>
+        </div>
+        <div *ngIf="secondFormGroup.get('startDate')?.hasError('invalidStartDate') && secondFormGroup.get('startDate')?.touched">
+          <mat-error class="start-error">Start date cannot be before the current date</mat-error>
+        </div>
+  
+        <label for="to">To:</label>
+        <div class="to">
+          <mat-form-field appearance="outline" class="w-100 inputbox from-to-to">
+            <mat-label>End Date</mat-label>
+            <input matInput [matDatepicker]="endPicker" placeholder="Choose a date" formControlName="endDate" required>
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+          <label for="appt-time" class="start">End Time:</label>
+          <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="endTime"/>
+        </div>
+        <div class="date-time-error">
+          <div *ngIf="secondFormGroup.get('endDate')?.hasError('invalidDateRange') && secondFormGroup.get('endDate')?.touched">
+            <mat-error class="end-error">End date cannot be before start date</mat-error>
+          </div>
+          <div *ngIf="secondFormGroup.errors?.['invalidDuration']">
+            <p class="duration-error">The time should match the scheduled duration</p>
+          </div> 
+        </div>
+        <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
+      </div>
     </div>
-    <div>
-     
-      <label for="from">From:</label>
-      <div class="from">
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to-from">
-        <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="startDate" required>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <!-- <mat-form-field appearance="outline" class="w-100 inputbox from-to">
-        <mat-label>Start Time</mat-label>
-        <input matInput type="time" placeholder="Choose time" formControlName="startTime" required>
-
-      </mat-form-field> -->
-      <label for="appt-time" class="start">Start Time: </label>
-     <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="startTime"/>
-    </div>
-    
-      <label for="from">To:</label>
-      <div class="to">
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to-to">
-        <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="endPicker" placeholder="Choose a date" formControlName="endDate" required>
-        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-        <mat-datepicker #endPicker></mat-datepicker>
-      </mat-form-field>
-   
-      <!-- <mat-form-field appearance="outline" class="w-100 inputbox from-to">
-        <mat-label>End Time</mat-label>
-        <input matInput type="time" placeholder="Choose time" formControlName="endTime" required>
-      </mat-form-field> -->
-      <label for="appt-time" class="start">End Time: </label>
-      <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="endTime"/>
-    </div>
-      <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
-    </div>
-  </div>
+  </form>
+  
 
   <div class="checkboxLabel">
     <div class="col-auto labelName">

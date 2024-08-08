@@ -8,6 +8,13 @@ $bg-color: linear-gradient(#261D42, #8061C3);
     height: 100vh;
 }
 
+.loading-indicator{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-top: 300px;
+}
+
 .EvaluateMCQ{
     height:100%;
     width:100%;

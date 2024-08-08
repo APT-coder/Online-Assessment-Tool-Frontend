@@ -127,3 +127,22 @@ border-radius: 3px;
 border: 1px solid #a69e9e;
 padding: 20px;
 }
+
+.end-error{
+  margin-bottom: 15px;
+
+}
+
+.start-error{
+  margin-bottom: 15px;
+}
+
+.duration-error{
+  color: var(--mat-form-field-error-text-color);
+  margin-bottom: 15px;
+
+}
+.date-time-error{
+  display: flex;
+  justify-content: space-between;
+}
