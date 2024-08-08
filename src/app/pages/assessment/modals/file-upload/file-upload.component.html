@@ -11,12 +11,12 @@
             <img src="assets/Uploadicon.png" alt="upload icon" class="upload-icon">
             <p class="upload-content">Drag and Drop a File<br/>
               or <label for="fileInput" class="select">select a file</label> from your computer</p>
-            <input type="file" id="fileInput" accept=".docx" style="display:none;" (change)="onFileSelected($event)">
+            <input type="file" id="fileInput" accept=".docx, .xlsx" style="display:none;" (change)="onFileSelected($event)">
             <app-button-inactive class="template" [content]="'Get Template'" (click)="downloadTemplate()"></app-button-inactive>
           </div>
           <p class="file-name" *ngIf="fileName">{{ fileName }} <span *ngIf="uploaded">- Uploaded</span></p>
         </div>
-        <p class="file-types">File types: Word Documents (.docx)</p>
+        <p class="file-types">File types: Word (.docx) and Excel (.xlsx)</p>
         <app-button-active class="upload-button" style="width: fit-content;" [content]="'Upload File'" (click)="uploadFile()"></app-button-active>
       </div>
     </div>

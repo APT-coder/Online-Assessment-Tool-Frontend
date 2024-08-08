@@ -15,14 +15,23 @@ import { Router } from '@angular/router';
 export class UploadSuccessComponent {
   dashboard = localStorage.getItem("dashboard");
   htmlContent: string;
+  questionContent: any;
   questionCount: number = 0;
 
-  constructor(private router: Router,)
+  constructor(private router: Router)
   {
     this.htmlContent = localStorage.getItem("htmlContent") as string;
     console.log(this.htmlContent);
 
-    this.questionCount = this.getQuestionCount(this.htmlContent);
+    this.questionContent = JSON.parse(localStorage.getItem("questionContent") as string);
+    console.log(this.questionContent);
+
+    if(this.htmlContent != null){
+      this.questionCount = this.getQuestionCount(this.htmlContent, "word");
+    }
+    else{
+      this.questionCount = this.getQuestionCount(this.questionContent, "excel");
+    }
   }
 
   @Output() prepareTest = new EventEmitter<void>();
@@ -31,20 +40,30 @@ export class UploadSuccessComponent {
     this.prepareTest.emit();
   }
 
-  getQuestionCount(htmlContent: string): number {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, 'text/html');
-    const paragraphs = doc.querySelectorAll('p');
-  
+  getQuestionCount(content: any, type: string): number {
     let questionCount = 0;
-  
-    paragraphs.forEach((p) => {
-      const text = p.innerText.trim();
-      if (text.startsWith('Question:')) {
-        questionCount++;
+
+    if(type === "word"){
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(content, 'text/html');
+      const paragraphs = doc.querySelectorAll('p');
+      paragraphs.forEach((p) => {
+        const text = p.innerText.trim();
+        if (text.startsWith('Question:')) {
+          questionCount++;
+        }
+      });
+    }
+
+    else if(type === "excel"){
+      if (!Array.isArray(content) || content.length < 1) {
+        return 0;
       }
-    });
-  
+      const questions = content.slice(1);
+      console.log(questions.length);
+      questionCount = questions.length;
+    }
+
     return questionCount;
   }
 
