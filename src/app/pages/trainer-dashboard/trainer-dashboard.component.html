@@ -15,9 +15,11 @@
         <div class="row">
           @if(selectedAssessmentStatus == "Evaluated"){
           <div class="col-md-6">
+            <h6>Percentage Range Analysis of Trainee Scores</h6>
             <app-bar-graph [assessmentId]="selectedAssessmentId"></app-bar-graph>
           </div>
           <div class="col-md-6">
+            <h6>Trainee Attendance Status</h6>
             <app-pie-diagram [assessmentId]="selectedAssessmentId"></app-pie-diagram>
           </div>
           }@else{
