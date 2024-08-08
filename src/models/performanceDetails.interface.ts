@@ -4,4 +4,6 @@ export interface PerformanceDetails {
     traineesAttended: number;
     absentees: number;
     assessmentDate: string;
+    assessmentName: string;
+    batchName: string;
 }

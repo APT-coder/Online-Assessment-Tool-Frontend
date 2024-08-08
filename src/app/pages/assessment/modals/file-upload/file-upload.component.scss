@@ -53,8 +53,10 @@ $text-colour:#3b82f6;
 }
 .file-types{
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     bottom: 30px;
-    margin-left: 90px;
 }
 .upload-button{
     position: relative;
@@ -63,5 +65,11 @@ $text-colour:#3b82f6;
 
 }
 .select{
+    color: blue;
+}
+.file-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: blue;
 }
