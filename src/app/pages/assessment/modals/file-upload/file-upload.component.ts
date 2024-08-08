@@ -96,4 +96,24 @@ export class FileUploadComponent {
       modalElement.style.display = 'none'; // Hide the modal
     }
   }
+
+  downloadTemplate() {
+   
+    const templateUrl = 'assets/Assessment_Template.docx';
+
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = templateUrl;
+    link.download = 'Assessment_Template.docx';
+  
+    
+    document.body.appendChild(link);
+  
+    // Simulate a click on the link to trigger the download
+    link.click();
+  
+    // Remove the link from the body
+    document.body.removeChild(link);
+  }
+  
 }
