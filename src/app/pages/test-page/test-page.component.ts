@@ -78,8 +78,8 @@ export class TestPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    // this.toggleFullScreen();
-    // document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+    this.toggleFullScreen();
+    document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
   }
 
   ngOnDestroy(): void {
