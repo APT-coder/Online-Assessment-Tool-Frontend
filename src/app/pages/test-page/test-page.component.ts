@@ -78,8 +78,8 @@ export class TestPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.toggleFullScreen();
-    document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+    // this.toggleFullScreen();
+    // document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -229,9 +229,13 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   onReviewMarked(isMarked: boolean) {
-    if (this.question[this.count].questionstatus == 'marked') {
+    if (this.question[this.count].questionstatus == 'marked' && this.question[this.count].answered =="") {
       this.question[this.count].questionstatus = 'unreviewed';
-    } else {
+    }
+    else if( this.question[this.count].questionstatus == 'marked' && this.question[this.count].answered !==""){
+      this.question[this.count].questionstatus = 'done';
+    }
+     else {
       this.question[this.count].questionstatus = 'marked';
     }
   }
