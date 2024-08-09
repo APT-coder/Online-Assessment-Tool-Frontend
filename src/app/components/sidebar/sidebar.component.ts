@@ -42,7 +42,6 @@ export class SidebarComponent {
     path: string = '';
     profileDetails = [
       { label: 'Name:', value: 'Your Name' },
-      { label: 'Email:', value: 'your.email@example.com' },
       { label: 'Designation:', value: 'Your Role' }
     ];
   constructor(private elementRef: ElementRef, private authService: MsalService) { }
@@ -52,16 +51,15 @@ export class SidebarComponent {
     console.log(this.user);
     
       this.profileDetails[0].value = this.user.UserName;
-      this.profileDetails[1].value = this.user.UserEmail;
 
       if(this.user.UserAdmin){
-        this.profileDetails[2].value = "Admin";
+        this.profileDetails[1].value = "Admin";
       }
       else if(this.user.TrainerId){
-        this.profileDetails[2].value = this.user.UserRole.roleName;
+        this.profileDetails[1].value = this.user.UserRole.roleName;
       }
       else{
-        this.profileDetails[2].value = "Trainee";
+        this.profileDetails[1].value = "Trainee";
       }
 
       if (this.user.UserType === 0) {

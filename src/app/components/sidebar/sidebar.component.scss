@@ -25,7 +25,8 @@ td{
 .profile-details {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; 
+  table-layout: fixed;
+  margin-bottom: 30px; 
 }
 .text-full{
   background-color: #a8c9eb;
@@ -38,9 +39,21 @@ td{
 }
 .small-button {
   font-size: 12px; 
-  padding: 5px 10px; 
+ position: relative;
+ top: -20px;
   height: 30px; 
   width: auto; 
 }
+
+.profile-divide{
+  background-color: rgb(247, 247, 247);
+}
+.profile{
+  color: #374151;
+  margin-top: 20px;
+  font-weight: bolder;
+}
+
+
 
 
