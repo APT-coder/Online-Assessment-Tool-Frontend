@@ -38,16 +38,26 @@ import { HttpClient } from '@angular/common/http';
   standalone:true
 })
 export class TrainerManagementComponent {
+
   isCardVisible: boolean = false;
   isSidebarCollapsed: boolean = false;
   selectedRole: Role = { id: 0, roleName: '', permissionIds: [] };
   isEditMode: boolean = false;
   isModalVisible: boolean = false;
   jsonData: any;
+  visibleTemplatePreview: boolean = false;
+  public csvData: any[] = [];
 
   constructor(private apiService: TrainermanagementService, private userService: TrainermanagementService, private messageService: MessageService, private http: HttpClient) {}
 
   ngOnInit() {
+    this.readCSV("assets/sample.csv");
+  }
+
+
+  previewTemplate() {
+    this.displayDialog = false;
+    this.visibleTemplatePreview = true;
   }
 
   ShowTrainer() {
@@ -206,5 +216,24 @@ export class TrainerManagementComponent {
         this.messageService.add({ severity: 'error', summary: 'User creation failed', detail: 'User batch not created', life: 5000 });
       }
     );
+  }
+
+  private readCSV(filePath: string): void {
+    this.http.get(filePath, { responseType: 'text' }).subscribe(
+      data => {
+        this.parseCSV(data);
+      },
+      error => {
+        console.error('Error loading the CSV file:', error);
+      }
+    );
+  }
+
+  private parseCSV(data: string): void {
+    const workbook: XLSX.WorkBook = XLSX.read(data, { type: 'string' });
+    const sheetName: string = workbook.SheetNames[0];
+    const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+    this.csvData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    console.log(this.csvData);
   }
 }

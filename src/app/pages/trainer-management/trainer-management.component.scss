@@ -46,3 +46,32 @@
     .button-top{
         margin-top: 20px;
     }
+
+    .p-button-rounded{
+        position: realtaive;
+        color: #22c55e;;
+       
+    }
+
+    .template-table{
+       
+        width: 100%;
+  border-collapse: collapse; 
+ 
+    }
+
+    .template-table td {
+        border: 1px solid #d6d6d6; 
+        padding: 8px;
+        text-align: left; 
+        font-size: 14px;
+        background-color: #ffffff; 
+    }      
+
+    .template-table tr:nth-child(even) td {
+        background-color: #f4f4f4; 
+      }
+    
+    .preview-heading{
+        color:var(--primary-color);  ;
+    }
