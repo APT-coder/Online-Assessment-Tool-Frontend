@@ -58,3 +58,30 @@ $letterColor:#1D335F;
     margin-top: 30px;
     width: 900px;
 }
+.modal-top{
+    display: flex;
+    justify-content:space-between;
+    padding-bottom:10px;
+}
+.modal-top-buttons{
+    display: flex;
+    gap:10px;
+}
+.select{
+    padding-left: 10px;
+}
+.admin-checkbox{
+    display: flex;
+    justify-content: flex-start;
+    gap:10px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+.card {
+    border: none;
+}
+
+
+ ::ng-deep .p-button-label{
+    font-weight: normal;
+ }
