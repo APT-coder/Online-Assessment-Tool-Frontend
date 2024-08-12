@@ -73,3 +73,21 @@ $text-colour:#3b82f6;
     align-items: center;
     color: blue;
 }
+.docx-content {
+    padding: 10px;
+    border: 1px solid #ccc;
+    max-width: 100%;
+    overflow-x: auto;
+    background-color: #fffdfd;
+  }
+
+ ::ng-deep .pi-download:before{
+    color:  #22c55e;
+  }
+  ::ng-deep .p-ripple{
+    background: white;
+  }
+
+  .preview-heading{
+    color:var(--primary-color);
+  }
