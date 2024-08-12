@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
+import { EmailService } from '../../../../service/email/email.service';
 
 
 interface Trainee {
@@ -44,14 +45,14 @@ export class AssessmentPerformanceComponent implements OnInit {
 
   trainees!: Trainee[];
   originalProducts!: Trainee[];
-  selectedTrainees!: Trainee;
+  selectedTrainees!: Trainee[];
 
   performanceData!: {maximumScore: string, totalTrainees: string, traineesAttended: string, absentees: string, assessmentDate: Date, assessmentName: string, batchName: string};
 
   isLoading: boolean = true; // Loading state
   visible: boolean = false;
 
-  constructor(private route: ActivatedRoute, private performanceService: PerformanceDetailsService) {}
+  constructor(private route: ActivatedRoute, private performanceService: PerformanceDetailsService,private emailService: EmailService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -130,7 +131,30 @@ export class AssessmentPerformanceComponent implements OnInit {
   showDialog() {
     this.visible = true;  
 }
-sendMail(){
-console.log(this.selectedTrainees)
+async sendMail() {
+  const emailRequests = await Promise.all(
+    this.selectedTrainees.map(async (trainee: { traineeName: string;score: number }) => {
+      const userDetails = await this.emailService.getUserEmailByUsername(trainee.traineeName).toPromise();
+    return {
+      toEmail: userDetails.email,
+      subject: 'Assessment Performance',
+        body: `Your Score is ${trainee.score}` 
+    }
+
+    })
+  );
+  
+console.log(this.selectedTrainees);
+console.log(emailRequests);
+
+  emailRequests.forEach((request: { toEmail: string; subject: string; body: string; }) => {
+    this.emailService.sendEmail(request).subscribe(response => {
+      console.log('Email sent successfully!', response);
+    }, error => {
+      console.error('Error sending email', error);
+    });
+  });
 }
+
+
 }
