@@ -9,6 +9,11 @@ import { PerformanceDetailsService } from '../../../../service/performance-detai
 import { PerformanceDetails } from '../../../../../models/performanceDetails.interface';
 import * as XLSX from 'xlsx';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 interface Trainee {
   traineeName: string;
@@ -24,7 +29,8 @@ interface Trainee {
     TableComponent,
     SidebarComponent,
     CommonModule,
-    ProgressBarModule],
+    ProgressBarModule,DialogModule, ButtonModule,
+    TableModule,CheckboxModule],
   templateUrl: './assessment-performance.component.html',
   styleUrl: './assessment-performance.component.scss'
 })
@@ -38,9 +44,12 @@ export class AssessmentPerformanceComponent implements OnInit {
 
   trainees!: Trainee[];
   originalProducts!: Trainee[];
+  selectedTrainees!: Trainee;
+
   performanceData!: {maximumScore: string, totalTrainees: string, traineesAttended: string, absentees: string, assessmentDate: Date, assessmentName: string, batchName: string};
 
   isLoading: boolean = true; // Loading state
+  visible: boolean = false;
 
   constructor(private route: ActivatedRoute, private performanceService: PerformanceDetailsService) {}
 
@@ -51,6 +60,17 @@ export class AssessmentPerformanceComponent implements OnInit {
       this.fetchPerformanceData(this.scheduledAssessmentId);
       this.fetchTraineesData(this.scheduledAssessmentId);
     });
+  }
+
+  onSearch(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm) {
+      this.trainees = this.originalProducts.filter(trainee =>
+        trainee.traineeName.toLowerCase().includes(searchTerm)
+      );
+    } else {
+      this.trainees = [...this.originalProducts];
+    }
   }
 
   fetchPerformanceData(scheduledAssessmentId: number) {
@@ -106,4 +126,11 @@ export class AssessmentPerformanceComponent implements OnInit {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Performance Data');
     XLSX.writeFile(workbook, 'assessment_performance.xlsx');
   }
+
+  showDialog() {
+    this.visible = true;  
+}
+sendMail(){
+console.log(this.selectedTrainees)
+}
 }
