@@ -6,21 +6,28 @@ import { CommonModule } from '@angular/common';
 import { WordParserService } from '../../../../service/doc-parser/word-parser.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UploadSuccessComponent } from '../upload-success/upload-success.component';
+import * as mammoth from 'mammoth';
+import { HttpClient } from '@angular/common/http';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [ButtonActiveComponent, ButtonInactiveComponent, ButtonNormalComponent, CommonModule, UploadSuccessComponent],
+  imports: [ButtonActiveComponent, ButtonInactiveComponent, ButtonNormalComponent, CommonModule, UploadSuccessComponent, DialogModule, ButtonModule],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.scss'
 })
 export class FileUploadComponent {
   fileName: string | undefined;
   uploaded: boolean = false;
+  visibleTemplatePreview = false;
+  wordTemplateContent: any;
 
   constructor(
     private wordParserService: WordParserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private http: HttpClient
   ) {}
 
   async onFileSelected(event: Event) {
@@ -116,4 +123,35 @@ export class FileUploadComponent {
     document.body.removeChild(link);
   }
   
+  async openTemplatePreview() {
+    this.uploaded = true;
+    this.visibleTemplatePreview = true;
+
+    try {
+      await this.readWordFile("assets/Assessment_Template.docx");
+      console.log(this.wordTemplateContent);
+    } catch (error) {
+      console.error('Error processing template preview:', error);
+    }
+  }
+
+  private async readWordFile(filePath: string): Promise<void> {
+    try {
+      const arrayBuffer = await this.http.get(filePath, { responseType: 'arraybuffer' }).toPromise();
+      await this.processDocxFile(arrayBuffer);
+    } catch (error) {
+      console.error('Error loading file:', error);
+      throw error; // rethrow to catch in openTemplatePreview
+    }
+  }
+
+  private async processDocxFile(arrayBuffer: any): Promise<void> {
+    try {
+      const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+      this.wordTemplateContent = result.value; // Get the HTML content from the .docx file
+    } catch (err) {
+      console.error('Error reading .docx file:', err);
+      throw err; // rethrow to catch in readWordFile
+    }
+  }
 }

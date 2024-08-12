@@ -12,7 +12,7 @@
             <p class="upload-content">Drag and Drop a File<br/>
               or <label for="fileInput" class="select">select a file</label> from your computer</p>
             <input type="file" id="fileInput" accept=".docx, .xlsx" style="display:none;" (change)="onFileSelected($event)">
-            <app-button-inactive class="template" [content]="'Get Template'" (click)="downloadTemplate()"></app-button-inactive>
+            <app-button-inactive class="template" [content]="'Get Template'" (click)="openTemplatePreview()"></app-button-inactive>
           </div>
           <p class="file-name" *ngIf="fileName">{{ fileName }} <span *ngIf="uploaded">- Uploaded</span></p>
         </div>
@@ -26,3 +26,18 @@
 <div *ngIf="uploaded">
   <app-upload-success (prepareTest)="prepareTestAndCloseModal()"></app-upload-success>
 </div>
+
+<p-dialog [(visible)]="visibleTemplatePreview" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" >
+  <ng-template pTemplate="header">
+    <div class="flex justify-content-between align-items-center">
+      <span class="preview-heading">Template Preview</span>
+      <div>
+        <p-button  pRipple type="button" icon="pi pi-download" class="p-button-text p-button-rounded" (click)="downloadTemplate()"></p-button>
+      </div>
+    </div>
+  </ng-template>
+  
+ 
+  <div class="docx-content" [innerHTML]="wordTemplateContent"></div>
+  
+</p-dialog>
