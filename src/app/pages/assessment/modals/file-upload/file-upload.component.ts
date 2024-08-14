@@ -6,15 +6,16 @@ import { CommonModule } from '@angular/common';
 import { WordParserService } from '../../../../service/doc-parser/word-parser.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UploadSuccessComponent } from '../upload-success/upload-success.component';
-import * as mammoth from 'mammoth';
-import { HttpClient } from '@angular/common/http';
 import { DialogModule } from 'primeng/dialog';
+import * as mammoth from 'mammoth';
+import * as XLSX from 'xlsx';
+import { HttpClient } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [ButtonActiveComponent, ButtonInactiveComponent, ButtonNormalComponent, CommonModule, UploadSuccessComponent, DialogModule, ButtonModule],
+  imports: [ButtonActiveComponent, ButtonInactiveComponent, ButtonNormalComponent, CommonModule, UploadSuccessComponent,DialogModule, ButtonModule],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.scss'
 })
@@ -23,6 +24,9 @@ export class FileUploadComponent {
   uploaded: boolean = false;
   visibleTemplatePreview = false;
   wordTemplateContent: any;
+  isWordPreview: boolean = true;
+  excelTemplateContent: string = '';
+  isExcel: boolean = false;
 
   constructor(
     private wordParserService: WordParserService,
@@ -100,29 +104,50 @@ export class FileUploadComponent {
   closeUploadModal(){
     const modalElement = document.getElementById('exampleModal');
     if (modalElement) {
-      modalElement.style.display = 'none'; // Hide the modal
+      modalElement.style.display = 'none';
+    }
+  }
+  onToggleChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.isExcel = inputElement.checked;
+    this.isWordPreview = !inputElement.checked;
+    if (!this.isWordPreview) {
+      this.loadExcelFile();
     }
   }
 
-  downloadTemplate() {
-   
-    const templateUrl = 'assets/Assessment_Template.docx';
+  getPreviewHeading(): string {
+    return this.isWordPreview ? 'Word Preview Template (.docx)' : 'Excel Preview Template (.xlsx)';
+  }
 
-    // Create a temporary link element
+  loadExcelFile(): void {
+    const filePath = 'assets/Assessment Template.xlsx';
+
+    this.http.get(filePath, { responseType: 'arraybuffer' }).subscribe(data => {
+      const workbook = XLSX.read(new Uint8Array(data), { type: 'array' });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      this.excelTemplateContent = XLSX.utils.sheet_to_html(worksheet);
+      const startIndex = this.excelTemplateContent.indexOf('<title>');
+      const endIndex = this.excelTemplateContent.indexOf('</title>') + '</title>'.length;
+      this.excelTemplateContent = this.excelTemplateContent.slice(0, startIndex) + this.excelTemplateContent.slice(endIndex);
+      console.log(this.excelTemplateContent);    
+    });
+  }
+
+
+  downloadTemplate() {
+    const isExcel = this.isExcel;
+    const wordTemplateUrl = 'assets/Assessment_Template.docx';
+    const excelTemplateUrl = 'assets/Assessment Template.xlsx';
     const link = document.createElement('a');
-    link.href = templateUrl;
-    link.download = 'Assessment_Template.docx';
-  
-    
+    link.href = isExcel ? excelTemplateUrl : wordTemplateUrl;
+    link.download = isExcel ? 'Assessment_Template.xlsx' : 'Assessment_Template.docx';
     document.body.appendChild(link);
-  
-    // Simulate a click on the link to trigger the download
     link.click();
-  
-    // Remove the link from the body
     document.body.removeChild(link);
   }
-  
+
   async openTemplatePreview() {
     this.uploaded = true;
     this.visibleTemplatePreview = true;
@@ -141,17 +166,17 @@ export class FileUploadComponent {
       await this.processDocxFile(arrayBuffer);
     } catch (error) {
       console.error('Error loading file:', error);
-      throw error; // rethrow to catch in openTemplatePreview
+      throw error;
     }
   }
 
   private async processDocxFile(arrayBuffer: any): Promise<void> {
     try {
       const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-      this.wordTemplateContent = result.value; // Get the HTML content from the .docx file
+      this.wordTemplateContent = result.value;
     } catch (err) {
       console.error('Error reading .docx file:', err);
-      throw err; // rethrow to catch in readWordFile
+      throw err;
     }
   }
 }
