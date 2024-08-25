@@ -61,7 +61,7 @@ export class CreateTestFormComponent implements OnInit {
   showScrollToTopButton = false;
   showScrollToBottomButton = true;
 
-  questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' }];
+  questions: { id: number, type: string, score: number, content: string, options: Option[], correctAnswer: string[] }[] = [{ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: [] }];
   assessmentCreated!: boolean;
   totalScore: number = 0;
   createdBy: number = this.user.TrainerId;
@@ -137,7 +137,7 @@ export class CreateTestFormComponent implements OnInit {
 
   addNewQuestion() {
     const newQuestionId = this.questions.length + 1;
-    this.questions.push({ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: '' });
+    this.questions.push({ id: 1, type: '', score: 0, content: '', options: [], correctAnswer: [] });
   }
 
   removeQuestion(index: number) {
@@ -146,19 +146,21 @@ export class CreateTestFormComponent implements OnInit {
 
   onMcqData(data: any, index: number) {
     this.questions[index].content = data.question;
-    const correctChoice = data.options.find((option: Option) => option.isCorrect);
-    this.questions[index].correctAnswer = correctChoice.option;
+    const correctChoices = data.options
+        .filter((option: Option) => option.isCorrect)
+        .map((option: Option) => option.option);
+    this.questions[index].correctAnswer = correctChoices;    
     this.questions[index].options = data.options.map((option: Option) => option.option);
   }
 
   onDescData(data: any, index: number) {
     this.questions[index].content = data.question;
-    this.questions[index].correctAnswer = data.answer;
+    this.questions[index].correctAnswer = [data.answer];
   }
 
   onFillData(data: any, index: number) {
     this.questions[index].content = data.question;
-    this.questions[index].correctAnswer = data.answer;
+    this.questions[index].correctAnswer = [data.answer];
   }
 
   logQuestions() {

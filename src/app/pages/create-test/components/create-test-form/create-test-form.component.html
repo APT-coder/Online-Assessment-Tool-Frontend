@@ -40,7 +40,10 @@
           </div>
         </div>
         <div *ngIf="question.type === 'mcq'">
-          <app-mcq-form [index]="i" (mcqData)="onMcqData($event, i)"></app-mcq-form>
+          <app-mcq-form [index]="i" [type]="'mcq'" (mcqData)="onMcqData($event, i)"></app-mcq-form>
+        </div>
+        <div *ngIf="question.type === 'msq'">
+          <app-mcq-form [index]="i" [type]="'msq'" (mcqData)="onMcqData($event, i)"></app-mcq-form>
         </div>
         <div *ngIf="question.type === 'descriptive'">
           <app-descriptive-form [index]="i" (descData)="onDescData($event, i)"></app-descriptive-form>

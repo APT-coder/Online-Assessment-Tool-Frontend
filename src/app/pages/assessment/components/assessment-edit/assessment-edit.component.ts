@@ -10,7 +10,7 @@ interface Question {
   type: string;
   content: string;
   options?: string[];
-  correctAnswer: string;
+  correctAnswer: string[];
   score: number;
 }
 
@@ -58,14 +58,14 @@ export class AssessmentEditComponent {
       type: 'mcq',
       content: '',
       options: [''],
-      correctAnswer: '',
+      correctAnswer: [''],
       score: 0
     });
     this.questionsChange.emit(this.questions);
   }
 
   setCorrectAnswer(question: Question, option: string) {
-    question.correctAnswer = option;
+    question.correctAnswer.push(option);
     this.questionsChange.emit(this.questions);
   }
 
