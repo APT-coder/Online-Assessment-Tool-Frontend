@@ -28,11 +28,11 @@ export class AuthComponent {
       setTimeout(() => {
         
         if (this.userRoleData.UserType === 0) {
-          this.route.navigate(['/admin']);
+          this.route.navigate(['/app/admin']);
         } else if (this.userRoleData.UserType === 1) {
-          this.route.navigate(['/trainer']);
+          this.route.navigate(['/app/trainer']);
         } else {
-          this.route.navigate(['/trainee']);
+          this.route.navigate(['/app/trainee']);
         }
       }, 3000);
     } catch (error) {

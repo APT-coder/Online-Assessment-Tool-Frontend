@@ -182,7 +182,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
     console.log('NEED BACKEND CONNECTION DONE');
     ///MAIN
     console.log(this.question);
-    this.router.navigate(["/trainee"]);
+    this.router.navigate(["/app/trainee"]);
   }
 
   sendDataBeforeClosing() {
