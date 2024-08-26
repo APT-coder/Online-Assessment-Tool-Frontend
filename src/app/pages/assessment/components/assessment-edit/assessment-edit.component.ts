@@ -10,7 +10,7 @@ interface Question {
   type: string;
   content: string;
   options?: string[];
-  correctAnswer: string;
+  correctAnswer: string[];
   score: number;
 }
 
@@ -58,14 +58,26 @@ export class AssessmentEditComponent {
       type: 'mcq',
       content: '',
       options: [''],
-      correctAnswer: '',
+      correctAnswer: [''],
       score: 0
     });
     this.questionsChange.emit(this.questions);
   }
 
-  setCorrectAnswer(question: Question, option: string) {
-    question.correctAnswer = option;
+  setCorrectAnswer(question: Question, option: string, event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+  
+    if (isChecked) {
+      if (!question.correctAnswer.includes(option)) {
+        question.correctAnswer.push(option);
+      }
+    } else {
+      const index = question.correctAnswer.indexOf(option);
+      if (index > -1) {
+        question.correctAnswer.splice(index, 1);
+      }
+    }
+  
     this.questionsChange.emit(this.questions);
   }
 

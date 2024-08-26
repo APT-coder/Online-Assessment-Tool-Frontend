@@ -10,7 +10,7 @@ interface Question {
   type: string;
   content: string;
   options?: string[];
-  correctAnswer: string;
+  correctAnswer: string[];
   score: number;
 }
 
