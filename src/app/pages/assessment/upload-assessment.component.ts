@@ -26,7 +26,7 @@ interface Question {
   type: string;
   content: string;
   options?: string[];
-  correctAnswer?: string;
+  correctAnswer?: string[];
   score: number;
   userAnswer?: string;
 }
@@ -176,13 +176,13 @@ export class AssessmentComponent implements OnInit {
             type: 'unknown',
             content: text.replace('Question:', '').trim(),
             options: [],
-            correctAnswer: '',
+            correctAnswer: [],
             score: 0
           };
         } else if (text.startsWith('Options:')) {
           currentQuestion!.type = 'mcq';
         } else if (text.startsWith('Correct Answer:')) {
-          currentQuestion!.correctAnswer = text.replace('Correct Answer:', '').trim();
+          currentQuestion!.correctAnswer = [text.replace('Correct Answer:', '').trim()];
         } else if (text.startsWith('Score:')) {
           currentQuestion!.score = parseInt(text.replace('Score:', '').trim(), 10);
         } else if (currentQuestion && currentQuestion.type === 'mcq' && /^[A-Z]\./.test(text)) {
@@ -190,10 +190,10 @@ export class AssessmentComponent implements OnInit {
         } else if (currentQuestion && currentQuestion.type === 'unknown') {
           if (currentQuestion.content.startsWith('Fill in the blank')) {
             currentQuestion.type = 'fillup';
-            currentQuestion.correctAnswer = text.replace('____', '').trim();
+            currentQuestion.correctAnswer = [text.replace('____', '').trim()];
           } else {
             currentQuestion.type = 'descriptive';
-            currentQuestion.correctAnswer = text.trim();
+            currentQuestion.correctAnswer = [text.trim()];
           }
         }
       });

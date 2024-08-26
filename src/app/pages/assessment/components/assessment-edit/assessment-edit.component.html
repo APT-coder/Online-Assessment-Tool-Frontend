@@ -33,12 +33,12 @@
                     <input type="text" id="option{{ i }}{{ j }}" [(ngModel)]="question.options![j]" name="option{{ i }}{{ j }}" class="form-control">
                     <div class="form-check">
                       <input type="radio" id="correct{{ i }}{{ j }}" name="correct{{ i }}" class="form-check-input custom-radio" [checked]="question.correctAnswer.includes(option)" (change)="setCorrectAnswer(question, option, $event)">
-                      <label class="form-check-label" for="correct{{ i }}{{ j }}">
+                      <label class="form-check-label form-mcq" for="correct{{ i }}{{ j }}">
                         Correct Answer
                       </label>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-secondary add-option-btn" (click)="addOption(i)">Add Option</button>
+                  <button type="button" class="btn btn-secondary add-option-btn mcq-add-option" (click)="addOption(i)">Add Option</button>
                 </div>
                 
                 <!-- MSQ Case -->
