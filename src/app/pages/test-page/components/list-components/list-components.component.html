@@ -4,7 +4,7 @@
       <ul class="grid-container">
     
         <!-- @if (selectedOption==-1) { -->
-        <div *ngFor="let option of questions[0] | optionsFilter; let i = index">
+        <div *ngFor="let option of fullQuestions.questionOptions[0]?.options; let i = index">
           <button class="wrapper-button" (click)="handleClick(option, i)">
             <div class="center-wrapper">
               <div class="option-box" #optionBox [ngClass]="{'clicked': selectedOption === i}">
@@ -60,7 +60,25 @@
     </div>
     }
    
-   
+ 
+      @if (questionType == "msq") {
+        <div class="list-container">
+          <ul class="grid-container">
+            <div *ngFor="let option of fullQuestions.questionOptions[0]?.options; let i = index">
+              <button class="wrapper-button" (click)="handleMultipleClick(option, i)">
+                <div class="center-wrapper">
+                  <div class="option-box" #optionBox [ngClass]="{'clicked': selectedOptions.includes(i)}">
+                    <span class="option-label">{{ i + 1 }}.</span>
+                    <span class="option-content">{{ option }}</span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </ul>
+        </div>
+      }
+
+        
    
     @if (isChecked=="marked") {
       <div class="mark-for-review">
@@ -76,5 +94,7 @@
      
     }
    
+    <div class="option-sizer"></div>
+      
    
 </div>
