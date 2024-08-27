@@ -1,12 +1,14 @@
 <div class="sidebar-container">
-  <p-sidebar #sidebarRef [style]="{'width':'250px'}" [position]="'left'" [visible]="true" [modal]="false" [baseZIndex]="1000">
+  <p-sidebar #sidebarRef [style]="{'width': sidebarCollapsed ? '80px' : '220px'}" [position]="'left'" [visible]="true" [modal]="false" [baseZIndex]="1000">
     <ng-template pTemplate="headless">
       <div class="flex flex-column h-full">
         <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
           <span class="inline-flex align-items-center gap-2">
-            <span class="font-semibold text-2xl text-primary">Knowlix</span>
+            <span class="font-semibold text-2xl text-primary" *ngIf="!sidebarCollapsed">KnowliX</span>
+            <span class="font-semibold text-2xl text-primary" *ngIf="sidebarCollapsed">K</span>
+            <i class="pi pi-angle-left cursor-pointer ml-3" *ngIf="!sidebarCollapsed" (click)="toggleSidebar()"></i>
+            <i class="pi pi-angle-right cursor-pointer ml-3" *ngIf="sidebarCollapsed" (click)="toggleSidebar()"></i>
           </span>
-          <!-- Optional close button -->
         </div>
         <div class="overflow-y-auto">
           <ul class="list-none p-3 m-0">
@@ -18,7 +20,7 @@
                      routerLinkActive="active-link" 
                      [routerLinkActiveOptions]="{exact: true}">
                     <i class="pi pi-home mr-2"></i>
-                    <span class="font-medium">Dashboard</span>
+                    <span class="font-medium" *ngIf="!sidebarCollapsed">Dashboard</span>
                   </a>
                 </li>
                 <ng-container *ngIf="user.UserType === 0 || user.UserType === 1">
@@ -29,7 +31,7 @@
                          routerLinkActive="active-link" 
                          [routerLinkActiveOptions]="{exact: true}">
                         <i class="pi pi-users mr-2"></i>
-                        <span class="font-medium">User Management</span>
+                        <span class="font-medium" *ngIf="!sidebarCollapsed">User Management</span>
                       </a>
                     </li>
                   </ng-container>
@@ -39,7 +41,7 @@
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}">
                       <i class="pi pi-plus mr-2"></i>
-                      <span class="font-medium">Create Test</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Create Test</span>
                     </a>
                   </li>
                   <li>
@@ -48,7 +50,7 @@
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}">
                       <i class="pi pi-upload mr-2"></i>
-                      <span class="font-medium">Upload Questions</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Upload Questions</span>
                     </a>
                   </li>
                 </ng-container>
@@ -60,7 +62,7 @@
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}"> -->
                       <i class="pi pi-plus mr-2"></i>
-                      <span class="font-medium" >Scheduled Tests</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Scheduled Tests</span>
                     </a>
                   </li>
                   <li>
@@ -70,19 +72,20 @@
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}"> -->
                       <i class="pi pi-upload mr-2"></i>
-                      <span class="font-medium" >Attended Tests</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Attended Tests</span>
                     </a>
                   </li>
                 </ng-container>
+                <!-- More items as needed -->
               </ul>
             </li>
           </ul>
         </div>
         <div class="mt-auto">
-          <hr class=" border-top-1 border-none surface-border" />
-          <p-button (onClick)="op.toggle($event)" [plain]="true" [severity]="'secondary'" [text]="true" pRipple class="m-5  p-3 flex align-items-center cursor-pointer gap-2 border-round text-700  transition-duration-150 p-ripple">
+          <hr class="border-top-1 border-none surface-border" />
+          <p-button (onClick)="op.toggle($event)" [plain]="true" [severity]="'secondary'" [text]="true" pRipple class="m-5 p-3 flex align-items-center cursor-pointer gap-2 border-round text-700 transition-duration-150 p-ripple">
             <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
-            <span class="font-bold">{{username}}</span>
+            <span class="font-bold" *ngIf="!sidebarCollapsed">{{username}}</span>
           </p-button>
         </div>
       </div>

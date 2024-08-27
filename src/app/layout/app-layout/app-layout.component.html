@@ -1,13 +1,11 @@
 <div class="container">
-    <div class="row">
-      <div class="col-2">
-        <div class="sidebar">
-          <app-sidebar></app-sidebar>
-        </div>
-      </div>
-  
-      <div class="col-10">
-        <router-outlet></router-outlet>
-      </div>
+  <div class="row">
+    <div class="col-sidebar" [ngClass]="{'col-collapsed': !sidebarToggled}">
+      <app-sidebar (sidebarToggled)="onSidebarToggled($event)"></app-sidebar>
     </div>
+    
+    <div class="col-content" [ngClass]="{'col-expanded': sidebarToggled}">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

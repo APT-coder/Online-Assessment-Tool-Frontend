@@ -35,6 +35,14 @@ export class SidebarComponent {
       this.isSchedule.emit(scheduled);
   }
 
+  sidebarCollapsed = false;
+  @Output() sidebarToggled = new EventEmitter<boolean>();
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+    this.sidebarToggled.emit(this.sidebarCollapsed);
+  }
+
   user = JSON.parse(localStorage.getItem('userDetails') as string);
   username = this.user.UserName;
     hoveredRow: number | null = null;
