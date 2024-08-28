@@ -4,6 +4,15 @@
   height: 100vh;
 }
 
+.message-container {
+  position: absolute; 
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 30%;
+  margin-left: 30%;
+}
+
 .form_main {
   width: 400px;
   height: 80vh;

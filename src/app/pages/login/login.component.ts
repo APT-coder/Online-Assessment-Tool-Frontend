@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthComponent } from '../../guard/auth/auth.component'; 
 import { AuthService } from '../../service/auth/auth.service';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -27,10 +29,12 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     MatButtonModule,
     MatIconModule,
     AuthComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    MessagesModule
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
@@ -49,7 +53,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: MsalService,
     private authUserService: AuthService,
     private msalBroadcastService: MsalBroadcastService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -163,9 +168,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         if(!response.isSuccess){
           if(!response.result && response.statusCode == 401){
             console.log("Invalid username or password", response);
+            this.messageService.add({ severity: 'error', summary: 'Login failed ', detail: 'Invalid email or password', life: 5000 });
           }
           else if(response.statusCode == 403){
             console.log("User inactive, Reset Password", response);
+            this.messageService.add({ severity: 'error', summary: 'Login failed ', detail: 'Password Expired ! Reset Password to continue', life: 10000 });
             this.userInactive = true;
             this.resetPassword = true;
             this.email = response.result;

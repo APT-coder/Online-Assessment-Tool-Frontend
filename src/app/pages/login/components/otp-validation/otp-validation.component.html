@@ -17,7 +17,11 @@
             </ng-template>
         </p-inputOtp>
         <div class="flex justify-content-between mt-5 align-self-stretch">
-            <p-button label="Resend Code" [link]="true" class="p-0"/>
+            <p-button label="Resend Code" [link]="true" class="p-0" (click)="resendCode()" [disabled]="!canResend"/>
             <p-button label="Submit Code" (onClick)="verifyOtp()"/>
-        </div>
+          </div>
+          
+          <div class="mt-3 text-color-secondary">
+            Resend available in: {{ timer }} seconds
+          </div>
     </div>

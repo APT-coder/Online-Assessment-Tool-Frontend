@@ -73,6 +73,12 @@ export class ResetPasswordComponent {
     }
   }
 
+  resendOtp(data: boolean){
+    if(data){
+      this.generateOtp();
+    }
+  }
+
   passwordMatchValidator(form: FormGroup): null | { passwordMismatch: boolean } {
     const newPassword = form.get('newPassword')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
