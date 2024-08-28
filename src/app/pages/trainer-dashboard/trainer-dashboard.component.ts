@@ -4,7 +4,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { TableDashboardComponent } from './components/table-dashboard/table-dashboard.component';
 import { PieDiagramComponent } from './components/pie-diagram/pie-diagram.component';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../service/user/user.service';
+import { AuthService } from '../../service/auth/auth.service'; 
 import { BarGraphComponent } from "./components/bar-graph/bar-graph/bar-graph.component";
 
 @Component({
@@ -21,7 +21,7 @@ export class TrainerDashboardComponent {
   isDataAvailable: boolean = false;
   noDataMessage: string = 'Select the evaluated assessment to see the data';
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService) {}
 
   showModal() {
     this.isModalVisible = true;

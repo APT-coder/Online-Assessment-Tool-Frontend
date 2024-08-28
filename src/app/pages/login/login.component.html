@@ -1,4 +1,7 @@
 @if(!loginDisplay){
+    <div class="message-container">
+        <p-messages></p-messages>
+    </div>    
     <div class="login-container">
         <div class="split-screen">
             <div class="content-card">
@@ -96,7 +99,7 @@
                         <div class="error-msg" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
                       </div>     
                     <button id="button" [disabled]="loginForm.invalid">Submit</button>
-                        <a class="forgotLink" href="#">Forgot your password?</a>
+                        <a class="forgotLink" href="#" (click)="forgotPassword()">Forgot your password?</a>
                     </form>
                     
                 </div>
@@ -111,3 +114,6 @@
     @if (!isIframe) {
     <app-auth></app-auth>}
     }
+@if(resetPassword){
+    <app-reset-password [visible]="resetPassword" [userInactive]="userInactive" [email]="email"></app-reset-password>
+}

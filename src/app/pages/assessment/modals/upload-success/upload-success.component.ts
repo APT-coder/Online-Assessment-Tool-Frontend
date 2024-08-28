@@ -68,6 +68,6 @@ export class UploadSuccessComponent {
   }
 
   returnToDashboard() {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/app/admin']);
   }
 }

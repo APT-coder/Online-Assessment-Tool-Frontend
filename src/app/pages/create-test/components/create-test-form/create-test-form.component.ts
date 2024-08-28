@@ -198,7 +198,7 @@ export class CreateTestFormComponent implements OnInit {
         this.scrollToTop();
 
         setTimeout(() => {
-          this.router.navigate([`/${this.dashboard}`]);
+          this.router.navigate([`/app/${this.dashboard}`]);
         }, 5000);
       }, (error: any) => {
         console.error('Error posting question', error);

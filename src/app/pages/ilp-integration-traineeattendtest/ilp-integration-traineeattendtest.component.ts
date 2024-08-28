@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Route, Router } from '@angular/router';
-import { UserService } from '../../service/user/user.service';
+import { AuthService } from '../../service/auth/auth.service'; 
 import { ScheduledAssessmentService } from '../../service/scheduled-assessment/scheduled-assessment.service';
 import { ScheduledService } from '../../service/scheduled-assessment/scheduled.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -20,7 +20,7 @@ export class IlpIntegrationTraineeattendtestComponent implements OnInit {
   scheduledAssessmentDetails: any;
   assessmentPayload: any;
   constructor(private route: ActivatedRoute, private router: Router,
-    private userService : UserService, 
+    private authService : AuthService, 
     private scheduledAssessmentService : ScheduledAssessmentService,
     private scheduledService : ScheduledService
     ) {
@@ -46,7 +46,7 @@ export class IlpIntegrationTraineeattendtestComponent implements OnInit {
   
   getUserRole(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.userService.getUserRole(this.token).subscribe(
+      this.authService.getUserRole(this.token).subscribe(
         (data) => {
           resolve(data);
         },
