@@ -21,7 +21,7 @@
             <p-button label="Submit Code" (onClick)="verifyOtp()"/>
           </div>
           
-          <div class="mt-3 text-color-secondary">
+          <div class="mt-3 text-color-secondary" *ngIf="!canResend">
             Resend available in: {{ timer }} seconds
           </div>
     </div>
