@@ -101,5 +101,6 @@ openFileExplorer() {
 
 logout() {
   this.authService.logoutRedirect();
+  localStorage.removeItem("msalKey");
 }
 }

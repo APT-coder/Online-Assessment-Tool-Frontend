@@ -19,18 +19,19 @@ import { PermissionsGuard } from './guard/route/permissions.guard';
 import { AccessDeniedComponent } from './components/error/403-access-denied/access-denied.component';
 import { InternalServerErrorComponent } from './components/error/500-internal-server-error/internal-server-error/internal-server-error.component'; 
 import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
+import { AuthGuard } from './guard/auth/auth.guard';
 
 export const routes: Routes = [
     {
         path: '', component: LoginComponent
     },
     {
-        path: 'auth', component: AuthComponent, canActivate: [MsalGuard],
+        path: 'auth', component: AuthComponent, canActivate: [AuthGuard]
     },
     {
         path: 'app',
         component: AppLayoutComponent,
-        canActivate: [MsalGuard],
+        canActivate: [AuthGuard],
         children: [
             {
                 path: 'trainer', 
