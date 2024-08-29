@@ -3,7 +3,6 @@ import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/butt
 import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
-
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -101,16 +100,99 @@ loadStudentCount(scheduledAssessmentId: number): void {
 }
 
 
+// onStudentClick(traineeId: number): void {
+//   this.isLoading = true; // Start loading state
+//   this.selectedStudentId = traineeId;
+
+//   this.scheduledAssessmentService.getTraineeAnswerDetails(traineeId, this.scheduledAssessmentId)
+//     .subscribe({
+//       next: (data) => {
+//         // Ensure data.result is an array and map it to the expected format
+//         this.selectedStudentResponses = data.result.map((response: TraineeAnswerDetailDTO) => {
+//           console.log('Raw Response:', response);
+
+//           // Adapt the response to match the expected structure
+//           let optionsArray: string[] = [];
+//           let correctAnswer: string = '';
+
+//           if (response.questionOptions) {
+//             optionsArray = response.questionOptions['options'] || []; // Adjust to match the field names
+//             correctAnswer = response.questionOptions['correctAnswers'].join(', ') || ''; // Join correctAnswers if needed
+//           } else {
+//             console.warn('questionOptions is missing or malformed:', response.questionOptions);
+//           }
+
+//           return {
+//             ...response,
+//             questionOptions: {
+//               Options: optionsArray, // Assign the options array
+//               correctAnswer: correctAnswer // Handle multiple correct answers if necessary
+//             }
+//           };
+//         });
+
+//         console.log('Processed Student Responses:', this.selectedStudentResponses);
+//         this.isLoading = false; // Stop loading state
+//       },
+//       error: (error) => {
+//         console.error('Error fetching trainee answers:', error);
+//         this.isLoading = false; // Stop loading state on error
+//       }
+//     });
+// }
+
 onStudentClick(traineeId: number): void {
-  console.log('Clicked trainee ID:', traineeId); 
-  this.selectedStudentId = traineeId; // Update the selected student ID
-  this.scheduledAssessmentService.getTraineeAnswerDetails(traineeId,this.scheduledAssessmentId)
-    .subscribe( data => {
-      this.selectedStudentResponses = data.result;
-      console.log(this.selectedStudentResponses);
+  this.isLoading = true;
+  this.selectedStudentId = traineeId;
+
+  this.scheduledAssessmentService.getTraineeAnswerDetails(traineeId, this.scheduledAssessmentId)
+    .subscribe({
+      next: (data) => {
+        this.selectedStudentResponses = data.result.map((response: TraineeAnswerDetailDTO) => {
+          console.log('Raw Response:', response);
+
+          let optionsArray: string[] = [];
+          let correctAnswer: string | string[] = [];
+
+          if (response.questionOptions) {
+            optionsArray = response.questionOptions['options'] || [];
+            
+            // Determine if the question is MCQ or MSQ and set the correct answer accordingly
+            if (response.questionType === 'mcq') {
+              // MCQ: correctAnswer should be a single value
+              correctAnswer = response.questionOptions['correctAnswers']?.[0] || '';
+            } else if (response.questionType === 'msq') {
+              // MSQ: correctAnswer should be an array of values
+              correctAnswer = response.questionOptions['correctAnswers'] || [];
+            } else {
+              console.warn('Unknown question type:', response.questionType);
+            }
+          } else {
+            console.warn('questionOptions is missing or malformed:', response.questionOptions);
+          }
+
+          return {
+            ...response,
+            questionOptions: {
+              Options: optionsArray,
+              correctAnswer: correctAnswer
+            }
+          };
+        });
+
+        console.log('Processed Student Responses:', this.selectedStudentResponses);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching trainee answers:', error);
+        this.isLoading = false;
+      }
     });
-    this.isLoading = false; // Data is loaded, stop loading
 }
+
+
+
+
 
 onScoreChange(questionId: number, newScore: number): void {
   const assessmentId = this.scheduledAssessmentId;

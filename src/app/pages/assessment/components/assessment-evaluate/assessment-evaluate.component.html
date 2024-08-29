@@ -42,47 +42,98 @@
             >
               <h6>{{ i + 1 }}. {{ question.questionText }}</h6>
               <ng-container [ngSwitch]="question.questionType">
-                <ul *ngSwitchCase="'mcq'" class="mcq">
+              <ul *ngSwitchCase="'mcq'" class="mcq">
+  <div class="mark-box">
+    <input
+      type="number"
+      name="score{{ i }}"
+      readonly
+      #score="ngModel"
+      [(ngModel)]="question.score"
+      [min]="0"
+      [max]="question.points"
+      [class.invalid]="question.score < 0 || question.score > question.points"
+      (ngModelChange)="onScoreChange(question.questionId, $event)"
+    />&nbsp;
+    <span>out of {{ question.points }}</span>
+  </div>
+  <div *ngIf="question.score < 0 || question.score > question.points" class="error-message">
+    Score must be between 0 and {{ question.points }}.
+  </div>
+
+  <!-- Display the options -->
+  <ul *ngIf="question.questionOptions.Options && question.questionOptions.Options.length > 0">
+    <li
+    *ngFor="let option of question.questionOptions.Options"
+    [ngClass]="{
+      'correct-option': option === question.questionOptions.correctAnswer && (option !== question.answer || question.answer === option),
+      'incorrect-option': option === question.answer && option !== question.questionOptions.correctAnswer,
+      'option': option !== question.questionOptions.correctAnswer && option !== question.answer
+    }"
+  >
+    {{ option }}
+  </li>
+  
+  
+
+  </ul>
+
+  <div class="correct-answer">
+    <strong>Correct Answer:</strong>
+    {{ question.questionOptions.correctAnswer }}
+  </div>
+</ul>
+
+                
+            
+                <!-- MSQ Type -->
+                <ul *ngSwitchCase="'msq'" class="msq">
                   <div class="mark-box">
-                    <input type="number"
-                    name="score{{i}}"
-                    readonly
-                    #score="ngModel"
-                    [(ngModel)]="question.score" [min]="0" 
-                    [max]="question.points" 
-                    [class.invalid]="question.score < 0 || question.score > question.points"
-                    (ngModelChange)="onScoreChange(question.questionId,$event)"/>&nbsp;
+                    <input
+                      type="number"
+                      name="score{{ i }}"
+                      readonly
+                      #score="ngModel"
+                      [(ngModel)]="question.score"
+                      [min]="0"
+                      [max]="question.points"
+                      [class.invalid]="question.score < 0 || question.score > question.points"
+                      (ngModelChange)="onScoreChange(question.questionId, $event)"
+                    />&nbsp;
                     <span>out of {{ question.points }}</span>
-                    
                   </div>
                   <div *ngIf="question.score < 0 || question.score > question.points" class="error-message">
                     Score must be between 0 and {{ question.points }}.
-                 </div>
-                  <li
-                    *ngFor="
-                      let option of [
-                        question.questionOptions.option1,
-                        question.questionOptions.option2,
-                        question.questionOptions.option3,
-                        question.questionOptions.option4
-                      ]
-                    "
-                    [ngClass]="{
-                      'correct-option':
-                        option === question.questionOptions.correctAnswer ||
-                        option === question.answer,
-                      'incorrect-option':
-                        option === question.answer &&
-                        option !== question.questionOptions.correctAnswer
-                    }"
-                  >
-                    {{ option }}
-                  </li>
+                  </div>
+                  <div *ngIf="!question.questionOptions.Options || question.questionOptions.Options.length === 0">
+                    No options available.
+                  </div>
+                  <ul *ngIf="question.questionOptions.Options && question.questionOptions.Options.length > 0">
+                    <li
+                      *ngFor="let option of question.questionOptions.Options"
+                      [ngClass]="{
+                        'correct-option': question.questionOptions.correctAnswer.includes(option),
+                        'incorrect-option': question.answer.includes(option) && !question.questionOptions.correctAnswer.includes(option)
+                      }"
+                    >
+                      {{ option }}
+                    </li>
+                  </ul>
                   <div class="correct-answer">
-                    <strong>Correct Answer:</strong>
-                    {{ question.questionOptions.correctAnswer }}
+                    <strong>Correct Answers:</strong>
+                    {{ question.questionOptions.correctAnswer.join(', ') }}
                   </div>
                 </ul>
+
+                
+                
+
+                
+                
+                
+                
+                
+                
                 <div *ngSwitchCase="'descriptive'" class="descriptive">
                   <div class="mark-box">
                     <input type="number"
