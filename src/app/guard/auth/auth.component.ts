@@ -23,7 +23,7 @@ export class AuthComponent {
     try {
       this.userRoleData = await this.getUserRole();
       localStorage.setItem("userDetails", JSON.stringify(this.userRoleData.result));
-      localStorage.setItem("apiToken", JSON.stringify(this.userRoleData.result.Token));
+      localStorage.setItem("apiToken", this.userRoleData.result.Token);
 
       console.log('User role data:', this.userRoleData.result);
       console.log('API Token:', this.userRoleData.result.Token);
