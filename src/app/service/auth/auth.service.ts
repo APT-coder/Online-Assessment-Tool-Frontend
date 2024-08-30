@@ -11,6 +11,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  getApiToken() {
+    const token = localStorage.getItem("apiToken");
+    return token;
+  }
+
   getUserRole(token: string): Observable<any> {
     const url = `${this.authApiUrl}/AzureSSOLogin/getUserRole/${token}`;
     return this.http.get<any>(url);

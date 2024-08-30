@@ -12,7 +12,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         console.error('An error occurred:', error.message);
         if(error.status != 404){
-          this.router.navigate(['/server-error']);
+          //this.router.navigate(['/server-error']);
         }
         else{
           console.log("Error occured");

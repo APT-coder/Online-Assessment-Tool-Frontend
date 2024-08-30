@@ -37,6 +37,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { ErrorInterceptor } from './core/interceptors/http-error.interceptor';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(msalConfig);
@@ -91,6 +92,9 @@ export const appConfig: ApplicationConfig = {
       MsalBroadcastService,
       {
         provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true
+      },
+      {
+        provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
       }
   ],
 };
