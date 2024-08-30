@@ -22,8 +22,11 @@ export class AuthComponent {
   async initializeUserRoleAndRoute(): Promise<void> {
     try {
       this.userRoleData = await this.getUserRole();
-      localStorage.setItem("userDetails", JSON.stringify(this.userRoleData));
-      console.log('User role data:', this.userRoleData);
+      localStorage.setItem("userDetails", JSON.stringify(this.userRoleData.result));
+      localStorage.setItem("apiToken", JSON.stringify(this.userRoleData.result.Token));
+
+      console.log('User role data:', this.userRoleData.result);
+      console.log('API Token:', this.userRoleData.result.Token);
 
       setTimeout(() => {
         
@@ -42,7 +45,7 @@ export class AuthComponent {
 
   getUserRole(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.authService.getUserRole(localStorage.getItem("msalKey") as string).subscribe(
+      this.authService.getUserRole(localStorage.getItem("loginToken") as string).subscribe(
         (data) => {
           resolve(data);
         },

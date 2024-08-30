@@ -13,10 +13,10 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    const msalKey = localStorage.getItem("msalKey");
+    const loginToken = localStorage.getItem("loginToken");
     
-    if (msalKey != null || undefined) {
-      console.log(msalKey);
+    if (loginToken != null || undefined) {
+      console.log(loginToken);
       return true;
     }
     else{

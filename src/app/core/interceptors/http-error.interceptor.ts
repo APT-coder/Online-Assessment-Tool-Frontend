@@ -6,8 +6,6 @@ import { catchError, Observable, throwError } from 'rxjs';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
-  userDetails = JSON.parse(localStorage.getItem("userDetails") || '{}');
-
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(

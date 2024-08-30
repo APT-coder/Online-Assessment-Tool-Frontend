@@ -61,11 +61,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: new FormControl('')
     });
 
-    if(localStorage.getItem("msalKey")){
+    if(localStorage.getItem("loginToken")){
       this.router.navigate(['/auth']);
     }
 
-    console.log(localStorage.getItem("msalKey"));
+    console.log(localStorage.getItem("loginToken"));
   }
 
   ngOnInit(): void {
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.handleRedirectObservable().subscribe((response: AuthenticationResult) => {
       if (response && response.accessToken) {
         console.log('Login successful', response);
-        localStorage.setItem('msalKey', response.accessToken);
+        localStorage.setItem('loginToken', response.accessToken);
         this.router.navigate(['/auth']);
       }
     });
@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }).subscribe({
         next: (response: AuthenticationResult) => {
           if (response && response.accessToken) {
-            localStorage.setItem('msalKey', response.accessToken);
+            localStorage.setItem('loginToken', response.accessToken);
             console.log('Token acquired silently', response.accessToken);
           }
         },
@@ -180,7 +180,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
         else if(response.isSuccess){
           console.log("Login successful", response);
-          localStorage.setItem('msalKey', response.result.token);
+          localStorage.setItem('loginToken', response.result.token);
           this.router.navigate(['/auth']);
         }
       },
