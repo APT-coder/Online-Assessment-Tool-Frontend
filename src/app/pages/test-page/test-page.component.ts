@@ -11,7 +11,8 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 import { TimerService } from '../../service/timer/timer.service';
 import { Subscription } from 'rxjs';
 import { RemainingChanceDailogueComponent } from './components/remaining-chance-dailogue/remaining-chance-dailogue.component';
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 
 @Component({
@@ -182,7 +183,44 @@ export class TestPageComponent implements OnInit, OnDestroy {
     console.log('NEED BACKEND CONNECTION DONE');
     ///MAIN
     console.log(this.question);
+    this.downloadPDF();
     this.router.navigate(["/app/trainee"]);
+  }
+
+  downloadPDF() {
+
+    function splitTextToLines(text: string, maxWidth: number, doc: jsPDF): string[] {
+
+      return doc.splitTextToSize(text, maxWidth);
+
+    }
+    // Create a new jsPDF instance
+    const doc = new jsPDF();
+    // Set initial offsets and dimensions
+    const xOffset = 10;
+    const rowHeight = 10;
+    const columnWidth = 100; // Width for question number
+    const textWidth = 150;   // Maximum width for question text and answer
+    let yOffset = 10; // Start at a certain vertical position
+
+    this.question.forEach((q: { questionNo: { toString: () => string | string[]; }; questionText: string | string[]; answered: any; }) => {
+      // Print question number
+      doc.text(q.questionNo.toString(), xOffset, yOffset);
+      // Split question text into lines that fit within textWidth
+      const textLines = splitTextToLines(q.questionText as string, textWidth, doc);
+      // Print each line of the question text
+      textLines.forEach((line, index) => {
+        doc.text(line, xOffset + columnWidth, yOffset + (rowHeight * index));
+      });
+      // Move to the next line after the question text
+      yOffset += rowHeight * textLines.length;
+      // Print the answer on the new line
+      doc.text(q.answered || '', xOffset, yOffset);
+      // Move yOffset down for the next question
+      yOffset += rowHeight * 2; // Add extra spacing for better readability
+    });
+    // Save the document or display as needed
+    doc.save('questions.pdf');
   }
 
   sendDataBeforeClosing() {
