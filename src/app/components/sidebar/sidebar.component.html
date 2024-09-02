@@ -4,10 +4,8 @@
       <div class="flex flex-column h-full">
         <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
           <span class="inline-flex align-items-center gap-2">
+            <app-hamburger-menu-icon (menuOpen)="toggleSidebar($event)"></app-hamburger-menu-icon>
             <span class="font-semibold text-2xl text-primary" *ngIf="!sidebarCollapsed">KnowliX</span>
-            <span class="font-semibold text-2xl text-primary" *ngIf="sidebarCollapsed">K</span>
-            <i class="pi pi-angle-left cursor-pointer ml-3" *ngIf="!sidebarCollapsed" (click)="toggleSidebar()"></i>
-            <i class="pi pi-angle-right cursor-pointer ml-3" *ngIf="sidebarCollapsed" (click)="toggleSidebar()"></i>
           </span>
         </div>
         <div class="overflow-y-auto">

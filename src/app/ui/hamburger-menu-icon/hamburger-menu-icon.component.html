@@ -1,0 +1,6 @@
+<div class="hamburger" (click)="toggleMenu()" [class.is-active]="isMenuOpen">
+    <div class="line" [ngClass]="{'rotate-top': isMenuOpen}"></div>
+    <div class="line" [ngClass]="{'fade-out': isMenuOpen}"></div>
+    <div class="line" [ngClass]="{'rotate-bottom': isMenuOpen}"></div>
+  </div>
+  

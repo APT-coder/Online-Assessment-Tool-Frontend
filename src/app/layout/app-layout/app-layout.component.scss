@@ -1,32 +1,24 @@
-.container {
-    height: 100vh;
-  }
-  
-  .row {
-    height: 100%;
-  }
-  
-  .col-sidebar {
-    transition: width 0.3s ease;
-  }
-  
-  .col-content {
-    transition: margin-left 0.3s ease;
-  }
-  
-  .col-sidebar {
-    width: 220px;
-  }
-  
-  .col-content {
-    margin-left: 100px;
-  }
-  
-  .col-collapsed {
-    width: 60px;
-  }
-  
-  .col-expanded {
-    margin-left: 5px;
-  }
-  
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  transition: width 0.3s;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 10px;
+  transition: margin-left 0.3s;
+}
+
+.sidebar.collapsed + .main-content {
+  margin-left: 5px;
+}

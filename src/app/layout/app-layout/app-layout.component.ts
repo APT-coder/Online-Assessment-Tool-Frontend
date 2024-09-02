@@ -12,14 +12,14 @@ import { SharedService } from '../../service/shared/shared.service';
   styleUrl: './app-layout.component.scss'
 })
 export class AppLayoutComponent {
-  sidebarToggled: boolean = false;
+  isSidebarCollapsed = true;
 
   constructor(private sharedService: SharedService) {}
 
-  onSidebarToggled(collapsed: boolean) {
-    this.sidebarToggled = collapsed;
+  toggleSidebar(data: boolean) {
+    this.isSidebarCollapsed = data;
   }
-
+  
   handleIsScheduled(isScheduled: boolean) {
     this.sharedService.setIsScheduled(isScheduled);
   }
