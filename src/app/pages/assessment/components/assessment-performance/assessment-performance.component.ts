@@ -246,4 +246,8 @@ export class AssessmentPerformanceComponent implements OnInit {
       reader.readAsDataURL(blob);
     });
   }
+
+  filteredData(data: Trainee[]){
+    console.log(data);
+  }
 }
