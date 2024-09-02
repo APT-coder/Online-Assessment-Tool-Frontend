@@ -4,7 +4,7 @@ import { ListTableComponent } from './components/list-table/list-table.component
 import { PieDiagramComponent } from './components/pie-diagram/pie-diagram.component';
 import { TableDashboardComponent } from './components/table-dashboard/table-dashboard.component';
 import { AdminDashboardService } from '../../service/admin-dashboard/admin-dashboard.service'; 
-import { AssessmentOverview } from '../../../models/assessmentOverview.interface'; 
+import { AssessmentOverview } from '../../shared/models/assessmentOverview.interface'; 
 import { CommonModule } from '@angular/common';
 import { TrainerTableComponent } from "./components/trainer-table/trainer-table.component";
 

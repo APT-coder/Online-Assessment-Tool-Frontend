@@ -9,13 +9,13 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import { TraineeStatusDTO } from '../../../../../models/TraineeStatusDTO.interface';
+import { TraineeStatusDTO } from '../../../../shared/models/TraineeStatusDTO.interface';
 import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service'; 
-import { TraineeAnswerDetailDTO } from '../../../../../models/TraineeAnswerDetailDTO.interface';
-import { UpdateScoreDTO } from '../../../../../models/UpdateScoreDTO.interface'; 
+import { TraineeAnswerDetailDTO } from '../../../../shared/models/TraineeAnswerDetailDTO.interface';
+import { UpdateScoreDTO } from '../../../../shared/models/UpdateScoreDTO.interface'; 
 import { forkJoin } from 'rxjs';
-import { AssessmentTableDTO } from '../../../../../models/AssessmentTableDTO.interface'; 
-import { AssessmentStatus } from '../../../../../models/AssessmentTableDTO.interface'; 
+import { AssessmentTableDTO } from '../../../../shared/models/AssessmentTableDTO.interface'; 
+import { AssessmentStatus } from '../../../../shared/models/AssessmentTableDTO.interface'; 
 import { ActivatedRoute } from '@angular/router';
 import { ProgressBarModule } from 'primeng/progressbar';
 

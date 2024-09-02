@@ -15,7 +15,7 @@ import { AssessmentPreviewComponent } from "../../../assessment/components/asses
 import { Router } from '@angular/router';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { AssessmentService } from '../../../../service/assessment/assessment.service';
-import { Assessment } from '../../../../../models/assessment.interface'; 
+import { Assessment } from '../../../../shared/models/assessment.interface'; 
 import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';

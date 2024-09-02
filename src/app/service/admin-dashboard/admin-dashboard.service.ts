@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Performers } from '../../../models/performers.interface';
-import { ApiResponses } from '../../../models/apiResponse.interface'; 
-import { AdminChartResponse } from '../../../models/adminChartResponse.interface'; 
+import { Performers } from '../../shared/models/performers.interface';
+import { ApiResponses } from '../../shared/models/apiResponse.interface'; 
+import { AdminChartResponse } from '../../shared/models/adminChartResponse.interface'; 
 
 @Injectable({
   providedIn: 'root'
