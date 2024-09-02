@@ -136,7 +136,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
                 'visibilitychange',
                 this.handleVisibilityChange.bind(this)
               );
-              this.router.navigate(['/trainee']);
+              this.router.navigate(['/app/trainee']);
             });
         }
       }
@@ -216,10 +216,23 @@ export class TestPageComponent implements OnInit, OnDestroy {
         // Move to the next line after the question text
         yOffset += rowHeight * textLines.length;
         // Print the answer on the new line
-        doc.text(`Selected Answer: ${q.answered}` || 'Not Answered', xOffset, yOffset);
+        doc.text('Selected Answer:', xOffset, yOffset);
+
+        // Set text color based on whether the question was answered
+        if (q.answered) {
+            doc.setTextColor(0, 100, 0); // Dark green for answered
+            doc.text(q.answered, xOffset + 50, yOffset); // Indent the answer text
+        } else {
+            doc.setTextColor(255, 0, 0); // Red for not answered
+            doc.text('Not Answered', xOffset + 50, yOffset); // Indent the "Not Answered" text
+        }
+
+        // Reset text color to black for the next question
+        doc.setTextColor(0, 0, 0);
         // Move yOffset down for the next question
         yOffset += rowHeight * 2; // Add extra spacing for better readability
     });
+
     const dateTime = Date.now();
     // Save the document or display as needed
     doc.save(`${this.user.TraineeId}_${this.user.UserName}_${dateTime}`);
