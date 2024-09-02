@@ -1,9 +1,4 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div class="col-10">
+
       <div *ngIf="isLoading" class="loading-indicator">
         <p-progressBar
           mode="indeterminate"
@@ -116,6 +111,3 @@
           <app-table [trainees]="originalProducts"></app-table>
         </div>
       </div>
-    </div>
-  </div>
-</div>
