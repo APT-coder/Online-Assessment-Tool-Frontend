@@ -58,7 +58,35 @@
         <button mat-button matStepperNext><app-button-active [content]="'Next'"></app-button-active></button>
       </div>
     </div>
-    
+    <!-- Cards for question upload type -->
+      
+        <div class="card-container">
+          <app-card 
+            header="File Upload"
+            description="Upload a file having questions and create an assessment."
+            saveButtonLabel="Select"
+            imageUrl="https://primefaces.org/cdn/primeng/images/card-ng.jpg">
+          </app-card>
+        
+          <app-card 
+            header="Create Assessment"
+            description="Create a new assessment manually by selecting question type entering details."
+            saveButtonLabel="Select"
+            imageUrl="https://primefaces.org/cdn/primeng/images/card-ng.jpg">
+          </app-card>
+        
+          <app-card 
+            header="Question Bank"
+            description="Create an assessment using question from the question bank."
+            saveButtonLabel="Select"
+            imageUrl="https://primefaces.org/cdn/primeng/images/card-ng.jpg">
+          </app-card>
+        </div>
+        
+      
+       
+      
+    <!-- Cards for question upload type End -->
     <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>

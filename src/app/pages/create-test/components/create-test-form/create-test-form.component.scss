@@ -187,3 +187,26 @@ app-button-active {
   display: block;
   margin-top: 5px;
 }
+.card-container {
+  display: flex;
+  justify-content: space-between; /* Space evenly between cards */
+  gap: 20px; /* Optional: control the gap between cards */
+  margin: 20px; /* Optional: adjust the margin around the container */
+}
+
+app-card {
+  flex: 1; /* Allow each card to take up equal space */
+  max-width: 30%; /* Set a maximum width for each card */
+  min-width: 250px; /* Prevent cards from shrinking too much */
+}
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  app-card {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+}
