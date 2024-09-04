@@ -1,14 +1,24 @@
 <!-- <div class="card flex justify-content-center"> -->
-    <p-card [header]="header" [subheader]="subheader" [style]="{ width: '300px', height:'5%' }">
-      <ng-template pTemplate="header">
-        <img [alt]="header" [src]="imageUrl" />
-      </ng-template>
-      <p>{{ description }}</p>
-      <ng-template pTemplate="footer">
-        <div class="flex gap-3 mt-1">
-          <p-button [label]="saveButtonLabel" class="w-full" />
-        </div>
-      </ng-template>
-    </p-card>
+  <p-card [header]="header" [subheader]="subheader" 
+
+  class="card"
+  [ngClass]="{ 'selected': isSelected }">
+<ng-template pTemplate="header">
+<img [alt]="header" [src]="imageUrl" class="image" />
+</ng-template>
+<p class="description">{{ description }}</p>
+<ng-template pTemplate="footer">
+<div class="flex gap-3 mt-1">
+<p-button 
+  [label]="saveButtonLabel" 
+  class="w-full no-ripple " 
+  (click)="onSelect()"
+  pRipple="false"
+  >
+</p-button>
+</div>
+</ng-template>
+</p-card>
+
   <!-- </div>
    -->

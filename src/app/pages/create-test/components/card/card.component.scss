@@ -1,0 +1,57 @@
+.description
+{
+    height: 1.5rem;
+    text-align: center;
+}
+
+.p-card{
+    height: 0;
+    width: 0;
+}
+.card{
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+
+
+.card:hover {
+    transform: scale(1.00); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .p-button {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card.selected {
+    border: 2px solid #76b8fe; 
+    box-shadow: 0 0 15px rgba(100, 175, 254, 0.5);
+    transform: scale(1.00);
+    background-color: #e6f0ff; 
+  }
+.image
+{
+    padding: 0.313rem;
+    width: 10.125rem;
+    height: 6.438rem;
+    margin-bottom: 0;
+   
+}
+::ng-deep .p-card .p-card-title
+{
+    margin: 0 !important;
+    font-size: 16px;
+  
+}
+
+::ng-deep .p-card-body
+{
+    padding-top: 0.063rem;
+}
+
+
+  
+  
+

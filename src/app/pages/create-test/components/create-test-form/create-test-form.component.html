@@ -8,21 +8,54 @@
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
     <ng-template matStepLabel>Create Questions</ng-template>
-    <div class="inputLabel" *ngIf="!assessmentCreated">
+    <div class="inputLabel" *ngIf="!assessmentCreated"  >
       <div class="col-auto labelName">
         <label for="testName">Test Name:</label>
       </div>
       <div>
         <mat-form-field appearance="outline" class="w-100 inputbox">
           <mat-label>Enter the name of your test</mat-label>
-          <input matInput placeholder="Ex. Soft Skills" #testNameInput required>
+          <input matInput placeholder="Ex. Soft Skills" #testNameInput required   [(ngModel)]="assessmentName">
         </mat-form-field>
         <small id="testname-help" class="details">
           This name will be visible to students
         </small>
       </div>
+ <!-- Cards for question upload type -->
+      <div class="card-container">
+        <app-card 
+          header="File Upload"
+          description="Upload file containing questions and then create an assessment by selecting the questions."
+          saveButtonLabel="Select"
+          imageUrl="assets/file-upload.png"
+          [isSelected]="selectedCardIndex === 0"
+          (select)="selectCard(0)">
+          
+        </app-card>
+      
+        <app-card 
+          header="Create Assessment"
+          description="Create a new assessment manually by selecting question type entering details."
+          saveButtonLabel="Select"
+          imageUrl="assets/create_question.png"
+          [isSelected]="selectedCardIndex === 1"
+          (select)="selectCard(1)">
+        </app-card>
+      
+        <app-card 
+          header="Question Bank"
+          description="Create an assessment by selecting questions from the question bank."
+          saveButtonLabel="Select"
+          imageUrl="assets/question_bank.png"
+          [isSelected]="selectedCardIndex === 2"
+          (select)="selectCard(2)">
+        </app-card>
+      </div>
+      
+    <!-- Cards for question upload type End -->
+
       <div class="form-group">
-        <button mat-button (click)="createAssessment(testNameInput.value)">Create Assessment</button>
+        <p-button mat-button (click)="createAssessment(testNameInput.value)" class="create-assessment-button" [disabled]="!isCardSelected || !assessmentName" *ngIf="!assessmentCreated">Create Assessment</p-button>
       </div>
     </div>
     
@@ -58,35 +91,13 @@
         <button mat-button matStepperNext><app-button-active [content]="'Next'"></app-button-active></button>
       </div>
     </div>
-    <!-- Cards for question upload type -->
+   
       
-        <div class="card-container">
-          <app-card 
-            header="File Upload"
-            description="Upload a file having questions and create an assessment."
-            saveButtonLabel="Select"
-            imageUrl="https://primefaces.org/cdn/primeng/images/card-ng.jpg">
-          </app-card>
-        
-          <app-card 
-            header="Create Assessment"
-            description="Create a new assessment manually by selecting question type entering details."
-            saveButtonLabel="Select"
-            imageUrl="https://primefaces.org/cdn/primeng/images/card-ng.jpg">
-          </app-card>
-        
-          <app-card 
-            header="Question Bank"
-            description="Create an assessment using question from the question bank."
-            saveButtonLabel="Select"
-            imageUrl="https://primefaces.org/cdn/primeng/images/card-ng.jpg">
-          </app-card>
-        </div>
+       
         
       
        
-      
-    <!-- Cards for question upload type End -->
+
     <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>

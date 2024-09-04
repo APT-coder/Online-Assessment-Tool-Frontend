@@ -21,6 +21,8 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { CardComponent } from '../card/card.component';
+import { ButtonComponent } from '../../../../ui/buttons/button/button.component';
+import { Button } from 'primeng/button';
 interface Option {
   option: string;
   isCorrect: boolean;
@@ -47,7 +49,10 @@ interface Option {
     ReactiveFormsModule,
     MessagesModule,
     MessageModule,
-    CardComponent
+    CardComponent,
+    ButtonComponent,
+    Button,
+    
   ],
   providers:[MessageService],
   templateUrl: './create-test-form.component.html',
@@ -57,6 +62,14 @@ export class CreateTestFormComponent implements OnInit {
   @ViewChild('stepper')
   stepper!: MatStepper;
   @ViewChild(ScheduleComponent) scheduleComponent!: ScheduleComponent;
+  selectedCardIndex: number | null = null;
+  isCardSelected: boolean = false;
+  assessmentName: string = '';
+
+  selectCard(index: number) {
+    this.selectedCardIndex = index;
+    this.isCardSelected=true;
+  }
 
   user = JSON.parse(localStorage.getItem('userDetails') as string);
 
