@@ -10,6 +10,8 @@
         [tableStyle]="{'min-width': '50rem'}"
         [sortField]="defaultSortField" [sortOrder]="defaultSortOrder"
         [globalFilterFields]="filterColumns"
+        selectionMode="single" [(selection)]="selectedRow"
+        (onRowSelect)="onRowSelect($event)"
     >
         <ng-template pTemplate="caption">
             <div class="flex-container">
@@ -61,14 +63,14 @@
                         }
                     }
                 </th>
-                <th *ngIf="!action">
+                <th *ngIf="action">
                     Action
                 </th>
             </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-data let-columns="columns">
-            <tr>
+            <tr [pSelectableRow]="data">
                 <td *ngFor="let col of columns">
                     @if(col.type === "status"){
                         <p-tag [value]="data[col.field]" [severity]="getSeverity(data[col.field])" />
@@ -82,13 +84,13 @@
                 </td>
                 <td *ngIf="action">
                     <ng-container *ngIf="data.status === 'Evaluated'">
-                        <p-button icon="pi pi-info-circle" (click)="navigateToRoute(data, 'evaluated')" />
+                        <p-button icon="pi pi-info-circle" (click)="navigateToRoute(data, 'evaluated')" [style]="{'font-size': '12px', 'padding': '3px 6px', 'height': '24px'}"/>
                     </ng-container>
                     <ng-container *ngIf="data.status === 'Completed'">
-                        <p-button icon="pi pi-check" (click)="navigateToRoute(data, 'completed')" />
+                        <p-button icon="pi pi-check" (click)="navigateToRoute(data, 'completed')" [style]="{'font-size': '12px', 'padding': '3px 6px', 'height': '24px'}"/>
                     </ng-container>
                     <ng-container *ngIf="data.status === 'Upcoming'">
-                        <p-button icon="pi pi-pencil" (click)="navigateToRoute(data, 'upcoming')" />
+                        <p-button icon="pi pi-pencil" (click)="navigateToRoute(data, 'upcoming')" [style]="{'font-size': '12px', 'padding': '3px 6px', 'height': '24px'}"/>
                     </ng-container>
                 </td>
             </tr>

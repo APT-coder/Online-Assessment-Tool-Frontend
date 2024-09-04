@@ -15,12 +15,16 @@ export class AdminDashboardService {
   private baseApiUrl = 'https://localhost:7120/api/Assessment';
   private chartApiUrl='https://localhost:7120/api/AssessmentScore/GetAssessment';
   private trainerApiUrl='https://localhost:7120/api/Trainer/GetTrainerList';
+  private traineeScoreUrl='https://localhost:7120/api/AssessmentScore/GetTraineesWithAverageScore/batch';
 
   constructor(private http: HttpClient) { }
   getAllAssessmentOverviews(): Observable<ApiResponses> {
     return this.http.get<ApiResponses>(`${this.baseApiUrl}/GetAllAssessmentOverviews/overview`);
   }
   
+  getTraineeAverageScoreTable(batchName: string): Observable<ApiResponses> {
+    return this.http.get<ApiResponses>(`${this.traineeScoreUrl}/${batchName}`);
+  }
 
   getHighPerformers(assessmentId: number): Observable<Performers[]> {
     return this.http.get<Performers[]>(`${this.baseApiUrl}/GetHighPerformers/highperformers/${assessmentId}`);

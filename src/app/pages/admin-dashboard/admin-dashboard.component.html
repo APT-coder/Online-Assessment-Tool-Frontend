@@ -1,48 +1,85 @@
-<div class="profile">
-  <h4 class="welcome dashboard-table">Welcome to Admin Dashboard</h4>
-</div>
+<p-tabView>
+  <div class="dropdown-bar">
+    <p-dropdown 
+      [options]="years" 
+      [(ngModel)]="selectedYear" 
+      placeholder="Select a Year"
+      (onChange)="onYearChange($event)"
+      optionLabel="label" 
+      optionValue="value"
+    ></p-dropdown>
 
-<app-table-dashboard (assessmentIdSelected)="receiveAssessment($event)" class="dashboard-table"></app-table-dashboard>
+    <p-dropdown 
+      [options]="batches" 
+      [(ngModel)]="selectedBatch" 
+      placeholder="Select a Batch" 
+      [disabled]="!selectedYear" 
+      (onChange)="onBatchChange($event)"
+      optionLabel="batchname"
+      optionValue="batchname" 
+    ></p-dropdown>
+  </div>
 
-<div class="row down-section ">
-  @if(selectedAssessmentStatus=="Evaluated"){
-    <div class="col-4 mt-3 dashboard-table">
-      <app-list-table
-        [title]="'High Performers'"
-        [performerType]="'top'"
-        [batchName]="'Batch 1'"
-        [assessmentName]="'Assessment 1'"
-        [assessmentId]="selectedAssessmentId"
-      >
-      </app-list-table>
-    </div>
-    <div class="col-4 mt-3 dashboard-table">
-      <app-list-table
-        [title]="'Low Performers'"
-        [performerType]="'low'"
-        [batchName]="'Batch 1'"
-        [assessmentName]="'Assessment 1'"
-        [assessmentId]="selectedAssessmentId"
-      >
-      </app-list-table>
-    </div>
-    
-    <div class="col-3 piechart">
-      
-      <div class="chart">
-        <h6>Student Performance by Score Range</h6>
-        <app-pie-diagram class="pie"  [assessmentId]="selectedAssessmentId"></app-pie-diagram>
+  <p-tabPanel header="Assessments">
+      <app-dashboard-table [tableData]="adminTableData"
+      [defaultSortField]="'date'"
+      [defaultSortOrder]="-1"
+      [dataKey]="'assessmentId'"
+      [action]="true"
+      [cols]="adminTableCols"
+      [status]="status" (rowSelected)="getSelectedRow($event)"></app-dashboard-table>
+
+      <div class="row down-section ">
+        @if(selectedAssessmentStatus=="Evaluated"){
+          <div class="col-4 mt-3 dashboard-table">
+            <app-list-table
+              [title]="'High Performers'"
+              [performerType]="'top'"
+              [batchName]="'Batch 1'"
+              [assessmentName]="'Assessment 1'"
+              [assessmentId]="selectedAssessmentId"
+            >
+            </app-list-table>
+          </div>
+          <div class="col-4 mt-3 dashboard-table">
+            <app-list-table
+              [title]="'Low Performers'"
+              [performerType]="'low'"
+              [batchName]="'Batch 1'"
+              [assessmentName]="'Assessment 1'"
+              [assessmentId]="selectedAssessmentId"
+            >
+            </app-list-table>
+          </div>
+          
+          <div class="col-3 piechart">
+            
+            <div class="chart">
+              <h6>Student Performance by Score Range</h6>
+              <app-pie-diagram class="pie"  [assessmentId]="selectedAssessmentId"></app-pie-diagram>
+            </div>
+          </div>
+        }
+      @else {
+        <div class="no-data-container mt-3 ">
+          <div class="no-data-message">
+            <svg class="no-data-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <span>{{ noDataMessage }}</span>
+          </div>
+        </div>
+      }
       </div>
-    </div>
-  }
-@else {
-  <div class="no-data-container mt-3 ">
-    <div class="no-data-message">
-      <svg class="no-data-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-      </svg>
-      <span>{{ noDataMessage }}</span>
-    </div>
-  </div>
-}
-  </div>
+  </p-tabPanel>
+  <p-tabPanel header="Trainee">
+      <app-dashboard-table [tableData]="traineeTableData"
+      [defaultSortField]="'rankInBatch'"
+      [defaultSortOrder]="1"
+      [dataKey]="'traineeId'"
+      [action]="false"
+      [cols]="traineeTableCols" (rowSelected)="getSelectedRow($event)"
+      ></app-dashboard-table>
+  </p-tabPanel>
+</p-tabView>
+

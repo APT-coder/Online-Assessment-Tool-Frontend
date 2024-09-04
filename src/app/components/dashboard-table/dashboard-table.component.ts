@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CommonModule } from '@angular/common';
@@ -32,6 +32,7 @@ export class DashboardTableComponent {
   @Input() action: boolean = false;
   @Input() cols: Column[] = [];
   @Input() status: any;
+  @Output() rowSelected = new EventEmitter<string>();
 
   selectableColumns: Column[] = [];
   selectedColumns: Column[] = [];
@@ -39,6 +40,7 @@ export class DashboardTableComponent {
   filterColumns: string[] = [];
   searchValue: string = '';
   selectedStatus: string = ''; 
+  selectedRow: any;
 
   constructor(private router: Router) {}
 
@@ -90,7 +92,14 @@ export class DashboardTableComponent {
   navigateToRoute(data: any, status: string) {
     if(status === 'evaluated'){
       this.router.navigate([`/app/performance/${data[this.dataKey]}`]);
-      console.log("hello");
     }
+    else if(status === 'completed'){
+      this.router.navigate([`/app/evaluate/${data[this.dataKey]}`]);
+    }
+  }
+
+  onRowSelect(event: any) {
+    console.log(event.data);
+    this.rowSelected.emit(event.data);
   }
 }
