@@ -16,6 +16,7 @@ import { MessageModule } from 'primeng/message';
 import { Dialog, DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-trainer-management',
@@ -31,7 +32,8 @@ import { HttpClient } from '@angular/common/http';
     TrainerTableComponent, MessagesModule,
     MessageModule,
     DialogModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule
   ],
   providers:[MessageService],
 

@@ -20,6 +20,7 @@ import { ScheduledAssessmentService } from '../../../../service/scheduled-assess
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 interface Option {
   option: string;
   isCorrect: boolean;
@@ -45,7 +46,8 @@ interface Option {
     MatFormField,
     ReactiveFormsModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    ToastModule
   ],
   providers:[MessageService],
   templateUrl: './create-test-form.component.html',

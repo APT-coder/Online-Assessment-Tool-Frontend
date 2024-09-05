@@ -21,6 +21,7 @@ import { ScheduledAssessmentService } from '../../service/scheduled-assessment/s
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 interface Question {
   id: string
   type: string;
@@ -50,7 +51,8 @@ interface Question {
     ScheduleComponent,
     FileUploadComponent,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    ToastModule
   ],
   providers:[MessageService],
   templateUrl: './upload-assessment.component.html',
