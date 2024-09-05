@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
-import { Assessment } from '../../../models/assessment.interface';
+import { Assessment } from '../../shared/models/assessment.interface';
 import { AssessmentService } from '../../service/assessment/assessment.service';
 import { FileUploadComponent } from './modals/file-upload/file-upload.component';
 import { ScheduledAssessmentService } from '../../service/scheduled-assessment/scheduled-assessment.service';

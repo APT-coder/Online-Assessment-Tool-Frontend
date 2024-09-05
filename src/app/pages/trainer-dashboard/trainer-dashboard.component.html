@@ -1,7 +1,63 @@
-<div class="trainerpage-top">
-  <h4>Welcome To Trainer Dashboard</h4>
-</div>
-<app-table-dashboard (assessmentSelected)="onAssessmentSelected($event)"></app-table-dashboard>
+<p-tabView (onChange)="onTabChange($event)">
+  <div class="dropdown-bar">
+    <p-dropdown 
+      [options]="years" 
+      [(ngModel)]="selectedYear" 
+      placeholder="Select a Year"
+      (onChange)="onYearChange($event)"
+      optionLabel="label" 
+      optionValue="value"
+    ></p-dropdown>
+
+    <p-dropdown 
+      [options]="batches" 
+      [(ngModel)]="selectedBatch" 
+      placeholder="Select a Batch" 
+      [disabled]="!selectedYear" 
+      (onChange)="onBatchChange($event)"
+      optionLabel="batchname"
+      optionValue="batchname" 
+    ></p-dropdown>
+  </div>
+
+  <p-tabPanel header="All">
+    <app-dashboard-table [tableData]="assessmentTableData"
+    [defaultSortField]="'createdOn'"
+    [defaultSortOrder]="-1"
+    [dataKey]="'scheduledAssessmentId'"
+    [action]="true"
+    [cols]="assessmentTableCols"
+    [status]="status" (rowSelected)="onAssessmentSelected($event)"></app-dashboard-table>
+  </p-tabPanel>
+  <p-tabPanel header="Upcoming">
+    <app-dashboard-table [tableData]="filteredAssessmentData"
+    [defaultSortField]="'scheduledDate'"
+    [defaultSortOrder]="-1"
+    [dataKey]="'scheduledAssessmentId'"
+    [action]="true"
+    [cols]="filteredTableCols"
+    (rowSelected)="onAssessmentSelected($event)"></app-dashboard-table>
+  </p-tabPanel>
+  <p-tabPanel header="Completed">
+    <app-dashboard-table [tableData]="filteredAssessmentData"
+    [defaultSortField]="'scheduledDate'"
+    [defaultSortOrder]="-1"
+    [dataKey]="'scheduledAssessmentId'"
+    [action]="true"
+    [cols]="filteredTableCols"
+    (rowSelected)="onAssessmentSelected($event)"></app-dashboard-table>
+  </p-tabPanel>
+  <p-tabPanel header="Evaluated">
+    <app-dashboard-table [tableData]="filteredAssessmentData"
+    [defaultSortField]="'scheduledDate'"
+    [defaultSortOrder]="-1"
+    [dataKey]="'scheduledAssessmentId'"
+    [action]="true"
+    [cols]="filteredTableCols"
+    (rowSelected)="onAssessmentSelected($event)"></app-dashboard-table>
+</p-tabPanel>
+</p-tabView>
+
 <div class="chart-card">
   <div class="row">
     @if(selectedAssessmentStatus == "Evaluated"){

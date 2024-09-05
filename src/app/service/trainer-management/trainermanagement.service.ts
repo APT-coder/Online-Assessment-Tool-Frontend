@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
-import { Role } from '../../../models/role.interface';
-import { Permission } from '../../../models/permission.interface';
-import { User } from '../../../models/user.interface';
+import { Role } from '../../shared/models/role.interface';
+import { Permission } from '../../shared/models/permission.interface';
+import { User } from '../../shared/models/user.interface';
  
 export interface ApiResponse<T> {
   isSuccess: boolean;

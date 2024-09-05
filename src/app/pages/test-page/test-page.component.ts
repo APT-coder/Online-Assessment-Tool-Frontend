@@ -5,7 +5,7 @@ import { QuestionService } from '../../service/assessment/question.service';
 import { QuestionComponent } from './components/question/question.component';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Question } from '../../../models/test.interface';
+import { Question } from '../../shared/models/test.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { TimerService } from '../../service/timer/timer.service';

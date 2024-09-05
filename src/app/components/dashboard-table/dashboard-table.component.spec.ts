@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableStyledComponent } from './table-styled.component';
+import { DashboardTableComponent } from './dashboard-table.component';
 
-describe('TableStyledComponent', () => {
-  let component: TableStyledComponent;
-  let fixture: ComponentFixture<TableStyledComponent>;
+describe('DashboardTableComponent', () => {
+  let component: DashboardTableComponent;
+  let fixture: ComponentFixture<DashboardTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableStyledComponent]
+      imports: [DashboardTableComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TableStyledComponent);
+    fixture = TestBed.createComponent(DashboardTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

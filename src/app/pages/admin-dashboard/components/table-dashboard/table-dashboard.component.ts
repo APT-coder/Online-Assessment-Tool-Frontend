@@ -6,7 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { TagModule } from 'primeng/tag';
-import { AssessmentOverview } from '../../../../../models/assessmentOverview.interface';
+import { AssessmentOverview } from '../../../../shared/models/assessmentOverview.interface';
 import { CommonModule } from '@angular/common';
 import { ButtonActiveComponent } from "../../../../ui/buttons/button-active/button-active.component";
 import { RouterModule } from '@angular/router';
