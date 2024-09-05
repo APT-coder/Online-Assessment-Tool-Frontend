@@ -16,10 +16,17 @@ export const trainerAssessmentTable = [
     { field: 'status', header: 'Status', fixed: true, filter: true, type: 'status' }
   ];
 
+export const trainerAssessmentTableFiltered = [
+    { field: 'assessmentName', header: 'Assessment Name', fixed: true, filter: true },
+    { field: 'batchName', header: 'Batch Name', fixed: true, filter: true },
+    { field: 'createdOn', header: 'Created On', type: 'date' },
+    { field: 'scheduledDate', header: 'Scheduled On', type: 'date', filter: true },    
+  ];
+
 export const traineeTable = [
+    { field: 'rankInBatch', header: 'Rank', filter: true, fixed: true, type: 'numeric' },
     { field: 'traineeName', header: 'Trainee Name', fixed: true, filter: true },
     { field: 'averagePercentageScore', header: 'Average % Score', fixed: true, filter: true, type: 'numeric' },
-    { field: 'rankInBatch', header: 'Rank', filter: true, fixed: true, type: 'numeric' },
     { field: 'totalAssessmentsCompleted', header: 'Assessments Taken', type: 'numeric', filter: true },
     { field: 'totalScore', header: 'Total Score', type: 'numeric', fixed: false, filter: true },    
     { field: 'lastAssessmentDate', header: 'Last Test Date', filter: true, type: 'date' },

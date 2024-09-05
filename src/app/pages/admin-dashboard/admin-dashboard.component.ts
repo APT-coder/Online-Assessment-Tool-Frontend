@@ -44,13 +44,13 @@ export class AdminDashboardComponent  implements OnInit {
   ];
   batches: any = [];
   allBatches: any = [];
+  batchAverageScore: any;
   noDataMessage: string = 'Select the evaluated assessment to see the data';
 
   constructor(private assessmentService: AdminDashboardService, 
     private userService: TrainermanagementService) {}
 
   ngOnInit(): void {
-    this.fetchAssessments();
     this.loadBatches();
     this.noDataMessage = 'Select the evaluated assessment to see the data';
 
@@ -85,14 +85,15 @@ export class AdminDashboardComponent  implements OnInit {
         this.selectedBatch = null;
     }
     console.log(this.selectedBatch);
+    this.fetchAssessments(this.selectedBatch);
     this.fetchTraineeAverageScore(this.selectedBatch);
   }
 
-  fetchAssessments(): void {
+  fetchAssessments(batchName: string): void {
     this.assessmentService.getAllAssessmentOverviews().subscribe(
       (data) => {
         if (data && data.isSuccess) {
-          this.adminTableData = data.result;
+          this.adminTableData = data.result.filter(a => a.batchName === batchName);
           this.initializeMostRecentAssessment();
         } else {
           console.error('Failed to fetch assessments:', data?.message || 'Unknown error');
@@ -109,6 +110,7 @@ export class AdminDashboardComponent  implements OnInit {
       (data) => {
         if (data && data.isSuccess) {
           this.traineeTableData = data.result;
+          this.batchAverageScore = this.traineeTableData[0].batchAverageScore;
         } else {
           console.error('Failed to fetch trainee data:', data?.message || 'Unknown error');
         }
@@ -146,10 +148,6 @@ export class AdminDashboardComponent  implements OnInit {
   onAssessmentSelected(assessmentId: number): void {
     this.selectedAssessmentId = assessmentId;
     console.log('Selected Assessment ID:', this.selectedAssessmentId);
-  }
-
-  getSelectedRow(data: any){
-    console.log(data);
   }
 
   onYearChange(event: any) {
