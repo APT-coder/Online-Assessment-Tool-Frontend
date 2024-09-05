@@ -5,7 +5,6 @@ import { PieDiagramComponent } from './components/pie-diagram/pie-diagram.compon
 import { AdminDashboardService } from '../../service/admin-dashboard/admin-dashboard.service'; 
 import { AssessmentOverview } from '../../shared/models/assessmentOverview.interface'; 
 import { CommonModule } from '@angular/common';
-import { TrainerTableComponent } from "./components/trainer-table/trainer-table.component";
 import { DashboardTableComponent } from '../../components/dashboard-table/dashboard-table.component';
 import { TabViewModule } from 'primeng/tabview';
 import { adminAssessmentTable, traineeTable, status } from '../../shared/constants/dashboardTableCols';
@@ -18,7 +17,7 @@ import { TrainermanagementService } from '../../service/trainer-management/train
   standalone: true,
   imports: [SidebarComponent, ListTableComponent, 
     PieDiagramComponent, DashboardTableComponent, 
-    CommonModule, TrainerTableComponent, TabViewModule,
+    CommonModule, TabViewModule,
     DropdownModule, FormsModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
