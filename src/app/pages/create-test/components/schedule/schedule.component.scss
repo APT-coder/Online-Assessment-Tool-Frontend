@@ -43,7 +43,7 @@
   margin-top: -20px;
   line-height: 1.4;
   position: relative;
-  bottom: 13px;
+  
   word-wrap: break-word; 
   margin-bottom: 20px; 
 }
@@ -130,11 +130,13 @@ padding: 20px;
 
 .end-error{
   margin-bottom: 15px;
+  color: var(--mat-form-field-error-text-color);
 
 }
 
 .start-error{
   margin-bottom: 15px;
+  color: var(--mat-form-field-error-text-color);
 }
 
 .duration-error{
@@ -145,4 +147,104 @@ padding: 20px;
 .date-time-error{
   display: flex;
   justify-content: space-between;
+}
+
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.custom-select {
+  display: inline-block;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  appearance: none; /* Removes default arrow */
+}
+
+.custom-select::after {
+  content: '▼'; /* Dropdown arrow */
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.custom-select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 0.375rem solid transparent;
+  border-right: 0.375rem solid transparent;
+  border-top: 0.375rem solid #333;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+#assessmentDuration
+{
+  height: 50px;
+}
+#randomize
+{
+  height: 20px;
+    bottom: 3px;
+    position: relative;
+    width: 20px;
+    margin-left: 5px;
+}
+#batchId
+{
+  height: 50px;
+}
+#display{
+  height: 20px;
+  bottom: 3px;
+  position: relative;
+  width: 20px;
+  margin-left: 5px;
+}
+#submit
+{
+  height: 20px;
+  bottom: 3px;
+  position: relative;
+  width: 20px;
+  margin-left: 5px;
+}
+.form-group{
+  display: flex;
+}
+#Date
+{
+  width: 500px!important;
+}
+.form-control
+{
+  height: 50px;
+}
+.end{
+  width: 100px;
+}
+
+.form-group {
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+.form-group label,
+.form-group input {
+  display: inline-block;
+  vertical-align: middle; /* Align vertically center */
+}
+.form-group label {
+  margin-right: 8px; /* Add some space between label and input */
 }
