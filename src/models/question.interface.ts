@@ -4,5 +4,5 @@ export interface Question {
     score: number;
     content: string;
     options: string[];
-    correctAnswer: string;
+    correctAnswer: string|string[];
   }

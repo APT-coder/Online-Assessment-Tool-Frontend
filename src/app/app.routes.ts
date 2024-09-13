@@ -18,6 +18,8 @@ import { NotFoundComponent } from './components/error/404-not-found/not-found.co
 import { PermissionsGuard } from './guard/route/permissions.guard';
 import { AccessDeniedComponent } from './components/error/403-access-denied/access-denied.component';
 import { InternalServerErrorComponent } from './components/error/500-internal-server-error/internal-server-error/internal-server-error.component'; 
+import { QuestionBankComponent } from './pages/question-bank/question-bank.component';
+import { AssessmentPreviewComponent } from './pages/assessment/components/assessment-preview/assessment-preview.component';
 
 export const routes: Routes = [
     {
@@ -57,6 +59,12 @@ export const routes: Routes = [
         data: { expectedRole: [0, 1], expectedPermission: 'CREATE_ASSESSMENT' }  // Trainer and Admin can access this route
     },
     {
+        path: 'assessment-preview', 
+        component: AssessmentPreviewComponent, 
+        canActivate: [MsalGuard, RouteGuard, PermissionsGuard],
+        data: { expectedRole: [0, 1], expectedPermission: 'CREATE_ASSESSMENT' }  // Trainer and Admin can access this route
+    },
+    {
         path: 'evaluate/:scheduledAssessmentId', 
         component: AssessmentEvaluateComponent, 
         canActivate: [MsalGuard, RouteGuard, PermissionsGuard],
@@ -71,6 +79,12 @@ export const routes: Routes = [
     {
         path: 'performance/:scheduledAssessmentId', 
         component: AssessmentPerformanceComponent, 
+        canActivate: [MsalGuard, RouteGuard],
+        data: { expectedRole: [0, 1], expectedPermission: 'CREATE_ASSESSMENT' }  // Trainer and Admin can access this route
+    },
+    {
+        path: 'question-bank', 
+        component: QuestionBankComponent, 
         canActivate: [MsalGuard, RouteGuard],
         data: { expectedRole: [0, 1], expectedPermission: 'VIEW_PERFORMANCE_DETAILS' }  // Trainer and Admin can access this route
     },
