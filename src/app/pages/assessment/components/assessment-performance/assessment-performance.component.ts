@@ -6,7 +6,7 @@ import { SidebarComponent } from '../../../../components/sidebar/sidebar.compone
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PerformanceDetailsService } from '../../../../service/performance-details/performance-details.service';
-import { PerformanceDetails } from '../../../../../models/performanceDetails.interface';
+import { PerformanceDetails } from '../../../../shared/models/performanceDetails.interface';
 import * as XLSX from 'xlsx';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
@@ -15,8 +15,8 @@ import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { EmailService } from '../../../../service/email/email.service';
 import { FormsModule } from '@angular/forms';
-import { performanceTemplate } from '../../../../../models/emailTemplate';
-import { adminMailTemplate } from '../../../../../models/emailTemplate';
+import { performanceTemplate } from '../../../../shared/constants/emailTemplate';
+import { adminMailTemplate } from '../../../../shared/constants/emailTemplate';
 
 interface Trainee {
   traineeName: string;
@@ -245,5 +245,9 @@ export class AssessmentPerformanceComponent implements OnInit {
       reader.onerror = reject;
       reader.readAsDataURL(blob);
     });
+  }
+
+  filteredData(data: Trainee[]){
+    console.log(data);
   }
 }

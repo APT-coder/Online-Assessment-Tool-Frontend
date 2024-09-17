@@ -108,6 +108,6 @@
           ></app-card>
         </div>
         <div class="performanceTable">
-          <app-table [trainees]="originalProducts"></app-table>
+          <app-table [trainees]="originalProducts" (filteredData)="filteredData($event)"></app-table>
         </div>
       </div>

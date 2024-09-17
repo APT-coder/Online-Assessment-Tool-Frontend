@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { Role } from '../../../../../models/role.interface';
-import { Permission } from '../../../../../models/permission.interface';
+import { Role } from '../../../../shared/models/role.interface';
+import { Permission } from '../../../../shared/models/permission.interface';
 import { ApiResponse, TrainermanagementService } from '../../../../service/trainer-management/trainermanagement.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

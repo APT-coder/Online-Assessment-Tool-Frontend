@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
 import { TrainermanagementService } from '../../service/trainer-management/trainermanagement.service';
-import { Role } from '../../../models/role.interface';
+import { Role } from '../../shared/models/role.interface';
 import { RolecreationCardComponent } from "./components/rolecreation-card/rolecreation-card.component";
 import { AccountcreationModalComponent } from "./components/accountcreation-modal/accountcreation-modal.component";
 import { TrainerTableComponent } from "./components/trainer-table/trainer-table.component";
@@ -16,6 +16,7 @@ import { MessageModule } from 'primeng/message';
 import { Dialog, DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-trainer-management',
@@ -31,7 +32,8 @@ import { HttpClient } from '@angular/common/http';
     TrainerTableComponent, MessagesModule,
     MessageModule,
     DialogModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule
   ],
   providers:[MessageService],
 

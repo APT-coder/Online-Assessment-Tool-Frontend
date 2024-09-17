@@ -9,10 +9,10 @@ import { TagModule } from 'primeng/tag';
 import { NgFor, NgIf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiResponse, TrainermanagementService } from '../../../../service/trainer-management/trainermanagement.service';
-import { Role } from '../../../../../models/role.interface';
+import { Role } from '../../../../shared/models/role.interface';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
 import { AccountcreationModalComponent } from "../accountcreation-modal/accountcreation-modal.component";
-import { User } from '../../../../../models/user.interface';
+import { User } from '../../../../shared/models/user.interface';
 import { MessageService } from 'primeng/api';
 
 @Component({

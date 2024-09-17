@@ -4,6 +4,7 @@ import { SidebarComponent } from '../../../../components/sidebar/sidebar.compone
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
 import { ButtonInactiveComponent } from '../../../../ui/buttons/button-inactive/button-inactive.component';
 import { ButtonPointsComponent } from '../../../../ui/buttons/button-points/button-points.component';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 
 interface Question {
   id: string;
@@ -31,8 +32,9 @@ interface Assessment {
 })
 export class AssessmentPreviewComponent {
     @Input() questions: any;
+    selectedQuestions:any[]=[];
     @Output() editClicked: EventEmitter<void> = new EventEmitter<void>();
-
+    constructor(private route: ActivatedRoute) {}
     onEditClicked() {
       this.editClicked.emit();
     }
@@ -41,8 +43,17 @@ export class AssessmentPreviewComponent {
 
     ngOnInit() {
         console.log(this.questions);
-    }
-
+        this.route.queryParams.subscribe(params => {
+          const questionsQuery = params['questions'];
+          if (questionsQuery) {
+            this.selectedQuestions = JSON.parse(decodeURIComponent(questionsQuery));
+            console.log('Selected Questions:', this.selectedQuestions);
+          } else {
+            console.log('No query parameters found.');
+          }
+        });
+      }
+      
     onToggleSidebar(collapsed: boolean) {
         this.isSidebarCollapsed = collapsed;
       }

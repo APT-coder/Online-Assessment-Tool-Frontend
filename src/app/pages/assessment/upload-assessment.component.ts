@@ -14,13 +14,14 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
-import { Assessment } from '../../../models/assessment.interface';
+import { Assessment } from '../../shared/models/assessment.interface';
 import { AssessmentService } from '../../service/assessment/assessment.service';
 import { FileUploadComponent } from './modals/file-upload/file-upload.component';
 import { ScheduledAssessmentService } from '../../service/scheduled-assessment/scheduled-assessment.service';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 interface Question {
   id: string
   type: string;
@@ -50,7 +51,8 @@ interface Question {
     ScheduleComponent,
     FileUploadComponent,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    ToastModule
   ],
   providers:[MessageService],
   templateUrl: './upload-assessment.component.html',

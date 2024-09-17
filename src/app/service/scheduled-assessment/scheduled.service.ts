@@ -3,10 +3,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
-import { ScheduledResponse } from '../../../models/Schedule.interface'; 
-import { CheckAttended } from '../../../models/checkAttende.interface';
-import { CheckAttendedPostBody } from '../../../models/checkAttendedpostbody.interface';
-import {Score} from '../../../models/Score.interface'
+import { ScheduledResponse } from '../../shared/models/Schedule.interface'; 
+import { CheckAttended } from '../../shared/models/checkAttende.interface';
+import { CheckAttendedPostBody } from '../../shared/models/checkAttendedpostbody.interface';
+import {Score} from '../../shared/models/Score.interface'
 
 @Injectable({
   providedIn: 'root'
