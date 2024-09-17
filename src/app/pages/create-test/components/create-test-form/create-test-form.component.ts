@@ -104,6 +104,14 @@ export class CreateTestFormComponent implements OnInit {
           localStorage.setItem("assessmentId", (this.assessment.assessmentId).toString());
       
           console.log('Assessment successfully created!', this.assessment);
+          if(this.isCardSelected){
+            if(this.selectedCardIndex === 0){
+              this.router.navigate(["/app/upload-assessment"]);
+            }
+            else if(this.selectedCardIndex === 2){
+              this.router.navigate(["/app/question-bank"]);
+            }
+          }
         },
         (error: any) => {
           console.error('Error creating assessment', error);
