@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Output } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { Sidebar, SidebarModule } from 'primeng/sidebar';
 import { RippleModule } from 'primeng/ripple';
@@ -53,10 +53,10 @@ export class SidebarComponent {
       { label: 'Name:', value: 'Your Name' },
       { label: 'Designation:', value: 'Your Role' }
     ];
-  constructor(private elementRef: ElementRef, private authService: MsalService) { }
+  constructor(private elementRef: ElementRef, private authService: MsalService, private route: Router) { }
 
   ngOnInit(): void {
-
+    this.authService.instance.initialize();
     console.log(this.user);
     
       this.profileDetails[0].value = this.user.UserName;
@@ -101,7 +101,15 @@ openFileExplorer() {
 }
 
 logout() {
-  this.authService.logoutRedirect();
-  localStorage.removeItem("loginToken");
+  if(localStorage.getItem('externalLogin') as string === null){
+    this.authService.logoutRedirect();
+    localStorage.clear();
+    sessionStorage.clear();
+  }
+  else{
+    localStorage.clear();
+    sessionStorage.clear();
+    this.route.navigate(["/"]);
+  }
 }
 }

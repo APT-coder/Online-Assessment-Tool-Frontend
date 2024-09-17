@@ -183,6 +183,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         else if(response.isSuccess){
           console.log("Login successful", response);
           localStorage.setItem('loginToken', response.result.token);
+          localStorage.setItem('externalLogin', "true");
           this.router.navigate(['/auth']);
         }
       },
