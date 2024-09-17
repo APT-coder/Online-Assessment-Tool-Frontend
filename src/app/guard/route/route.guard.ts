@@ -20,11 +20,11 @@ export class RouteGuard implements CanActivate {
 
     // Redirect to user's appropriate dashboard
     if (userDetails.UserType === 0) {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/app/admin']);
     } else if (userDetails.UserType === 1) {
-      this.router.navigate(['/trainer']);
+      this.router.navigate(['/app/trainer']);
     } else {
-      this.router.navigate(['/trainee']);
+      this.router.navigate(['/app/trainee']);
     }
 
     return false;

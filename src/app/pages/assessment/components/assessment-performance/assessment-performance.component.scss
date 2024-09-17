@@ -10,8 +10,8 @@ $letterColor:#1D335F;
     display: flex;
     flex-direction: column;
     padding:20px;
-    padding-left: 80px;
-    padding-right: 80px;
+    //padding-left: 80px;
+    //padding-right: 80px;
     height: 100vh;
 }
 .performanceIntro{
@@ -36,7 +36,7 @@ $letterColor:#1D335F;
     align-content: center;
     padding-top: 3px;
     height:100px;
-    width:900px;
+    //width:900px;
     margin-top: 40px;
     border-radius: 10px;
 }
@@ -56,5 +56,32 @@ $letterColor:#1D335F;
 }
 .performanceTable{
     margin-top: 30px;
-    width: 900px;
+    //width: 900px;
 }
+.modal-top{
+    display: flex;
+    justify-content:space-between;
+    padding-bottom:10px;
+}
+.modal-top-buttons{
+    display: flex;
+    gap:10px;
+}
+.select{
+    padding-left: 10px;
+}
+.admin-checkbox{
+    display: flex;
+    justify-content: flex-start;
+    gap:10px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+.card {
+    border: none;
+}
+
+
+ ::ng-deep .p-button-label{
+    font-weight: normal;
+ }

@@ -5,13 +5,14 @@ import { QuestionService } from '../../service/assessment/question.service';
 import { QuestionComponent } from './components/question/question.component';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Question } from '../../../models/test.interface';
+import { Question } from '../../shared/models/test.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { TimerService } from '../../service/timer/timer.service';
 import { Subscription } from 'rxjs';
 import { RemainingChanceDailogueComponent } from './components/remaining-chance-dailogue/remaining-chance-dailogue.component';
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 
 @Component({
@@ -135,7 +136,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
                 'visibilitychange',
                 this.handleVisibilityChange.bind(this)
               );
-              this.router.navigate(['/trainee']);
+              this.router.navigate(['/app/trainee']);
             });
         }
       }
@@ -145,7 +146,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   onComplete(): void {
     console.log('Backend have to be called');
     this.sendDataBeforeClosing();
-    this.router.navigate(["/trainee"]);
+    this.router.navigate(["/app/trainee"]);
   }
 
   formatTime(seconds: number): string {
@@ -182,8 +183,61 @@ export class TestPageComponent implements OnInit, OnDestroy {
     console.log('NEED BACKEND CONNECTION DONE');
     ///MAIN
     console.log(this.question);
-    this.router.navigate(["/trainee"]);
+    this.downloadPDF();
+    this.router.navigate(["/app/trainee"]);
   }
+
+  downloadPDF() {
+    function splitTextToLines(text: string, maxWidth: number, doc: jsPDF): string[] {
+        return doc.splitTextToSize(text, maxWidth);
+    }
+
+    // Create a new jsPDF instance
+    const doc = new jsPDF();
+    // Set initial offsets and dimensions
+    const xOffset = 10;
+    const rowHeight = 10;
+    const textWidth = 200;   // Maximum width for the combined question number and text
+    let yOffset = 20; // Start at a certain vertical position
+    
+    doc.setFontSize(14);
+    doc.text(`${this.assessment.result.assessmentName}`, xOffset, 10);
+    doc.setFontSize(12);
+
+    this.question.forEach((q: { questionNo: { toString: () => string | string[]; }; questionText: string | string[]; answered: any; }) => {
+        // Combine question number and text with a single space
+        const combinedText = `${q.questionNo.toString()}. ${q.questionText}`;
+        // Split combined text into lines that fit within textWidth
+        const textLines = splitTextToLines(combinedText as string, textWidth, doc);
+        // Print each line of the combined text
+        textLines.forEach((line, index) => {
+            doc.text(line, xOffset, yOffset + (rowHeight * index));
+        });
+        // Move to the next line after the question text
+        yOffset += rowHeight * textLines.length;
+        // Print the answer on the new line
+        doc.text('Selected Answer:', xOffset, yOffset);
+
+        // Set text color based on whether the question was answered
+        if (q.answered) {
+            doc.setTextColor(0, 100, 0); // Dark green for answered
+            doc.text(q.answered, xOffset + 50, yOffset); // Indent the answer text
+        } else {
+            doc.setTextColor(255, 0, 0); // Red for not answered
+            doc.text('Not Answered', xOffset + 50, yOffset); // Indent the "Not Answered" text
+        }
+
+        // Reset text color to black for the next question
+        doc.setTextColor(0, 0, 0);
+        // Move yOffset down for the next question
+        yOffset += rowHeight * 2; // Add extra spacing for better readability
+    });
+
+    const dateTime = Date.now();
+    // Save the document or display as needed
+    doc.save(`${this.user.TraineeId}_${this.user.UserName}_${dateTime}`);
+  }
+
 
   sendDataBeforeClosing() {
     this.postAssessment();

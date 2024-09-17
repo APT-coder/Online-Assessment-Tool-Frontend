@@ -1,5 +1,4 @@
-
-<div class="d-flex justify-content-end w-40" style="margin-left: 30%;"><p-messages></p-messages></div>
+<p-toast position="top-right"/>
 
 <mat-stepper linear #stepper>
   <!-- Step 1: Create Questions -->
@@ -40,7 +39,10 @@
           </div>
         </div>
         <div *ngIf="question.type === 'mcq'">
-          <app-mcq-form [index]="i" (mcqData)="onMcqData($event, i)"></app-mcq-form>
+          <app-mcq-form [index]="i" [type]="'mcq'" (mcqData)="onMcqData($event, i)"></app-mcq-form>
+        </div>
+        <div *ngIf="question.type === 'msq'">
+          <app-mcq-form [index]="i" [type]="'msq'" (mcqData)="onMcqData($event, i)"></app-mcq-form>
         </div>
         <div *ngIf="question.type === 'descriptive'">
           <app-descriptive-form [index]="i" (descData)="onDescData($event, i)"></app-descriptive-form>

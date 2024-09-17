@@ -14,7 +14,21 @@
                                         <input type="radio" [name]="'q' + i" [value]="option" class="radio"> {{ option }}
                                     </div>
                                     <div class="correct-answer">
-                                        Correct Answer: {{ question.correctAnswer }}
+                                        Correct Answers:
+                                        <ng-container *ngFor="let answer of question.correctAnswer; let j = index">
+                                            <span *ngIf="j > 0">, </span>{{ answer }}
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div *ngSwitchCase="'msq'">
+                                    <div *ngFor="let option of question.options" class="option-container">
+                                        <input type="radio" [name]="'q' + i" [value]="option" class="radio"> {{ option }}
+                                    </div>
+                                    <div class="correct-answer">
+                                        Correct Answers:
+                                        <ng-container *ngFor="let answer of question.correctAnswer; let j = index">
+                                            <span *ngIf="j > 0">, </span>{{ answer }}
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div *ngSwitchCase="'descriptive'">

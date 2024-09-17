@@ -14,13 +14,14 @@ import { ChipsModule } from 'primeng/chips';
 import { CommonModule } from '@angular/common';
 import { MsalService } from '@azure/msal-angular';
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
+import { HamburgerMenuIconComponent } from "../../ui/hamburger-menu-icon/hamburger-menu-icon.component";
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, SidebarModule, ButtonModule, RippleModule, AvatarModule, StyleClassModule,ImageModule,
+  imports: [RouterLink, SidebarModule, ButtonModule, RippleModule, AvatarModule, StyleClassModule, ImageModule,
     OverlayPanelModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ChipsModule, CommonModule, ButtonActiveComponent,
-    RouterLinkActive],
+    RouterLinkActive, HamburgerMenuIconComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   
@@ -33,6 +34,14 @@ export class SidebarComponent {
 
   changeIsSchedule(scheduled:boolean) {
       this.isSchedule.emit(scheduled);
+  }
+
+  sidebarCollapsed = true;
+  @Output() sidebarToggled = new EventEmitter<boolean>();
+
+  toggleSidebar(data: boolean) {
+    this.sidebarCollapsed = data;
+    this.sidebarToggled.emit(this.sidebarCollapsed);
   }
 
   user = JSON.parse(localStorage.getItem('userDetails') as string);
@@ -93,5 +102,6 @@ openFileExplorer() {
 
 logout() {
   this.authService.logoutRedirect();
+  localStorage.removeItem("loginToken");
 }
 }

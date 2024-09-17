@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { AssessmentOverview } from '../../../models/assessmentOverview.interface';
+import { AssessmentOverview } from '../../shared/models/assessmentOverview.interface'; 
 import { AdminDashboardService } from '../../service/admin-dashboard/admin-dashboard.service';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { faChevronDown, faPen } from '@fortawesome/free-solid-svg-icons';
 import { QuestionService } from '../../service/assessment/question.service';
 import { Router } from '@angular/router';
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
-import { Question } from '../../../models/question.interface';
+import { Question } from '../../shared/models/question.interface'; 
 import { AssessmentPreviewComponent } from "../assessment/components/assessment-preview/assessment-preview.component";
 
 @Component({
@@ -105,7 +105,7 @@ export class QuestionBankComponent implements OnInit {
   onNextClick(): void {
     const questionsQuery = encodeURIComponent(JSON.stringify(this.selectedQuestions));
   
-  this.router.navigate(['/assessment-preview'], {
+  this.router.navigate(['/app/assessment-preview'], {
     queryParams: { questions: questionsQuery }
   });
   }

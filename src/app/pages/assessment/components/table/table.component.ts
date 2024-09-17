@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PerformanceDetailsService } from '../../../../service/performance-details/performance-details.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface Trainee {
   traineeName: string;
@@ -16,17 +17,20 @@ interface Trainee {
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, TagModule, InputTextModule, HttpClientModule, CommonModule, FormsModule],
+  imports: [TableModule, TagModule, InputTextModule, HttpClientModule, CommonModule, FormsModule, DropdownModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 export class TableComponent implements OnInit {
   @Input() trainees!: Trainee[];
+  @Output() filteredData = new EventEmitter<Trainee[]>();
+
   statuses!: any[];
   loading: boolean = true;
   showSearch = false;
   originalProducts!: Trainee[];
   assessmentId: any;
+  selectedStatus: string = ''; 
 
   constructor(private route: ActivatedRoute,private performanceService: PerformanceDetailsService) {}
 
@@ -59,5 +63,10 @@ export class TableComponent implements OnInit {
     } else {
       this.trainees = [...this.originalProducts];
     }
+  }
+
+  onTableFilter(event: any) {
+    const filteredValue = event.filteredValue;
+    this.filteredData.emit(filteredValue);
   }
 }

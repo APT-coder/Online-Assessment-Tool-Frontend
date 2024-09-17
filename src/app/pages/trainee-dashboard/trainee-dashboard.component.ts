@@ -3,6 +3,7 @@ import { ReminderComponent } from './components/reminder/reminder.component';
 import { ScheduledService } from '../../service/scheduled-assessment/scheduled.service';
 import { AttendedTestsComponent } from './components/attended-tests/attended-tests.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { SharedService } from '../../service/shared/shared.service';
 
 @Component({
   selector: 'app-trainee-dashboard',
@@ -13,13 +14,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 })
 export class TraineeDashboardComponent {
 
-isScheduled:boolean=true;
-  
-handleIsScheduled(isScheduled: boolean) {
-  this.isScheduled =isScheduled
-  console.log(isScheduled);
-  
-}
+  isScheduled:boolean=true;
   selected: string = 'scheduled';
 
   handleClick(buttonType: string) {
@@ -31,9 +26,14 @@ handleIsScheduled(isScheduled: boolean) {
   firstname: string = this.getFirstName(this.user.UserName);
   scheduled: any[] | undefined;
 
-  constructor(private api: ScheduledService) {}
+  constructor(private api: ScheduledService, private sharedService: SharedService) {}
 
   ngOnInit(): void {
+    this.sharedService.isScheduled$.subscribe(isScheduled => {
+      this.isScheduled = isScheduled;
+      console.log('Is Scheduled:', isScheduled);
+    });
+
     this.fetchScheduled();
     console.log(this.user);
   }

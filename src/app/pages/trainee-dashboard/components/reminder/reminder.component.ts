@@ -25,16 +25,16 @@ export class ReminderComponent {
 
 
 
-clear(table: Table) {
-  table.clear();
-  this.searchValue = ''
-}
+  clear(table: Table) {
+    table.clear();
+    this.searchValue = ''
+  }
 
-filterTable(event: Event, dt: any) {
-  const target = event.target as HTMLInputElement;
-  const filterValue = target?.value || ''; // Safe access to the value property
-  dt.filterGlobal(filterValue, 'contains');
-}
+  filterTable(event: Event, dt: any) {
+    const target = event.target as HTMLInputElement;
+    const filterValue = target?.value || ''; // Safe access to the value property
+    dt.filterGlobal(filterValue, 'contains');
+  }
 
   constructor(private router: Router,private api: ScheduledService,private snackBar: MatSnackBar) {}
   user = JSON.parse(localStorage.getItem('userDetails') as string);

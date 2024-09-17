@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Question } from '../../../models/question.interface'; 
+import { Question } from '../../shared/models/question.interface'; 
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +22,8 @@ export class AssessmentService {
       createdBy: createdBy,
       questionOptions: [
         {
-          option1: question.options[0] || '',
-          option2: question.options[1] || '',
-          option3: question.options[2] || '',
-          option4: question.options[3] || '',
-          correctAnswer: question.correctAnswer
+          options: question.options,
+          correctAnswers: question.correctAnswer
         }
       ]
     };
@@ -49,6 +46,7 @@ export class AssessmentService {
 
   postQuestion(assessmentId: number, question: any, createdBy: number): Observable<any> {
     const transformedData = this.transformData(question, createdBy);
+    console.log(transformedData);
     return this.http.post(`${this.assessmentApiUrl}/AddQuestionToAssessment/${assessmentId}/questions`, transformedData);
   }
 }

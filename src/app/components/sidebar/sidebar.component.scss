@@ -12,6 +12,7 @@ a{
 
 p-sidebar {
   height: 100%;
+  transition: width 0.3s ease;
 }
 
 td{
@@ -52,6 +53,22 @@ td{
   color: #374151;
   margin-top: 20px;
   font-weight: bolder;
+}
+
+.pi-angle-left {
+  cursor: pointer;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
 }
 
 

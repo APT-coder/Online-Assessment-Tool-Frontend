@@ -1,33 +1,113 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div class="col-10">
+
       <div *ngIf="isLoading" class="loading-indicator">
-        <p-progressBar mode="indeterminate" [style]="{ height: '6px', width: '400px' }" />
+        <p-progressBar
+          mode="indeterminate"
+          [style]="{ height: '6px', width: '400px' }"
+        />
       </div>
       <div *ngIf="!isLoading" class="performancePage">
         <div class="performanceIntro">
           <div class="performanceBatch">
-            <h4>{{performanceData.assessmentName}} - {{performanceData.batchName}}</h4>
+            <h4>
+              {{ performanceData.assessmentName }} -
+              {{ performanceData.batchName }}
+            </h4>
           </div>
           <div class="shareOption">
-            <app-button-active [content]="'Export as Excel'" [customStyles]="{'height':'38px','width':'120px','font-size':'14px'}" (buttonClick)="exportToExcel()"></app-button-active>
-            <app-button-active [content]="'Share'" [customStyles]="{'height':'38px','width':'120px','font-size':'14px'}"></app-button-active>
+            <app-button-active
+              [content]="'Export as Excel'"
+              [customStyles]="{
+                height: '38px',
+                width: '120px',
+                'font-size': '14px'
+              }"
+              (buttonClick)="exportToExcel(false)"
+            ></app-button-active>
+            <!-- <app-button-active [content]="'Share'" [customStyles]="{'height':'38px','width':'120px','font-size':'14px'}"></app-button-active> -->
+            <div class="card flex justify-content-center">
+              <p-button (onClick)="showDialog()" label="Share"/>
+              <p-dialog
+                header="Share Assessment Performance"
+                [modal]="true"
+                [(visible)]="visible"
+                [style]="{ width: '50rem' }"
+                [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+              >
+                <div class="modal-top">
+                  <input
+                    type="text"
+                    (input)="onSearch($event)"
+                    placeholder="Search Trainee..."
+                    style="width: 150px; margin-left: 10px;height:40px;border-radius: 10px;"
+                  />
+
+                  <div class="modal-top-buttons">
+                    <div class="card flex justify-content-center">
+                      <p-button label="Add Email" class="modal-button" />
+                    </div>
+                    <div class="card flex justify-content-center">
+                      <p-button label="Send" (onClick)="sendMail()" />
+                    </div>
+                  </div>
+                </div>
+                <div class="admin-checkbox">
+                  <p-checkbox value="Share with Admin" [(ngModel)]="shareWithAdmin" inputId="shareWithAdmin" />
+                  <label for="shareWithAdmin">Share with Admin</label>
+                </div>
+                <div class="card">
+                  <p-table
+                    [scrollable]="true"
+                    scrollHeight="320px"
+                    [value]="trainees"
+                    [(selection)]="selectedTrainees"
+                    dataKey="traineeName"
+                    [tableStyle]="{ 'min-width': '20rem' }"
+                  >
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th style="width: 4rem"><p-tableHeaderCheckbox id="select_all"/>
+                          <label for="select_all" class="select">Select all</label></th>
+                        <th style="width: 12rem">Trainee Name</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-trainees>
+                      <tr>
+                        <td>
+                          <p-tableCheckbox [value]="trainees" />
+                        </td>
+                        <td>{{ trainees.traineeName }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </p-dialog>
+            </div>
           </div>
         </div>
         <div class="moreDetails">
-          <app-card [name]=name4 [title]="performanceData.maximumScore"></app-card>
-          <app-card [name]=name1 [title]="performanceData.totalTrainees"></app-card>
-          <app-card [name]=name2 [title]="performanceData.traineesAttended"></app-card>
-          <app-card [name]=name3 [title]="performanceData.absentees"></app-card>
-          <app-card [name]=name5 [title]="getFormattedDate(performanceData.assessmentDate)" [h4Styles]="{  'font-size': '18px','padding-bottom':'5px' }"></app-card>
+          <app-card
+            [name]="name4"
+            [title]="performanceData.maximumScore"
+          ></app-card>
+          <app-card
+            [name]="name1"
+            [title]="performanceData.totalTrainees"
+          ></app-card>
+          <app-card
+            [name]="name2"
+            [title]="performanceData.traineesAttended"
+          ></app-card>
+          <app-card
+            [name]="name3"
+            [title]="performanceData.absentees"
+          ></app-card>
+          <app-card
+            [name]="name5"
+            [title]="getFormattedDate(performanceData.assessmentDate)"
+            [h4Styles]="{ 'font-size': '18px', 'padding-bottom': '5px' }"
+          ></app-card>
         </div>
         <div class="performanceTable">
-          <app-table [trainees]="originalProducts"></app-table>
+          <app-table [trainees]="originalProducts" (filteredData)="filteredData($event)"></app-table>
         </div>
       </div>
-    </div>
-  </div>
-</div>

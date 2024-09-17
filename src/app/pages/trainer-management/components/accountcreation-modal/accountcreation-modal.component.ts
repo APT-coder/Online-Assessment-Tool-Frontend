@@ -8,12 +8,12 @@ import { PasswordModule } from 'primeng/password';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Role } from '../../../../../models/role.interface';
+import { Role } from '../../../../shared/models/role.interface';
 import { Batch, TrainermanagementService } from '../../../../service/trainer-management/trainermanagement.service';
 import { CalendarModule } from 'primeng/calendar';
 import { MessageService, SelectItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../../../models/user.interface';
+import { User } from '../../../../shared/models/user.interface';
 
 
 @Component({

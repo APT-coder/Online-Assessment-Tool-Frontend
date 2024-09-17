@@ -1,8 +1,5 @@
 <div class="dashboard">
-    <!-- <div class="sidebar-component"><app-sidebar [isTrainee]="true" (testToggle)="handleClick($event)"></app-sidebar></div> -->
-    <div class="sidebar-component"  ><app-sidebar (isSchedule)="handleIsScheduled($event)"></app-sidebar></div>
- 
- 
+    
     <div class="table-component">
         <h1 class="learner-welcome"> Hi, {{firstname}}</h1>
 
@@ -13,11 +10,8 @@
            
             @else {
                 <app-attended-tests></app-attended-tests>
-                 <!-- <h1>HI</h1> -->
             }
         }
     </div>
- 
- 
- 
+
 </div>

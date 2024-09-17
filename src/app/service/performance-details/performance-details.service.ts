@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PerformanceDetails } from '../../../models/performanceDetails.interface';
+import { PerformanceDetails } from '../../shared/models/performanceDetails.interface';
 
 interface Trainee {
   traineeName: string;

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TraineeAnswerDetailDTO } from '../../../models/TraineeAnswerDetailDTO.interface';
-import { TraineeStatusDTO } from '../../../models/TraineeStatusDTO.interface';
-import { UpdateScoreDTO } from '../../../models/UpdateScoreDTO.interface';
-import { AssessmentStatus, AssessmentTableDTO } from '../../../models/AssessmentTableDTO.interface';
+import { TraineeAnswerDetailDTO } from '../../shared/models/TraineeAnswerDetailDTO.interface';
+import { TraineeStatusDTO } from '../../shared/models/TraineeStatusDTO.interface';
+import { UpdateScoreDTO } from '../../shared/models/UpdateScoreDTO.interface';
+import { AssessmentStatus, AssessmentTableDTO } from '../../shared/models/AssessmentTableDTO.interface';
 
 @Injectable({
   providedIn: 'root'

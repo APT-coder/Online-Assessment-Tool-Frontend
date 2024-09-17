@@ -3,7 +3,8 @@
     <p-table class="table"
              [value]="trainees"
              [scrollable]="true" 
-             scrollHeight="350px">
+             scrollHeight="350px"
+             (onFilter)="onTableFilter($event)">
       <h1>Trainee Status and Marks Details</h1>
       <ng-template pTemplate="header">
         <tr>
@@ -18,9 +19,19 @@
           </th>
           <th pSortableColumn="isPresent">
             Status <p-sortIcon field="isPresent"></p-sortIcon>
+            <p-columnFilter field="isPresent" matchMode="equals" display="menu">
+              <ng-template pTemplate="filter" let-filter="filterCallback">
+                  <p-dropdown [(ngModel)]="selectedStatus" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
+                      <ng-template let-option pTemplate="item">
+                          <p-tag [value]="option.value" [severity]="getSeverity(option.label)" />
+                      </ng-template>
+                  </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th pSortableColumn="score">
             Marks <p-sortIcon field="score"></p-sortIcon>
+            <p-columnFilter type="numeric" field="score" display="menu" />
           </th>
         </tr>
       </ng-template>

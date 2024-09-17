@@ -14,19 +14,20 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
 import { ScheduleComponent } from '../create-test/components/schedule/schedule.component';
-import { Assessment } from '../../../models/assessment.interface';
+import { Assessment } from '../../shared/models/assessment.interface';
 import { AssessmentService } from '../../service/assessment/assessment.service';
 import { FileUploadComponent } from './modals/file-upload/file-upload.component';
 import { ScheduledAssessmentService } from '../../service/scheduled-assessment/scheduled-assessment.service';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 interface Question {
   id: string
   type: string;
   content: string;
   options?: string[];
-  correctAnswer?: string;
+  correctAnswer?: string[];
   score: number;
   userAnswer?: string;
 }
@@ -50,7 +51,8 @@ interface Question {
     ScheduleComponent,
     FileUploadComponent,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    ToastModule
   ],
   providers:[MessageService],
   templateUrl: './upload-assessment.component.html',
@@ -176,13 +178,13 @@ export class AssessmentComponent implements OnInit {
             type: 'unknown',
             content: text.replace('Question:', '').trim(),
             options: [],
-            correctAnswer: '',
+            correctAnswer: [],
             score: 0
           };
         } else if (text.startsWith('Options:')) {
           currentQuestion!.type = 'mcq';
         } else if (text.startsWith('Correct Answer:')) {
-          currentQuestion!.correctAnswer = text.replace('Correct Answer:', '').trim();
+          currentQuestion!.correctAnswer = [text.replace('Correct Answer:', '').trim()];
         } else if (text.startsWith('Score:')) {
           currentQuestion!.score = parseInt(text.replace('Score:', '').trim(), 10);
         } else if (currentQuestion && currentQuestion.type === 'mcq' && /^[A-Z]\./.test(text)) {
@@ -190,10 +192,10 @@ export class AssessmentComponent implements OnInit {
         } else if (currentQuestion && currentQuestion.type === 'unknown') {
           if (currentQuestion.content.startsWith('Fill in the blank')) {
             currentQuestion.type = 'fillup';
-            currentQuestion.correctAnswer = text.replace('____', '').trim();
+            currentQuestion.correctAnswer = [text.replace('____', '').trim()];
           } else {
             currentQuestion.type = 'descriptive';
-            currentQuestion.correctAnswer = text.trim();
+            currentQuestion.correctAnswer = [text.trim()];
           }
         }
       });
