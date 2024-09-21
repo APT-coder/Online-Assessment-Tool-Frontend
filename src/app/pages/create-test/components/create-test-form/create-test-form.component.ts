@@ -1,19 +1,15 @@
 import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { CommonModule } from '@angular/common';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatButtonModule } from '@angular/material/button';
 import { QuestionDropdownComponent } from '../question-dropdown/question-dropdown.component';
 import { McqFormComponent } from '../mcq-form/mcq-form.component';
 import { DescriptiveFormComponent } from '../descriptive-form/descriptive-form.component';
 import { FillInTheBlanksFormComponent } from '../fill-in-the-blanks-form/fill-in-the-blanks-form.component';
 import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component'; 
 import { ScheduleComponent } from '../schedule/schedule.component'; 
-import { MatIconModule } from '@angular/material/icon';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssessmentPreviewComponent } from "../../../assessment/components/assessment-preview/assessment-preview.component";
 import { Router } from '@angular/router';
-import { MatFormField, MatInputModule } from '@angular/material/input';
 import { AssessmentService } from '../../../../service/assessment/assessment.service';
 import { Assessment } from '../../../../shared/models/assessment.interface'; 
 import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service';
@@ -24,6 +20,9 @@ import { CardComponent } from '../card/card.component';
 import { ButtonComponent } from '../../../../ui/buttons/button/button.component';
 import { Button } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { StepperModule } from 'primeng/stepper';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 
 interface Option {
   option: string;
@@ -35,26 +34,24 @@ interface Option {
   standalone: true,
   imports: [
     CommonModule,
-    MatStepperModule,
-    MatButtonModule,
     QuestionDropdownComponent,
     McqFormComponent,
     DescriptiveFormComponent,
     FillInTheBlanksFormComponent,
     ButtonActiveComponent,
     ScheduleComponent,
-    MatIconModule,
     FormsModule,
     AssessmentPreviewComponent,
-    MatInputModule,
-    MatFormField,
     ReactiveFormsModule,
     MessagesModule,
     MessageModule,
     CardComponent,
     ButtonComponent,
     Button,
-    ToastModule
+    ToastModule,
+    StepperModule,
+    InputTextModule,
+    TooltipModule,
   ],
   providers:[MessageService],
   templateUrl: './create-test-form.component.html',
