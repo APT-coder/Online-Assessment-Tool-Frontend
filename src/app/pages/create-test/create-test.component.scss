@@ -1,0 +1,114 @@
+.row {
+    display: flex;
+    width: 100%;
+  }
+  .form-group {
+    display: flex;
+    margin-top: 1rem;
+  }
+  .w-100{
+    width: 100vw;
+    min-width: 100%;
+  }
+  
+  button {
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  
+  app-button-active {
+    display: inline-block;
+    width: auto;
+    height: 2.5rem;
+  }
+  
+  .input{
+    width: 100%;
+    height: 50px;
+  }
+  
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  
+  .inputLabel {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  
+  .labelName {
+    margin-bottom: 5px;
+  }
+  
+  .details {
+    font-size: 0.875em;
+    color: #a69e9e;
+    margin-top: -20px;
+    line-height: 1.4;
+    position: relative;
+    bottom: 13px;
+    word-wrap: break-word; 
+    margin-bottom: 20px; 
+  }
+  .card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px;
+  }
+  
+  app-card {
+    flex: 1;
+    max-width: 30%;
+    min-width: 250px;
+    transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+      }
+  }
+  @media (max-width: 768px) {
+    .card-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    app-card {
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .create-assessment-button{
+   display: flex;
+   align-items: center;
+   justify-content: right;
+  }
+  .input-container{ 
+    width: 100%;
+  }
+  .button-container {
+    position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 20px; /* Add some padding to give space on the sides */
+  background-color: #fff; /* Optional: background color */
+  display: flex;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+  z-index: 1000; /* Make sure it stays on top of other content */
+  box-sizing: border-box; /* Ensures padding and width are calculated properly */
+  }
+  
+  
+  
+  

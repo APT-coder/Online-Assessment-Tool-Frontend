@@ -2,98 +2,10 @@
   display: flex;
   width: 100%;
 }
+
 .form-group {
   display: flex;
   margin-top: 1rem;
 }
-/* Adjust button styles */
-button {
-  height: 2.5rem; /* Adjust height of buttons */
-  padding: 0.5rem 1rem; /* Adjust padding to control size */
-  font-size: 1rem; /* Adjust font size as needed */
-}
-
-/* Adjust the styles of app-button-active */
-app-button-active {
-  display: inline-block;
-  width: auto; /* Set to auto or a specific value to control width */
-  height: 2.5rem; /* Set the height of the custom button component */
-}
-
-.input{
-  width: 100%;
-  height: 50px;
-}
-
-
-@keyframes bounce {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-10px);
-  }
-}
-
-
-.inputLabel {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-
-.labelName {
-  margin-bottom: 5px;
-}
-
-.details {
-  font-size: 0.875em;
-  color: #a69e9e;
-  margin-top: -20px;
-  line-height: 1.4;
-  position: relative;
-  bottom: 13px;
-  word-wrap: break-word; 
-  margin-bottom: 20px; 
-}
-.card-container {
-  display: flex;
-  justify-content: space-between; /* Space evenly between cards */
-  gap: 20px; /* Optional: control the gap between cards */
-  margin: 20px; /* Optional: adjust the margin around the container */
-}
-
-app-card {
-  flex: 1; /* Allow each card to take up equal space */
-  max-width: 30%; /* Set a maximum width for each card */
-  min-width: 250px; /* Prevent cards from shrinking too much */
-  transition: transform 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-5px);
-    }
-}
-@media (max-width: 768px) {
-  .card-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  app-card {
-    max-width: 100%;
-    margin-bottom: 20px;
-  }
-}
-
-.create-assessment-button{
- display: flex;
- align-items: center;
- justify-content: right;
-}
-.input-container{ 
-  width: 100%;
-}
-
 
 

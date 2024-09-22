@@ -12,7 +12,7 @@ import { QuestionService } from '../../service/assessment/question.service';
 import { Router } from '@angular/router';
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
 import { Question } from '../../shared/models/question.interface'; 
-import { AssessmentPreviewComponent } from "../assessment/components/assessment-preview/assessment-preview.component";
+import { AssessmentPreviewComponent } from '../create-test/components/assessment-preview/assessment-preview.component'; 
 
 @Component({
   selector: 'app-question-bank',
