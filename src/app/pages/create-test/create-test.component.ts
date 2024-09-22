@@ -61,7 +61,7 @@ export class CreateTestComponent implements OnInit {
   dashboard = localStorage.getItem("dashboard");
   assessment: Assessment = { assessmentId: 0, assessmentName: '', createdBy: 0, createdOn: new Date() };
 
-  secondStep: string = '';
+  secondStep: string = 'Add Questions';
   thirdStep: string = '';
 
   constructor(private assessmentService: AssessmentService,

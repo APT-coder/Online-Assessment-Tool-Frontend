@@ -40,6 +40,7 @@ export class ScheduleComponent {
   @Input()
   questions: any[] = [];
   assessmentId: string = '';
+  firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   isSidebarCollapsed: boolean = false;
   batches: any[] = [];
@@ -48,9 +49,14 @@ export class ScheduleComponent {
   constructor(private _formBuilder: FormBuilder, private userService: TrainermanagementService, private cdr: ChangeDetectorRef) {
     console.log(localStorage.getItem("assessmentId"));
 
+    this.firstFormGroup = this._formBuilder.group({
+      batchId: ['']
+    })
+
     this.secondFormGroup = this._formBuilder.group({
       startDate: [new Date(), [ this.startDateValidator()]],
       endDate: [new Date(), [this.dateRangeValidator('startDate', 'endDate')]],
+      scheduledDate: [new Date(), Validators.required],
       assessmentDuration: ['00:00:00', Validators.required],
       startTime: ['00:00', Validators.required],
       endTime: ['00:00', Validators.required],
@@ -82,18 +88,14 @@ export class ScheduleComponent {
       const currentDate = new Date();
       // Normalize the current date to 00:00:00 to avoid time comparison issues
       const normalizedCurrentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-  
       const startDate = new Date(control.value);
       // Normalize the start date to 00:00:00
       const normalizedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-  
       console.log("Validating start date:", normalizedStartDate);
-  
       if (normalizedStartDate < normalizedCurrentDate) {
         console.log("Invalid Start Date Detected");
         return { 'invalidStartDate': true };
       }
-  
       return null;
     };
   }
@@ -103,10 +105,8 @@ export class ScheduleComponent {
     return (formGroup: AbstractControl): ValidationErrors | null => {
       const startDate = new Date(formGroup.get(startDateKey)?.value);
       const endDate = new Date(formGroup.get(endDateKey)?.value);
-  
       // Initialize error object
       let errors = formGroup.errors || {};
-  
       // Check if the startDate and endDate are valid Date objects
       if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
         if (endDate < startDate) {
@@ -116,10 +116,8 @@ export class ScheduleComponent {
           delete errors['invalidDateRange']; // Clear error if valid
         }
       }
-  
       // Apply errors to the form group
       formGroup.setErrors(errors);
-  
       return Object.keys(errors).length > 0 ? errors : null;
     };
   }
@@ -142,33 +140,25 @@ export class ScheduleComponent {
       console.log("Start Date:", startDate, "Start Time:", startTime);
       console.log("End Date:", endDate, "End Time:", endTime);
       console.log("Assessment Duration:", duration);
-    
       // If endDate is before startDate, no need to validate duration
       if (endDate < startDate) {
         console.log("Invalid Date Range Detected. Skipping Duration Validation.");
         return { 'invalidDateRange': true };// Return null since duration validation is not applicable
       }
-      
       if (startDate && startTime && endDate && endTime && duration) {
         const startDateTime = this.combineDateAndTime(startDate, startTime);
         const endDateTime = this.combineDateAndTime(endDate, endTime);
         const assessmentDuration = this.parseDuration(duration);
-    
         const actualDuration = endDateTime.getTime() - startDateTime.getTime();
-    
         console.log("Actual Duration (ms):", actualDuration, "Expected Duration (ms):", assessmentDuration);
-    
         if (actualDuration < assessmentDuration) {
           console.log("Invalid Duration Detected");
           return { 'invalidDuration': true };
         }
       }
-    
       return null; // Return null if no validation errors are found
     };
   }
-  
-  
 
   // Helper method to combine date and time into a single Date object
   combineDateAndTime(date: Date, time: string): Date {
@@ -208,6 +198,7 @@ export class ScheduleComponent {
     const formValues = this.secondFormGroup.value;
     const logData = {
       ...formValues,
+      batchId: this.firstFormGroup.value,
       assessmentId: parseInt(localStorage.getItem("assessmentId") as string)
     };
     const outputlog = this.transformAssessmentData(logData);
@@ -216,20 +207,21 @@ export class ScheduleComponent {
 
   transformAssessmentData(input: any): any {
     const output = {
-      batchId: input.batchId,
+      batchId: parseInt(input.batchId.batchId),
       assessmentId: parseInt(localStorage.getItem("assessmentId") as string),
       scheduledDate: input.scheduledDate,
       assessmentDuration: input.assessmentDuration,
-      startDate: input.startDate,
-      endDate: input.endDate,
-      startTime: this.convertTimeToISO(input.startTime, input.scheduledDate),
-      endTime: this.convertTimeToISO(input.endTime, input.scheduledDate),
+      startDate: this.convertTimeToISO(input.startTime, input.startDate),
+      endDate: this.convertTimeToISO(input.endTime, input.endDate),
+      startTime: this.convertTimeToISO(input.startTime, input.startDate),
+      endTime: this.convertTimeToISO(input.endTime, input.endDate),
       status: 0, 
       canRandomizeQuestion: input.canRandomizeQuestion,
       canDisplayResult: input.canDisplayResult,
       canSubmitBeforeEnd: input.canSubmitBeforeEnd,
-      Link: this.generateAssessmentLink(input.assessmentId)
+      link: this.generateAssessmentLink(input.assessmentId)
     };
+    console.log(output);
     return output;
   }
 

@@ -88,8 +88,15 @@
   .create-assessment-button{
    display: flex;
    align-items: center;
-   justify-content: right;
+   justify-content: left;
+   margin-left: 30rem;
+   transform: translateY(-80px);
   }
+
+  .width-input{
+    width: 30%;
+  }
+
   .input-container{ 
     width: 100%;
   }

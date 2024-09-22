@@ -11,7 +11,7 @@
                 <div class="col-auto labelName mr-2">
                   <label for="testName" class="font-medium">Test Name:</label>
                 </div>
-                <div class="p-field w-25 mb-3 ">
+                <div class="p-field width-input mb-3 ">
                   <input id="testName" type="text" pInputText #testNameInput placeholder="Ex. Soft Skills" required
                     [(ngModel)]="assessmentName" class="p-inputtext p-component w-full" />
                 </div>
@@ -19,10 +19,10 @@
                   This name will be visible to students
                 </small>
               </div>
-              <p-button class="create-assessment-button" [disabled]="!isCardSelected || !assessmentName"
-                *ngIf="!assessmentCreated" (click)="createAssessment(testNameInput.value, nextCallback)">Create Assessment</p-button>
+              
             </div>
-
+            <p-button label="Create Test" class="create-assessment-button" [disabled]="!isCardSelected || !assessmentName"
+            *ngIf="!assessmentCreated" (click)="createAssessment(testNameInput.value, nextCallback)"/>
             <!--Cards for question upload type -->
             <div class="card-container">
               <app-card header="File Upload"

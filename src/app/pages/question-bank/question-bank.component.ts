@@ -141,5 +141,4 @@ export class QuestionBankComponent implements OnInit {
     const formattedQuestions = this.convertToQuestionFormat(this.selectedQuestions);
     this.questionsSelected.emit(formattedQuestions);
   }
-  
 }
