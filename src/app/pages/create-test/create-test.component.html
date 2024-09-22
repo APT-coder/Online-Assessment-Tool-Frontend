@@ -1,17 +1,17 @@
 <p-toast position="top-right" />
 
-<div class="stepper-card flex w-100">
+<div class="stepper-card">
     <p-stepper [linear]="true" [activeStep]="activeStep">
       <!-- First Stepper for Creating Assessment -->
       <p-stepperPanel header="Create Assessment">
         <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
           <div class="flex flex-column h-12rem">
             <div class="form-group">
-              <div class="input-container flex-row align-items-center mb-3">
+              <div class="input-container flex-row align-items-center ml-4">
                 <div class="col-auto labelName mr-2">
                   <label for="testName" class="font-medium">Test Name:</label>
                 </div>
-                <div class="p-field w-100 mb-3 ">
+                <div class="p-field w-25 mb-3 ">
                   <input id="testName" type="text" pInputText #testNameInput placeholder="Ex. Soft Skills" required
                     [(ngModel)]="assessmentName" class="p-inputtext p-component w-full" />
                 </div>
@@ -19,6 +19,8 @@
                   This name will be visible to students
                 </small>
               </div>
+              <p-button class="create-assessment-button" [disabled]="!isCardSelected || !assessmentName"
+                *ngIf="!assessmentCreated" (click)="createAssessment(testNameInput.value, nextCallback)">Create Assessment</p-button>
             </div>
 
             <!--Cards for question upload type -->
@@ -43,8 +45,7 @@
             </div>
             <!-- Cards for question upload type End -->
             <div class="form-group">
-              <p-button class="create-assessment-button" [disabled]="!isCardSelected || !assessmentName"
-                *ngIf="!assessmentCreated" (click)="createAssessment(testNameInput.value, nextCallback)">Create Assessment</p-button>
+              
             </div>
           </div>
         </ng-template>
@@ -73,7 +74,13 @@
                 }
                 <!-- Question Bank Selected -->
                 @else{
-                  <app-create-test-form (questionsChange)="getQuestions($event)"></app-create-test-form>
+                  @if(!fileUploaded){
+                    <app-question-bank (questionsSelected)="getParsedContent($event)"
+                     (message)="showMessage($event)"></app-question-bank>
+                  }
+                  @else{
+                    <app-assessment-edit [questions]="editQuestions" (questionsChange)="getQuestions($event)"></app-assessment-edit>
+                  }
                 }
               }
 
@@ -94,7 +101,7 @@
           </div>
           <div class="flex button-container">
             <p-button label="Back" icon="pi pi-arrow-left" (onClick)="goToPreviousStep()" />
-            <button pButton icon="pi pi-arrow-right" iconPos="right" (click)="logQuestions(nextCallback)">Save and Next</button>
+            <p-button label="Save & Next" icon="pi pi-arrow-right" iconPos="right" (click)="logQuestions(nextCallback)"/>
           </div>
         </ng-template>
       </p-stepperPanel>

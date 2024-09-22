@@ -6,10 +6,6 @@
     display: flex;
     margin-top: 1rem;
   }
-  .w-100{
-    width: 100vw;
-    min-width: 100%;
-  }
   
   button {
     height: 2.5rem;
@@ -99,14 +95,17 @@
   }
   .button-container {
     position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 10px 20px; /* Add some padding to give space on the sides */
-  background-color: #fff; /* Optional: background color */
-  display: flex;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
-  z-index: 1000; /* Make sure it stays on top of other content */
-  box-sizing: border-box; /* Ensures padding and width are calculated properly */
+    bottom: 0;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #fff;
+    display: flex;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+  .button-container p-button:first-child {
+    margin-right: 10px;
   }
   
   

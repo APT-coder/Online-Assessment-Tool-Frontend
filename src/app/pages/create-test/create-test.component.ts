@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { CreateTestFormComponent } from "./components/create-test-form/create-test-form.component";
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { AssessmentEditComponent } from './components/assessment-edit/assessment-edit.component';
+import { QuestionBankComponent } from '../question-bank/question-bank.component';
 
 interface Option {
   option: string;
@@ -28,6 +29,7 @@ interface Option {
     CreateTestFormComponent,
     FileUploadComponent,
     AssessmentEditComponent,
+    QuestionBankComponent,
     AssessmentPreviewComponent,
     ScheduleComponent,
     ButtonModule,
@@ -142,6 +144,12 @@ export class CreateTestComponent implements OnInit {
     }
     else if(message === "Download Success"){
       this.messageService.add({ severity: 'success', summary: 'Download Success', detail: 'Template Downloaded successfully', life: 5000 });
+    }
+    else if(message === "Empty Set"){
+      this.messageService.add({ severity: 'error', summary: 'No Questions selected', detail: 'Select atleast one question to proceed', life: 5000 });
+    }
+    else if(message === "No Questions"){
+      this.messageService.add({ severity: 'warn', summary: 'No Questions found', detail: 'No questions found in selected assessment', life: 5000 });
     }
   }
 
