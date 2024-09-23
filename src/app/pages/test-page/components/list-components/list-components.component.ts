@@ -28,7 +28,11 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
   clickedIndex: number | null = null;
   inputValue: string = '';
   
-  enteredAnswer: string = ''
+  enteredAnswer: string = '';
+  selectedOptions: number[] = [];
+
+  selectedOptionsState: { [key: number]: number[] } = {};
+  currentQuestionIndex: number = 0;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -41,7 +45,17 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['questions']) {
-      // The inputData property has changed, call your function here
+      this.currentQuestionIndex = this.questionNumber;
+
+      // Initialize or reset selected options for the current question
+      if (!this.selectedOptionsState[this.currentQuestionIndex]) {
+        this.selectedOptionsState[this.currentQuestionIndex] = [];
+      }
+
+      // Load the selected options for the current question
+      this.selectedOptions = this.selectedOptionsState[this.currentQuestionIndex];
+      
+      // Call your function here if needed to handle new data
       this.handleDataChange(changes['questions'].currentValue);
     }
   }
@@ -100,6 +114,26 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
     // console.log(i);
     console.log(answer);
     // this.setOptionBoxSizes();
+  }
+
+  handleMultipleClick(answer: string, i: number): void {
+    const index = this.selectedOptions.indexOf(i);
+
+    if (index === -1) {
+      // Option not yet selected, add it
+      this.selectedOptions.push(i);
+    } else {
+      // Option already selected, remove it
+      this.selectedOptions.splice(index, 1);
+    }
+
+    this.selectedOptionsState[this.currentQuestionIndex] = [...this.selectedOptions];
+
+    // Emit all selected answers
+    const selectedAnswers = this.selectedOptions.map(idx => this.fullQuestions.questionOptions[0].options[idx]);
+    this.buttonClicked.emit({ answer: selectedAnswers.join(','), index: i });
+
+    this.cdr.detectChanges();
   }
 
 

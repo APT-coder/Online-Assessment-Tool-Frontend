@@ -12,20 +12,19 @@ export class RouteGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     const userDetails = JSON.parse(localStorage.getItem("userDetails") || '{}');
-    const expectedRole = route.data['expectedRole'];
+    const expectedRole = route.data['expectedRole'] as number [];
     
-    if (userDetails && (userDetails.UserType === expectedRole || (userDetails.UserType === 0 && expectedRole !== 2))) {
-      // Allow access if user role matches or if user is admin and the route is not trainee-specific
+    if (userDetails && (expectedRole.includes(userDetails.UserType))) {
       return true;
     }
 
     // Redirect to user's appropriate dashboard
     if (userDetails.UserType === 0) {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/app/admin']);
     } else if (userDetails.UserType === 1) {
-      this.router.navigate(['/trainer']);
+      this.router.navigate(['/app/trainer']);
     } else {
-      this.router.navigate(['/trainee']);
+      this.router.navigate(['/app/trainee']);
     }
 
     return false;

@@ -1,26 +1,24 @@
 <form [formGroup]="secondFormGroup">
-  <!-- <div class="inputLabel">
-    <div class="col-auto labelName">
-      <label for="testName">Test Name:</label>
-    </div>
-    <div>
-      <mat-form-field appearance="outline" class="w-100 inputbox">
-        <mat-label>Enter the name of your test</mat-label>
-        <input matInput placeholder="Ex. Soft Skills" formControlName="assessmentName" required>
-      </mat-form-field>
-      <small id="testname-help" class="details">This name will be visible to students</small>
-    </div>
-  </div> -->
 
   <div class="inputLabel">
     <div class="col-auto labelName">
-      <label for="testDuration">Test Duration:</label>
+      <label for="testDuration">Test Duration: Enter the duration of test</label>
     </div>
     <div>
-      <mat-form-field appearance="outline" class="w-100 inputbox">
-        <mat-label>Enter the duration of test</mat-label>
-        <input matInput placeholder="Ex. 01:30:00" formControlName="assessmentDuration" required>
-      </mat-form-field>
+    
+      <div class="form-group">
+        
+        <input 
+          type="text" 
+          id="assessmentDuration" 
+          name="assessmentDuration" 
+          placeholder="Ex. 01:30:00" 
+          class="form-control w-100 inputbox" 
+          formControlName="assessmentDuration"
+          required
+        >
+      </div>
+      
       <small id="testduration-help" class="details">Students will only have the set time to complete the whole test. The time limit is entered in the format (hours : minutes : seconds)</small>
     </div>
   </div>
@@ -29,7 +27,14 @@
     <div class="col-auto labelName">
       <label for="randomize">Randomize Questions:</label>
     </div>
-    <mat-checkbox formControlName="canRandomizeQuestion" class="example-margin">Whole Test</mat-checkbox>
+    
+    <input 
+    type="checkbox" 
+    id="randomize" 
+    name="canRandomizeQuestion"
+    class="form-check-input"
+    formControlName="canRandomizeQuestion"
+  >
     <small id="randomize-help" class="details-random">Questions will be displayed in a random order to each student in the whole test</small>
   </div>
 
@@ -37,71 +42,130 @@
     <div class="col-auto labelName">
       <label for="batchSelect">Select Batch:</label>
     </div>
-    <mat-form-field appearance="outline" class="w-100 inputbox">
-      <mat-label>Select Batch</mat-label>
-      <mat-select id="batches" formControlName="batchId">
-        <mat-option value="one">ILP 01</mat-option>
-        <mat-option value="two">ILP 02</mat-option>
-        <mat-option value="three">ILP 03</mat-option>
-        <mat-option value="four">ILP 04</mat-option>
-      </mat-select>
-    </mat-form-field>
+
+    <form [formGroup]="firstFormGroup">
+      <div class="form-group">
+        <div class="custom-select-wrapper">
+          <select id="batchId" name="batchId" class="custom-select" formControlName="batchId">
+            <option *ngFor="let batch of batches" [value]="batch.batchid">
+              {{ batch.batchname }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </form>
+
   </div>
 
-  <div class="inputLabel">
-    <div class="col-auto labelName">
-      <label for="schedule">Schedule:</label>
-    </div>
-    <div>
+  <form [formGroup]="secondFormGroup">
+    <div class="inputLabel">
+      <div class="col-auto labelName">
+        <label for="schedule">Schedule:</label>
+      </div>
+      <div>
+        <label for="from">From:</label>
+        <div class="from">
      
-      <label for="from">From:</label>
-      <div class="from">
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to-from">
-        <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="startDate" required>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <!-- <mat-form-field appearance="outline" class="w-100 inputbox from-to">
-        <mat-label>Start Time</mat-label>
-        <input matInput type="time" placeholder="Choose time" formControlName="startTime" required>
+          <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input 
+              type="date" 
+              id="Date" 
+              name="startDate" 
+              class="form-control w-100 inputbox" 
+              required
+              formControlName="startDate"
+            >
+            </div>
+           
+            <label for="startTime" class="start">Start Time:</label>
+            <input 
+              id="startTime" 
+              type="time" 
+              name="startTime" 
+              class="form-control"
+              formControlName="startTime"
+            >
+         
+          </div>
+        
+        <div *ngIf="secondFormGroup.controls['startDate'].hasError('invalidStartDate') && secondFormGroup.controls['startDate'].touched">
+          <p class="start-error">Start date cannot be before the current date</p>
+        </div>
+        
+  
+        <label for="to">To:</label>
+        <div class="to">
+        
+          <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <input 
+              type="date" 
+              id="Date" 
+              name="endDate" 
+              class="form-control w-100 inputbox" 
+              formControlName="endDate"
+              required
+            >
+            </div>
+            
+            <label for="endTime" class="end">End Time:</label>
+            <input 
+              id="endTime" 
+              type="time" 
+              name="endTime" 
+              class="form-control"
+              formControlName="endTime"
+            >
+          
+          </div>
+       
+        <div class="date-time-error">
+          <!-- Display Invalid Date Range Error -->
+          <div *ngIf="secondFormGroup.errors?.['invalidDateRange'] && secondFormGroup.touched">
+            <p class="end-error">End date cannot be before start date</p>
+          </div>
+          
 
-      </mat-form-field> -->
-      <label for="appt-time" class="start">Start Time: </label>
-     <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="startTime"/>
+<!-- Display Invalid Duration Error -->
+<div *ngIf="secondFormGroup.hasError('invalidDuration') && (secondFormGroup.touched || secondFormGroup.dirty)">
+  <p class="duration-error">The time should match the scheduled duration</p>
+</div>
+
+           
+        </div>
+        <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
+      </div>
     </div>
-    
-      <label for="from">To:</label>
-      <div class="to">
-      <mat-form-field appearance="outline" class="w-100 inputbox from-to-to">
-        <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="endPicker" placeholder="Choose a date" formControlName="endDate" required>
-        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-        <mat-datepicker #endPicker></mat-datepicker>
-      </mat-form-field>
-   
-      <!-- <mat-form-field appearance="outline" class="w-100 inputbox from-to">
-        <mat-label>End Time</mat-label>
-        <input matInput type="time" placeholder="Choose time" formControlName="endTime" required>
-      </mat-form-field> -->
-      <label for="appt-time" class="start">End Time: </label>
-      <input id="appt-time" type="time" name="appt-time" value="13:30" formControlName="endTime"/>
-    </div>
-      <small id="schedule-help" class="details">Set a schedule for when your test will automatically open and then close based on the time zone for your account.</small>
-    </div>
-  </div>
+  </form>
+  
 
   <div class="checkboxLabel">
     <div class="col-auto labelName">
       <label for="display">Display result to trainees:</label>
     </div>
-    <mat-checkbox formControlName="canDisplayResult" class="example-margin"></mat-checkbox>
+
+    <input 
+    type="checkbox" 
+    id="display" 
+    name="canDisplayResult" 
+    class="form-check-input"
+    formControlName="canDisplayResult"
+  >
   </div>
 
   <div class="checkboxLabel">
     <div class="col-auto labelName">
       <label for="submit">Enable Submit:</label>
     </div>
-    <mat-checkbox formControlName="canSubmitBeforeEnd" class="example-margin">Submit</mat-checkbox>
+
+     <input
+     type="checkbox"
+     id="submit"
+     name="canSubmitBeforeEnd"
+     class="example-margin"
+     formControlName="canSubmitBeforeEnd"
+     >
   </div>
+  <button (click)="logFormValues()">Click</button>
 </form>

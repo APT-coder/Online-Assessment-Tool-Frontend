@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { Performers } from '../../../../../models/performers.interface'; 
+import { Performers } from '../../../../shared/models/performers.interface'; 
 import { AdminDashboardService } from '../../../../service/admin-dashboard/admin-dashboard.service'; 
-import { TableComponent } from '../../../assessment/components/table/table.component';
+import { TableComponent } from '../../../assessment-performance/components/table/table.component';
 import { TableModule } from 'primeng/table';
 
 @Component({

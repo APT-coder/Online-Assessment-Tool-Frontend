@@ -1,95 +1,29 @@
-
-<div class="d-flex justify-content-end w-40" style="margin-left: 30%;"><p-messages></p-messages></div>
-
-<mat-stepper linear #stepper>
-  <!-- Step 1: Create Questions -->
-  <mat-step>
-    <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
-      <mat-icon>keyboard_arrow_up</mat-icon>
-    </button>
-    <ng-template matStepLabel>Create Questions</ng-template>
-    <div class="inputLabel" *ngIf="!assessmentCreated">
-      <div class="col-auto labelName">
-        <label for="testName">Test Name:</label>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="w-100 inputbox">
-          <mat-label>Enter the name of your test</mat-label>
-          <input matInput placeholder="Ex. Soft Skills" #testNameInput required>
-        </mat-form-field>
-        <small id="testname-help" class="details">
-          This name will be visible to students
-        </small>
-      </div>
-      <div class="form-group">
-        <button mat-button (click)="createAssessment(testNameInput.value)">Create Assessment</button>
-      </div>
-    </div>
-    
-    <div *ngIf="assessmentCreated">
-      <div *ngFor="let question of questions; let i = index">
-        <h4>Question {{ i + 1 }}</h4>
-        <div class="form-group row">
-          <label class="col-form-label col-sm-2">Question Type</label>
-          <div class="col-sm-4">
-            <app-question-dropdown (selectedType)="onQuestionTypeSelected($event, i)"></app-question-dropdown>
-          </div>
-          <label class="col-form-label col-sm-2">Question Score</label>
-          <div class="col-sm-2">
-            <input type="number" [(ngModel)]="question.score" name="score{{ i }}" class="form-control">
-          </div>
-        </div>
-        <div *ngIf="question.type === 'mcq'">
-          <app-mcq-form [index]="i" (mcqData)="onMcqData($event, i)"></app-mcq-form>
-        </div>
-        <div *ngIf="question.type === 'descriptive'">
-          <app-descriptive-form [index]="i" (descData)="onDescData($event, i)"></app-descriptive-form>
-        </div>
-        <div *ngIf="question.type === 'fillup'">
-          <app-fill-in-the-blanks-form [index]="i" (fillData)="onFillData($event, i)"></app-fill-in-the-blanks-form>
-        </div>
-        <button mat-button color="warn" (click)="removeQuestion(i)" class="delete-button">Delete Question</button>
-      </div>
-      <div class="form-group">
-        <app-button-active mat-button [content]="'Add New Question'" (click)="addNewQuestion()"></app-button-active>
-        <button mat-button matStepperNext><app-button-active [content]="'Next'"></app-button-active></button>
-      </div>
-    </div>
-    
-    <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
-  </mat-step>
-
-  <mat-step>
-    <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
-      <mat-icon>keyboard_arrow_up</mat-icon>
-    </button>
-    <ng-template matStepLabel>Preview</ng-template>
-    <app-assessment-preview [questions]="questions"></app-assessment-preview>
-    <div class="form-group">
-      <button mat-button><app-button-active (buttonClick)="logQuestions()" [content]="'Save Questions'" ></app-button-active></button>
-      <button mat-button matStepperPrevious><app-button-active [content]="'Back'"></app-button-active></button>
-      <button mat-button matStepperNext><app-button-active [content]="'Next'" ></app-button-active></button>
-    </div>
-    <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
-  </mat-step>
-
-  <!-- Step 2: Configure -->
-  <mat-step>
-    <button mat-fab class="scroll-to-top-button" (click)="scrollToTop()">
-      <mat-icon>keyboard_arrow_up</mat-icon>
-    </button>
-    <ng-template matStepLabel>Schedule</ng-template>
-    <app-schedule></app-schedule>
-    <div class="form-group">
-      <button mat-button matStepperPrevious><app-button-active [content]="'Back'" ></app-button-active></button>
-      <button mat-button matStepperNext><app-button-active (click)="finishSchedule()" [content]="'Schedule'" ></app-button-active></button>
-    </div>
-    <button mat-fab class="scroll-to-bottom-button" (click)="scrollToBottom()">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
-  </mat-step>
-</mat-stepper>
+<div *ngFor="let question of questions; let i = index">
+  <h4>Question {{ i + 1 }}</h4>
+  <div class="form-group row">
+  <label class="col-form-label col-sm-2">Question Type</label>
+  <div class="col-sm-4">
+      <app-question-dropdown (selectedType)="onQuestionTypeSelected($event, i)"></app-question-dropdown>
+  </div>
+  <label class="col-form-label col-sm-2">Question Score</label>
+  <div class="col-sm-2">
+      <input type="number" [(ngModel)]="question.score" name="score{{ i }}" class="form-control">
+  </div>
+  </div>
+  <div *ngIf="question.type === 'mcq'">
+    <app-mcq-form [index]="i" [type]="'mcq'" (mcqData)="onMcqData($event, i)"></app-mcq-form>
+  </div>
+  <div *ngIf="question.type === 'msq'">
+    <app-mcq-form [index]="i" [type]="'msq'" (mcqData)="onMcqData($event, i)"></app-mcq-form>
+  </div>
+  <div *ngIf="question.type === 'descriptive'">
+    <app-descriptive-form [index]="i" (descData)="onDescData($event, i)"></app-descriptive-form>
+  </div>
+  <div *ngIf="question.type === 'fillup'">
+    <app-fill-in-the-blanks-form [index]="i" (fillData)="onFillData($event, i)"></app-fill-in-the-blanks-form>
+  </div>
+  <button pButton color="warn" (click)="removeQuestion(i)" class="delete-button">Delete Question</button>
+</div>
+<div class="form-group">
+  <button pButton (click)="addNewQuestion()">Add New Question</button>
+</div>

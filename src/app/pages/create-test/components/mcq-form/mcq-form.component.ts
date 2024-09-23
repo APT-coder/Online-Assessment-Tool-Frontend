@@ -23,6 +23,8 @@ import { CommonModule } from '@angular/common';
 export class McqFormComponent {
   @Input()
   index!: number;
+  @Input()
+  type!: string;
   @Output()
   mcqData = new EventEmitter<any>();
 
@@ -65,10 +67,12 @@ export class McqFormComponent {
   }
 
   onCheckboxChange(index: number) {
-    this.options.controls.forEach((group, i) => {
-      if (i !== index) {
-        group.get('isCorrect')?.setValue(false);
-      }
-    });
+    if(this.type === 'mcq'){
+      this.options.controls.forEach((group, i) => {
+        if (i !== index) {
+          group.get('isCorrect')?.setValue(false);
+        }
+      });
+    }
   }
 }

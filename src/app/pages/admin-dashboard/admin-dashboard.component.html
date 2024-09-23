@@ -1,19 +1,36 @@
+<p-tabView>
+  <div class="dropdown-bar">
+    <p-dropdown 
+      [options]="years" 
+      [(ngModel)]="selectedYear" 
+      placeholder="Select a Year"
+      (onChange)="onYearChange($event)"
+      optionLabel="label" 
+      optionValue="value"
+    ></p-dropdown>
 
-<div class="container">
-  <div class="row">
-    <div class="col-2 mr-5">
-      <div class="sidebar">
-        <app-sidebar></app-sidebar>
-      </div>
-    </div>
+    <p-dropdown 
+      [options]="batches" 
+      [(ngModel)]="selectedBatch" 
+      placeholder="Select a Batch" 
+      [disabled]="!selectedYear" 
+      (onChange)="onBatchChange($event)"
+      optionLabel="batchname"
+      optionValue="batchname" 
+    ></p-dropdown>
 
-    <div class="col mt-1 dashboard">
-      <div class="profile">
-        <h4 class="welcome dashboard-table">Welcome to Admin Dashboard</h4>
-      </div>
+    Batch Average Score Percentage: {{batchAverageScore}}
+  </div>
 
-      <app-table-dashboard (assessmentIdSelected)="receiveAssessment($event)" class="dashboard-table"></app-table-dashboard>
-      
+  <p-tabPanel header="Assessments">
+      <app-dashboard-table [tableData]="adminTableData"
+      [defaultSortField]="'date'"
+      [defaultSortOrder]="-1"
+      [dataKey]="'assessmentId'"
+      [action]="true"
+      [cols]="adminTableCols"
+      [status]="status" (rowSelected)="receiveAssessment($event)"></app-dashboard-table>
+
       <div class="row down-section ">
         @if(selectedAssessmentStatus=="Evaluated"){
           <div class="col-4 mt-3 dashboard-table">
@@ -38,8 +55,9 @@
           </div>
           
           <div class="col-3 piechart">
+            
             <div class="chart">
-             
+              <h6>Student Performance by Score Range</h6>
               <app-pie-diagram class="pie"  [assessmentId]="selectedAssessmentId"></app-pie-diagram>
             </div>
           </div>
@@ -54,7 +72,16 @@
           </div>
         </div>
       }
-        </div>
-    </div>
-  </div>
-</div>
+      </div>
+  </p-tabPanel>
+  <p-tabPanel header="Trainee">
+      <app-dashboard-table [tableData]="traineeTableData"
+      [defaultSortField]="'rankInBatch'"
+      [defaultSortOrder]="1"
+      [dataKey]="'traineeId'"
+      [action]="false"
+      [cols]="traineeTableCols"
+      ></app-dashboard-table>
+  </p-tabPanel>
+</p-tabView>
+

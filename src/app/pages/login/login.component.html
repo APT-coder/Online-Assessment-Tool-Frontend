@@ -1,4 +1,5 @@
 @if(!loginDisplay){
+    <p-toast position="top-right"/>
     <div class="login-container">
         <div class="split-screen">
             <div class="content-card">
@@ -80,8 +81,10 @@
                            
                     </div>
                     <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                        <div class="error-msg" *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
-                      </div> 
+                        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="error-message">
+                            <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+                            <div *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</div>
+                          </div>                      </div> 
                         
                     <div class="inputContainer" *ngIf="showPassword">
                         <svg class="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2e2e2e" viewBox="0 0 16 16">
@@ -94,7 +97,7 @@
                         <div class="error-msg" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
                       </div>     
                     <button id="button" [disabled]="loginForm.invalid">Submit</button>
-                        <a class="forgotLink" href="#">Forgot your password?</a>
+                        <a class="forgotLink" href="#" (click)="forgotPassword()">Forgot your password?</a>
                     </form>
                     
                 </div>
@@ -109,3 +112,6 @@
     @if (!isIframe) {
     <app-auth></app-auth>}
     }
+@if(resetPassword){
+    <app-reset-password [visible]="resetPassword" [userInactive]="userInactive" [email]="email"></app-reset-password>
+}

@@ -11,6 +11,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AuthComponent } from '../../guard/auth/auth.component'; 
+import { AuthService } from '../../service/auth/auth.service';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +29,14 @@ import { AuthComponent } from '../../guard/auth/auth.component';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    AuthComponent
+    AuthComponent,
+    ResetPasswordComponent,
+    MessagesModule,
+    ToastModule
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
@@ -35,18 +44,30 @@ export class LoginComponent implements OnInit, OnDestroy {
   hide = signal(true);
   loginDisplay: boolean = false;
   isIframe = false;
+  resetPassword: boolean = false;
+  userInactive: boolean = false;
+  email: string = '';
+
   private readonly _destroying$ = new Subject<void>();
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private authService: MsalService,
+    private authUserService: AuthService,
     private msalBroadcastService: MsalBroadcastService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('')
     });
+
+    if(localStorage.getItem("loginToken")){
+      this.router.navigate(['/auth']);
+    }
+
+    console.log(localStorage.getItem("loginToken"));
   }
 
   ngOnInit(): void {
@@ -54,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.handleRedirectObservable().subscribe((response: AuthenticationResult) => {
       if (response && response.accessToken) {
         console.log('Login successful', response);
-        localStorage.setItem('msalKey', response.accessToken);
+        localStorage.setItem('loginToken', response.accessToken);
         this.router.navigate(['/auth']);
       }
     });
@@ -95,7 +116,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }).subscribe({
         next: (response: AuthenticationResult) => {
           if (response && response.accessToken) {
-            localStorage.setItem('msalKey', response.accessToken);
+            localStorage.setItem('loginToken', response.accessToken);
             console.log('Token acquired silently', response.accessToken);
           }
         },
@@ -120,7 +141,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.log(email);
       this.checkEmailProvider(email);
     } else {
-      console.log('Logging in with', this.loginForm.value);
+      this.handleExternalLogin(this.loginForm.value);
     }
   }
 
@@ -142,6 +163,36 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginRedirect();
   }
 
+  handleExternalLogin(loginForm: FormGroup) {
+    console.log(loginForm);
+    this.authUserService.externalTrainerLogin(loginForm).subscribe(
+      response => {
+        if(!response.isSuccess){
+          if(!response.result && response.statusCode == 401){
+            console.log("Invalid username or password", response);
+            this.messageService.add({ severity: 'error', summary: 'Login failed ', detail: 'Invalid email or password', life: 10000 });
+          }
+          else if(response.statusCode == 403){
+            console.log("User inactive, Reset Password", response);
+            this.messageService.add({ severity: 'error', summary: 'Login failed ', detail: 'Password Expired ! Reset Password to continue', life: 10000 });
+            this.userInactive = true;
+            this.resetPassword = true;
+            this.email = response.result;
+          }
+        }
+        else if(response.isSuccess){
+          console.log("Login successful", response);
+          localStorage.setItem('loginToken', response.result.token);
+          localStorage.setItem('externalLogin', "true");
+          this.router.navigate(['/auth']);
+        }
+      },
+      error => {
+        console.log("Login failed", error);
+      }
+    )
+  }
+
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
@@ -150,5 +201,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();
+  }
+
+  forgotPassword() {
+    this.resetPassword = true;
   }
 }

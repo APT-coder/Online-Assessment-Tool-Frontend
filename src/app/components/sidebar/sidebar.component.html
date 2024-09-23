@@ -1,12 +1,12 @@
 <div class="sidebar-container">
-  <p-sidebar #sidebarRef [style]="{'width':'250px'}" [position]="'left'" [visible]="true" [modal]="false" [baseZIndex]="1000">
+  <p-sidebar #sidebarRef [style]="{'width': sidebarCollapsed ? '80px' : '220px'}" [position]="'left'" [visible]="true" [modal]="false" [baseZIndex]="1000">
     <ng-template pTemplate="headless">
       <div class="flex flex-column h-full">
         <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
           <span class="inline-flex align-items-center gap-2">
-            <span class="font-semibold text-2xl text-primary">Knowlix</span>
+            <app-hamburger-menu-icon (menuOpen)="toggleSidebar($event)"></app-hamburger-menu-icon>
+            <span class="font-semibold text-2xl text-primary" *ngIf="!sidebarCollapsed">KnowliX</span>
           </span>
-          <!-- Optional close button -->
         </div>
         <div class="overflow-y-auto">
           <ul class="list-none p-3 m-0">
@@ -14,41 +14,50 @@
               <ul class="list-none p-0 m-0 overflow-hidden">
                 <li>
                   <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" 
-                     routerLink="/{{path}}" 
+                     routerLink="/app/{{path}}" 
                      routerLinkActive="active-link" 
                      [routerLinkActiveOptions]="{exact: true}">
                     <i class="pi pi-home mr-2"></i>
-                    <span class="font-medium">Dashboard</span>
+                    <span class="font-medium" *ngIf="!sidebarCollapsed">Dashboard</span>
                   </a>
                 </li>
                 <ng-container *ngIf="user.UserType === 0 || user.UserType === 1">
                   <ng-container *ngIf="user.UserType === 0">
                     <li>
                       <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" 
-                         routerLink="/user-management" 
+                         routerLink="/app/user-management" 
                          routerLinkActive="active-link" 
                          [routerLinkActiveOptions]="{exact: true}">
                         <i class="pi pi-users mr-2"></i>
-                        <span class="font-medium">User Management</span>
+                        <span class="font-medium" *ngIf="!sidebarCollapsed">User Management</span>
                       </a>
                     </li>
                   </ng-container>
                   <li>
                     <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" 
-                       routerLink="/create-test" 
+                       routerLink="/app/create-test" 
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}">
                       <i class="pi pi-plus mr-2"></i>
-                      <span class="font-medium">Create Test</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Create Test</span>
                     </a>
                   </li>
-                  <li>
+                  <!-- <li>
                     <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" 
-                       routerLink="/upload-assessment" 
+                       routerLink="/app/upload-assessment" 
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}">
                       <i class="pi pi-upload mr-2"></i>
-                      <span class="font-medium">Upload Questions</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Upload Questions</span>
+                    </a>
+                  </li> -->
+                  <li>
+                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple" 
+                       routerLink="/app/question-bank" 
+                       routerLinkActive="active-link" 
+                       [routerLinkActiveOptions]="{exact: true}">
+                      <i class="pi pi-book mr-2"></i>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Question Bank</span>
                     </a>
                   </li>
                 </ng-container>
@@ -60,7 +69,7 @@
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}"> -->
                       <i class="pi pi-plus mr-2"></i>
-                      <span class="font-medium" >Scheduled Tests</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Scheduled Tests</span>
                     </a>
                   </li>
                   <li>
@@ -70,19 +79,20 @@
                        routerLinkActive="active-link" 
                        [routerLinkActiveOptions]="{exact: true}"> -->
                       <i class="pi pi-upload mr-2"></i>
-                      <span class="font-medium" >Attended Tests</span>
+                      <span class="font-medium" *ngIf="!sidebarCollapsed">Attended Tests</span>
                     </a>
                   </li>
                 </ng-container>
+                <!-- More items as needed -->
               </ul>
             </li>
           </ul>
         </div>
         <div class="mt-auto">
-          <hr class=" border-top-1 border-none surface-border" />
-          <p-button (onClick)="op.toggle($event)" [plain]="true" [severity]="'secondary'" [text]="true" pRipple class="m-5 p-3 flex align-items-center cursor-pointer gap-2 border-round text-700 hover:surface-100 transition-duration-150 p-ripple">
+          <hr class="border-top-1 border-none surface-border" />
+          <p-button (onClick)="op.toggle($event)" [plain]="true" [severity]="'secondary'" [text]="true" pRipple class="m-5 p-3 flex align-items-center cursor-pointer gap-2 border-round text-700 transition-duration-150 p-ripple">
             <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
-            <span class="font-bold">{{username}}</span>
+            <span class="font-bold" *ngIf="!sidebarCollapsed">{{username}}</span>
           </p-button>
         </div>
       </div>
@@ -91,8 +101,9 @@
 </div>
 
 <p-overlayPanel #op>
-  <div class="flex flex-column gap-5 w-8rem h-15rem">
+  <div class="flex flex-column gap-5 w-10rem h-15rem">
     <div>
+      <div class="profile-divide">
       <span class="font-medium text-900 block mb-2"></span>
       <div class="d-flex align-items-center justify-content-center">
         <div class="content m-3">
@@ -107,14 +118,15 @@
           </div>
         </div>
       </div>
-      <div class="d-flex align-items-center justify-content-center text-center text-primary">
+      </div>
+      <div class="d-flex align-items-center justify-content-center text-center profile">
         <table class="profile-details">
           <tr *ngFor="let detail of profileDetails; let i = index"
               (mouseover)="hoveredRow = i"
               (mouseleave)="hoveredRow = null">
             <td class="value">
               <!-- Truncated view -->
-              <span class="text-truncated" [ngClass]="{'hidden': hoveredRow === i && (detail.value || '').length > 14}">
+              <span class="text-truncated " [ngClass]="{'hidden': hoveredRow === i && (detail.value || '').length > 14}">
                 {{ (detail.value || '').length > 14 ? (detail.value || '').substring(0, 14) + '...' : detail.value }}
               </span>
               <!-- Full view, shown only on hover -->
@@ -125,9 +137,10 @@
           </tr>
         </table>
       </div>
-      <div class="d-flex align-items-center justify-content-center mt-1 mb-2">
+      <div class="d-flex align-items-center justify-content-center  mb-2">
         <app-button-active (buttonClick)="logout()" [content]="'LogOut'" class="small-button"></app-button-active>
       </div>
     </div>
   </div>
 </p-overlayPanel>
+

@@ -1,0 +1,306 @@
+$letterColor:#3b82f6;
+$correctOption:rgba(209,234,215);
+$incorrectOption:rgba(212, 40, 40,0.3);
+$bg-color: linear-gradient(#261D42, #8061C3);
+
+.col-10 {
+    padding-right: 0;
+    height: 100vh;
+}
+
+.loading-indicator{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-top: 300px;
+}
+
+.EvaluateMCQ{
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    overflow: hidden;
+}
+::ng-deep .custom-button {
+  border-radius: 12px; 
+  font-weight: bold;
+  background-color: #4CAF50; 
+  color: white;
+  padding: 10px 20px; 
+}
+
+.qn-body{
+padding:20px;
+padding-right: 20px;
+height:100%;
+//margin-left: 50px;
+display:flex;
+flex-direction: column;
+}
+.qn-intro h3{
+    margin:0;
+    color:$letterColor;
+}
+.qn-intro{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.save-and-submit{
+  display: flex;
+  gap:12px;
+}
+.qn-content{
+    display: flex;
+    flex-direction: row;
+    height:80vh;
+}
+
+.qn {
+    border-bottom: none;
+    border-radius: 10px;
+    width: 90%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    padding-left: 30px;
+  }
+  
+  .qn {
+    -ms-overflow-style: none; 
+    margin-top: 20px;
+    padding: 10px;
+    padding-top: 20px;
+  }
+  
+  .n h6 {
+    margin: 10px 0;
+  }
+  
+  .qn ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .qn li {
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+  
+  .qn li::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 2px solid grey; 
+  }
+  
+  .correct-option {
+    background-color: $correctOption;
+    color: black;
+  }
+  
+  .correct-option::before {
+    background-color:green; 
+    border: none; 
+  }
+  
+  .incorrect-option {
+    background-color: $incorrectOption; 
+    color: black;
+  }
+  
+  .incorrect-option::before {
+    background-color:red; 
+    border: none; 
+  }
+  
+.mark-box{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Mark-side{
+    display: flex;
+    flex-direction: column;
+    width: 30%;height: 100%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.Marks{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    margin-bottom: 20px;
+    
+}
+
+.submitted p{
+    font-size: 14px;
+    color:grey;
+}
+
+.submitted-student{
+    font-size: 15px;
+    // padding:1px;
+    cursor: pointer;
+}
+
+
+.submitted-student span{
+  border-bottom: 1px solid rgb(201, 198, 198);
+  padding-bottom: 5px;
+}
+
+.submitted-student-list{
+  overflow-y: auto;
+}
+
+.submitted-student.active-student {
+  background-color: #d6dce5; 
+  // border: 2px solid #155724;
+  color: #3b82f6; 
+}
+
+.submitted-student:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.02);  
+}
+
+
+.submitted-student span{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+  
+}
+
+.icon-name{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+}
+.absentees{
+    display: flex;
+    flex-direction: column;
+    
+}
+.absent p{
+    font-size: 14px;
+    color:grey;
+}
+.absent-student{
+  display: flex;
+  flex-direction: column;
+   padding: 2px;
+   overflow-y: auto;
+   height: 150px;
+   overflow-y: auto;
+   cursor: pointer;
+}
+
+.absent-student-name{
+  border-bottom: 1px solid rgb(201, 198, 198);
+  padding-bottom: 5px;
+  display: flex;
+  gap:20px;
+}
+
+.absent-student-name:hover{
+  background-color: #f1f1f1;
+  transform: scale(1.02); 
+}
+
+.descriptive{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height:300px;
+}
+
+.learner-response{
+  width:100%;
+  height:150px;
+  overflow-y: auto;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border-color: rgb(206, 203, 203);
+  background-color:rgb(251, 253, 254);
+}
+
+
+.mark-box input{
+  width:50px;
+}
+
+.mark-box input.invalid {
+  border: 1px solid red;
+  background-color: #fdd;
+}
+
+.fill-up{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 130px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+
+.fill-up .answer-box{
+  background-color:rgb(251, 253, 254);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  height:40px;
+  width:200px;
+  border:.3px solid rgb(206, 203, 203);
+}
+
+.correct-answer{
+  color: green;
+  width:600px;
+  margin-bottom: 10px;
+}
+
+/* Styles for scrollbar */
+::-webkit-scrollbar {
+  width: 3px; 
+  height: 4px; 
+}
+
+/* Track (background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ccc, #999); 
+  border-radius: 10px; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #aaa, #777); 
+}
+
+
+.error-message{
+  color:red;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.student-score{
+  padding-right: 10px;
+}

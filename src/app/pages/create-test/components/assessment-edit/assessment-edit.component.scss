@@ -1,0 +1,156 @@
+$bg-color: #8061C3;
+
+.preview-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: -50px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.preview-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.preview-body {
+  margin-right: -50px;
+  justify-content: space-between;
+  overflow-y: auto;
+  padding: 20px;
+  padding-right: 0;
+  align-content: center;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border-radius: 10px;
+}
+
+.preview-body::-webkit-scrollbar {
+  display: none;
+}
+
+.qn-point {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  padding-right: 0;
+  margin-bottom: 10px;
+}
+
+.question {
+  width: 90%;
+}
+
+.question-container p {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.question-score {
+  margin-top: 45px;
+}
+
+.question-container textarea,
+.question-container input[type="text"],
+.question-container input[type="radio"] {
+  margin-top: 5px;
+}
+
+.question-container input[type="radio"] {
+  padding: 20px;
+}
+
+.questionNo {
+  margin-top: 30px;
+}
+
+.question-point {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.question-name {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.question-score {
+  flex-shrink: 0;
+  text-align: right;
+  position: relative;
+  bottom: 5px;
+}
+
+.question-type {
+  margin-top: 30px;
+  text-align: right;
+}
+
+.question-score {
+  margin-right: 10px;
+}
+
+.question-type select {
+  width: 150px;
+}
+
+#question0 {
+  position: relative;
+  top: 15px;
+}
+
+#ques-name0 {
+  position: relative;
+  top: 15px;
+}
+
+.add-option-btn {
+  margin-top: 10px;
+}
+
+.add-question-btn {
+  display: block;
+  margin: 20px auto 0 auto;
+}
+
+.add-option-btn{
+  border: 1.5px solid $bg-color;
+  color:$bg-color;
+  border-radius: 20px;
+background-color: white;
+ align-items: center;
+ font-size: 14px;
+ justify-content: center;
+}
+.add-question-btn{
+   border: 1.5px solid $bg-color;
+  color:$bg-color;
+  border-radius: 20px;
+background-color: white;
+ align-items: center;
+ font-size: 14px;
+ justify-content: center;
+
+}
+/* Scale down the radio button */
+.custom-radio {
+  transform: scale(0.4); /* Adjust the scale factor as needed */
+  -webkit-transform: scale(0.4); /* For Safari */
+}
+
+.form-mcq
+{
+  position: relative;
+  top: 12px;
+}
+
+.mcq-add-option{
+  margin-top: 13px;
+}

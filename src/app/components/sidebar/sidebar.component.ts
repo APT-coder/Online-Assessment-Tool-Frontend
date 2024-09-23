@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { Sidebar, SidebarModule } from 'primeng/sidebar';
+import { SidebarModule } from 'primeng/sidebar';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { StyleClassModule } from 'primeng/styleclass';
@@ -14,13 +14,14 @@ import { ChipsModule } from 'primeng/chips';
 import { CommonModule } from '@angular/common';
 import { MsalService } from '@azure/msal-angular';
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
+import { HamburgerMenuIconComponent } from "../../ui/hamburger-menu-icon/hamburger-menu-icon.component";
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, SidebarModule, ButtonModule, RippleModule, AvatarModule, StyleClassModule,ImageModule,
+  imports: [RouterLink, SidebarModule, ButtonModule, RippleModule, AvatarModule, StyleClassModule, ImageModule,
     OverlayPanelModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ChipsModule, CommonModule, ButtonActiveComponent,
-    RouterLinkActive],
+    RouterLinkActive, HamburgerMenuIconComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   
@@ -35,6 +36,14 @@ export class SidebarComponent {
       this.isSchedule.emit(scheduled);
   }
 
+  sidebarCollapsed = true;
+  @Output() sidebarToggled = new EventEmitter<boolean>();
+
+  toggleSidebar(data: boolean) {
+    this.sidebarCollapsed = data;
+    this.sidebarToggled.emit(this.sidebarCollapsed);
+  }
+
   user = JSON.parse(localStorage.getItem('userDetails') as string);
   username = this.user.UserName;
     hoveredRow: number | null = null;
@@ -42,26 +51,24 @@ export class SidebarComponent {
     path: string = '';
     profileDetails = [
       { label: 'Name:', value: 'Your Name' },
-      { label: 'Email:', value: 'your.email@example.com' },
       { label: 'Designation:', value: 'Your Role' }
     ];
-  constructor(private elementRef: ElementRef, private authService: MsalService) { }
+  constructor(private elementRef: ElementRef, private authService: MsalService, private route: Router) { }
 
   ngOnInit(): void {
-
+    this.authService.instance.initialize();
     console.log(this.user);
     
       this.profileDetails[0].value = this.user.UserName;
-      this.profileDetails[1].value = this.user.UserEmail;
 
       if(this.user.UserAdmin){
-        this.profileDetails[2].value = "Admin";
+        this.profileDetails[1].value = "Admin";
       }
       else if(this.user.TrainerId){
-        this.profileDetails[2].value = this.user.UserRole.roleName;
+        this.profileDetails[1].value = this.user.UserRole.roleName;
       }
       else{
-        this.profileDetails[2].value = "Trainee";
+        this.profileDetails[1].value = "Trainee";
       }
 
       if (this.user.UserType === 0) {
@@ -94,6 +101,15 @@ openFileExplorer() {
 }
 
 logout() {
-  this.authService.logoutRedirect();
+  if(localStorage.getItem('externalLogin') as string === null){
+    this.authService.logoutRedirect();
+    localStorage.clear();
+    sessionStorage.clear();
+  }
+  else{
+    localStorage.clear();
+    sessionStorage.clear();
+    this.route.navigate(["/"]);
+  }
 }
 }

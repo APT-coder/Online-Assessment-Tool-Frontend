@@ -1,0 +1,24 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  transition: width 0.3s;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 10px;
+  transition: margin-left 0.3s;
+}
+
+.sidebar.collapsed + .main-content {
+  margin-left: 5px;
+}

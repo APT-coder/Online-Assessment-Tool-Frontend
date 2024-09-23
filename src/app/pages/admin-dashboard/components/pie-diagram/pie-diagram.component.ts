@@ -1,9 +1,9 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { AdminChart } from '../../../../../models/adminChart.interface'; 
+import { AdminChart } from '../../../../shared/models/adminChart.interface'; 
 import { AdminDashboardService } from '../../../../service/admin-dashboard/admin-dashboard.service'; 
-import { ApiResponses } from '../../../../../models/apiResponse.interface'; 
-import { AdminChartResponse } from '../../../../../models/adminChartResponse.interface'; 
+import { ApiResponses } from '../../../../shared/models/apiResponse.interface'; 
+import { AdminChartResponse } from '../../../../shared/models/adminChartResponse.interface'; 
 import { CommonModule } from '@angular/common';
 
 @Component({

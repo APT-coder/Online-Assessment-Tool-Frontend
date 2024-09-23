@@ -15,7 +15,12 @@ $color:var(--primary-color) ;
     display: flex;
     justify-content: space-between;
 }
-
+::ng-deep .p-tabview-nav-link{
+  text-decoration: none !important;
+}
+::ng-deep .p-tabview .p-tabview-panels{
+  padding: 0 !important;
+}
 
 .down-section{
     overflow-x: hidden;
@@ -64,4 +69,47 @@ $color:var(--primary-color) ;
   .dashboard-table{
     cursor: pointer;
   }
+  .piechart .chart h6{
+    width:max-content;
+    padding-top: 40px;
+    padding-left: 35px;
+    color:#007bff ;
+    font-weight: 600;
+  }
+
+  .dropdown-bar {    
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+  }
+  
+  .dropdown-bar p-dropdown {
+    width: 45%;
+    margin-right: 10px; 
+  }
+  
+  .dropdown-bar p-dropdown:last-child {
+    margin-right: 0;
+  }
+  
+  .dropdown-bar .ui-dropdown {
+    width: 100%;
+  }
+  
+  .dropdown-bar .ui-dropdown-label {
+    font-weight: 500;
+    color: #495057; 
+  }
+  
+  .dropdown-bar .ui-dropdown-trigger {
+    color: #495057;
+  }
+  
+  .dropdown-bar .ui-dropdown-panel {
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
   
