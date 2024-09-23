@@ -1,0 +1,42 @@
+@if(!uploaded){
+    <div class="file-upload-container" 
+        (dragover)="onDragOver($event)" 
+        (drop)="onDrop($event)">
+        <h2 class="upload-title">Upload Your Files</h2>
+        <p class="supported-files">Supported files: {{ supportedFiles }}</p>
+
+        <div class="drag-drop-area" id="drag-drop-area">
+            <p>Drag and drop your files here</p>
+            <p>or</p>
+            <button pButton class="upload-button" (click)="openFileDialog()">Choose Files</button>
+            <input type="file" id="file-input" single (change)="handleFileInput($event)" hidden />
+        </div>
+
+        <p class="help-link" (click)="openTemplatePreview()" style="cursor: pointer; color: blue; text-decoration: none;">
+            Need help? Preview template.
+        </p>
+    </div>
+}
+
+
+<p-dialog [(visible)]="visibleTemplatePreview" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+    <ng-template pTemplate="header">
+      <div class="flex justify-content-between align-items-center">
+        <span class="preview-heading">{{ getPreviewHeading() }}</span>
+        <div>
+          <p-button pRipple type="button" icon="pi pi-download" class="p-button-text p-button-rounded download-icon" (click)="downloadTemplate()"></p-button>
+        </div>
+        <label class="switch">
+          <input type="checkbox" (change)="onToggleChange($event)">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </ng-template>
+  
+    <div class="docx-content" *ngIf="isWordPreview; else excelContent" [innerHTML]="wordTemplateContent"></div>
+    <ng-template #excelContent>
+      <div class="excel-content">
+        <table [innerHTML]="excelTemplateContent"></table>
+      </div>
+    </ng-template>
+  </p-dialog>

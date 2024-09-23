@@ -1,4 +1,121 @@
-<app-create-test-form></app-create-test-form>
+<p-toast position="top-right" />
 
-
+<div class="stepper-card">
+    <p-stepper [linear]="true" [activeStep]="activeStep">
+      <!-- First Stepper for Creating Assessment -->
+      <p-stepperPanel header="Create Assessment">
+        <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+          <div class="flex flex-column h-12rem">
+            <div class="form-group">
+              <div class="input-container flex-row align-items-center ml-4">
+                <div class="col-auto labelName mr-2">
+                  <label for="testName" class="font-medium">Test Name:</label>
+                </div>
+                <div class="p-field width-input mb-3 ">
+                  <input id="testName" type="text" pInputText #testNameInput placeholder="Ex. Soft Skills" required
+                    [(ngModel)]="assessmentName" class="p-inputtext p-component w-full" />
+                </div>
+                <small id="testname-help" class="details">
+                  This name will be visible to students
+                </small>
+              </div>
+              
+            </div>
+            <p-button label="Create Test" class="create-assessment-button" [disabled]="!isCardSelected || !assessmentName"
+            *ngIf="!assessmentCreated" (click)="createAssessment(testNameInput.value, nextCallback)"/>
+            <!--Cards for question upload type -->
+            <div class="card-container">
+              <app-card header="File Upload"
+                description="Upload file containing questions and then create an assessment by selecting the questions."
+                saveButtonLabel="Select" imageUrl="assets/file-upload.png" [isSelected]="selectedCardIndex === 0"
+                (select)="selectCard(0)">
   
+              </app-card>
+  
+              <app-card header="Create Assessment"
+                description="Create a new assessment manually by selecting question type entering details."
+                saveButtonLabel="Select" imageUrl="assets/create_question.png" [isSelected]="selectedCardIndex === 1"
+                (select)="selectCard(1)">
+              </app-card>
+  
+              <app-card header="Question Bank"
+                description="Create an assessment by selecting questions from the question bank." saveButtonLabel="Select"
+                imageUrl="assets/question_bank.png" [isSelected]="selectedCardIndex === 2" (select)="selectCard(2)">
+              </app-card>
+            </div>
+            <!-- Cards for question upload type End -->
+            <div class="form-group">
+              
+            </div>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+
+    <p-stepperPanel [header]="secondStep">
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+            let-index="index">
+            <div class="flex flex-column h-12rem">
+
+              <!-- Assessment Created successfully -->
+              @if(assessmentCreated){
+                <!-- File Upload Selected -->
+                @if(selectedCardIndex === 0){
+                  @if(!fileUploaded){
+                    <app-file-upload (uploadSuccess)="getParsedContent($event)"
+                     (message)="showMessage($event)"></app-file-upload>
+                  }
+                  @else{
+                    <app-assessment-edit [questions]="editQuestions" (questionsChange)="getQuestions($event)"></app-assessment-edit>
+                  }
+                }
+                <!-- Create test Selected -->
+                @else if(selectedCardIndex === 1){
+                  <app-create-test-form (questionsChange)="getQuestions($event)"></app-create-test-form>
+                }
+                <!-- Question Bank Selected -->
+                @else{
+                  @if(!fileUploaded){
+                    <app-question-bank (questionsSelected)="getParsedContent($event)"
+                     (message)="showMessage($event)"></app-question-bank>
+                  }
+                  @else{
+                    <app-assessment-edit [questions]="editQuestions" (questionsChange)="getQuestions($event)"></app-assessment-edit>
+                  }
+                }
+              }
+
+            </div>
+            <div class="flex button-container">
+            <p-button label="Back" icon="pi pi-arrow-left" (onClick)="goToPreviousStep()" />
+            <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" (onClick)="goToNextStep()" />
+            </div>
+        </ng-template>
+    </p-stepperPanel>
+      
+      <!-- Preview Questions before saving -->
+      <p-stepperPanel header="Preview">
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+          let-index="index">
+          <div class="flex flex-column h-12rem">
+            <app-assessment-preview [questions]="questions"></app-assessment-preview>
+          </div>
+          <div class="flex button-container">
+            <p-button label="Back" icon="pi pi-arrow-left" (onClick)="goToPreviousStep()" />
+            <p-button label="Save & Next" icon="pi pi-arrow-right" iconPos="right" (click)="logQuestions(nextCallback)"/>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+
+      <!-- Schedule Assessment -->
+      <p-stepperPanel header="Schedule">
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+          <div class="flex flex-column h-12rem">
+            <app-schedule></app-schedule>
+          </div>
+          <div class="flex button-container">
+            <p-button label="Schedule Test" icon="pi pi-arrow-right" iconPos="right" (onClick)="finishSchedule()" />
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+    </p-stepper>
+  </div>

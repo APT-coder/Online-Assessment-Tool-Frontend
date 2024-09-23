@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component'; 
-import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
+import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component'; 
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -9,13 +9,13 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import { TraineeStatusDTO } from '../../../../shared/models/TraineeStatusDTO.interface';
-import { ScheduledAssessmentService } from '../../../../service/scheduled-assessment/scheduled-assessment.service'; 
-import { TraineeAnswerDetailDTO } from '../../../../shared/models/TraineeAnswerDetailDTO.interface';
-import { UpdateScoreDTO } from '../../../../shared/models/UpdateScoreDTO.interface'; 
+import { TraineeStatusDTO } from '../../shared/models/TraineeStatusDTO.interface';
+import { ScheduledAssessmentService } from '../../service/scheduled-assessment/scheduled-assessment.service'; 
+import { TraineeAnswerDetailDTO } from '../../shared/models/TraineeAnswerDetailDTO.interface';
+import { UpdateScoreDTO } from '../../shared/models/UpdateScoreDTO.interface'; 
 import { forkJoin } from 'rxjs';
-import { AssessmentTableDTO } from '../../../../shared/models/AssessmentTableDTO.interface'; 
-import { AssessmentStatus } from '../../../../shared/models/AssessmentTableDTO.interface'; 
+import { AssessmentTableDTO } from '../../shared/models/AssessmentTableDTO.interface'; 
+import { AssessmentStatus } from '../../shared/models/AssessmentTableDTO.interface'; 
 import { ActivatedRoute } from '@angular/router';
 import { ProgressBarModule } from 'primeng/progressbar';
 

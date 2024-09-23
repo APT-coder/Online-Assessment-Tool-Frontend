@@ -17,7 +17,6 @@ $correctOption:green;
 .preview-body{
     margin-right: -50px;
     // height: 450px;
-    width:850px;
     // border:0.5px solid #8546D2;
     justify-content: space-between;
     overflow-y: auto;
@@ -53,6 +52,7 @@ $correctOption:green;
 
 .question-score {
     margin-top: 5px; 
+    margin-right: 50px;
 }
 
 .question-container textarea,

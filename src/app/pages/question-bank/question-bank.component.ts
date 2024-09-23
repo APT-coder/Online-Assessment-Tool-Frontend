@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AssessmentOverview } from '../../shared/models/assessmentOverview.interface'; 
-import { AdminDashboardService } from '../../service/admin-dashboard/admin-dashboard.service';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -12,7 +11,17 @@ import { QuestionService } from '../../service/assessment/question.service';
 import { Router } from '@angular/router';
 import { ButtonActiveComponent } from "../../ui/buttons/button-active/button-active.component";
 import { Question } from '../../shared/models/question.interface'; 
-import { AssessmentPreviewComponent } from "../assessment/components/assessment-preview/assessment-preview.component";
+import { AssessmentPreviewComponent } from '../create-test/components/assessment-preview/assessment-preview.component'; 
+import { AssessmentService } from '../../service/assessment/assessment.service';
+
+interface QuestionMapped {
+  id: string;
+  type: string;
+  content: string;
+  options?: string[];
+  correctAnswer: string[];
+  score: number;
+}
 
 @Component({
   selector: 'app-question-bank',
@@ -31,6 +40,9 @@ import { AssessmentPreviewComponent } from "../assessment/components/assessment-
   styleUrls: ['./question-bank.component.scss']
 })
 export class QuestionBankComponent implements OnInit {
+  @Output() questionsSelected = new EventEmitter<Question[]>();
+  @Output() message = new EventEmitter<string>();
+
   assessments!: AssessmentOverview[];
   faChevronDown = faChevronDown;
   faPen = faPen;
@@ -40,7 +52,7 @@ export class QuestionBankComponent implements OnInit {
   selectedQuestions: Question[] = [];
   showPreview: boolean = false;
   constructor(
-    private assessmentService: AdminDashboardService,
+    private assessmentService: AssessmentService,
     private questionService: QuestionService,
     private router: Router
   ) {}
@@ -50,7 +62,7 @@ export class QuestionBankComponent implements OnInit {
   }
 
   fetchAssessments(): void {
-    this.assessmentService.getAllAssessmentOverviews().subscribe(
+    this.assessmentService.getAllAssessments().subscribe(
       (data) => {
         if (data && data.isSuccess) {
           this.assessments = data.result;
@@ -78,6 +90,9 @@ export class QuestionBankComponent implements OnInit {
         if (response.isSuccess) {
           console.log(response.result);
           this.assessmentDetails[assessmentId] = response.result;
+          if(this.assessmentDetails[assessmentId].questions.length === 0){
+            this.message.emit("No Questions");
+          }
           this.expandedAssessmentIds.add(assessmentId);
         } else {
           console.error('Error fetching assessment details');
@@ -101,13 +116,29 @@ export class QuestionBankComponent implements OnInit {
       }
     }
   }
+
+  convertToQuestionFormat = (data: any[]): Question[] => {
+    return data.map(item => ({
+      id: item.questionId.toString(),
+      type: item.questionType,
+      content: item.questionText,
+      options: item.questionOptions[0]?.options || [],
+      correctAnswer: item.questionOptions[0]?.correctAnswers || [],
+      score: item.points
+    }));
+  };
   
   onNextClick(): void {
-    const questionsQuery = encodeURIComponent(JSON.stringify(this.selectedQuestions));
-  
-  this.router.navigate(['/app/assessment-preview'], {
-    queryParams: { questions: questionsQuery }
-  });
+    // const questionsQuery = encodeURIComponent(JSON.stringify(this.selectedQuestions));
+    
+    // this.router.navigate(['/app/assessment-preview'], {
+    //   queryParams: { questions: questionsQuery }
+    // });
+    if(this.selectedQuestions.length === 0){
+      this.message.emit("Empty Set");
+      return;
+    }
+    const formattedQuestions = this.convertToQuestionFormat(this.selectedQuestions);
+    this.questionsSelected.emit(formattedQuestions);
   }
-  
 }

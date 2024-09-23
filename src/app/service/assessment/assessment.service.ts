@@ -9,8 +9,6 @@ import { Question } from '../../shared/models/question.interface';
 export class AssessmentService {
 
   assessmentApiUrl = `https://localhost:7120/api/Assessment`;
-  // https://localhost:7120/api/Assessment/UpdateAssessmentTotalScore/2
-
   
   constructor(private http: HttpClient) {}
 
@@ -27,6 +25,10 @@ export class AssessmentService {
         }
       ]
     };
+  }
+
+  getAllAssessments(): Observable<any> {
+    return this.http.get<any>(`${this.assessmentApiUrl}/GetAllAssessments`);
   }
 
   createAssessment(assessmentName: string | null, createdBy: number): Observable<any> {

@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ButtonActiveComponent } from '../../../../ui/buttons/button-active/button-active.component';
-import { CardComponent } from '../card/card.component';
-import { TableComponent } from '../table/table.component';
-import { SidebarComponent } from '../../../../components/sidebar/sidebar.component';
+import { ButtonActiveComponent } from '../../ui/buttons/button-active/button-active.component';
+import { CardComponent } from './components/card/card.component';
+import { TableComponent } from './components/table/table.component';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { PerformanceDetailsService } from '../../../../service/performance-details/performance-details.service';
-import { PerformanceDetails } from '../../../../shared/models/performanceDetails.interface';
+import { PerformanceDetailsService } from '../../service/performance-details/performance-details.service';
+import { PerformanceDetails } from '../../shared/models/performanceDetails.interface';
 import * as XLSX from 'xlsx';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
-import { EmailService } from '../../../../service/email/email.service';
+import { EmailService } from '../../service/email/email.service';
 import { FormsModule } from '@angular/forms';
-import { performanceTemplate } from '../../../../shared/constants/emailTemplate';
-import { adminMailTemplate } from '../../../../shared/constants/emailTemplate';
+import { performanceTemplate } from '../../shared/constants/emailTemplate';
+import { adminMailTemplate } from '../../shared/constants/emailTemplate';
 
 interface Trainee {
   traineeName: string;
