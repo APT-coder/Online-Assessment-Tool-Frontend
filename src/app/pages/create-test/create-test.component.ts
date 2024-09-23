@@ -198,13 +198,14 @@ export class CreateTestComponent implements OnInit {
       });
     });
     
-    if(this.questionsUploaded){
-      this.updateTotalScore();
+    // if(this.questionsUploaded){
+    //   this.updateTotalScore();
 
-      // if(nextCallback){
-      //   nextCallback.emit();
-      // }
-    }
+    //   // if(nextCallback){
+    //   //   nextCallback.emit();
+    //   // }
+    // }
+    this.updateTotalScore();
     this.goToNextStep();
   }
 
