@@ -3,13 +3,14 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { QuestionBankComponent } from "./pages/question-bank/question-bank.component";
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [RouterOutlet],
+    imports: [RouterOutlet, QuestionBankComponent],
     providers: [
       { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

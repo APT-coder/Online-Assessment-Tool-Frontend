@@ -94,7 +94,7 @@ export class CreateTestComponent implements OnInit {
   }
 
   goToNextStep() {
-    if(this.activeStep === 1 && this.selectedCardIndex === 2){
+    if(this.activeStep === 1 && this.selectedCardIndex === 2 && !this.fileUploaded){
       this.questionBankComponent.onNextClick();
     }
     else{
