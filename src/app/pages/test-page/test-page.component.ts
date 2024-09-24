@@ -45,6 +45,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   questionWithoutNumber: any;
   private attemptCounter = 0;
   private maxAttempts = 2;
+  testCompleted: boolean = false;
 
   constructor(
     private router: Router,
@@ -105,40 +106,45 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   handleVisibilityChange() {
-    if (document.hidden) {
-      this.attemptCounter++;
-      const attemptsLeft = this.maxAttempts - this.attemptCounter;
-
-      if (attemptsLeft > 0) {
-        const message = `You have ${attemptsLeft} attempt(s) left. If you switch tabs again, you will be exited from the assessment.`;
-        this.dialog
-          .open(RemainingChanceDailogueComponent, {
-            data: { message, attemptsLeft },
-          })
-          .afterClosed()
-          .subscribe(() => {
-            this.toggleFullScreen();
-          });
-      } else {
-        const message = `You have been caught switching tabs. You will be exited from the assessment.`;
-        if (attemptsLeft == 0) {
+    if(!this.testCompleted){
+      if (document.hidden) {
+        this.attemptCounter++;
+        const attemptsLeft = this.maxAttempts - this.attemptCounter;
+  
+        if (attemptsLeft > 0) {
+          const message = `You have ${attemptsLeft} attempt(s) left. If you switch tabs again, you will be exited from the assessment.`;
           this.dialog
             .open(RemainingChanceDailogueComponent, {
-              data: { message },
+              data: { message, attemptsLeft },
             })
             .afterClosed()
             .subscribe(() => {
-              console.log(
-                'User has exceeded maximum attempts, navigating to /trainee.'
-              );
-              document.removeEventListener(
-                'visibilitychange',
-                this.handleVisibilityChange.bind(this)
-              );
-              this.router.navigate(['/app/trainee']);
+              this.toggleFullScreen();
             });
+        } else {
+          const message = `You have been caught switching tabs. You will be exited from the assessment.`;
+          if (attemptsLeft == 0) {
+            this.dialog
+              .open(RemainingChanceDailogueComponent, {
+                data: { message },
+              })
+              .afterClosed()
+              .subscribe(() => {
+                console.log(
+                  'User has exceeded maximum attempts, navigating to /trainee.'
+                );
+                document.removeEventListener(
+                  'visibilitychange',
+                  this.handleVisibilityChange.bind(this)
+                );
+                this.router.navigate(['/app/trainee']);
+              });
+          }
         }
       }
+    }
+    else{
+      // do nothing
     }
   }
 
@@ -146,6 +152,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
     console.log('Backend have to be called');
     this.sendDataBeforeClosing();
     document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+    this.testCompleted = true;
     this.router.navigate(["/app/trainee"]);
   }
 

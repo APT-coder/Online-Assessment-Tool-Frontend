@@ -18,7 +18,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-assessment >
-          <tr (click)="onRowClicked(assessment.assessmentId, assessment)">
+          <tr (click)="onRowClicked(assessment.scheduledAssessmentId, assessment)">
             <td>{{ assessment.assessmentName }}</td>
             <td>{{ assessment.startDate |utcToIst| date: 'dd-MM-yyyy' }}</td>
             <td>{{ assessment.startTime |utcToIst| date: 'shortTime' }}</td>
