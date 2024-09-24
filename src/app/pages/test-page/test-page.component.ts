@@ -89,7 +89,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
       this.timerSubscription.unsubscribe();
     }
     document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
-    
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -146,6 +145,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
   onComplete(): void {
     console.log('Backend have to be called');
     this.sendDataBeforeClosing();
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
     this.router.navigate(["/app/trainee"]);
   }
 
@@ -192,49 +192,45 @@ export class TestPageComponent implements OnInit, OnDestroy {
         return doc.splitTextToSize(text, maxWidth);
     }
 
-    // Create a new jsPDF instance
     const doc = new jsPDF();
-    // Set initial offsets and dimensions
     const xOffset = 10;
     const rowHeight = 10;
-    const textWidth = 200;   // Maximum width for the combined question number and text
-    let yOffset = 20; // Start at a certain vertical position
-    
+    const textWidth = 200;   
+    let yOffset = 20; 
+    const pageHeight = doc.internal.pageSize.height;
+
     doc.setFontSize(14);
     doc.text(`${this.assessment.result.assessmentName}`, xOffset, 10);
     doc.setFontSize(12);
 
     this.question.forEach((q: { questionNo: { toString: () => string | string[]; }; questionText: string | string[]; answered: any; }) => {
-        // Combine question number and text with a single space
         const combinedText = `${q.questionNo.toString()}. ${q.questionText}`;
-        // Split combined text into lines that fit within textWidth
         const textLines = splitTextToLines(combinedText as string, textWidth, doc);
-        // Print each line of the combined text
+        
         textLines.forEach((line, index) => {
-            doc.text(line, xOffset, yOffset + (rowHeight * index));
+          if (yOffset + (rowHeight * index) > pageHeight - rowHeight) {
+            doc.addPage();
+            yOffset = 20;
+          }
+          doc.text(line, xOffset, yOffset + (rowHeight * index));
         });
-        // Move to the next line after the question text
+
         yOffset += rowHeight * textLines.length;
-        // Print the answer on the new line
         doc.text('Selected Answer:', xOffset, yOffset);
 
-        // Set text color based on whether the question was answered
         if (q.answered) {
-            doc.setTextColor(0, 100, 0); // Dark green for answered
-            doc.text(q.answered, xOffset + 50, yOffset); // Indent the answer text
+            doc.setTextColor(0, 100, 0);
+            doc.text(q.answered, xOffset + 50, yOffset);
         } else {
-            doc.setTextColor(255, 0, 0); // Red for not answered
-            doc.text('Not Answered', xOffset + 50, yOffset); // Indent the "Not Answered" text
+            doc.setTextColor(255, 0, 0);
+            doc.text('Not Answered', xOffset + 50, yOffset);
         }
 
-        // Reset text color to black for the next question
         doc.setTextColor(0, 0, 0);
-        // Move yOffset down for the next question
-        yOffset += rowHeight * 2; // Add extra spacing for better readability
+        yOffset += rowHeight * 2;
     });
 
     const dateTime = Date.now();
-    // Save the document or display as needed
     doc.save(`${this.user.TraineeId}_${this.user.UserName}_${dateTime}`);
   }
 

@@ -199,7 +199,7 @@ export class FileUploadComponent {
   downloadTemplate() {
     const isExcel = this.isExcel;
     const wordTemplateUrl = 'assets/Assessment_Template.docx';
-    const excelTemplateUrl = 'assets/Assessment Template.xlsx';
+    const excelTemplateUrl = 'assets/Assessment_Template.xlsx';
     const link = document.createElement('a');
     link.href = isExcel ? excelTemplateUrl : wordTemplateUrl;
     link.download = isExcel ? 'Assessment_Template.xlsx' : 'Assessment_Template.docx';
