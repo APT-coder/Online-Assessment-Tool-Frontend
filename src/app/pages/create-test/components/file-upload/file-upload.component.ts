@@ -182,7 +182,7 @@ export class FileUploadComponent {
   }
 
   loadExcelFile(): void {
-    const filePath = 'assets/Assessment Template.xlsx';
+    const filePath = 'assets/Assessment_Template.xlsx';
 
     this.http.get(filePath, { responseType: 'arraybuffer' }).subscribe(data => {
       const workbook = XLSX.read(new Uint8Array(data), { type: 'array' });

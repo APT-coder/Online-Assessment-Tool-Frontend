@@ -22,7 +22,7 @@ export class ReminderComponent {
 
   @Input() assessments: any;
   searchValue: string | undefined;
-
+  sortOrder: number = -1;
 
 
   clear(table: Table) {

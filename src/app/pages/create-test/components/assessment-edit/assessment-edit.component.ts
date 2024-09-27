@@ -91,19 +91,14 @@ export class AssessmentEditComponent {
 
   removeOption(questionIndex: number, optionIndex: number) {
     const question = this.questions[questionIndex];
-    
-    // Remove the option from the options array
-    if (question.options) {
-      question.options.splice(optionIndex, 1);
-    }
+    const optionValue = question.options![optionIndex];
   
-    // Ensure to update the correctAnswer array by removing the option if it was marked as correct
-    const correctAnswerIndex = question.correctAnswer.indexOf(question.options![optionIndex]);
+    const correctAnswerIndex = question.correctAnswer.indexOf(optionValue);
     if (correctAnswerIndex > -1) {
       question.correctAnswer.splice(correctAnswerIndex, 1);
     }
   
-    // Emit the updated questions array
+    question.options?.splice(optionIndex, 1);
     this.questionsChange.emit(this.questions);
-  }
+  }  
 }
