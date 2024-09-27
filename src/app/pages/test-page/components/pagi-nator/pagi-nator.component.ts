@@ -23,7 +23,6 @@ export class PagiNatorComponent {
     event.preventDefault();
     this.itemClicked.emit(item);
     this.actionTriggered.emit();
-    // console.log('Selected question id',this.selectedQuestionId); 
   }
 
   get paginatedQuestions() {
@@ -52,6 +51,6 @@ export class PagiNatorComponent {
   }
 
   ngOnInit(): void {
-        console.log(this.questions);
+        
     }
 }

@@ -37,7 +37,6 @@ export class IlpIntegrationTraineeattendtestComponent implements OnInit {
   async initializeUserRoleAndRoute(): Promise<void> {
     try {
       this.userRoleData = await this.getUserRole();
-      console.log(this.userRoleData);
       this.getBatchAndValidateUser();
     }catch (error) {
       console.error('Error fetching user role data:', error);
@@ -61,7 +60,6 @@ export class IlpIntegrationTraineeattendtestComponent implements OnInit {
     this.scheduledAssessmentService.fetchAssessmentName(parseInt(this.id))
     .subscribe((data) => {
       this.scheduledAssessmentDetails = data;
-      console.log(this.scheduledAssessmentDetails);
       this.validateUser();
     });
   }
@@ -79,7 +77,6 @@ export class IlpIntegrationTraineeattendtestComponent implements OnInit {
         this.scheduledService.getScheduled(this.userRoleData.TraineeId)
         .subscribe((data) => {
           this.assessmentPayload = data.filter(d => d.assessmentId == this.id);
-          console.log(this.assessmentPayload[0]);
 
           this.attendTest();
         });

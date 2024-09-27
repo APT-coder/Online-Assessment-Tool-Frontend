@@ -47,7 +47,6 @@ export class ScheduleComponent {
   isFormSubmitted = false;
  
   constructor(private _formBuilder: FormBuilder, private userService: TrainermanagementService, private cdr: ChangeDetectorRef) {
-    console.log(localStorage.getItem("assessmentId"));
 
     this.firstFormGroup = this._formBuilder.group({
       batchId: ['']
@@ -77,7 +76,6 @@ export class ScheduleComponent {
       (response: { isSuccess: any; result: any[]; }) => {
         if (response) {
           this.batches = response.result;
-          console.log(this.batches);
         }
       });
   }
@@ -91,9 +89,7 @@ export class ScheduleComponent {
       const startDate = new Date(control.value);
       // Normalize the start date to 00:00:00
       const normalizedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-      console.log("Validating start date:", normalizedStartDate);
       if (normalizedStartDate < normalizedCurrentDate) {
-        console.log("Invalid Start Date Detected");
         return { 'invalidStartDate': true };
       }
       return null;
@@ -110,7 +106,6 @@ export class ScheduleComponent {
       // Check if the startDate and endDate are valid Date objects
       if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
         if (endDate < startDate) {
-          console.log("Invalid Date Range Detected");
           errors['invalidDateRange'] = true; // Set error on form group
         } else {
           delete errors['invalidDateRange']; // Clear error if valid
@@ -136,13 +131,9 @@ export class ScheduleComponent {
       const endDate = new Date(formGroup.get(endDateControlName)?.value);
       const endTime = formGroup.get(endTimeControlName)?.value;
       const duration = formGroup.get(durationControlName)?.value;
-      
-      console.log("Start Date:", startDate, "Start Time:", startTime);
-      console.log("End Date:", endDate, "End Time:", endTime);
-      console.log("Assessment Duration:", duration);
+
       // If endDate is before startDate, no need to validate duration
       if (endDate < startDate) {
-        console.log("Invalid Date Range Detected. Skipping Duration Validation.");
         return { 'invalidDateRange': true };// Return null since duration validation is not applicable
       }
       if (startDate && startTime && endDate && endTime && duration) {
@@ -150,9 +141,7 @@ export class ScheduleComponent {
         const endDateTime = this.combineDateAndTime(endDate, endTime);
         const assessmentDuration = this.parseDuration(duration);
         const actualDuration = endDateTime.getTime() - startDateTime.getTime();
-        console.log("Actual Duration (ms):", actualDuration, "Expected Duration (ms):", assessmentDuration);
         if (actualDuration < assessmentDuration) {
-          console.log("Invalid Duration Detected");
           return { 'invalidDuration': true };
         }
       }
@@ -179,10 +168,6 @@ export class ScheduleComponent {
     this.isFormSubmitted = true;
     this.secondFormGroup.markAllAsTouched();
     this.secondFormGroup.updateValueAndValidity(); 
-    
-    console.log("Start Date Control Errors:", this.secondFormGroup.get('startDate')?.errors);
-    console.log("End Date Control Errors:", this.secondFormGroup.get('endDate')?.errors);
-    console.log("Form Group Errors:", this.secondFormGroup.errors);
 
     if (this.secondFormGroup.valid) {
       console.log("Form is valid");
@@ -221,7 +206,6 @@ export class ScheduleComponent {
       canSubmitBeforeEnd: input.canSubmitBeforeEnd,
       link: this.generateAssessmentLink(input.assessmentId)
     };
-    console.log(output);
     return output;
   }
 

@@ -57,7 +57,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.data = navigation.extras.state['data'];
-      console.log(this.data);
       
     }
   }
@@ -149,7 +148,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
   }
 
   onComplete(): void {
-    console.log('Backend have to be called');
     this.sendDataBeforeClosing();
     document.removeEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
     this.testCompleted = true;
@@ -187,9 +185,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log('NEED BACKEND CONNECTION DONE');
-    ///MAIN
-    console.log(this.question);
     this.downloadPDF();
     this.router.navigate(["/app/trainee"]);
   }
@@ -244,7 +239,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
   sendDataBeforeClosing() {
     this.postAssessment();
-    console.log('Sending data before closing.');
   }
 
   openConfirmationDialog(): void {

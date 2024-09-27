@@ -37,7 +37,6 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
   constructor(private cdr: ChangeDetectorRef) {}
 
   performAction() {
-    console.log('Action performed in Child2');
     setTimeout(() => {
       this.setOptionBoxSizes();
     }, 10);
@@ -87,7 +86,6 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
       box.nativeElement.style.width = `${maxWidth}px`;
       box.nativeElement.style.height = `${maxHeight}px`;
     });
-    console.log("from setOptionboxes",maxHeight);
   }
 
 
@@ -110,10 +108,6 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
       this.buttonClicked.emit({ answer: answer, index: i });
     }
     this.cdr.detectChanges();
-    // this.buttonClicked.emit(this.selectedOption);
-    // console.log(i);
-    console.log(answer);
-    // this.setOptionBoxSizes();
   }
 
   handleMultipleClick(answer: string, i: number): void {
@@ -138,7 +132,6 @@ export class ListComponentsComponent implements AfterViewInit ,OnChanges {
 
 
   onCheckboxChange(event: Event) {
-    console.log(this.isChecked);
     const inputElement = event.target as HTMLInputElement;
     this.reviewMarked.emit(inputElement.checked);
   }

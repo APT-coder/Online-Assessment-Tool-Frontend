@@ -57,7 +57,6 @@ export class SidebarComponent {
 
   ngOnInit(): void {
     this.authService.instance.initialize();
-    console.log(this.user);
     
       this.profileDetails[0].value = this.user.UserName;
 
@@ -95,7 +94,6 @@ openFileExplorer() {
   fileInput.onchange = (event: any) => {
     const file = event.target.files[0];
     if (file) {
-      console.log('Selected file:', file.name);
     }
   };
 }

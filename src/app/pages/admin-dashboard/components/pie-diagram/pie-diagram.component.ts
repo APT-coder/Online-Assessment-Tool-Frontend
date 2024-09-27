@@ -28,13 +28,11 @@ export class PieDiagramComponent {
 
   updateChart(): void {
     if (this.assessmentId === null) {
-      console.log(this.assessmentId);
       return;
     }
 
     this.chartService.getChartValues(this.assessmentId).subscribe(
       (chartData: AdminChartResponse) => {
-        console.log(chartData.result); // For debugging purposes
         const chartResult = chartData.result;
 
         if (chartResult.length === 0) {

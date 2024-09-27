@@ -51,7 +51,6 @@ export class ReminderComponent {
     }
 
     this.api.checkAttended(this.user.TraineeId , assessmentId).subscribe((response) =>{
-      console.log(response.result.exists);
       if(response.result.exists){
         this.openSnackBar("AlreadyAttended");
       }else{

@@ -25,9 +25,6 @@ export class AuthComponent {
       localStorage.setItem("userDetails", JSON.stringify(this.userRoleData.result));
       localStorage.setItem("apiToken", this.userRoleData.result.Token);
 
-      console.log('User role data:', this.userRoleData.result);
-      console.log('API Token:', this.userRoleData.result.Token);
-
       setTimeout(() => {
         
         if (this.userRoleData.UserType === 0) {

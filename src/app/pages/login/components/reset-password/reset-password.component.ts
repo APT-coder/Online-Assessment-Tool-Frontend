@@ -50,7 +50,6 @@ export class ResetPasswordComponent {
   generateOtp() {
     if (this.emailForm.valid) {
       const emailValue = this.emailForm.get('email')?.value;
-      console.log('Valid Email:', emailValue);
       localStorage.setItem("email", emailValue);
       this.emailEntered = true;
 
@@ -89,7 +88,6 @@ export class ResetPasswordComponent {
     if(!userInactive){
       if (this.passwordForm.valid) {
         const passwordValue = this.passwordForm.get('password')?.value;
-        console.log('Valid Password:', passwordValue);
         const email = localStorage.getItem("email") as string;
 
         this.resetPassword(email, passwordValue);
@@ -101,8 +99,6 @@ export class ResetPasswordComponent {
       if (this.changePasswordForm.valid) {
         const emailValue = this.changePasswordForm.get('email')?.value;
         const newPasswordValue = this.changePasswordForm.get('newPassword')?.value;
-        console.log('Email:', emailValue);
-        console.log('New Password:', newPasswordValue);
 
         this.resetPassword(emailValue, newPasswordValue);
       } else {

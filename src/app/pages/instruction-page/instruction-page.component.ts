@@ -38,8 +38,6 @@ onRowClicked() {
   assessmentId:any;
 
   ngOnInit(): void {
-    this.assessmentId = this.route.snapshot.paramMap.get('id');
-    console.log(this.data);
-    
+    this.assessmentId = this.route.snapshot.paramMap.get('id');    
   }
 }

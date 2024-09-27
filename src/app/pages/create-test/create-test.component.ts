@@ -108,7 +108,6 @@ export class CreateTestComponent implements OnInit {
 
   getQuestions(questions: any){
     this.questions = questions;
-    console.log(questions);
   }
 
   createAssessment(assessmentName: string, nextCallback: any) {
@@ -138,7 +137,6 @@ export class CreateTestComponent implements OnInit {
     this.fileUploaded = true;
     this.questions = questions;
     this.editQuestions = questions;
-    console.log(this.questions);
   }
 
   showMessage(message: string){
@@ -172,7 +170,6 @@ export class CreateTestComponent implements OnInit {
       return formattedQuestion;
     });
 
-    console.log('Formatted Questions:', formattedQuestions);
     this.submitQuestions(formattedQuestions, nextCallback);
   }
 
@@ -218,9 +215,8 @@ export class CreateTestComponent implements OnInit {
   finishSchedule() {
     if (this.scheduleComponent) {
       const formResult = this.scheduleComponent.logFormValues();
-      console.log(formResult);
       this.scheduledAssessmentService.scheduleAssessment(formResult).subscribe((response: any) => {
-        console.log('Question scheduled successfully', response);
+        console.log('Assessment scheduled successfully', response);
         this.messageService.add({ severity: 'success', summary: 'Assessment Scheduled ', detail: 'Assessment Scheduled Successfully', life: 3000 });
 
         this.scrollToTop();

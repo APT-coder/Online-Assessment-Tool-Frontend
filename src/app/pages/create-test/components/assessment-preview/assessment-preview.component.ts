@@ -42,14 +42,11 @@ export class AssessmentPreviewComponent {
     currentAssessment: Assessment | null = null;
 
     ngOnInit() {
-        console.log(this.questions);
         this.route.queryParams.subscribe(params => {
           const questionsQuery = params['questions'];
           if (questionsQuery) {
             this.selectedQuestions = JSON.parse(decodeURIComponent(questionsQuery));
-            console.log('Selected Questions:', this.selectedQuestions);
           } else {
-            console.log('No query parameters found.');
           }
         });
       }

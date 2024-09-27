@@ -22,7 +22,6 @@ export class AttendedTestsComponent {
     this.api.getScores(this.user.TraineeId).subscribe((response) =>{
         
         this.scores =response.result;
-        console.log(this.scores);
     })
   }
 

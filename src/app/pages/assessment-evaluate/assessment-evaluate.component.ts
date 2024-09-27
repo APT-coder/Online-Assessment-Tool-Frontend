@@ -149,7 +149,6 @@ onStudentClick(traineeId: number): void {
     .subscribe({
       next: (data) => {
         this.selectedStudentResponses = data.result.map((response: TraineeAnswerDetailDTO) => {
-          console.log('Raw Response:', response);
 
           let optionsArray: string[] = [];
           let correctAnswer: string | string[] = [];
@@ -180,7 +179,6 @@ onStudentClick(traineeId: number): void {
           };
         });
 
-        console.log('Processed Student Responses:', this.selectedStudentResponses);
         this.isLoading = false;
       },
       error: (error) => {
@@ -214,7 +212,6 @@ onScoreChange(questionId: number, newScore: number): void {
 
 
 saveScores(): void {
-  console.log(this.updatedScores);
   const traineeId = this.selectedStudentId;
   this.evaluatedStudentIds.add(traineeId);
 
@@ -222,15 +219,11 @@ saveScores(): void {
     this.scheduledAssessmentService.updateScores(scoreUpdate)
   );
 
-  console.log("inside savescores", updateRequests);
 
   forkJoin(updateRequests).subscribe({
     next: responses => {
       this.onStudentClick(traineeId);
       this.updateScore(this.selectedStudentResponses);
-
-      console.log('Scores updated successfully', responses);
-      console.log('Evaluated Student IDs:', Array.from(this.evaluatedStudentIds));
     },
     error: error => {
       console.error('Error updating scores', error);
@@ -272,18 +265,15 @@ updateAssessmentStatus(): void {
 }
 
 updateScore(selectedStudentResponses: any) {
-  console.log(selectedStudentResponses);
   var newScore = 0;
   selectedStudentResponses.forEach((element: any) => {
     newScore += element.score;
   });
-  console.log(newScore);
 
   var selectedStudent = this.students.find((student: any) => student.traineeId === this.selectedStudentId);
   if (selectedStudent) {
     selectedStudent.score = newScore;
   }
-  console.log(this.students);
 }
 
 

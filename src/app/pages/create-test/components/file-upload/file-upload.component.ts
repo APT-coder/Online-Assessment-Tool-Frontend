@@ -53,7 +53,6 @@ export class FileUploadComponent {
       const fileInput = event.target as HTMLInputElement;
       const file = fileInput.files?.[0];
       if (file) {
-        console.log('Selected file from input:', file);
 
         await this.uploadFile(file);
       }
@@ -61,7 +60,6 @@ export class FileUploadComponent {
     if (event instanceof DragEvent && event.dataTransfer) {
       const file = event.dataTransfer.files?.[0];
       if (file) {
-        console.log('Dropped file(s):', file);
 
         await this.uploadFile(file);
       }
@@ -113,7 +111,6 @@ export class FileUploadComponent {
       if(file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
         try {
           this.htmlContent = await this.wordParserService.readWordFile(file);
-          console.log('HTML Content:', this.htmlContent);
           this.uploaded = true;
 
           this.questionCount = await this.getQuestionCount(this.htmlContent, "word");
@@ -126,7 +123,6 @@ export class FileUploadComponent {
         file.type === 'application/vnd.ms-excel'){
         try {
           this.questionContent = await this.wordParserService.readExcelFile(file);
-          console.log('File Content', this.questionContent);
           this.uploaded = true;
 
           this.questionCount = await this.getQuestionCount(this.questionContent, "excel");
@@ -161,7 +157,6 @@ export class FileUploadComponent {
         return 0;
       }
       const questions = content.slice(1);
-      console.log(questions.length);
       questionCount = questions.length;
     }
 
@@ -192,7 +187,6 @@ export class FileUploadComponent {
       const startIndex = this.excelTemplateContent.indexOf('<title>');
       const endIndex = this.excelTemplateContent.indexOf('</title>') + '</title>'.length;
       this.excelTemplateContent = this.excelTemplateContent.slice(0, startIndex) + this.excelTemplateContent.slice(endIndex);
-      console.log(this.excelTemplateContent);    
     });
   }
 
@@ -215,7 +209,6 @@ export class FileUploadComponent {
 
     try {
       await this.readWordFile("assets/Assessment_Template.docx");
-      console.log(this.wordTemplateContent);
     } catch (error) {
       console.error('Error processing template preview:', error);
     }
@@ -243,7 +236,6 @@ export class FileUploadComponent {
 
   parseQuestions(htmlContent: string): Promise<void> {
     return new Promise((resolve) => {
-      console.log('Parsing HTML content:', htmlContent);
       const parser = new DOMParser();
       const doc = parser.parseFromString(htmlContent, 'text/html');
       const paragraphs = doc.querySelectorAll('p');
@@ -320,7 +312,6 @@ export class FileUploadComponent {
             score: row[indexMap.score]
           };
         });
-        console.log(this.questions);
         resolve(this.questions);
       } catch (error) {
         reject(error);

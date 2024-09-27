@@ -41,11 +41,9 @@ export class OtpValidationComponent {
 
   verifyOtp() {
     this.email = localStorage.getItem("email") as string;
-    console.log(this.email, this.value);
 
     this.authService.verifyOtp(this.email, this.value).subscribe(
       response => {
-        console.log(response);
         this.otpVerified.emit(true);
       },
       error => {

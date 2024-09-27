@@ -25,7 +25,6 @@ export class ListTableComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['assessmentId'] || changes['performerType']) {
-      console.log(this.assessmentId);
       if (this.assessmentId !== null) {
         this.updateTitleAndFetchData();
       }
@@ -47,7 +46,6 @@ export class ListTableComponent {
       this.adminDashboardService.getHighPerformers(this.assessmentId).subscribe(
         (data: Performers[]) => {
           this.filteredData = data;
-          console.log(this.filteredData)
         },
         (error: any) => {
           console.error('Error fetching top performers:', error);

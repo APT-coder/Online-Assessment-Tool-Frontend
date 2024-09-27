@@ -90,7 +90,6 @@ export class QuestionBankComponent implements OnInit {
     this.questionService.getAssessment(assessmentId).subscribe(
       (response: any) => {
         if (response.isSuccess) {
-          console.log(response.result);
           if(this.fetchedAssessmentIds.has(assessmentId)){
             this.expandedAssessmentIds.add(assessmentId);
           }
@@ -125,7 +124,6 @@ export class QuestionBankComponent implements OnInit {
         }
       }
     }
-    console.log(this.selectedQuestions);
   }
 
   toggleAllQuestionSelection(assessmentId: any, event: Event) {
@@ -148,7 +146,6 @@ export class QuestionBankComponent implements OnInit {
             });
         }
     }
-    console.log(this.selectedQuestions);
   }
 
   convertToQuestionFormat = (data: any[]): Question[] => {

@@ -66,8 +66,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     if(localStorage.getItem("loginToken")){
       this.router.navigate(['/auth']);
     }
-
-    console.log(localStorage.getItem("loginToken"));
   }
 
   ngOnInit(): void {
@@ -117,7 +115,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         next: (response: AuthenticationResult) => {
           if (response && response.accessToken) {
             localStorage.setItem('loginToken', response.accessToken);
-            console.log('Token acquired silently', response.accessToken);
           }
         },
         error: (error) => {
@@ -138,7 +135,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (!this.showPassword) {
       const email = this.loginForm.get('email')?.value;
-      console.log(email);
       this.checkEmailProvider(email);
     } else {
       this.handleExternalLogin(this.loginForm.value);
@@ -164,7 +160,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   handleExternalLogin(loginForm: FormGroup) {
-    console.log(loginForm);
     this.authUserService.externalTrainerLogin(loginForm).subscribe(
       response => {
         if(!response.isSuccess){

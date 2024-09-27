@@ -83,7 +83,6 @@ export class AdminDashboardComponent  implements OnInit {
     } else {
         this.selectedBatch = null;
     }
-    console.log(this.selectedBatch);
     this.fetchAssessments(this.selectedBatch);
     this.fetchTraineeAverageScore(this.selectedBatch);
   }
@@ -127,14 +126,12 @@ export class AdminDashboardComponent  implements OnInit {
       );
       this.defaultAssessmentId = mostRecentAssessment.assessmentId;
       this.selectedAssessmentId = this.defaultAssessmentId; // Set default selection
-      console.log('Initialized Most Recent Assessment ID:', this.defaultAssessmentId);
     }
   }
 
 
   receiveAssessment(obj: any) {
     this.selectedAssessmentId =obj.assessmentId;
-    console.log(obj.assessmentId);
     this.selectedAssessmentStatus=obj.status;
     if (!obj.isEvaluated) {
       this.isDataAvailable = false;
@@ -146,12 +143,10 @@ export class AdminDashboardComponent  implements OnInit {
 
   onAssessmentSelected(assessmentId: number): void {
     this.selectedAssessmentId = assessmentId;
-    console.log('Selected Assessment ID:', this.selectedAssessmentId);
   }
 
   onYearChange(event: any) {
     this.batches = this.getBatchesForYear(event.value);
-    console.log(this.batches);
   }
 
   onBatchChange(event: any) {

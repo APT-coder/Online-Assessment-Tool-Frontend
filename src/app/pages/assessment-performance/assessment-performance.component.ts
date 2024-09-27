@@ -94,7 +94,6 @@ export class AssessmentPerformanceComponent implements OnInit {
         batchName: data.batchName.toString()
       };
       this.isLoading = false; // Data is loaded, stop loading
-      console.log('Performance Data JSON:', this.performanceData);
     });
   }
 
@@ -103,7 +102,6 @@ export class AssessmentPerformanceComponent implements OnInit {
       (data: Trainee[]) => {
         this.trainees = data;
         this.originalProducts = [...this.trainees];
-        console.log(this.originalProducts);
       },
       error => {
         console.error('Error fetching trainees data', error);
@@ -164,7 +162,6 @@ export class AssessmentPerformanceComponent implements OnInit {
                 score: trainee.score.toString(),
                 assessmentName: this.performanceData.assessmentName
               });
-              console.log(emailBody);
               
               return {
                 toEmail: userDetails.email,
@@ -248,6 +245,5 @@ export class AssessmentPerformanceComponent implements OnInit {
   }
 
   filteredData(data: Trainee[]){
-    console.log(data);
   }
 }

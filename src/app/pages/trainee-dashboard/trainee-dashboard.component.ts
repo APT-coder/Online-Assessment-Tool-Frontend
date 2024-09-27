@@ -26,7 +26,6 @@ export class TraineeDashboardComponent {
 
   handleClick(buttonType: string) {
     this.selected = buttonType;
-    console.log(buttonType);
   }
 
   user = JSON.parse(localStorage.getItem('userDetails') as string);
@@ -39,11 +38,9 @@ export class TraineeDashboardComponent {
   ngOnInit(): void {
     this.sharedService.isScheduled$.subscribe(isScheduled => {
       this.isScheduled = isScheduled;
-      console.log('Is Scheduled:', isScheduled);
     });
 
     this.fetchScheduled();
-    console.log(this.user);
   }
 
   fetchScheduled(): void {
@@ -51,7 +48,6 @@ export class TraineeDashboardComponent {
       this.scheduled = response;
       this.filterScheduled = this.scheduledPipe.transform(response);
       this.warning = this.filterScheduled.length === 0 ? "No upcoming tests" : "";
-      console.log(this.scheduled);
     });
   }
   

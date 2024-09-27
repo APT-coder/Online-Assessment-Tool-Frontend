@@ -57,7 +57,6 @@ export class DashboardTableComponent {
     const selectedNonFixedColumns = event.value.filter((col: Column) => !col.fixed);
     this.selectedColumns = [...this.fixedColumns, ...selectedNonFixedColumns];
     this.selectedColumns = this.cols.filter(col => this.selectedColumns.includes(col));
-    console.log(this.selectedColumns);
   }
 
   clear(table: Table) {
@@ -99,7 +98,6 @@ export class DashboardTableComponent {
   }
 
   onRowSelect(event: any) {
-    console.log(event.data);
     this.rowSelected.emit(event.data);
   }
 }
