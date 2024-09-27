@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PerformanceDetails } from '../../shared/models/performanceDetails.interface';
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 interface Trainee {
   traineeName: string;
@@ -14,8 +15,8 @@ interface Trainee {
 })
 export class PerformanceDetailsService {
 
-  private performanceApiUrl = 'https://localhost:7120/api/Assessment/GetTraineeAssessmentDetails/GetTraineeAssessmentDetails'; // Replace with your actual API URL
-  private scheduledAssessmentApiUrl = 'https://localhost:7120/api/ScheduledAssessment/GetScheduledAssessmentDetails'
+  private performanceApiUrl = `${apiUrl}/api/Assessment/GetTraineeAssessmentDetails/GetTraineeAssessmentDetails`; // Replace with your actual API URL
+  private scheduledAssessmentApiUrl = `${apiUrl}/api/ScheduledAssessment/GetScheduledAssessmentDetails`;
   constructor(private http: HttpClient) { }
 
   getTrainees(assessmentId : number): Observable<Trainee[]> {

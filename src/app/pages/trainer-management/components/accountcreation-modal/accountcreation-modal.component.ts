@@ -136,7 +136,6 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
   selectedBatchIds:number[] = []
   onBatchChange(event: any) {
      this.selectedBatchIds =event.value.map((batch: { label: string, value: number }) => batch.value);
-     console.log('Selected Batch IDs:', this.selectedBatchIds);
     // Perform additional logic if needed
   }
 
@@ -202,8 +201,6 @@ export class AccountcreationModalComponent implements OnChanges, OnInit {
       if (this.mode === 'edit' && this.userData && this.userData.userId) {
         apiPayload.createUserDTO.userId = this.userData.userId;
       }
-
-      console.log('API Payload:', apiPayload); // Debug the payload
 
       if (this.mode === 'edit') {
         this.userService.updateUser(apiPayload).subscribe(

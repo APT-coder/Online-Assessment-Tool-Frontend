@@ -56,15 +56,10 @@ export class PieDiagramComponent implements OnInit, OnChanges {
   
     fetchTraineeAssessmentDetails() {
         this.dashboardService.getTraineeAssessmentDetails(this.assessmentId).subscribe((data: any) => {
-          console.log('API Response Data:', data);
       
           // Calculate present and absent counts with correct casing
           const presentCount = data.filter((item: any) => item.isPresent === 'Completed').length;
           const absentCount = data.filter((item: any) => item.isPresent === 'Absent').length;
-      
-          // Log counts to the console
-          console.log('Present Count:', presentCount);
-          console.log('Absent Count:', absentCount);
       
           // Set data for pie chart
           this.data = {

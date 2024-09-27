@@ -13,7 +13,6 @@ export class WordParserService {
     try {
       const arrayBuffer = await file.arrayBuffer();
       const result = await mammoth.convertToHtml({ arrayBuffer });
-      console.log('HTML Conversion Result:', result.value); // Debug log
       return result.value; // The HTML content
     } catch (error) {
       console.error('Error reading the Word file:', error);
@@ -28,7 +27,6 @@ export class WordParserService {
       const sheetName = workbook.SheetNames[0]; // Get the first sheet name
       const sheet = workbook.Sheets[sheetName]; // Get the first sheet
       const data = XLSX.utils.sheet_to_json(sheet, { header: 1 }); // Convert sheet to JSON array
-      console.log('Excel Conversion Result:', data); // Debug log
       return data; // The Excel content as JSON array
     } catch (error) {
       console.error('Error reading the Excel file:', error);

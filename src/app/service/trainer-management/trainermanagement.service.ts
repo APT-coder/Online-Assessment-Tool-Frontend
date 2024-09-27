@@ -4,7 +4,8 @@ import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { Role } from '../../shared/models/role.interface';
 import { Permission } from '../../shared/models/permission.interface';
 import { User } from '../../shared/models/user.interface';
- 
+import { apiUrl } from '../../shared/constants/apiUrl';
+
 export interface ApiResponse<T> {
   isSuccess: boolean;
   result: T;
@@ -23,10 +24,10 @@ export interface Batch {
  
 export class TrainermanagementService {
 
-    userApiUrl = `https://localhost:7120/api/User`;
-    roleApiUrl = `https://localhost:7120/api/Roles`;
-    permissionApiUrl = `https://localhost:7120/api/Permission`;
-    batchApiUrl =  `https://localhost:7120/api/Batch`;
+    userApiUrl = `${apiUrl}/api/User`;
+    roleApiUrl = `${apiUrl}/api/Roles`;
+    permissionApiUrl = `${apiUrl}/api/Permission`;
+    batchApiUrl =  `${apiUrl}/api/Batch`;
 
     constructor(private http: HttpClient) { }
 

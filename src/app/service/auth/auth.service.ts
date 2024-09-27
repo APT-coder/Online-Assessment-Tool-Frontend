@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private authApiUrl = 'https://localhost:7120/api/Auth';
+  private authApiUrl = `${apiUrl}/api/Auth`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmailService {
-  private baseUrl = 'https://localhost:7120/api';
+  private baseUrl = `${apiUrl}/api`;
   constructor(private http: HttpClient) { }
 
   getUserEmailByUsername(username: string): Observable<any> {

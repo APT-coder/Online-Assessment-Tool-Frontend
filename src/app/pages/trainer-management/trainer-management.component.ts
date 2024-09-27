@@ -236,6 +236,5 @@ export class TrainerManagementComponent {
     const sheetName: string = workbook.SheetNames[0];
     const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
     this.csvData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-    console.log(this.csvData);
   }
 }

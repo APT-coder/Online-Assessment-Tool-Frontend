@@ -45,7 +45,6 @@ export class TrainerTableComponent {
 
   onEditUser(user: User): void {
     this.selectedUser = user;
-    console.log(this.selectedUser);
     this.isEditTrainer = true;
     if (user.userType === 1) {
       // Load trainer details if necessary
@@ -84,7 +83,6 @@ export class TrainerTableComponent {
   }
 
   loadUsersForRole(role: Role): void {
-    console.log('Loading users for role:', role);
 
     if (!role || !role.roleName) {
       console.error('Role or roleName is undefined:', role);
@@ -94,7 +92,6 @@ export class TrainerTableComponent {
 
     this.apiService.getUsersByRoleName(role.roleName).subscribe(
       response => {
-        console.log('Users fetched:', response);
 
         if (response.message) {
           this.message = response.message;
@@ -132,7 +129,6 @@ export class TrainerTableComponent {
       (response: ApiResponse<Role>) => {
         if (response.isSuccess) {
           this.role = response.result;
-          console.log('Role retrieved:', this.role);
           this.editRole.emit(this.role);
         } else {
           console.error('Error retrieving role:', response.message);
@@ -146,7 +142,6 @@ export class TrainerTableComponent {
 
   deleteUser(userId: number): void {
     if (userId !== undefined && userId !== null) {
-      console.log('Deleting user with id:', userId);
       this.apiService.deleteUser(userId).subscribe(
         () => {
           this.roles.forEach(role => {

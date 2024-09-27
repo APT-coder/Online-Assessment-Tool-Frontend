@@ -5,13 +5,14 @@ import { TraineeAnswerDetailDTO } from '../../shared/models/TraineeAnswerDetailD
 import { TraineeStatusDTO } from '../../shared/models/TraineeStatusDTO.interface';
 import { UpdateScoreDTO } from '../../shared/models/UpdateScoreDTO.interface';
 import { AssessmentStatus, AssessmentTableDTO } from '../../shared/models/AssessmentTableDTO.interface';
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduledAssessmentService {
 
-  scheduleAssessmentApiUrl = `https://localhost:7120/api/ScheduledAssessment`
+  scheduleAssessmentApiUrl = `${apiUrl}/api/ScheduledAssessment`
 
   constructor(private http: HttpClient) {}
 
@@ -20,9 +21,7 @@ export class ScheduledAssessmentService {
   }
 
   getAttendedStudents(scheduledAssessmentId: number): Observable<TraineeStatusDTO> {
-    console.log("called");
     const data = this.http.get<TraineeStatusDTO>(`${this.scheduleAssessmentApiUrl}/GetAttendedStudents/attended-students/${scheduledAssessmentId}`);
-    console.log(data);
     return data;
   }
   
@@ -39,8 +38,7 @@ export class ScheduledAssessmentService {
   }
   
   updateScores(updateScoresDTO: UpdateScoreDTO): Observable<any> {
-    console.log(updateScoresDTO);
-    return this.http.put('https://localhost:7120/api/TraineeAnswer/UpdateScore/updateScore', updateScoresDTO);
+    return this.http.put(`${apiUrl}/api/TraineeAnswer/UpdateScore/updateScore`, updateScoresDTO);
   }
 
   updateTotalScores(newScore: number, traineeId: number, assessmentId: number): Observable<any> {
@@ -54,7 +52,7 @@ export class ScheduledAssessmentService {
         }
       ]    
     }
-    return this.http.put('https://localhost:7120/api/AssessmentScore/UpdateAssessmentScores/update-assessment-scores', payload);
+    return this.http.put(`${apiUrl}/api/AssessmentScore/UpdateAssessmentScores/update-assessment-scores`, payload);
   }
 
   fetchAssessmentName(scheduledAssessmentId:number): Observable<AssessmentTableDTO> {
@@ -65,7 +63,6 @@ export class ScheduledAssessmentService {
     const payload = {
       Status: status
     };
-    console.log(status);
     return this.http.put(`${this.scheduleAssessmentApiUrl}/UpdateScheduledAssessmentStatus/update-status/${scheduledAssessmentId}`, payload);
   }
 }

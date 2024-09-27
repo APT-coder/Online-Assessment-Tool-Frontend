@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Performers } from '../../shared/models/performers.interface';
 import { ApiResponses } from '../../shared/models/apiResponse.interface'; 
 import { AdminChartResponse } from '../../shared/models/adminChartResponse.interface'; 
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,10 @@ export class AdminDashboardService {
   getCustomersMini() {
     throw new Error('Method not implemented.');
   }
-  private baseApiUrl = 'https://localhost:7120/api/Assessment';
-  private chartApiUrl='https://localhost:7120/api/AssessmentScore/GetAssessment';
-  private trainerApiUrl='https://localhost:7120/api/Trainer/GetTrainerList';
-  private traineeScoreUrl='https://localhost:7120/api/AssessmentScore/GetTraineesWithAverageScore/batch';
+  private baseApiUrl = `${apiUrl}/api/Assessment`;
+  private chartApiUrl=`${apiUrl}/api/AssessmentScore/GetAssessment`;
+  private trainerApiUrl=`${apiUrl}/api/Trainer/GetTrainerList`;
+  private traineeScoreUrl=`${apiUrl}/api/AssessmentScore/GetTraineesWithAverageScore/batch`;
 
   constructor(private http: HttpClient) { }
   getAllAssessmentOverviews(): Observable<ApiResponses> {

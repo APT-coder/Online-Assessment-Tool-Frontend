@@ -90,7 +90,6 @@ export class TrainerDashboardComponent {
     } else {
         this.selectedBatch = null;
     }
-    console.log(this.selectedBatch);
     this.fetchAssessments(this.selectedBatch);
   }
 
@@ -105,17 +104,13 @@ export class TrainerDashboardComponent {
     setTimeout(() => {
       this.dashboardService.getAssessmentsForTrainer(trainerId).subscribe((data: AssessmentTableDTO[]) => {
         this.assessmentTableData = data.filter(a => a.batchName === batchName);
-        console.log(this.assessmentTableData);
       });
     }, 1000);
   }
 
   onAssessmentSelected(Obj: any) {
-    console.log(Obj);
     this.selectedAssessmentId = Obj.scheduledAssessmentId;
-    console.log("Assmnt Id" + Obj.scheduledAssessmentId);
     this.selectedAssessmentStatus = Obj.status;
-    console.log(Obj.status);
     if (!Obj.isEvaluated) {
       this.isDataAvailable = false;
       this.noDataMessage = 'No data available';
@@ -148,7 +143,6 @@ export class TrainerDashboardComponent {
 
   onYearChange(event: any) {
     this.batches = this.getBatchesForYear(event.value);
-    console.log(this.batches);
   }
 
   onBatchChange(event: any) {

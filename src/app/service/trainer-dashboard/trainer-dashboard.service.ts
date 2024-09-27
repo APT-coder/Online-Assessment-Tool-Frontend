@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 interface AssessmentTableDTO {
   scheduledAssessmentId: number;
@@ -21,8 +22,8 @@ export interface TraineeAssessmentTableDTO {
   providedIn: 'root'
 })
 export class TrainerDashboardService {
-  private assessmentApiUrl = 'https://localhost:7120/api/Assessment';
-  private assessmentScoreApiUrl = 'https://localhost:7120/api/AssessmentScore';
+  private assessmentApiUrl = `${apiUrl}/api/Assessment`;
+  private assessmentScoreApiUrl = `${apiUrl}/api/AssessmentScore`;
 
   constructor(private http: HttpClient) {}
 

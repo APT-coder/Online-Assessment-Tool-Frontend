@@ -1,5 +1,3 @@
-
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
@@ -7,6 +5,7 @@ import { ScheduledResponse } from '../../shared/models/Schedule.interface';
 import { CheckAttended } from '../../shared/models/checkAttende.interface';
 import { CheckAttendedPostBody } from '../../shared/models/checkAttendedpostbody.interface';
 import {Score} from '../../shared/models/Score.interface'
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +17,9 @@ export class ScheduledService {
 
 
 
-  private apiUrl="https://localhost:7120/api/ScheduledAssessment/GetScheduledByUserId";
-  private checkAttendedUrl ="https://localhost:7120/api/TraineeAnswer/CheckTraineeAnswerExists";
-  private assessentScore = "https://localhost:7120/api/AssessmentScore/GetAssessmentScoresByTraineeId";
+  private apiUrl=`${apiUrl}/api/ScheduledAssessment/GetScheduledByUserId`;
+  private checkAttendedUrl =`${apiUrl}/api/TraineeAnswer/CheckTraineeAnswerExists`;
+  private assessentScore = `${apiUrl}/api/AssessmentScore/GetAssessmentScoresByTraineeId`;
 
  
 

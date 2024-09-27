@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Question } from '../../shared/models/question.interface'; 
+import { apiUrl } from '../../shared/constants/apiUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssessmentService {
 
-  assessmentApiUrl = `https://localhost:7120/api/Assessment`;
+  assessmentApiUrl = `${apiUrl}/api/Assessment`;
   
   constructor(private http: HttpClient) {}
 
@@ -48,7 +49,6 @@ export class AssessmentService {
 
   postQuestion(assessmentId: number, question: any, createdBy: number): Observable<any> {
     const transformedData = this.transformData(question, createdBy);
-    console.log(transformedData);
     return this.http.post(`${this.assessmentApiUrl}/AddQuestionToAssessment/${assessmentId}/questions`, transformedData);
   }
 }
